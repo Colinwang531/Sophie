@@ -59,6 +59,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <UseDebugLibraries>true</UseDebugLibraries>
+    <RemoteRootDir>/root/projects</RemoteRootDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <UseDebugLibraries>false</UseDebugLibraries>
@@ -74,12 +75,48 @@
   <ImportGroup Label="Shared" />
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>/root/projects/bin/$(Platform)/$(Configuration)/</OutDir>
+    <RemoteProjectDir>/root/projects/$(ProjectName)</RemoteProjectDir>
+    <RemoteDeployDir>/root/projects/$(ProjectName)</RemoteDeployDir>
+  </PropertyGroup>
   <ItemGroup>
+    <ClCompile Include="..\3rdPart\glog-master\src\demangle.cc" />
+    <ClCompile Include="..\3rdPart\glog-master\src\logging.cc" />
+    <ClCompile Include="..\3rdPart\glog-master\src\raw_logging.cc" />
+    <ClCompile Include="..\3rdPart\glog-master\src\signalhandler.cc" />
+    <ClCompile Include="..\3rdPart\glog-master\src\symbolize.cc" />
+    <ClCompile Include="..\3rdPart\glog-master\src\utilities.cc" />
+    <ClCompile Include="..\3rdPart\glog-master\src\vlog_is_on.cc" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\3rdPart\glog-master\src\base\commandlineflags.h" />
+    <ClInclude Include="..\3rdPart\glog-master\src\base\googleinit.h" />
+    <ClInclude Include="..\3rdPart\glog-master\src\base\mutex.h" />
+    <ClInclude Include="..\3rdPart\glog-master\src\config.h" />
+    <ClInclude Include="..\3rdPart\glog-master\src\demangle.h" />
+    <ClInclude Include="..\3rdPart\glog-master\src\glog\logging.h" />
+    <ClInclude Include="..\3rdPart\glog-master\src\glog\log_severity.h" />
+    <ClInclude Include="..\3rdPart\glog-master\src\glog\raw_logging.h" />
+    <ClInclude Include="..\3rdPart\glog-master\src\glog\stl_logging.h" />
+    <ClInclude Include="..\3rdPart\glog-master\src\glog\vlog_is_on.h" />
+    <ClInclude Include="..\3rdPart\glog-master\src\mock-log.h" />
+    <ClInclude Include="..\3rdPart\glog-master\src\stacktrace.h" />
+    <ClInclude Include="..\3rdPart\glog-master\src\stacktrace_generic-inl.h" />
+    <ClInclude Include="..\3rdPart\glog-master\src\stacktrace_x86-inl.h" />
+    <ClInclude Include="..\3rdPart\glog-master\src\stacktrace_x86_64-inl.h" />
+    <ClInclude Include="..\3rdPart\glog-master\src\symbolize.h" />
+    <ClInclude Include="..\3rdPart\glog-master\src\utilities.h" />
   </ItemGroup>
-  <ItemDefinitionGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>/root/projects/HKDeviceComponent/3rdPart/glog-master/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <LibraryDependencies>pthread;%(LibraryDependencies)</LibraryDependencies>
+    </Link>
+  </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
 </Project>

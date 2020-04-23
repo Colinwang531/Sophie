@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="..\3rdPart\glog-master\src\demangle.cc">
+      <Filter>3rd\glog</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\glog-master\src\logging.cc">
+      <Filter>3rd\glog</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\glog-master\src\raw_logging.cc">
+      <Filter>3rd\glog</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\glog-master\src\signalhandler.cc">
+      <Filter>3rd\glog</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\glog-master\src\symbolize.cc">
+      <Filter>3rd\glog</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\glog-master\src\utilities.cc">
+      <Filter>3rd\glog</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\glog-master\src\vlog_is_on.cc">
+      <Filter>3rd\glog</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="3rd">
+      <UniqueIdentifier>{8586390f-4efc-41c6-a067-e479dbf6bfb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\glog">
+      <UniqueIdentifier>{816f41e2-5f79-4640-a63f-ad9635a4a680}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\3rdPart\glog-master\src\glog\log_severity.h">
+      <Filter>3rd\glog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\glog-master\src\glog\logging.h">
+      <Filter>3rd\glog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\glog-master\src\glog\raw_logging.h">
+      <Filter>3rd\glog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\glog-master\src\glog\stl_logging.h">
+      <Filter>3rd\glog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\glog-master\src\glog\vlog_is_on.h">
+      <Filter>3rd\glog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\glog-master\src\config.h">
+      <Filter>3rd\glog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\glog-master\src\demangle.h">
+      <Filter>3rd\glog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\glog-master\src\mock-log.h">
+      <Filter>3rd\glog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\glog-master\src\stacktrace.h">
+      <Filter>3rd\glog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\glog-master\src\stacktrace_generic-inl.h">
+      <Filter>3rd\glog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\glog-master\src\stacktrace_x86_64-inl.h">
+      <Filter>3rd\glog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\glog-master\src\stacktrace_x86-inl.h">
+      <Filter>3rd\glog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\glog-master\src\symbolize.h">
+      <Filter>3rd\glog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\glog-master\src\utilities.h">
+      <Filter>3rd\glog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\glog-master\src\base\commandlineflags.h">
+      <Filter>3rd\glog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\glog-master\src\base\googleinit.h">
+      <Filter>3rd\glog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\glog-master\src\base\mutex.h">
+      <Filter>3rd\glog</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
