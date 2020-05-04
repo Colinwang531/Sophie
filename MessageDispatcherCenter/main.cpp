@@ -1,7 +1,18 @@
-#include <cstdio>
+#include <iostream>
+#include "MessageQueue/AsynchronousUpstreamServer.h"
+using AsynchronousServer = mq::module::AsynchronousServer;
+using AsynchronousUpstreamServer = mq::module::AsynchronousUpstreamServer;
 
 int main()
 {
-    printf("hello from MessageDispatcherCenter!\n");
+    AsynchronousServer* s{ new(std::nothrow) AsynchronousUpstreamServer };
+
+    if (s)
+    {
+		s->startServer();
+		getchar();
+		s->stopServer();
+    }
+
     return 0;
 }
