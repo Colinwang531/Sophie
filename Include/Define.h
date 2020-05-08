@@ -14,7 +14,7 @@
 #define DEFINE_H
 
 //端口号使用范围
-static const unsigned short minPortNumber = 10000;
+static const unsigned short minPortNumber = 5000;
 static const unsigned short maxPortNumber = 65530;
 
 //进程间通信地址

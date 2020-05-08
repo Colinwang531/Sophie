@@ -19,11 +19,17 @@ static const int eInvalidParameter = 1;
 static const int eBadOperate = 2;
 static const int eBadNewObject = 3;
 static const int eBadNewThread = 4;
+static const int eNotSupport = 100;
 //网络类
 static const int eBindPortFail = 1000;
 static const int eBindInprocFail = 1001;
 static const int eBadNewSocket = 1002;
 static const int eBadConnect = 1003;
 static const int eBadClose = 1004;
+//SDK调用类
+static const int eBadInitSDK = 9000;
+static const int eBadCleanupSDK = 9001;
+static const int eBadLoginDevice = 9002;
+static const int eBadLogoutDevice = 9003;
 
 #endif//ERROR_H

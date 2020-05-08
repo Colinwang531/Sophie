@@ -3,7 +3,7 @@
 #include "Define.h"
 #include "Error.h"
 #include "Hardware/Cpu.h"
-using Cpu = hw::cpu::Cpu;
+using Cpu = base::hardware::Cpu;
 #include "MessageQueue/AsynchronousClient.h"
 
 namespace mq

@@ -10,12 +10,12 @@
 //										王科威									2020-04-26									创建
 //
 
-#ifndef HW_CPU_H
-#define HW_CPU_H
+#ifndef BASE_HARDWARE_CPU_H
+#define BASE_HARDWARE_CPU_H
 
-namespace hw
+namespace base
 {
-	namespace cpu
+	namespace hardware
 	{
 		class Cpu
 		{
@@ -35,7 +35,7 @@ namespace hw
 #endif//WINDOWS
 				const int mask = 0);
 		};//class Cpu
-	}//namespace Cpu
-}//namespace hw
+	}//namespace hardware
+}//namespace base
 
-#endif//HW_CPU_H
+#endif//BASE_HARDWARE_CPU_H

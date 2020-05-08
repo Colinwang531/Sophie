@@ -389,6 +389,45 @@
     <ClCompile Include="..\3rdPart\glog-master\src\vlog_is_on.cc">
       <Filter>3rd\glog</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\CommandLine\CommandLine.cpp">
+      <Filter>CommandLine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\cmdline.cpp">
+      <Filter>3rd\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\config_file.cpp">
+      <Filter>3rd\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\convert.cpp">
+      <Filter>3rd\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\options_description.cpp">
+      <Filter>3rd\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\parsers.cpp">
+      <Filter>3rd\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\positional_options.cpp">
+      <Filter>3rd\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\split.cpp">
+      <Filter>3rd\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\utf8_codecvt_facet.cpp">
+      <Filter>3rd\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\value_semantic.cpp">
+      <Filter>3rd\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\variables_map.cpp">
+      <Filter>3rd\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Device\Hikvision\HikvisionDevice.cpp">
+      <Filter>Device\Hikvision</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Device\AbstractDevice.cpp">
+      <Filter>Device</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="3rd">
@@ -1071,6 +1110,33 @@
     </Filter>
     <Filter Include="3rd\glog">
       <UniqueIdentifier>{3f7c3ae8-62a5-44e0-bace-f0a49274975c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CommandLine">
+      <UniqueIdentifier>{5ddd21e8-d17e-4693-a265-273dc029454e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\boost\program_options">
+      <UniqueIdentifier>{9bafc742-48e1-4cf3-87bd-721b126821eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\boost\program_options\detail">
+      <UniqueIdentifier>{46c96f78-0b59-46d2-af9a-85bcb1b0552a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Device">
+      <UniqueIdentifier>{fd22def8-b3d9-45e3-91b7-fc45ef0e58d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Device\Hikvision">
+      <UniqueIdentifier>{5433f4ec-d22c-4099-ba6b-294486ea7317}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Locker">
+      <UniqueIdentifier>{7b55411b-348d-4e93-b822-8bcd8965b204}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK">
+      <UniqueIdentifier>{51e019d8-70e9-4fc5-a72b-33f407a184ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\HCNet">
+      <UniqueIdentifier>{3e5fa371-d041-4fd0-bfd9-ebe3823c7ad3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\HCNet\HCNetSDKCom">
+      <UniqueIdentifier>{d9ca804b-0070-4556-b2bd-bb586a947ae8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -10667,5 +10733,154 @@
     <ClInclude Include="..\3rdPart\glog-master\src\base\mutex.h">
       <Filter>3rd\glog</Filter>
     </ClInclude>
+    <ClInclude Include="..\Include\CommandLine\CommandLine.h">
+      <Filter>CommandLine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\program_options\cmdline.hpp">
+      <Filter>3rd\boost\program_options</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\program_options\config.hpp">
+      <Filter>3rd\boost\program_options</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\program_options\environment_iterator.hpp">
+      <Filter>3rd\boost\program_options</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\program_options\eof_iterator.hpp">
+      <Filter>3rd\boost\program_options</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\program_options\errors.hpp">
+      <Filter>3rd\boost\program_options</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\program_options\option.hpp">
+      <Filter>3rd\boost\program_options</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\program_options\options_description.hpp">
+      <Filter>3rd\boost\program_options</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\program_options\parsers.hpp">
+      <Filter>3rd\boost\program_options</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\program_options\positional_options.hpp">
+      <Filter>3rd\boost\program_options</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\program_options\value_semantic.hpp">
+      <Filter>3rd\boost\program_options</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\program_options\variables_map.hpp">
+      <Filter>3rd\boost\program_options</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\program_options\version.hpp">
+      <Filter>3rd\boost\program_options</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\program_options\detail\cmdline.hpp">
+      <Filter>3rd\boost\program_options\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\program_options\detail\config_file.hpp">
+      <Filter>3rd\boost\program_options\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\program_options\detail\convert.hpp">
+      <Filter>3rd\boost\program_options\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\program_options\detail\parsers.hpp">
+      <Filter>3rd\boost\program_options\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\program_options\detail\utf8_codecvt_facet.hpp">
+      <Filter>3rd\boost\program_options\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\program_options\detail\value_semantic.hpp">
+      <Filter>3rd\boost\program_options\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Device\AbstractDevice.h">
+      <Filter>Device</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Device\EnableLoggingDevice.h">
+      <Filter>Device</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Device\Hikvision\HikvisionDevice.h">
+      <Filter>Device\Hikvision</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Locker\Locker.h">
+      <Filter>Locker</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\DataType.h">
+      <Filter>SDK\HCNet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\DecodeCardSdk.h">
+      <Filter>SDK\HCNet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\HCNetSDK.h">
+      <Filter>SDK\HCNet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\plaympeg4.h">
+      <Filter>SDK\HCNet</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\libAudioRender.so">
+      <Filter>SDK\HCNet</Filter>
+    </Library>
+    <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\libcrypto.so">
+      <Filter>SDK\HCNet</Filter>
+    </Library>
+    <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\libHCCore.so">
+      <Filter>SDK\HCNet</Filter>
+    </Library>
+    <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\libhcnetsdk.so">
+      <Filter>SDK\HCNet</Filter>
+    </Library>
+    <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\libhpr.so">
+      <Filter>SDK\HCNet</Filter>
+    </Library>
+    <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\libNPQos.so">
+      <Filter>SDK\HCNet</Filter>
+    </Library>
+    <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\libPlayCtrl.so">
+      <Filter>SDK\HCNet</Filter>
+    </Library>
+    <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\libssl.so">
+      <Filter>SDK\HCNet</Filter>
+    </Library>
+    <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\libSuperRender.so">
+      <Filter>SDK\HCNet</Filter>
+    </Library>
+    <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\libz.so">
+      <Filter>SDK\HCNet</Filter>
+    </Library>
+    <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\HCNetSDKCom\libanalyzedata.so">
+      <Filter>SDK\HCNet\HCNetSDKCom</Filter>
+    </Library>
+    <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\HCNetSDKCom\libHCAlarm.so">
+      <Filter>SDK\HCNet\HCNetSDKCom</Filter>
+    </Library>
+    <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\HCNetSDKCom\libHCCoreDevCfg.so">
+      <Filter>SDK\HCNet\HCNetSDKCom</Filter>
+    </Library>
+    <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\HCNetSDKCom\libHCDisplay.so">
+      <Filter>SDK\HCNet\HCNetSDKCom</Filter>
+    </Library>
+    <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\HCNetSDKCom\libHCGeneralCfgMgr.so">
+      <Filter>SDK\HCNet\HCNetSDKCom</Filter>
+    </Library>
+    <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\HCNetSDKCom\libHCIndustry.so">
+      <Filter>SDK\HCNet\HCNetSDKCom</Filter>
+    </Library>
+    <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\HCNetSDKCom\libHCPlayBack.so">
+      <Filter>SDK\HCNet\HCNetSDKCom</Filter>
+    </Library>
+    <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\HCNetSDKCom\libHCPreview.so">
+      <Filter>SDK\HCNet\HCNetSDKCom</Filter>
+    </Library>
+    <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\HCNetSDKCom\libHCVoiceTalk.so">
+      <Filter>SDK\HCNet\HCNetSDKCom</Filter>
+    </Library>
+    <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\HCNetSDKCom\libiconv2.so">
+      <Filter>SDK\HCNet\HCNetSDKCom</Filter>
+    </Library>
+    <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\HCNetSDKCom\libStreamTransClient.so">
+      <Filter>SDK\HCNet\HCNetSDKCom</Filter>
+    </Library>
+    <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\HCNetSDKCom\libSystemTransform.so">
+      <Filter>SDK\HCNet\HCNetSDKCom</Filter>
+    </Library>
   </ItemGroup>
 </Project>

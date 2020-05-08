@@ -82,6 +82,16 @@
   </PropertyGroup>
   <ItemGroup>
     <ClCompile Include="..\3rdPart\boost_1_72_0\libs\atomic\src\lockpool.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\cmdline.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\config_file.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\convert.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\options_description.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\parsers.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\positional_options.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\split.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\utf8_codecvt_facet.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\value_semantic.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\variables_map.cpp" />
     <ClCompile Include="..\3rdPart\boost_1_72_0\libs\thread\src\future.cpp" />
     <ClCompile Include="..\3rdPart\boost_1_72_0\libs\thread\src\pthread\once_atomic.cpp" />
     <ClCompile Include="..\3rdPart\boost_1_72_0\libs\thread\src\pthread\thread_.cpp" />
@@ -207,6 +217,9 @@
     <ClCompile Include="..\3rdPart\libzmq-master\src\zmq.cpp" />
     <ClCompile Include="..\3rdPart\libzmq-master\src\zmq_utils.cpp" />
     <ClCompile Include="..\3rdPart\libzmq-master\src\zmtp_engine.cpp" />
+    <ClCompile Include="..\Source\CommandLine\CommandLine.cpp" />
+    <ClCompile Include="..\Source\Device\AbstractDevice.cpp" />
+    <ClCompile Include="..\Source\Device\Hikvision\HikvisionDevice.cpp" />
     <ClCompile Include="..\Source\Hardware\Cpu.cpp" />
     <ClCompile Include="..\Source\MessageQueue\AsynchronousClient.cpp" />
     <ClCompile Include="main.cpp" />
@@ -2522,6 +2535,24 @@
     <ClInclude Include="..\3rdPart\boost_1_72_0\boost\preprocessor\wstringize.hpp" />
     <ClInclude Include="..\3rdPart\boost_1_72_0\boost\process.hpp" />
     <ClInclude Include="..\3rdPart\boost_1_72_0\boost\program_options.hpp" />
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\program_options\cmdline.hpp" />
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\program_options\config.hpp" />
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\program_options\detail\cmdline.hpp" />
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\program_options\detail\config_file.hpp" />
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\program_options\detail\convert.hpp" />
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\program_options\detail\parsers.hpp" />
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\program_options\detail\utf8_codecvt_facet.hpp" />
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\program_options\detail\value_semantic.hpp" />
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\program_options\environment_iterator.hpp" />
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\program_options\eof_iterator.hpp" />
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\program_options\errors.hpp" />
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\program_options\option.hpp" />
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\program_options\options_description.hpp" />
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\program_options\parsers.hpp" />
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\program_options\positional_options.hpp" />
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\program_options\value_semantic.hpp" />
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\program_options\variables_map.hpp" />
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\program_options\version.hpp" />
     <ClInclude Include="..\3rdPart\boost_1_72_0\boost\progress.hpp" />
     <ClInclude Include="..\3rdPart\boost_1_72_0\boost\python.hpp" />
     <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random.hpp" />
@@ -3407,14 +3438,47 @@
     <ClInclude Include="..\3rdPart\libzmq-master\src\zap_client.hpp" />
     <ClInclude Include="..\3rdPart\libzmq-master\src\zmq_draft.h" />
     <ClInclude Include="..\3rdPart\libzmq-master\src\zmtp_engine.hpp" />
+    <ClInclude Include="..\Include\CommandLine\CommandLine.h" />
     <ClInclude Include="..\Include\Define.h" />
+    <ClInclude Include="..\Include\Device\AbstractDevice.h" />
+    <ClInclude Include="..\Include\Device\EnableLoggingDevice.h" />
+    <ClInclude Include="..\Include\Device\Hikvision\HikvisionDevice.h" />
     <ClInclude Include="..\Include\Error.h" />
     <ClInclude Include="..\Include\Hardware\Cpu.h" />
+    <ClInclude Include="..\Include\Locker\Locker.h" />
     <ClInclude Include="..\Include\MessageQueue\AsynchronousClient.h" />
+    <ClInclude Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\DataType.h" />
+    <ClInclude Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\DecodeCardSdk.h" />
+    <ClInclude Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\HCNetSDK.h" />
+    <ClInclude Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\plaympeg4.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\HCNetSDKCom\libanalyzedata.so" />
+    <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\HCNetSDKCom\libHCAlarm.so" />
+    <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\HCNetSDKCom\libHCCoreDevCfg.so" />
+    <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\HCNetSDKCom\libHCDisplay.so" />
+    <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\HCNetSDKCom\libHCGeneralCfgMgr.so" />
+    <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\HCNetSDKCom\libHCIndustry.so" />
+    <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\HCNetSDKCom\libHCPlayBack.so" />
+    <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\HCNetSDKCom\libHCPreview.so" />
+    <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\HCNetSDKCom\libHCVoiceTalk.so" />
+    <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\HCNetSDKCom\libiconv2.so" />
+    <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\HCNetSDKCom\libStreamTransClient.so" />
+    <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\HCNetSDKCom\libSystemTransform.so" />
+    <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\libAudioRender.so" />
+    <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\libcrypto.so" />
+    <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\libHCCore.so" />
+    <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\libhcnetsdk.so" />
+    <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\libhpr.so" />
+    <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\libNPQos.so" />
+    <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\libPlayCtrl.so" />
+    <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\libssl.so" />
+    <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\libSuperRender.so" />
+    <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\libz.so" />
   </ItemGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>/root/projects/$(ProjectName)/3rdPart/boost_1_72_0;/root/projects/$(ProjectName)/3rdPart/libzmq-master/include;/root/projects/$(ProjectName)/3rdPart/libzmq-master/src;/root/projects/$(ProjectName)/3rdPart/glog-master/src;/root/projects/$(ProjectName)/Include;$(SolutionDir)3rdPart\boost_1_72_0;$(SolutionDir)3rdPart\libzmq-master\include;$(SolutionDir)3rdPart\libzmq-master\src;$(SolutionDir)3rdPart\glog-master\src;$(SolutionDir)Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>/root/projects/$(ProjectName)/3rdPart/boost_1_72_0;/root/projects/$(ProjectName)/3rdPart/libzmq-master/include;/root/projects/$(ProjectName)/3rdPart/libzmq-master/src;/root/projects/$(ProjectName)/3rdPart/glog-master/src;/root/projects/$(ProjectName)/SDK;/root/projects/$(ProjectName)/Include;$(SolutionDir)3rdPart\boost_1_72_0;$(SolutionDir)3rdPart\libzmq-master\include;$(SolutionDir)3rdPart\libzmq-master\src;$(SolutionDir)3rdPart\glog-master\src;$(SolutionDir)Include;$(SolutionDir)SDK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>BOOST_ALL_NO_LIB;ZMQ_POLL_BASED_ON_POLL;ZMQ_IOTHREAD_POLLER_USE_EPOLL
 ;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>

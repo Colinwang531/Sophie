@@ -8,9 +8,9 @@
 #endif//WINDOWS
 #include "Hardware/Cpu.h"
 
-namespace hw
+namespace base
 {
-	namespace cpu
+	namespace hardware
 	{
 		Cpu::Cpu(){}
 		Cpu::~Cpu(){}
@@ -52,5 +52,5 @@ namespace hw
 
 			return status;
 		}
-	}//namespace cpu
-}//namespace hw
+	}//namespace hardware
+}//namespace base
