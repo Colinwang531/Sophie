@@ -1,0 +1,50 @@
+syntax = "proto2";
+
+package msg;
+
+message Author
+{
+	required bool enableconfigure = 1;
+	required bool enablequery = 2;
+}
+
+message Person
+{
+	required string name = 1;
+	required string password = 2;
+	required Author author = 3;
+}
+
+message UserRequest
+{
+	optional Person person = 1;
+	optional string uid = 2;
+}
+
+message UserResponse
+{
+	required int32 result = 1;
+	optional string uid = 2;
+	repeated Person persons = 3;
+}
+
+message User
+{
+	enum Command
+	{
+		NEW_REQ = 1;
+		NEW_REP = 2;
+		DELETE_REQ = 3;
+		DELETE_REP = 4;
+		MODIFY_REQ = 5;
+		MODIFY_REP = 6;
+		QUERY_REQ = 7;
+		QUERY_REP = 8;
+		LOGIN_REQ = 9;
+		LOGIN_REP = 10;
+	}
+	
+	required Command command = 1;
+	optional UserRequest userrequest = 2;
+	optional UserResponse userresponse = 3;
+}

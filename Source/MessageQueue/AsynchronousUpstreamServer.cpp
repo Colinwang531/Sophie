@@ -2,6 +2,8 @@
 #include "zmq.h"
 #include "Define.h"
 #include "Error.h"
+#include "Thread/ThreadPool.h"
+using ThreadPool = base::thread::ThreadPool;
 #include "MessageQueue/AsynchronousUpstreamServer.h"
 
 namespace mq
@@ -14,17 +16,19 @@ namespace mq
 		AsynchronousUpstreamServer::~AsynchronousUpstreamServer()
 		{}
 
-		int AsynchronousUpstreamServer::createNewModule(const unsigned short port /* = 60000 */, const char* address /* = nullptr */)
+		int AsynchronousUpstreamServer::createNewModule(
+			const unsigned short listenPort /* = 61001 */, 
+			const char* upstreamIP /* = nullptr */, 
+			const unsigned short upstreamPort /* = 61101 */)
 		{
-			int e{ AsynchronousServer::createNewModule(port) };
+			int e{ AsynchronousServer::createNewModule(listenPort) };
 
-			if (eSuccess == e)
+			if (eSuccess == e && upstreamIP && gMinPortNumber < upstreamPort && gMaxPortNumber > upstreamPort)
 			{
-				//创建上游服务端模型
 				dealer = zmq_socket(ctx, ZMQ_DEALER);
 				if (dealer)
 				{
-					if (0 != zmq_connect(dealer, address))
+					if (0 != zmq_connect(dealer, (boost::format("tcp://%s:%d") % upstreamIP % upstreamPort).str().c_str()))
 					{
 						e = eBadConnect;
 					}
@@ -33,6 +37,10 @@ namespace mq
 				{
 					e = eBadNewSocket;
 				}
+			}
+			else
+			{
+				e = eInvalidParameter;
 			}
 
 			return e;
@@ -50,24 +58,31 @@ namespace mq
 			return e == eSuccess ? AsynchronousServer::destroyModule() : e;
 		}
 
-		void AsynchronousUpstreamServer::addPollItem(std::vector<void*>& items)
+		int AsynchronousUpstreamServer::startPoller()
 		{
-			if (dealer)
+			int e{ AsynchronousServer::startPoller() };
+
+			if (eSuccess == e)
 			{
-				items.push_back(dealer);
+				void* t{ 
+					ThreadPool::get_mutable_instance().createNewThread(
+						boost::bind(&AsynchronousUpstreamServer::pollerThreadProc, this)) };
+				e = t ? eSuccess : eBadNewThread;
 			}
 
-			AsynchronousServer::addPollItem(items);
+			return e;
 		}
 
-		void AsynchronousUpstreamServer::afterPollItemMessage(void* s /* = nullptr */)
+		void AsynchronousUpstreamServer::pollerThreadProc()
 		{
-			if (dealer == s)
+			zmq_pollitem_t pollitems[] = { { dealer, 0, ZMQ_POLLIN, 0 } };
+
+			while (!stopped)
 			{
-			}
-			else
-			{
-				AsynchronousServer::afterPollItemMessage(s);
+				zmq_poll(pollitems, 1, 1);
+				if (pollitems[0].revents & ZMQ_POLLIN)
+				{
+				}
 			}
 		}
 	}//namespace module

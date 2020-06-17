@@ -1,0 +1,42 @@
+syntax = "proto2";
+
+package msg;
+
+message Employee
+{
+	optional string name = 1;
+	optional string job = 2;
+	repeated string pictures = 3;
+}
+
+message CrewRequest
+{
+	optional Employee employee = 1;
+	optional string uid = 2;
+}
+
+message CrewResponse
+{
+	required int32 result = 1;
+	optional string uid = 2;
+	repeated Employee employees = 3;
+}
+
+message Crew
+{
+	enum Command
+	{
+		NEW_REQ = 1;
+		NEW_REP = 2;
+		DELETE_REQ = 3;
+		DELETE_REP = 4;
+		MODIFY_REQ = 5;
+		MODIFY_REP = 6;
+		QUERY_REQ = 7;
+		QUERY_REP = 8;
+	}
+	
+	required Command command = 1;
+	optional CrewRequest crewrequest = 2;
+	optional CrewResponse crewresponse = 3;
+}

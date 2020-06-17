@@ -428,6 +428,382 @@
     <ClCompile Include="..\Source\Device\AbstractDevice.cpp">
       <Filter>Device</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\MessageQueue\AsynchronousSender.cpp">
+      <Filter>MessageQueue</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\any.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\any.pb.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\any_lite.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\api.pb.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\arena.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\descriptor.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\descriptor.pb.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\descriptor_database.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\duration.pb.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\dynamic_message.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\empty.pb.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\extension_set.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\extension_set_heavy.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\field_mask.pb.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\generated_enum_util.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\generated_message_reflection.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\generated_message_table_driven.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\generated_message_table_driven_lite.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\generated_message_util.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\implicit_weak_message.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\map_field.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\message.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\message_lite.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\parse_context.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\reflection_ops.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\repeated_field.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\service.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\source_context.pb.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\struct.pb.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\text_format.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\timestamp.pb.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\type.pb.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\unknown_field_set.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\wire_format.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\wire_format_lite.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\wrappers.pb.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\code_generator.cc">
+      <Filter>3rd\protobuf\compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\command_line_interface.cc">
+      <Filter>3rd\protobuf\compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\importer.cc">
+      <Filter>3rd\protobuf\compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\parser.cc">
+      <Filter>3rd\protobuf\compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\plugin.cc">
+      <Filter>3rd\protobuf\compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\plugin.pb.cc">
+      <Filter>3rd\protobuf\compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\subprocess.cc">
+      <Filter>3rd\protobuf\compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\zip_writer.cc">
+      <Filter>3rd\protobuf\compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\cpp\cpp_enum.cc">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\cpp\cpp_enum_field.cc">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\cpp\cpp_extension.cc">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\cpp\cpp_field.cc">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\cpp\cpp_file.cc">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\cpp\cpp_generator.cc">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\cpp\cpp_helpers.cc">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\cpp\cpp_map_field.cc">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\cpp\cpp_message.cc">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\cpp\cpp_message_field.cc">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\cpp\cpp_padding_optimizer.cc">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\cpp\cpp_primitive_field.cc">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\cpp\cpp_service.cc">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\cpp\cpp_string_field.cc">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\io\coded_stream.cc">
+      <Filter>3rd\protobuf\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\io\printer.cc">
+      <Filter>3rd\protobuf\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\io\strtod.cc">
+      <Filter>3rd\protobuf\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\io\tokenizer.cc">
+      <Filter>3rd\protobuf\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\io\zero_copy_stream.cc">
+      <Filter>3rd\protobuf\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\io\zero_copy_stream_impl.cc">
+      <Filter>3rd\protobuf\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\io\zero_copy_stream_impl_lite.cc">
+      <Filter>3rd\protobuf\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\stubs\bytestream.cc">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\stubs\common.cc">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\stubs\int128.cc">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\stubs\status.cc">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\stubs\statusor.cc">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\stubs\stringpiece.cc">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\stubs\stringprintf.cc">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\stubs\structurally_valid.cc">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\stubs\strutil.cc">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\stubs\substitute.cc">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\stubs\time.cc">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\util\delimited_message_util.cc">
+      <Filter>3rd\protobuf\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\util\field_comparator.cc">
+      <Filter>3rd\protobuf\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\util\field_mask_util.cc">
+      <Filter>3rd\protobuf\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\util\json_util.cc">
+      <Filter>3rd\protobuf\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\util\message_differencer.cc">
+      <Filter>3rd\protobuf\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\util\time_util.cc">
+      <Filter>3rd\protobuf\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\util\type_resolver_util.cc">
+      <Filter>3rd\protobuf\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\util\internal\datapiece.cc">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\util\internal\default_value_objectwriter.cc">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\util\internal\error_listener.cc">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\util\internal\field_mask_utility.cc">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\util\internal\json_escaping.cc">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\util\internal\json_objectwriter.cc">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\util\internal\json_stream_parser.cc">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\util\internal\object_writer.cc">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\util\internal\proto_writer.cc">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\util\internal\protostream_objectsource.cc">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\util\internal\protostream_objectwriter.cc">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\util\internal\type_info.cc">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\util\internal\type_info_test_helper.cc">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\util\internal\utility.cc">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\testing\file.cc">
+      <Filter>3rd\protobuf\testing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\io\io_win32.cc">
+      <Filter>3rd\protobuf\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\MessageQueue\AsynchronousReceiver.cpp">
+      <Filter>MessageQueue</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\Component\Component.pb.cc">
+      <Filter>Protocol\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\Component\ComponentCodec.cpp">
+      <Filter>Protocol\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\Message.pb.cc">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\Alarm\Alarm.pb.cc">
+      <Filter>Protocol\Alarm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\Algorithm\Algorithm.pb.cc">
+      <Filter>Protocol\Algorithm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\Crew\Crew.pb.cc">
+      <Filter>Protocol\Crew</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\Device\Device.pb.cc">
+      <Filter>Protocol\Device</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\User\User.pb.cc">
+      <Filter>Protocol\User</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\Status\Status.pb.cc">
+      <Filter>Protocol\Status</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Number\Number.cpp">
+      <Filter>Number</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Time\XTime.cpp">
+      <Filter>Time</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\date_time\src\posix_time\posix_time_types.cpp">
+      <Filter>3rd\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\date_time\src\gregorian\date_generators.cpp">
+      <Filter>3rd\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\date_time\src\gregorian\greg_month.cpp">
+      <Filter>3rd\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\date_time\src\gregorian\greg_weekday.cpp">
+      <Filter>3rd\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\date_time\src\gregorian\gregorian_types.cpp">
+      <Filter>3rd\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Network\NetworkAsynchronousClient.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="HKDCClient.cpp" />
+    <ClCompile Include="..\Source\Protocol\MessageCodec.cpp">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Thread\ThreadPool.cpp">
+      <Filter>Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\Alarm\AlarmCodec.cpp">
+      <Filter>Protocol\Alarm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\Algorithm\AlgorithmCodec.cpp">
+      <Filter>Protocol\Algorithm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\Crew\CrewCodec.cpp">
+      <Filter>Protocol\Crew</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\Device\DeviceCodec.cpp">
+      <Filter>Protocol\Device</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\Status\StatusCodec.cpp">
+      <Filter>Protocol\Status</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="3rd">
@@ -1137,6 +1513,141 @@
     </Filter>
     <Filter Include="SDK\HCNet\HCNetSDKCom">
       <UniqueIdentifier>{d9ca804b-0070-4556-b2bd-bb586a947ae8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\boost\uuid">
+      <UniqueIdentifier>{948e721d-8bd9-4fec-afde-717a7ce1f2bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\boost\uuid\detail">
+      <UniqueIdentifier>{d4cc05d1-f843-4347-aaa9-c22754f562d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\boost\random">
+      <UniqueIdentifier>{8025bb3a-9685-4fed-8e79-74ec830074d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\boost\random\detail">
+      <UniqueIdentifier>{4394d587-a0db-4733-a187-3086523141ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\boost\tti">
+      <UniqueIdentifier>{597096df-4033-4d27-a57c-617da6435e0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\boost\tti\detail">
+      <UniqueIdentifier>{1011b1d8-216b-43bf-90c5-d6d0546d0ddf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\boost\tti\gen">
+      <UniqueIdentifier>{261ea738-da12-40d4-b5b4-79d60bfbce0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\boost\function_types">
+      <UniqueIdentifier>{4c177692-1198-49bb-95d2-309c9a8fd2c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\boost\function_types\config">
+      <UniqueIdentifier>{0f5478df-38aa-4be5-89b1-f3d1f7ebdeb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\boost\function_types\detail">
+      <UniqueIdentifier>{da473cae-b8f3-4a32-832c-1bc2b4d415f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\boost\function_types\detail\classifier_impl">
+      <UniqueIdentifier>{2ae8e4a3-476f-4089-b048-bd2fe60bc4a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\boost\function_types\detail\components_impl">
+      <UniqueIdentifier>{c1889326-b334-4006-bfd2-bc2117a09e51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\boost\function_types\detail\encoding">
+      <UniqueIdentifier>{33add79b-58f6-4887-b575-8eb359f0f36f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\boost\function_types\detail\pp_cc_loop">
+      <UniqueIdentifier>{5dbe17fd-6267-4964-af8c-5e1f24c239fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\boost\function_types\detail\pp_retag_default_cc">
+      <UniqueIdentifier>{9e2f0ef5-a4d4-489b-b713-37bbf4b4a9ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\boost\function_types\detail\pp_tags">
+      <UniqueIdentifier>{cadc0838-e563-484f-ad02-3751a7b021a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\boost\function_types\detail\pp_variate_loop">
+      <UniqueIdentifier>{e1b58a74-c12a-41c1-ab6f-65af28f0d63d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\boost\function_types\detail\synthesize_impl">
+      <UniqueIdentifier>{d1ae8204-571a-4a85-84c5-426c79ddc8c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Protocol">
+      <UniqueIdentifier>{379a1840-e11b-406c-b4c2-e22703faf27d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\protobuf">
+      <UniqueIdentifier>{92a04cb3-a2ff-4c64-958e-e4f452b01c81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\protobuf\io">
+      <UniqueIdentifier>{2df62479-6984-4f5c-b8a8-94f64a632506}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\protobuf\compiler">
+      <UniqueIdentifier>{f65f9825-ff64-4518-904a-e46c3903d1a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\protobuf\stubs">
+      <UniqueIdentifier>{2a96c97c-5d64-45c2-958c-719d8acdd209}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\protobuf\util">
+      <UniqueIdentifier>{02b93014-6c62-4370-865f-d0e350018b53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\protobuf\compiler\cpp">
+      <UniqueIdentifier>{d7bb136a-8cdc-40c1-b5bd-92d087788b01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\protobuf\util\internal">
+      <UniqueIdentifier>{8c1ef2fe-defd-45c7-a8c2-f0351200a10e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\protobuf\testing">
+      <UniqueIdentifier>{d9bb995f-2d71-4e53-ab58-04e5ed27db49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network">
+      <UniqueIdentifier>{9b330e67-9a71-401e-bba3-eb213027979a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Protocol\Component">
+      <UniqueIdentifier>{f9f64620-3b73-403d-ab80-6061b2f04dc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Protocol\Alarm">
+      <UniqueIdentifier>{a5c1a35e-b736-49a1-8c6a-69b862256501}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Protocol\Algorithm">
+      <UniqueIdentifier>{ebf01568-1c55-4c23-8bfe-1ce486fb2b52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Protocol\Crew">
+      <UniqueIdentifier>{843cf5c3-dac6-429b-b4d9-891eca729272}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Protocol\Device">
+      <UniqueIdentifier>{0a156f59-8071-4c8f-a1b9-a439be28306d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Protocol\Status">
+      <UniqueIdentifier>{49a94e47-5807-4358-846f-80aeb1e7d206}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Protocol\User">
+      <UniqueIdentifier>{de42758b-c843-43dc-8bbe-3cb6b46ebe39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Time">
+      <UniqueIdentifier>{fc39fc85-bc43-47a5-a241-d92ecf711010}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Number">
+      <UniqueIdentifier>{49e232a9-1165-43d8-b3fe-af33bc6f0f9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\boost\serialization">
+      <UniqueIdentifier>{001de488-e997-4cb2-b220-e872e7a34b4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\boost\serialization\detail">
+      <UniqueIdentifier>{c8f895b9-df48-4fbe-aa1f-8bbd929a5341}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\boost\archive">
+      <UniqueIdentifier>{fabc4242-90a1-49f8-8972-dfe9ff096a83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\boost\archive\detail">
+      <UniqueIdentifier>{dba0fe65-10a5-473f-9277-50d803f63aca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\boost\archive\impl">
+      <UniqueIdentifier>{320f7725-822b-4ff2-bdd7-909f33619dc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\boost\archive\iterators">
+      <UniqueIdentifier>{0f4067e1-ec69-4c13-a2ac-4069d1245692}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mutex">
+      <UniqueIdentifier>{7a0e871c-417e-4cbe-a9fc-8998f9357e22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Thread">
+      <UniqueIdentifier>{f146ba1d-5ebb-4e3b-98b1-8ee14ce508ff}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -10814,6 +11325,1741 @@
     <ClInclude Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\plaympeg4.h">
       <Filter>SDK\HCNet</Filter>
     </ClInclude>
+    <ClInclude Include="..\Include\MessageQueue\AsynchronousSender.h">
+      <Filter>MessageQueue</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\uuid\basic_name_generator.hpp">
+      <Filter>3rd\boost\uuid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\uuid\entropy_error.hpp">
+      <Filter>3rd\boost\uuid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\uuid\name_generator.hpp">
+      <Filter>3rd\boost\uuid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\uuid\name_generator_md5.hpp">
+      <Filter>3rd\boost\uuid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\uuid\name_generator_sha1.hpp">
+      <Filter>3rd\boost\uuid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\uuid\nil_generator.hpp">
+      <Filter>3rd\boost\uuid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\uuid\random_generator.hpp">
+      <Filter>3rd\boost\uuid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\uuid\string_generator.hpp">
+      <Filter>3rd\boost\uuid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\uuid\uuid.hpp">
+      <Filter>3rd\boost\uuid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\uuid\uuid_generators.hpp">
+      <Filter>3rd\boost\uuid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\uuid\uuid_hash.hpp">
+      <Filter>3rd\boost\uuid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\uuid\uuid_io.hpp">
+      <Filter>3rd\boost\uuid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\uuid\uuid_serialize.hpp">
+      <Filter>3rd\boost\uuid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\uuid\detail\config.hpp">
+      <Filter>3rd\boost\uuid\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\uuid\detail\md5.hpp">
+      <Filter>3rd\boost\uuid\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\uuid\detail\random_provider.hpp">
+      <Filter>3rd\boost\uuid\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\uuid\detail\random_provider_arc4random.ipp">
+      <Filter>3rd\boost\uuid\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\uuid\detail\random_provider_bcrypt.ipp">
+      <Filter>3rd\boost\uuid\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\uuid\detail\random_provider_detect_platform.hpp">
+      <Filter>3rd\boost\uuid\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\uuid\detail\random_provider_getentropy.ipp">
+      <Filter>3rd\boost\uuid\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\uuid\detail\random_provider_getrandom.ipp">
+      <Filter>3rd\boost\uuid\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\uuid\detail\random_provider_include_platform.hpp">
+      <Filter>3rd\boost\uuid\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\uuid\detail\random_provider_posix.ipp">
+      <Filter>3rd\boost\uuid\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\uuid\detail\random_provider_wincrypt.ipp">
+      <Filter>3rd\boost\uuid\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\uuid\detail\sha1.hpp">
+      <Filter>3rd\boost\uuid\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\uuid\detail\uuid_generic.ipp">
+      <Filter>3rd\boost\uuid\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\uuid\detail\uuid_x86.ipp">
+      <Filter>3rd\boost\uuid\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\additive_combine.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\bernoulli_distribution.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\beta_distribution.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\binomial_distribution.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\cauchy_distribution.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\chi_squared_distribution.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\discard_block.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\discrete_distribution.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\exponential_distribution.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\extreme_value_distribution.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\faure.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\fisher_f_distribution.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\gamma_distribution.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\generate_canonical.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\geometric_distribution.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\hyperexponential_distribution.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\independent_bits.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\inversive_congruential.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\lagged_fibonacci.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\laplace_distribution.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\linear_congruential.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\linear_feedback_shift.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\lognormal_distribution.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\mersenne_twister.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\negative_binomial_distribution.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\niederreiter_base2.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\non_central_chi_squared_distribution.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\normal_distribution.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\piecewise_constant_distribution.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\piecewise_linear_distribution.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\poisson_distribution.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\random_device.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\random_number_generator.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\ranlux.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\seed_seq.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\shuffle_order.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\shuffle_output.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\sobol.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\student_t_distribution.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\subtract_with_carry.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\taus88.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\traits.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\triangle_distribution.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\uniform_01.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\uniform_int.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\uniform_int_distribution.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\uniform_on_sphere.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\uniform_real.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\uniform_real_distribution.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\uniform_smallint.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\variate_generator.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\weibull_distribution.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\xor_combine.hpp">
+      <Filter>3rd\boost\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\detail\auto_link.hpp">
+      <Filter>3rd\boost\random\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\detail\config.hpp">
+      <Filter>3rd\boost\random\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\detail\const_mod.hpp">
+      <Filter>3rd\boost\random\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\detail\disable_warnings.hpp">
+      <Filter>3rd\boost\random\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\detail\enable_warnings.hpp">
+      <Filter>3rd\boost\random\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\detail\generator_bits.hpp">
+      <Filter>3rd\boost\random\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\detail\generator_seed_seq.hpp">
+      <Filter>3rd\boost\random\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\detail\gray_coded_qrng.hpp">
+      <Filter>3rd\boost\random\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\detail\int_float_pair.hpp">
+      <Filter>3rd\boost\random\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\detail\integer_log2.hpp">
+      <Filter>3rd\boost\random\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\detail\iterator_mixin.hpp">
+      <Filter>3rd\boost\random\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\detail\large_arithmetic.hpp">
+      <Filter>3rd\boost\random\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\detail\niederreiter_base2_table.hpp">
+      <Filter>3rd\boost\random\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\detail\operators.hpp">
+      <Filter>3rd\boost\random\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\detail\polynomial.hpp">
+      <Filter>3rd\boost\random\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\detail\ptr_helper.hpp">
+      <Filter>3rd\boost\random\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\detail\qrng_base.hpp">
+      <Filter>3rd\boost\random\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\detail\seed.hpp">
+      <Filter>3rd\boost\random\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\detail\seed_impl.hpp">
+      <Filter>3rd\boost\random\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\detail\signed_unsigned_tools.hpp">
+      <Filter>3rd\boost\random\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\detail\sobol_table.hpp">
+      <Filter>3rd\boost\random\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\detail\uniform_int_float.hpp">
+      <Filter>3rd\boost\random\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\random\detail\vector_io.hpp">
+      <Filter>3rd\boost\random\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\tti\has_data.hpp">
+      <Filter>3rd\boost\tti</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\tti\has_function.hpp">
+      <Filter>3rd\boost\tti</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\tti\has_member_data.hpp">
+      <Filter>3rd\boost\tti</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\tti\has_member_function.hpp">
+      <Filter>3rd\boost\tti</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\tti\has_static_member_data.hpp">
+      <Filter>3rd\boost\tti</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\tti\has_static_member_function.hpp">
+      <Filter>3rd\boost\tti</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\tti\has_template.hpp">
+      <Filter>3rd\boost\tti</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\tti\has_type.hpp">
+      <Filter>3rd\boost\tti</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\tti\member_type.hpp">
+      <Filter>3rd\boost\tti</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\tti\tti.hpp">
+      <Filter>3rd\boost\tti</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\tti\detail\dcomp_mem_fun.hpp">
+      <Filter>3rd\boost\tti\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\tti\detail\ddata.hpp">
+      <Filter>3rd\boost\tti\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\tti\detail\ddeftype.hpp">
+      <Filter>3rd\boost\tti\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\tti\detail\dftclass.hpp">
+      <Filter>3rd\boost\tti\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\tti\detail\dfunction.hpp">
+      <Filter>3rd\boost\tti\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\tti\detail\dlambda.hpp">
+      <Filter>3rd\boost\tti\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\tti\detail\dmem_data.hpp">
+      <Filter>3rd\boost\tti\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\tti\detail\dmem_fun.hpp">
+      <Filter>3rd\boost\tti\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\tti\detail\dmem_type.hpp">
+      <Filter>3rd\boost\tti\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\tti\detail\dmetafunc.hpp">
+      <Filter>3rd\boost\tti\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\tti\detail\dnotype.hpp">
+      <Filter>3rd\boost\tti\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\tti\detail\dnullptr.hpp">
+      <Filter>3rd\boost\tti\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\tti\detail\dplaceholder.hpp">
+      <Filter>3rd\boost\tti\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\tti\detail\dptmf.hpp">
+      <Filter>3rd\boost\tti\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\tti\detail\dstatic_mem_data.hpp">
+      <Filter>3rd\boost\tti\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\tti\detail\dstatic_mem_fun.hpp">
+      <Filter>3rd\boost\tti\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\tti\detail\dtclass.hpp">
+      <Filter>3rd\boost\tti\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\tti\detail\dtemplate.hpp">
+      <Filter>3rd\boost\tti\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\tti\detail\dtemplate_params.hpp">
+      <Filter>3rd\boost\tti\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\tti\detail\dtfunction.hpp">
+      <Filter>3rd\boost\tti\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\tti\detail\dtype.hpp">
+      <Filter>3rd\boost\tti\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\tti\detail\dvm_template_params.hpp">
+      <Filter>3rd\boost\tti\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\tti\gen\has_data_gen.hpp">
+      <Filter>3rd\boost\tti\gen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\tti\gen\has_function_gen.hpp">
+      <Filter>3rd\boost\tti\gen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\tti\gen\has_member_data_gen.hpp">
+      <Filter>3rd\boost\tti\gen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\tti\gen\has_member_function_gen.hpp">
+      <Filter>3rd\boost\tti\gen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\tti\gen\has_static_member_data_gen.hpp">
+      <Filter>3rd\boost\tti\gen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\tti\gen\has_static_member_function_gen.hpp">
+      <Filter>3rd\boost\tti\gen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\tti\gen\has_template_gen.hpp">
+      <Filter>3rd\boost\tti\gen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\tti\gen\has_type_gen.hpp">
+      <Filter>3rd\boost\tti\gen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\tti\gen\member_type_gen.hpp">
+      <Filter>3rd\boost\tti\gen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\tti\gen\namespace_gen.hpp">
+      <Filter>3rd\boost\tti\gen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\components.hpp">
+      <Filter>3rd\boost\function_types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\function_arity.hpp">
+      <Filter>3rd\boost\function_types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\function_pointer.hpp">
+      <Filter>3rd\boost\function_types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\function_reference.hpp">
+      <Filter>3rd\boost\function_types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\function_type.hpp">
+      <Filter>3rd\boost\function_types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\is_callable_builtin.hpp">
+      <Filter>3rd\boost\function_types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\is_function.hpp">
+      <Filter>3rd\boost\function_types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\is_function_pointer.hpp">
+      <Filter>3rd\boost\function_types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\is_function_reference.hpp">
+      <Filter>3rd\boost\function_types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\is_member_function_pointer.hpp">
+      <Filter>3rd\boost\function_types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\is_member_object_pointer.hpp">
+      <Filter>3rd\boost\function_types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\is_member_pointer.hpp">
+      <Filter>3rd\boost\function_types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\is_nonmember_callable_builtin.hpp">
+      <Filter>3rd\boost\function_types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\member_function_pointer.hpp">
+      <Filter>3rd\boost\function_types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\member_object_pointer.hpp">
+      <Filter>3rd\boost\function_types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\parameter_types.hpp">
+      <Filter>3rd\boost\function_types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\property_tags.hpp">
+      <Filter>3rd\boost\function_types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\result_type.hpp">
+      <Filter>3rd\boost\function_types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\config\cc_names.hpp">
+      <Filter>3rd\boost\function_types\config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\config\compiler.hpp">
+      <Filter>3rd\boost\function_types\config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\config\config.hpp">
+      <Filter>3rd\boost\function_types\config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\class_transform.hpp">
+      <Filter>3rd\boost\function_types\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\classifier.hpp">
+      <Filter>3rd\boost\function_types\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\components_as_mpl_sequence.hpp">
+      <Filter>3rd\boost\function_types\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\cv_traits.hpp">
+      <Filter>3rd\boost\function_types\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\pp_arity_loop.hpp">
+      <Filter>3rd\boost\function_types\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\pp_loop.hpp">
+      <Filter>3rd\boost\function_types\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\retag_default_cc.hpp">
+      <Filter>3rd\boost\function_types\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\synthesize.hpp">
+      <Filter>3rd\boost\function_types\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\to_sequence.hpp">
+      <Filter>3rd\boost\function_types\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\classifier_impl\arity10_0.hpp">
+      <Filter>3rd\boost\function_types\detail\classifier_impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\classifier_impl\arity10_1.hpp">
+      <Filter>3rd\boost\function_types\detail\classifier_impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\classifier_impl\arity20_0.hpp">
+      <Filter>3rd\boost\function_types\detail\classifier_impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\classifier_impl\arity20_1.hpp">
+      <Filter>3rd\boost\function_types\detail\classifier_impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\classifier_impl\arity30_0.hpp">
+      <Filter>3rd\boost\function_types\detail\classifier_impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\classifier_impl\arity30_1.hpp">
+      <Filter>3rd\boost\function_types\detail\classifier_impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\classifier_impl\arity40_0.hpp">
+      <Filter>3rd\boost\function_types\detail\classifier_impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\classifier_impl\arity40_1.hpp">
+      <Filter>3rd\boost\function_types\detail\classifier_impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\classifier_impl\arity50_0.hpp">
+      <Filter>3rd\boost\function_types\detail\classifier_impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\classifier_impl\arity50_1.hpp">
+      <Filter>3rd\boost\function_types\detail\classifier_impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\classifier_impl\master.hpp">
+      <Filter>3rd\boost\function_types\detail\classifier_impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\components_impl\arity10_0.hpp">
+      <Filter>3rd\boost\function_types\detail\components_impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\components_impl\arity10_1.hpp">
+      <Filter>3rd\boost\function_types\detail\components_impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\components_impl\arity20_0.hpp">
+      <Filter>3rd\boost\function_types\detail\components_impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\components_impl\arity20_1.hpp">
+      <Filter>3rd\boost\function_types\detail\components_impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\components_impl\arity30_0.hpp">
+      <Filter>3rd\boost\function_types\detail\components_impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\components_impl\arity30_1.hpp">
+      <Filter>3rd\boost\function_types\detail\components_impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\components_impl\arity40_0.hpp">
+      <Filter>3rd\boost\function_types\detail\components_impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\components_impl\arity40_1.hpp">
+      <Filter>3rd\boost\function_types\detail\components_impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\components_impl\arity50_0.hpp">
+      <Filter>3rd\boost\function_types\detail\components_impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\components_impl\arity50_1.hpp">
+      <Filter>3rd\boost\function_types\detail\components_impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\components_impl\master.hpp">
+      <Filter>3rd\boost\function_types\detail\components_impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\encoding\aliases_def.hpp">
+      <Filter>3rd\boost\function_types\detail\encoding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\encoding\aliases_undef.hpp">
+      <Filter>3rd\boost\function_types\detail\encoding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\encoding\def.hpp">
+      <Filter>3rd\boost\function_types\detail\encoding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\encoding\undef.hpp">
+      <Filter>3rd\boost\function_types\detail\encoding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\synthesize_impl\arity10_0.hpp">
+      <Filter>3rd\boost\function_types\detail\synthesize_impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\synthesize_impl\arity10_1.hpp">
+      <Filter>3rd\boost\function_types\detail\synthesize_impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\synthesize_impl\arity20_0.hpp">
+      <Filter>3rd\boost\function_types\detail\synthesize_impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\synthesize_impl\arity20_1.hpp">
+      <Filter>3rd\boost\function_types\detail\synthesize_impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\synthesize_impl\arity30_0.hpp">
+      <Filter>3rd\boost\function_types\detail\synthesize_impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\synthesize_impl\arity30_1.hpp">
+      <Filter>3rd\boost\function_types\detail\synthesize_impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\synthesize_impl\arity40_0.hpp">
+      <Filter>3rd\boost\function_types\detail\synthesize_impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\synthesize_impl\arity40_1.hpp">
+      <Filter>3rd\boost\function_types\detail\synthesize_impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\synthesize_impl\arity50_0.hpp">
+      <Filter>3rd\boost\function_types\detail\synthesize_impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\synthesize_impl\arity50_1.hpp">
+      <Filter>3rd\boost\function_types\detail\synthesize_impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\synthesize_impl\master.hpp">
+      <Filter>3rd\boost\function_types\detail\synthesize_impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\pp_variate_loop\master.hpp">
+      <Filter>3rd\boost\function_types\detail\pp_variate_loop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\pp_variate_loop\preprocessed.hpp">
+      <Filter>3rd\boost\function_types\detail\pp_variate_loop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\pp_tags\cc_tag.hpp">
+      <Filter>3rd\boost\function_types\detail\pp_tags</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\pp_tags\master.hpp">
+      <Filter>3rd\boost\function_types\detail\pp_tags</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\pp_tags\preprocessed.hpp">
+      <Filter>3rd\boost\function_types\detail\pp_tags</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\pp_retag_default_cc\master.hpp">
+      <Filter>3rd\boost\function_types\detail\pp_retag_default_cc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\pp_retag_default_cc\preprocessed.hpp">
+      <Filter>3rd\boost\function_types\detail\pp_retag_default_cc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\pp_cc_loop\master.hpp">
+      <Filter>3rd\boost\function_types\detail\pp_cc_loop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\pp_cc_loop\preprocessed.hpp">
+      <Filter>3rd\boost\function_types\detail\pp_cc_loop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\any.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\any.pb.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\api.pb.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\arena.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\arena_impl.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\arenastring.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\duration.pb.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\dynamic_message.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\empty.pb.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\extension_set.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\extension_set_inl.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\field_mask.pb.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\generated_enum_reflection.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\generated_enum_util.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\generated_message_reflection.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\generated_message_table_driven.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\generated_message_table_driven_lite.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\generated_message_util.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\has_bits.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\implicit_weak_message.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\inlined_string_field.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\map.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\map_entry.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\map_entry_lite.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\map_field.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\map_field_inl.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\map_field_lite.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\map_type_handler.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\message.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\message_lite.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\metadata.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\metadata_lite.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\package_info.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\port.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\reflection.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\reflection_internal.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\reflection_ops.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\repeated_field.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\service.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\source_context.pb.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\struct.pb.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\text_format.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\timestamp.pb.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\type.pb.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\unknown_field_set.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\wire_format.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\wire_format_lite.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\wrappers.pb.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\code_generator.h">
+      <Filter>3rd\protobuf\compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\command_line_interface.h">
+      <Filter>3rd\protobuf\compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\importer.h">
+      <Filter>3rd\protobuf\compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\package_info.h">
+      <Filter>3rd\protobuf\compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\parser.h">
+      <Filter>3rd\protobuf\compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\plugin.h">
+      <Filter>3rd\protobuf\compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\plugin.pb.h">
+      <Filter>3rd\protobuf\compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\scc.h">
+      <Filter>3rd\protobuf\compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\subprocess.h">
+      <Filter>3rd\protobuf\compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\zip_writer.h">
+      <Filter>3rd\protobuf\compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\cpp\cpp_enum.h">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\cpp\cpp_enum_field.h">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\cpp\cpp_extension.h">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\cpp\cpp_field.h">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\cpp\cpp_file.h">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\cpp\cpp_generator.h">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\cpp\cpp_helpers.h">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\cpp\cpp_map_field.h">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\cpp\cpp_message.h">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\cpp\cpp_message_field.h">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\cpp\cpp_message_layout_helper.h">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\cpp\cpp_options.h">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\cpp\cpp_padding_optimizer.h">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\cpp\cpp_primitive_field.h">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\cpp\cpp_service.h">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\compiler\cpp\cpp_string_field.h">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\io\coded_stream.h">
+      <Filter>3rd\protobuf\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\io\package_info.h">
+      <Filter>3rd\protobuf\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\io\printer.h">
+      <Filter>3rd\protobuf\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\io\strtod.h">
+      <Filter>3rd\protobuf\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\io\tokenizer.h">
+      <Filter>3rd\protobuf\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\io\zero_copy_stream.h">
+      <Filter>3rd\protobuf\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\io\zero_copy_stream_impl.h">
+      <Filter>3rd\protobuf\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\io\zero_copy_stream_impl_lite.h">
+      <Filter>3rd\protobuf\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\stubs\bytestream.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\stubs\callback.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\stubs\casts.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\stubs\common.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\stubs\fastmem.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\stubs\hash.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\stubs\int128.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\stubs\logging.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\stubs\macros.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\stubs\map_util.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\stubs\mathutil.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\stubs\mutex.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\stubs\once.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\stubs\platform_macros.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\stubs\port.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\stubs\status.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\stubs\status_macros.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\stubs\statusor.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\stubs\stl_util.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\stubs\stringpiece.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\stubs\stringprintf.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\stubs\strutil.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\stubs\substitute.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\stubs\template_util.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\stubs\time.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\util\delimited_message_util.h">
+      <Filter>3rd\protobuf\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\util\field_comparator.h">
+      <Filter>3rd\protobuf\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\util\field_mask_util.h">
+      <Filter>3rd\protobuf\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\util\json_util.h">
+      <Filter>3rd\protobuf\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\util\message_differencer.h">
+      <Filter>3rd\protobuf\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\util\package_info.h">
+      <Filter>3rd\protobuf\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\util\time_util.h">
+      <Filter>3rd\protobuf\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\util\type_resolver.h">
+      <Filter>3rd\protobuf\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\util\type_resolver_util.h">
+      <Filter>3rd\protobuf\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\util\internal\constants.h">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\util\internal\datapiece.h">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\util\internal\default_value_objectwriter.h">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\util\internal\error_listener.h">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\util\internal\expecting_objectwriter.h">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\util\internal\field_mask_utility.h">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\util\internal\json_escaping.h">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\util\internal\json_objectwriter.h">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\util\internal\json_stream_parser.h">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\util\internal\location_tracker.h">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\util\internal\mock_error_listener.h">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\util\internal\object_location_tracker.h">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\util\internal\object_source.h">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\util\internal\object_writer.h">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\util\internal\proto_writer.h">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\util\internal\protostream_objectsource.h">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\util\internal\protostream_objectwriter.h">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\util\internal\structured_objectwriter.h">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\util\internal\type_info.h">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\util\internal\type_info_test_helper.h">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\util\internal\utility.h">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\descriptor.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\parse_context.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\descriptor.pb.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\descriptor_database.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\testing\file.h">
+      <Filter>3rd\protobuf\testing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\io\io_win32.h">
+      <Filter>3rd\protobuf\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\MessageQueue\AsynchronousReceiver.h">
+      <Filter>MessageQueue</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\Component\Component.pb.h">
+      <Filter>Protocol\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\Component\ComponentCodec.h">
+      <Filter>Protocol\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\Message.pb.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\Alarm\Alarm.pb.h">
+      <Filter>Protocol\Alarm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\Algorithm\Algorithm.pb.h">
+      <Filter>Protocol\Algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\Crew\Crew.pb.h">
+      <Filter>Protocol\Crew</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\Device\Device.pb.h">
+      <Filter>Protocol\Device</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\User\User.pb.h">
+      <Filter>Protocol\User</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\Status\Status.pb.h">
+      <Filter>Protocol\Status</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Number\Number.h">
+      <Filter>Number</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\access.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\archive_input_unordered_map.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\archive_input_unordered_set.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\array.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\array_optimization.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\array_wrapper.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\assume_abstract.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\base_object.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\binary_object.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\bitset.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\boost_array.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\boost_unordered_map.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\boost_unordered_set.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\collection_size_type.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\collection_traits.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\collections_load_imp.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\collections_save_imp.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\complex.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\config.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\deque.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\export.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\extended_type_info.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\extended_type_info_no_rtti.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\extended_type_info_typeid.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\factory.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\force_include.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\forward_list.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\hash_collections_load_imp.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\hash_collections_save_imp.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\hash_map.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\hash_set.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\is_bitwise_serializable.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\item_version_type.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\level.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\level_enum.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\list.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\map.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\nvp.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\optional.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\priority_queue.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\queue.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\scoped_ptr.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\serialization.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\set.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\shared_ptr.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\shared_ptr_132.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\shared_ptr_helper.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\singleton.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\slist.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\smart_cast.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\split_free.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\split_member.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\stack.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\state_saver.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\static_warning.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\string.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\strong_typedef.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\throw_exception.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\tracking.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\tracking_enum.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\traits.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\type_info_implementation.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\unique_ptr.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\unordered_collections_load_imp.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\unordered_collections_save_imp.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\unordered_map.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\unordered_set.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\utility.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\valarray.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\variant.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\vector.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\vector_135.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\version.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\void_cast.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\void_cast_fwd.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\weak_ptr.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\wrapper.hpp">
+      <Filter>3rd\boost\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\detail\is_default_constructible.hpp">
+      <Filter>3rd\boost\serialization\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\detail\shared_count_132.hpp">
+      <Filter>3rd\boost\serialization\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\detail\shared_ptr_132.hpp">
+      <Filter>3rd\boost\serialization\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\detail\shared_ptr_nmt_132.hpp">
+      <Filter>3rd\boost\serialization\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\serialization\detail\stack_constructor.hpp">
+      <Filter>3rd\boost\serialization\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Time\XTime.h">
+      <Filter>Time</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\archive_exception.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\basic_archive.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\basic_binary_iarchive.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\basic_binary_iprimitive.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\basic_binary_oarchive.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\basic_binary_oprimitive.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\basic_streambuf_locale_saver.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\basic_text_iarchive.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\basic_text_iprimitive.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\basic_text_oarchive.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\basic_text_oprimitive.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\basic_xml_archive.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\basic_xml_iarchive.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\basic_xml_oarchive.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\binary_iarchive.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\binary_iarchive_impl.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\binary_oarchive.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\binary_oarchive_impl.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\binary_wiarchive.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\binary_woarchive.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\codecvt_null.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\dinkumware.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\polymorphic_binary_iarchive.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\polymorphic_binary_oarchive.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\polymorphic_iarchive.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\polymorphic_oarchive.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\polymorphic_text_iarchive.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\polymorphic_text_oarchive.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\polymorphic_text_wiarchive.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\polymorphic_text_woarchive.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\polymorphic_xml_iarchive.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\polymorphic_xml_oarchive.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\polymorphic_xml_wiarchive.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\polymorphic_xml_woarchive.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\text_iarchive.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\text_oarchive.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\text_wiarchive.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\text_woarchive.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\tmpdir.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\wcslen.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\xml_archive_exception.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\xml_iarchive.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\xml_oarchive.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\xml_wiarchive.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\xml_woarchive.hpp">
+      <Filter>3rd\boost\archive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\detail\abi_prefix.hpp">
+      <Filter>3rd\boost\archive\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\detail\abi_suffix.hpp">
+      <Filter>3rd\boost\archive\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\detail\archive_serializer_map.hpp">
+      <Filter>3rd\boost\archive\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\detail\auto_link_archive.hpp">
+      <Filter>3rd\boost\archive\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\detail\auto_link_warchive.hpp">
+      <Filter>3rd\boost\archive\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\detail\basic_iarchive.hpp">
+      <Filter>3rd\boost\archive\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\detail\basic_iserializer.hpp">
+      <Filter>3rd\boost\archive\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\detail\basic_oarchive.hpp">
+      <Filter>3rd\boost\archive\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\detail\basic_oserializer.hpp">
+      <Filter>3rd\boost\archive\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\detail\basic_pointer_iserializer.hpp">
+      <Filter>3rd\boost\archive\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\detail\basic_pointer_oserializer.hpp">
+      <Filter>3rd\boost\archive\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\detail\basic_serializer.hpp">
+      <Filter>3rd\boost\archive\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\detail\basic_serializer_map.hpp">
+      <Filter>3rd\boost\archive\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\detail\check.hpp">
+      <Filter>3rd\boost\archive\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\detail\common_iarchive.hpp">
+      <Filter>3rd\boost\archive\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\detail\common_oarchive.hpp">
+      <Filter>3rd\boost\archive\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\detail\decl.hpp">
+      <Filter>3rd\boost\archive\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\detail\helper_collection.hpp">
+      <Filter>3rd\boost\archive\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\detail\interface_iarchive.hpp">
+      <Filter>3rd\boost\archive\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\detail\interface_oarchive.hpp">
+      <Filter>3rd\boost\archive\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\detail\iserializer.hpp">
+      <Filter>3rd\boost\archive\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\detail\oserializer.hpp">
+      <Filter>3rd\boost\archive\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\detail\polymorphic_iarchive_route.hpp">
+      <Filter>3rd\boost\archive\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\detail\polymorphic_oarchive_route.hpp">
+      <Filter>3rd\boost\archive\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\detail\register_archive.hpp">
+      <Filter>3rd\boost\archive\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\detail\utf8_codecvt_facet.hpp">
+      <Filter>3rd\boost\archive\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\impl\archive_serializer_map.ipp">
+      <Filter>3rd\boost\archive\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\impl\basic_binary_iarchive.ipp">
+      <Filter>3rd\boost\archive\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\impl\basic_binary_iprimitive.ipp">
+      <Filter>3rd\boost\archive\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\impl\basic_binary_oarchive.ipp">
+      <Filter>3rd\boost\archive\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\impl\basic_binary_oprimitive.ipp">
+      <Filter>3rd\boost\archive\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\impl\basic_text_iarchive.ipp">
+      <Filter>3rd\boost\archive\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\impl\basic_text_iprimitive.ipp">
+      <Filter>3rd\boost\archive\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\impl\basic_text_oarchive.ipp">
+      <Filter>3rd\boost\archive\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\impl\basic_text_oprimitive.ipp">
+      <Filter>3rd\boost\archive\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\impl\basic_xml_grammar.hpp">
+      <Filter>3rd\boost\archive\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\impl\basic_xml_iarchive.ipp">
+      <Filter>3rd\boost\archive\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\impl\basic_xml_oarchive.ipp">
+      <Filter>3rd\boost\archive\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\impl\text_iarchive_impl.ipp">
+      <Filter>3rd\boost\archive\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\impl\text_oarchive_impl.ipp">
+      <Filter>3rd\boost\archive\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\impl\text_wiarchive_impl.ipp">
+      <Filter>3rd\boost\archive\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\impl\text_woarchive_impl.ipp">
+      <Filter>3rd\boost\archive\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\impl\xml_iarchive_impl.ipp">
+      <Filter>3rd\boost\archive\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\impl\xml_oarchive_impl.ipp">
+      <Filter>3rd\boost\archive\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\impl\xml_wiarchive_impl.ipp">
+      <Filter>3rd\boost\archive\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\impl\xml_woarchive_impl.ipp">
+      <Filter>3rd\boost\archive\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\iterators\base64_exception.hpp">
+      <Filter>3rd\boost\archive\iterators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\iterators\base64_from_binary.hpp">
+      <Filter>3rd\boost\archive\iterators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\iterators\binary_from_base64.hpp">
+      <Filter>3rd\boost\archive\iterators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\iterators\dataflow.hpp">
+      <Filter>3rd\boost\archive\iterators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\iterators\dataflow_exception.hpp">
+      <Filter>3rd\boost\archive\iterators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\iterators\escape.hpp">
+      <Filter>3rd\boost\archive\iterators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\iterators\insert_linebreaks.hpp">
+      <Filter>3rd\boost\archive\iterators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\iterators\istream_iterator.hpp">
+      <Filter>3rd\boost\archive\iterators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\iterators\mb_from_wchar.hpp">
+      <Filter>3rd\boost\archive\iterators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\iterators\ostream_iterator.hpp">
+      <Filter>3rd\boost\archive\iterators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\iterators\remove_whitespace.hpp">
+      <Filter>3rd\boost\archive\iterators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\iterators\transform_width.hpp">
+      <Filter>3rd\boost\archive\iterators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\iterators\unescape.hpp">
+      <Filter>3rd\boost\archive\iterators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\iterators\wchar_from_mb.hpp">
+      <Filter>3rd\boost\archive\iterators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\iterators\xml_escape.hpp">
+      <Filter>3rd\boost\archive\iterators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\iterators\xml_unescape.hpp">
+      <Filter>3rd\boost\archive\iterators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\archive\iterators\xml_unescape_exception.hpp">
+      <Filter>3rd\boost\archive\iterators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\libs\date_time\src\gregorian\greg_names.hpp">
+      <Filter>3rd\boost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Network\NetworkAsynchronousClient.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="HKDCClient.h" />
+    <ClInclude Include="..\Include\Protocol\MessageCodec.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\MessageDefs.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Mutex\RWLock.h">
+      <Filter>Mutex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Thread\ThreadPool.h">
+      <Filter>Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\Alarm\AlarmCodec.h">
+      <Filter>Protocol\Alarm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\Algorithm\AlgorithmCodec.h">
+      <Filter>Protocol\Algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\Crew\CrewCodec.h">
+      <Filter>Protocol\Crew</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\Device\DeviceCodec.h">
+      <Filter>Protocol\Device</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\Status\StatusCodec.h">
+      <Filter>Protocol\Status</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\libAudioRender.so">
@@ -10882,5 +13128,13 @@
     <Library Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\HCNetSDKCom\libSystemTransform.so">
       <Filter>SDK\HCNet\HCNetSDKCom</Filter>
     </Library>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\3rdPart\protobuf-master\src\google\protobuf\port_def.inc">
+      <Filter>3rd\protobuf</Filter>
+    </None>
+    <None Include="..\3rdPart\protobuf-master\src\google\protobuf\port_undef.inc">
+      <Filter>3rd\protobuf</Filter>
+    </None>
   </ItemGroup>
 </Project>

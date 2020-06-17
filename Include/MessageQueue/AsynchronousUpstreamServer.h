@@ -26,23 +26,34 @@ namespace mq
 			virtual ~AsynchronousUpstreamServer(void);
 
 		protected:
-			//创建上游服务端连接模型
-			//@port : 上游服务端端口号
-			//@upstream : 上游服务端连接地址
-			//@Return : 错误码值
-			int createNewModule(const unsigned short port = 61001, const char* address = nullptr) override;
+			//创建上游服务端通信模型
+			//@listenPort : 本地监听端口号
+			//@upstreamIP : 上游服务端IP地址
+			//@upstreamPort : 上游服务端端口号
+			//@Return : 错误码
+			int createNewModule(
+				const unsigned short listenPort = 61001, 
+				const char* upstreamIP = nullptr, 
+				const unsigned short upstreamPort = 61101) override;
 
-			//销毁服务端模型
+			//销毁上游服务端模型
 			//@Return : 错误码值
 			int destroyModule(void) override;
 
-			//添加数据读取实例项
-			//@items : 数据读取实例数组
-			void addPollItem(std::vector<void*>& items) override;
+			//启动数据读取线程
+			//@Return : 错误码
+			int startPoller(void) override;
 
-			//数据读取处理
-			//@s : 数据读取的socket实例
-			void afterPollItemMessage(void* s = nullptr) override;
+			//数据处理接口
+			//@msg : 数据内容
+			//@bytes : 数据字节数
+			virtual void afterUpstreamPollMessage(
+				const char* msg = nullptr, 
+				const unsigned int bytes = 0) = 0;
+
+		private:
+			//上游消息处理线程
+			void pollerThreadProc(void);
 
 		private:
 			void* dealer;

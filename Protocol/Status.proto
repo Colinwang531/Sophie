@@ -1,0 +1,39 @@
+syntax = "proto2";
+
+package msg;
+
+message StatusRequest
+{
+	enum Type
+	{
+		SAIL = 1;
+		AUTO = 2;
+		NAME = 3;
+	}
+	
+	required Type type = 1;
+	optional bool flag = 2;
+	optional string name = 3;
+}
+
+message StatusResponse
+{
+	required int32 result = 1;
+	optional bool flag = 2;
+	optional string name = 3;
+}
+
+message Status
+{
+	enum Command
+	{
+		SET_REQ = 1;
+		SET_REP = 2;
+		QUERY_REQ = 3;
+		QUERY_REP = 4;
+	}
+	
+	required Command command = 1;
+	optional StatusRequest statusrequest = 2;
+	optional StatusResponse statusresponse = 3;
+}

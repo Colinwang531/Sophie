@@ -1,0 +1,48 @@
+syntax = "proto2";
+
+package msg;
+
+message ComponentInfo
+{
+	enum Type
+	{
+		XMQ = 1;
+		WEB = 2;
+		HKD = 3;
+		DHD = 4;
+		ALM = 5;
+	}
+	
+	required Type type = 1;
+	optional string cid = 2;
+	optional string cname = 3;
+}
+
+message ComponentRequest
+{
+	required ComponentInfo componentinfo = 1;
+}
+
+message ComponentResponse
+{
+	required int32 result = 1;
+	optional string cid = 2;
+	repeated ComponentInfo componentinfos = 3;
+}
+
+message Component
+{
+	enum Command
+	{
+		SIGNIN_REQ = 1;
+		SIGNIN_REP = 2;
+		SIGNOUT_REQ = 3;
+		SIGNOUT_REP = 4;
+		QUERY_REQ = 5;
+		QUERY_REP = 6;
+	}
+	
+	required Command command = 1;
+	optional ComponentRequest componentrequest = 2;
+	optional ComponentResponse componentresponse = 3;
+}

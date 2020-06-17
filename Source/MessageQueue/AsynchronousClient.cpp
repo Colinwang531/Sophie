@@ -1,36 +1,39 @@
 #include "boost/format.hpp"
+#include "boost/uuid/uuid.hpp"
+#include "boost/uuid/uuid_generators.hpp"
+#include "boost/uuid/uuid_io.hpp"
 #include "zmq.h"
 #include "Define.h"
 #include "Error.h"
 #include "Hardware/Cpu.h"
 using Cpu = base::hardware::Cpu;
+#include "Thread/ThreadPool.h"
+using ThreadPool = base::thread::ThreadPool;
 #include "MessageQueue/AsynchronousClient.h"
 
 namespace mq
 {
 	namespace module
 	{
-		AsynchronousClient::AsynchronousClient() : ctx{ nullptr }, stopped{ true }, workerThread{ nullptr }
+		AsynchronousClient::AsynchronousClient() : ctx{ nullptr }, stopped{ true }
 		{}
 
 		AsynchronousClient::~AsynchronousClient()
 		{}
 
-		int AsynchronousClient::startClient(const char* address /* = nullptr */, const unsigned short port /* = 61001 */)
+		int AsynchronousClient::startClient(
+			const char* serverIP /* = nullptr */, 
+			const unsigned short serverPort /* = 61001 */)
 		{
 			int e{
-				minPortNumber < port&& maxPortNumber > port ? eSuccess : eInvalidParameter };
+				serverIP && gMinPortNumber < serverPort && gMaxPortNumber > serverPort ? eSuccess : eInvalidParameter };
 
 			if (eSuccess == e)
 			{
-				//异步服务端包含消息队列上下文实例和分发端实例
-				//分发端实例依赖于消息队列上下文实例创建
-				//分发端负责连接外部服务端
-
 				ctx = zmq_init(2 * Cpu().getCPUCoreNumber());
 				if (ctx)
 				{
-					e = createNewModule((boost::format("tcp://%s:%d") % address % port).str().c_str());
+					e = createNewModule(serverIP, serverPort);
 
 					if (eSuccess == e)
 					{
@@ -45,24 +48,36 @@ namespace mq
 
 		int AsynchronousClient::stopClient()
 		{
-			//异步客户端销毁前先退出工作线程再销毁模型实例
-
 			stopped = true;
-			zmq_threadclose(workerThread);
-
+			ThreadPool::get_mutable_instance().shutdownAllThread();
 			return destroyModule();
 		}
 
-		int AsynchronousClient::createNewModule(const char* address /* = nullptr */)
+		int AsynchronousClient::createNewModule(
+			const char* serverIP /* = nullptr */, 
+			const unsigned short serverPort /* = 61001 */)
 		{
+			int e{ eBadNewSocket };
 			dealer = zmq_socket(ctx, ZMQ_DEALER);
-			if (dealer)
+			//每个客户端都使用ID来标识唯一的消息链路
+			const std::string commID{ boost::uuids::to_string(boost::uuids::random_generator()()) };
+
+			if (dealer && !commID.empty())
 			{
-				if (0 != zmq_connect(dealer, address))
+				e = zmq_setsockopt(dealer, ZMQ_IDENTITY, commID.c_str(), commID.length());
+				if (!e)
 				{
-					zmq_close(dealer);
-					return eBadConnect;
+					e = !zmq_connect(dealer, (boost::format("tcp://%s:%d") % serverIP % serverPort).str().c_str()) ? eSuccess : eBadConnect;
 				}
+				else
+				{
+					e = eBadNewObject;
+				}
+			}
+
+			if (eSuccess != e)
+			{
+				zmq_close(dealer);
 			}
 
 			return eSuccess;
@@ -81,92 +96,37 @@ namespace mq
 			return e;
 		}
 
-		void AsynchronousClient::addPollItem(std::vector<void*>& items)
-		{
-			if (dealer)
-			{
-				items.push_back(dealer);
-			}
-		}
-
-		void AsynchronousClient::afterPollItemMessage(void* s /* = nullptr */)
-		{
-			if (dealer == s)
-			{
-			}
-		}
-
 		int AsynchronousClient::startPoller()
 		{
-			workerThread = zmq_threadstart(&AsynchronousClient::pollerThreadProc, this, "poller");
-			return workerThread ? eSuccess : eBadNewThread;
+			void* t{
+				ThreadPool::get_mutable_instance().createNewThread(
+					boost::bind(&AsynchronousClient::pollerThreadProc, this)) };
+			return t ? eSuccess : eBadNewThread;
 		}
 
-		void AsynchronousClient::pollerThreadProc(void* param /* = nullptr */)
+		void AsynchronousClient::pollerThreadProc()
 		{
-			AsynchronousClient* client{ reinterpret_cast<AsynchronousClient*>(param) };
+			int rbytes{ 0 };
+			zmq_pollitem_t pollitems[] = { { dealer, 0, ZMQ_POLLIN, 0 } };
 
-			if (client)
+			while (!stopped)
 			{
-				std::vector<void*> items;
-				client->addPollItem(items);
-				const int itemNumber{ items.size() };
-
-				if (0 < itemNumber)
+				zmq_poll(pollitems, 1, 1);
+				if (pollitems[0].revents & ZMQ_POLLIN)
 				{
-					zmq_pollitem_t* pollitems{ new(std::nothrow) zmq_pollitem_t[itemNumber] };
-
-					if (pollitems)
+					zmq_msg_t msg;
+					zmq_msg_init(&msg);
+					rbytes = zmq_msg_recv(&msg, dealer, ZMQ_DONTWAIT);
+					//保证数据内容部分能被完整接收
+					while (0 < zmq_msg_more(&msg))
 					{
-						for (int i = 0; i != itemNumber; ++i)
-						{
-							pollitems[i].socket = items[i];
-							pollitems[i].fd = 0;
-							pollitems[i].events = ZMQ_POLLIN;
-							pollitems[i].revents = 0;
-						}
-
-						while (!client->stopped)
-						{
-							zmq_poll(pollitems, itemNumber, 1);
-
-							for (int i = 0; i != itemNumber; ++i)
-							{
-								if (pollitems[i].revents & ZMQ_POLLIN)
-								{
-									client->afterPollItemMessage(pollitems[i].socket);
-								}
-							}
-						}
+						rbytes = zmq_msg_recv(&msg, dealer, ZMQ_DONTWAIT | ZMQ_RCVMORE);
 					}
+					//数据处理通知
+					afterClientPollMessage(reinterpret_cast<const char*>(zmq_msg_data(&msg)), rbytes);
+					zmq_msg_close(&msg);
 				}
 			}
 		}
-
-// 		int RequesterModel::send(const char* data, const int dataBytes, std::string& resp)
-// 		{
-// 			int status{ ERR_INVALID_PARAM };
-// 
-// 			if (data && 0 < dataBytes)
-// 			{
-// 				status = requester ? MQSender().send(data, dataBytes, requester) : ERR_BAD_OPERATE;
-// 
-// 				//if (ERR_OK == status)
-// 				//{
-// 				//	zmq_pollitem_t pollitems[] = { { requester, NULL, ZMQ_POLLIN, NULL } };
-// 				//	zmq_poll(pollitems, 1, 30000);
-// 				//	if (pollitems[0].revents & ZMQ_POLLIN)
-// 				//	{
-// 				//		status = MQReceiver().receive(requester, resp);
-// 				//	}
-// 				//	else
-// 				//	{
-// 				//		status = ERR_BAD_OPERATE;
-// 				//	}
-// 				//}
-// 			}
-// 
-// 			return status;
-// 		}
 	}//namespace module
 }//namespace mq

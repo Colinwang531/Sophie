@@ -1,0 +1,74 @@
+syntax = "proto2";
+
+package msg;
+
+message Camera
+{
+	required string cid = 1;
+	required int32 index = 2;
+	required bool enable = 3;
+	optional string nickname = 4;
+	optional string ip = 5;
+}
+
+message Embedded
+{
+	required bool enable = 1 [default = false];
+	
+	enum Factory
+	{
+		HIKVISION = 1;
+		DAHUA = 2;
+		EATON = 3;
+	}
+	
+	optional Factory factory = 2;
+	
+	enum Type
+	{
+		DVR = 1;
+		NVR = 2;
+		IPC = 3;
+	}
+	
+	optional Type type = 3;
+	optional string name = 4;
+	optional string password = 5;
+	optional string ip = 6;
+	optional int32 port = 7;
+	optional string did = 8;
+	optional string nickname = 9;
+	repeated Camera cameras = 10;
+}
+
+message DeviceRequest
+{
+	optional Embedded embedded = 1;
+	optional string did = 2;
+}
+
+message DeviceResponse
+{
+	required int32 result = 1;
+	optional string did = 2;
+	repeated Embedded embeddeds = 3;
+}
+
+message Device
+{
+	enum Command
+	{
+		NEW_REQ = 1;
+		NEW_REP = 2;
+		DELETE_REQ = 3;
+		DELETE_REP = 4;
+		MODIFY_REQ = 5;
+		MODIFY_REP = 6;
+		QUERY_REQ = 7;
+		QUERY_REP = 8;
+	}
+	
+	required Command command = 1;
+	optional DeviceRequest devicerequest = 2;
+	optional DeviceResponse deviceresponse = 3;
+}

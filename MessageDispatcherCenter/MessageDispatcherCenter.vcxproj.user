@@ -4,5 +4,6 @@
     <DebuggerFlavor>LinuxDebugger</DebuggerFlavor>
     <RemoteDebugTarget>-2048585875;127.0.0.1 (username=, port=60022, authentication=Password)</RemoteDebugTarget>
     <RemoteDebuggerWorkingDirectory>/root/projects/bin/$(Platform)/$(Configuration)</RemoteDebuggerWorkingDirectory>
+    <RemoteDebuggerCommandArguments>-l 61001</RemoteDebuggerCommandArguments>
   </PropertyGroup>
 </Project>

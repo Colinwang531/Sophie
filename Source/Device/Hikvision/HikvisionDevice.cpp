@@ -95,7 +95,7 @@ namespace base
 		{
 			int e{ 
 				userName.empty() || userPassword.empty() || deviceIP.empty() || 
-				minPortNumber > devicePort || maxPortNumber < devicePort || -1 < userID
+				gMinPortNumber > devicePort || gMaxPortNumber < devicePort || -1 < userID
 				? eBadOperate : eSuccess };
 
 			if (eSuccess == e)

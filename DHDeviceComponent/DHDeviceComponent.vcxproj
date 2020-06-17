@@ -74,8 +74,8 @@
   <ImportGroup Label="Shared" />
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>/root/projects/bin/$(Platform)/$(Configuration)/</OutDir>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
     <RemoteProjectDir>/root/projects/$(ProjectName)</RemoteProjectDir>
     <RemoteDeployDir>/root/projects/$(ProjectName)</RemoteDeployDir>
   </PropertyGroup>

@@ -15,21 +15,28 @@
 
 //公共类
 static const int eSuccess = 0;
-static const int eInvalidParameter = 1;
-static const int eBadOperate = 2;
-static const int eBadNewObject = 3;
-static const int eBadNewThread = 4;
-static const int eNotSupport = 100;
+static const int eInvalidParameter = -1;
+static const int eBadOperate = -2;
+static const int eBadNewObject = -3;
+static const int eBadNewThread = -4;
+static const int eOutOfRange = -5;
+static const int eNotSupport = -100;
+static const int eObjectExisted = -101;
 //网络类
-static const int eBindPortFail = 1000;
-static const int eBindInprocFail = 1001;
-static const int eBadNewSocket = 1002;
-static const int eBadConnect = 1003;
-static const int eBadClose = 1004;
+static const int eBindPortFail = -1000;
+static const int eBindInprocFail = -1001;
+static const int eBadNewSocket = -1002;
+static const int eBadConnect = -1003;
+static const int eBadClose = -1004;
+static const int eBadSend = -1005;
 //SDK调用类
-static const int eBadInitSDK = 9000;
-static const int eBadCleanupSDK = 9001;
-static const int eBadLoginDevice = 9002;
-static const int eBadLogoutDevice = 9003;
+static const int eBadInitSDK = -2000;
+static const int eBadCleanupSDK = -2001;
+static const int eBadLoginDevice = -2002;
+static const int eBadLogoutDevice = -2003;
+//协议类
+static const int eEmptyProtocolField = -3000;
+static const int eBadParseProtocol = -3001;
+static const int eBadPackProtocol = -3002;
 
 #endif//ERROR_H
