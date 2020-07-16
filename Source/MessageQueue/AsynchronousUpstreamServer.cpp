@@ -23,24 +23,14 @@ namespace mq
 		{
 			int e{ AsynchronousServer::createNewModule(listenPort) };
 
+			//上游服务器连接状态不作为服务器创建的结果
 			if (eSuccess == e && upstreamIP && gMinPortNumber < upstreamPort && gMaxPortNumber > upstreamPort)
 			{
 				dealer = zmq_socket(ctx, ZMQ_DEALER);
 				if (dealer)
 				{
-					if (0 != zmq_connect(dealer, (boost::format("tcp://%s:%d") % upstreamIP % upstreamPort).str().c_str()))
-					{
-						e = eBadConnect;
-					}
+					zmq_connect(dealer, (boost::format("tcp://%s:%d") % upstreamIP % upstreamPort).str().c_str());
 				}
-				else
-				{
-					e = eBadNewSocket;
-				}
-			}
-			else
-			{
-				e = eInvalidParameter;
 			}
 
 			return e;

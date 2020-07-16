@@ -7,20 +7,21 @@ message StatusRequest
 	enum Type
 	{
 		SAIL = 1;
-		AUTO = 2;
-		NAME = 3;
+		AIS = 2;
+		CLOCK = 3;
+		NAME = 4;
 	}
 	
 	required Type type = 1;
-	optional bool flag = 2;
-	optional string name = 3;
+	optional int32 flag = 2;
+	optional string text = 3;
 }
 
 message StatusResponse
 {
 	required int32 result = 1;
 	optional bool flag = 2;
-	optional string name = 3;
+	optional string text = 3;
 }
 
 message Status

@@ -20,33 +20,36 @@ namespace mq
 		class AsynchronousSender
 		{
 		public:
-			AsynchronousSender(const unsigned int bytes = mtu);
+			AsynchronousSender(void);
 			virtual ~AsynchronousSender(void);
 
 		public:
 			//发送数据
-			//@s : 数据发送的socket句柄值
+			//@s : SOCKET句柄值
 			//@data : 数据内容
 			//@bytes : 数据字节数
-			//@more : 数据发送结束标识,true标识还有数据待发送,false标识数据发送完成
+			//@forcemore : 强制分包标识
+			//             true == forcemore时data的数据无论大小都视为分包
 			//@Return : 实际发送字节数
-			const unsigned int sendData(
-				void* s = nullptr, const char* data = nullptr, const unsigned int bytes = 0, const bool more = false);
+			const unsigned long long sendData(
+				void* s = nullptr, 
+				const void* data = nullptr, 
+				const unsigned long long bytes = 0,
+				const bool forcemore = false);
 
 		private:
-			//发送拆包数据
-			//@s : 数据发送的socket句柄值
+			//发送分包数据
+			//@s : SOCKET句柄值
 			//@data : 数据内容
 			//@bytes : 数据字节数
-			//@more : 数据发送结束标识,true标识还有数据待发送,false标识数据发送完成
+			//@more : 数据分包结束标识,true标识还有数据待发送,false标识数据发送完成
 			//@Return : 错误码值
-			virtual const unsigned int sendDisassemblyData(
-				void* s = nullptr, const char* data = nullptr, const unsigned int bytes = 0, const bool more = false);
-
-		private:
-			const unsigned int disassemblyDataBytes;
-			static const unsigned int mtu = 512;
-		};//class MQSender
+			virtual const unsigned long long sendPartialData(
+				void* s = nullptr, 
+				const void* data = nullptr, 
+				const unsigned long long bytes = 0, 
+				const bool more = false);
+		};//class AsynchronousSender
 	}//namespace module
 }//namespace mq
 

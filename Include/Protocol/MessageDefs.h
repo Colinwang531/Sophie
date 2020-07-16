@@ -13,74 +13,55 @@
 #ifndef MESSAGE_DEFS_H
 #define MESSAGE_DEFS_H
 
-#include <vector>
+//====================================设备部分=============================================//
 
-//====================================组件部分=============================================//
 
-typedef enum class tagComponentCommand_t : int
+
+typedef struct tagDeviceCamera_t
 {
-	COMPONENT_COMMAND_NONE = 0,
-	COMPONENT_COMMAND_SIGNIN_REQ = 1,
-	COMPONENT_COMMAND_SIGNIN_REP = 2,
-	COMPONENT_COMMAND_SIGNOUT_REQ = 3,
-	COMPONENT_COMMAND_SIGNOUT_REP = 4,
-	COMPONENT_COMMAND_QUERY_REQ = 5,
-	COMPONENT_COMMAND_QUERY_REP = 6
-}ComponentCommand;
-
-typedef enum class tagComponentType_t : int
-{
-	COMPONENT_TYPE_NONE = 0,
-	COMPONENT_TYPE_XMQ = 1,
-	COMPONENT_TYPE_WEB = 2,
-	COMPONENT_TYPE_HKD = 3,
-	COMPONENT_TYPE_DHD = 4,
-	COMPONENT_TYPE_ALM = 5
-}ComponentType;
-
-typedef struct tagComponentInfo_t
-{
-	ComponentType type;
-	long long timestamp;
+	bool enable;
+	int index;
 	std::string cid;
-	std::string cname;									//可选参数
-}ComponentInfo;
+	std::string ip;
+	std::string nickname;
+}DeviceCamera;
 
-typedef struct tagComponentRequest_t
+typedef struct tagDeviceEmbedded_t
 {
-	ComponentInfo cinfo;
-}ComponentRequest;
+	bool enable;
+	DeviceFactory factory;
+	DeviceType type;
+	int port;
+	std::string name;
+	std::string password;
+	std::string ip;
+	std::string did;
+	std::string nickname;
+	std::vector<DeviceCamera> cameras;
+}DeviceEmbedded;
 
-typedef struct tagComponentResponse_t
+typedef struct tagDeviceRequest_t
+{
+	std::string did;
+	DeviceEmbedded embedded;
+}DeviceRequest;
+
+typedef struct tagDeviceResponse_t
 {
 	int result;
-	std::string cid;
-	std::vector<ComponentInfo> cinfos;
-}ComponentResponse;
+	std::string did;
+	std::vector<DeviceEmbedded> embeddeds;
+}DeviceResponse;
 
-typedef struct tagComponentPacket_t
+typedef struct tagDevicePacket_t 
 {
-	ComponentCommand command;							//信令类型
+	DeviceCommand command;								//信令类型
 	void* data;											//请求或应答
-}ComponentPacket;
+}DevicePacket;
 
 //====================================状态部分=============================================//
-typedef enum class tagStatusCommand_t : int
-{
-	STATUS_COMMAND_NONE = 0,
-	STATUS_COMMAND_SET_REQ = 1,
-	STATUS_COMMAND_SET_REP = 2,
-	STATUS_COMMAND_QUERY_REQ = 3,
-	STATUS_COMMAND_QUERY_REP = 3,
-}StatusCommand;
 
-typedef enum class tagStatusType_t : int
-{
-	STATUS_TYPE_NONE = 0,
-	STATUS_TYPE_SAIL = 1,
-	STATUS_TYPE_AUTO = 2,
-	STATUS_TYPE_NAME = 3
-}StatusType;
+
 
 typedef struct tagStatusRequest_t
 {
@@ -102,27 +83,86 @@ typedef struct tagStatusPacket_t
 	void* data;
 }StatusPacket;
 
+//====================================算法部分=============================================//
 
-//====================================消息部分=============================================//
-
-typedef enum class tagMessageType_t : int
+typedef enum class tagAlgorithmCommand_t : int
 {
-	MESSAGE_TYPE_NONE = 0,
-	MESSAGE_TYPE_ALARM = 1,
-	MESSAGE_TYPE_ALGORITHM = 2,
-	MESSAGE_TYPE_COMPONENT = 3,
-	MESSAGE_TYPE_CREW = 4,
-	MESSAGE_TYPE_DEVICE = 5,
-	MESSAGE_TYPE_STATUS = 6,
-	MESSAGE_TYPE_USER = 7
-}MessageType;
+	ALGORITHM_COMMAND_NONE = 0,
+	ALGORITHM_COMMAND_SET_REQ = 1,
+	ALGORITHM_COMMAND_SET_REP = 2,
+	ALGORITHM_COMMAND_QUERY_REQ = 3,
+	ALGORITHM_COMMAND_QUERY_REP = 3,
+}AlgorithmCommand;
 
-typedef struct tagMessagePacket_t
+typedef struct tagAlgorithmConfig_t
 {
-	MessageType type;									//消息类型
-	long long sequence;									//消息序列号
-	long long timestamp;								//消息时间戳
-	void* packet;										//消息数据
-}MessagePacket;
+	bool sleep;
+	bool fight;
+	bool helmet;
+	bool phone;
+	bool attendancein;
+	bool attendanceout;
+	int gpu;
+	float similar;
+	std::string cid;
+}AlgorithmConfig;
+
+typedef struct tagAlgorithmRequest_t
+{
+	AlgorithmConfig config;
+}AlgorithmRequest;
+
+typedef struct tagAlgorithmResponse_t
+{
+	int result;
+	AlgorithmConfig config;
+}AlgorithmResponse;
+
+typedef struct tagAlgorithmPacket_t
+{
+	AlgorithmCommand command;
+	void* data;
+}AlgorithmPacket;
+
+//====================================成员部分=============================================//
+
+typedef enum class tagCrewCommand_t : int
+{
+	CREW_COMMAND_NONE = 0,
+	CREW_COMMAND_NEW_REQ = 1,
+	CREW_COMMAND_NEW_REP = 2,
+	CREW_COMMAND_DELETE_REQ = 3,
+	CREW_COMMAND_DELETE_REP = 4,
+	CREW_COMMAND_MODIFY_REQ = 5,
+	CREW_COMMAND_MODIFY_REP = 6,
+	CREW_COMMAND_QUERY_REQ = 7,
+	CREW_COMMAND_QUERY_REP = 8
+}CrewCommand;
+
+typedef struct tagEmployee_t
+{
+	std::string name;
+	std::string job;
+	void* picture;
+}Employee;
+
+typedef struct tagCrewRequest_t
+{
+	Employee employee;
+	std::string uid;
+}CrewRequest;
+
+typedef struct tagCrewResponse_t
+{
+	int result;
+	std::string uid;
+	std::vector<Employee> employees;
+}CrewResponse;
+
+typedef struct tagCrewPacket_t
+{
+	CrewCommand command;
+	void* data;
+}CrewPacket;
 
 #endif//MESSAGE_DEFS_H

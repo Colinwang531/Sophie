@@ -170,9 +170,9 @@ namespace mq
 						//数据处理通知
 						afterServerPollMessage(
 							worker,
-							reinterpret_cast<const char*>(zmq_msg_data(&id)), idbytes,
-							reinterpret_cast<const char*>(zmq_msg_data(&delimiter)), delimiterbytes,
-							reinterpret_cast<const char*>(zmq_msg_data(&data)), databytes);
+							zmq_msg_data(&id), idbytes,
+							zmq_msg_data(&delimiter), delimiterbytes,
+							zmq_msg_data(&data), databytes);
 
 						zmq_msg_close(&id);
 						zmq_msg_close(&delimiter);

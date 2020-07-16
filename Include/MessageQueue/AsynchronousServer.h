@@ -71,11 +71,11 @@ namespace mq
 			//@Comment : 数据处理的实现必须由派生类完成,基类不处理任何数据
 			virtual void afterServerPollMessage(
 				void* s = nullptr,
-				const char* id = nullptr, 
+				const void* id = nullptr, 
 				const unsigned int idbytes = 0,
-				const char* delimiter = nullptr, 
+				const void* delimiter = nullptr, 
 				const unsigned int delimiterbytes = 0,
-				const char* data = nullptr, 
+				const void* data = nullptr, 
 				const unsigned int databytes = 0) = 0;
 
 		private:

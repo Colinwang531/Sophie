@@ -58,7 +58,7 @@ namespace mq
 			//@databytes : 数据内容字节数
 			//@Comment : 数据处理的实现必须由派生类完成,基类不处理任何数据
 			virtual void afterClientPollMessage(
-				const char* data = nullptr, 
+				const void* data = nullptr, 
 				const unsigned int databytes = 0) = 0;
 
 		private:

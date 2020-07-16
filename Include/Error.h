@@ -22,6 +22,7 @@ static const int eBadNewThread = -4;
 static const int eOutOfRange = -5;
 static const int eNotSupport = -100;
 static const int eObjectExisted = -101;
+static const int eObjectNotExist = -102;
 //网络类
 static const int eBindPortFail = -1000;
 static const int eBindInprocFail = -1001;
@@ -38,5 +39,9 @@ static const int eBadLogoutDevice = -2003;
 static const int eEmptyProtocolField = -3000;
 static const int eBadParseProtocol = -3001;
 static const int eBadPackProtocol = -3002;
+//文件类
+static const int eBadOpenFile = -4000;
+static const int eBadCloseFile = -4001;
+static const int eBadWriteData = -4002;
 
 #endif//ERROR_H

@@ -75,8 +75,9 @@ namespace msg {
 
 enum StatusRequest_Type : int {
   StatusRequest_Type_SAIL = 1,
-  StatusRequest_Type_AUTO = 2,
-  StatusRequest_Type_NAME = 3
+  StatusRequest_Type_AIS = 2,
+  StatusRequest_Type_CLOCK = 3,
+  StatusRequest_Type_NAME = 4
 };
 bool StatusRequest_Type_IsValid(int value);
 constexpr StatusRequest_Type StatusRequest_Type_Type_MIN = StatusRequest_Type_SAIL;
@@ -244,8 +245,10 @@ class StatusRequest PROTOBUF_FINAL :
   typedef StatusRequest_Type Type;
   static constexpr Type SAIL =
     StatusRequest_Type_SAIL;
-  static constexpr Type AUTO =
-    StatusRequest_Type_AUTO;
+  static constexpr Type AIS =
+    StatusRequest_Type_AIS;
+  static constexpr Type CLOCK =
+    StatusRequest_Type_CLOCK;
   static constexpr Type NAME =
     StatusRequest_Type_NAME;
   static inline bool Type_IsValid(int value) {
@@ -276,50 +279,50 @@ class StatusRequest PROTOBUF_FINAL :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kNameFieldNumber = 3,
+    kTextFieldNumber = 3,
     kFlagFieldNumber = 2,
     kTypeFieldNumber = 1,
   };
-  // optional string name = 3;
-  bool has_name() const;
+  // optional string text = 3;
+  bool has_text() const;
   private:
-  bool _internal_has_name() const;
+  bool _internal_has_text() const;
   public:
-  void clear_name();
-  const std::string& name() const;
-  void set_name(const std::string& value);
-  void set_name(std::string&& value);
-  void set_name(const char* value);
-  void set_name(const char* value, size_t size);
-  std::string* mutable_name();
-  std::string* release_name();
-  void set_allocated_name(std::string* name);
+  void clear_text();
+  const std::string& text() const;
+  void set_text(const std::string& value);
+  void set_text(std::string&& value);
+  void set_text(const char* value);
+  void set_text(const char* value, size_t size);
+  std::string* mutable_text();
+  std::string* release_text();
+  void set_allocated_text(std::string* text);
   GOOGLE_PROTOBUF_RUNTIME_DEPRECATED("The unsafe_arena_ accessors for"
   "    string fields are deprecated and will be removed in a"
   "    future release.")
-  std::string* unsafe_arena_release_name();
+  std::string* unsafe_arena_release_text();
   GOOGLE_PROTOBUF_RUNTIME_DEPRECATED("The unsafe_arena_ accessors for"
   "    string fields are deprecated and will be removed in a"
   "    future release.")
-  void unsafe_arena_set_allocated_name(
-      std::string* name);
+  void unsafe_arena_set_allocated_text(
+      std::string* text);
   private:
-  const std::string& _internal_name() const;
-  void _internal_set_name(const std::string& value);
-  std::string* _internal_mutable_name();
+  const std::string& _internal_text() const;
+  void _internal_set_text(const std::string& value);
+  std::string* _internal_mutable_text();
   public:
 
-  // optional bool flag = 2;
+  // optional int32 flag = 2;
   bool has_flag() const;
   private:
   bool _internal_has_flag() const;
   public:
   void clear_flag();
-  bool flag() const;
-  void set_flag(bool value);
+  ::PROTOBUF_NAMESPACE_ID::int32 flag() const;
+  void set_flag(::PROTOBUF_NAMESPACE_ID::int32 value);
   private:
-  bool _internal_flag() const;
-  void _internal_set_flag(bool value);
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_flag() const;
+  void _internal_set_flag(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
   // required .msg.StatusRequest.Type type = 1;
@@ -344,8 +347,8 @@ class StatusRequest PROTOBUF_FINAL :
   typedef void DestructorSkippable_;
   ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
-  bool flag_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr text_;
+  ::PROTOBUF_NAMESPACE_ID::int32 flag_;
   int type_;
   friend struct ::TableStruct_Status_2eproto;
 };
@@ -471,37 +474,37 @@ class StatusResponse PROTOBUF_FINAL :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kNameFieldNumber = 3,
+    kTextFieldNumber = 3,
     kResultFieldNumber = 1,
     kFlagFieldNumber = 2,
   };
-  // optional string name = 3;
-  bool has_name() const;
+  // optional string text = 3;
+  bool has_text() const;
   private:
-  bool _internal_has_name() const;
+  bool _internal_has_text() const;
   public:
-  void clear_name();
-  const std::string& name() const;
-  void set_name(const std::string& value);
-  void set_name(std::string&& value);
-  void set_name(const char* value);
-  void set_name(const char* value, size_t size);
-  std::string* mutable_name();
-  std::string* release_name();
-  void set_allocated_name(std::string* name);
+  void clear_text();
+  const std::string& text() const;
+  void set_text(const std::string& value);
+  void set_text(std::string&& value);
+  void set_text(const char* value);
+  void set_text(const char* value, size_t size);
+  std::string* mutable_text();
+  std::string* release_text();
+  void set_allocated_text(std::string* text);
   GOOGLE_PROTOBUF_RUNTIME_DEPRECATED("The unsafe_arena_ accessors for"
   "    string fields are deprecated and will be removed in a"
   "    future release.")
-  std::string* unsafe_arena_release_name();
+  std::string* unsafe_arena_release_text();
   GOOGLE_PROTOBUF_RUNTIME_DEPRECATED("The unsafe_arena_ accessors for"
   "    string fields are deprecated and will be removed in a"
   "    future release.")
-  void unsafe_arena_set_allocated_name(
-      std::string* name);
+  void unsafe_arena_set_allocated_text(
+      std::string* text);
   private:
-  const std::string& _internal_name() const;
-  void _internal_set_name(const std::string& value);
-  std::string* _internal_mutable_name();
+  const std::string& _internal_text() const;
+  void _internal_set_text(const std::string& value);
+  std::string* _internal_mutable_text();
   public:
 
   // required int32 result = 1;
@@ -539,7 +542,7 @@ class StatusResponse PROTOBUF_FINAL :
   typedef void DestructorSkippable_;
   ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr text_;
   ::PROTOBUF_NAMESPACE_ID::int32 result_;
   bool flag_;
   friend struct ::TableStruct_Status_2eproto;
@@ -807,7 +810,7 @@ inline void StatusRequest::set_type(::msg::StatusRequest_Type value) {
   // @@protoc_insertion_point(field_set:msg.StatusRequest.type)
 }
 
-// optional bool flag = 2;
+// optional int32 flag = 2;
 inline bool StatusRequest::_internal_has_flag() const {
   bool value = (_has_bits_[0] & 0x00000002u) != 0;
   return value;
@@ -816,116 +819,116 @@ inline bool StatusRequest::has_flag() const {
   return _internal_has_flag();
 }
 inline void StatusRequest::clear_flag() {
-  flag_ = false;
+  flag_ = 0;
   _has_bits_[0] &= ~0x00000002u;
 }
-inline bool StatusRequest::_internal_flag() const {
+inline ::PROTOBUF_NAMESPACE_ID::int32 StatusRequest::_internal_flag() const {
   return flag_;
 }
-inline bool StatusRequest::flag() const {
+inline ::PROTOBUF_NAMESPACE_ID::int32 StatusRequest::flag() const {
   // @@protoc_insertion_point(field_get:msg.StatusRequest.flag)
   return _internal_flag();
 }
-inline void StatusRequest::_internal_set_flag(bool value) {
+inline void StatusRequest::_internal_set_flag(::PROTOBUF_NAMESPACE_ID::int32 value) {
   _has_bits_[0] |= 0x00000002u;
   flag_ = value;
 }
-inline void StatusRequest::set_flag(bool value) {
+inline void StatusRequest::set_flag(::PROTOBUF_NAMESPACE_ID::int32 value) {
   _internal_set_flag(value);
   // @@protoc_insertion_point(field_set:msg.StatusRequest.flag)
 }
 
-// optional string name = 3;
-inline bool StatusRequest::_internal_has_name() const {
+// optional string text = 3;
+inline bool StatusRequest::_internal_has_text() const {
   bool value = (_has_bits_[0] & 0x00000001u) != 0;
   return value;
 }
-inline bool StatusRequest::has_name() const {
-  return _internal_has_name();
+inline bool StatusRequest::has_text() const {
+  return _internal_has_text();
 }
-inline void StatusRequest::clear_name() {
-  name_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+inline void StatusRequest::clear_text() {
+  text_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   _has_bits_[0] &= ~0x00000001u;
 }
-inline const std::string& StatusRequest::name() const {
-  // @@protoc_insertion_point(field_get:msg.StatusRequest.name)
-  return _internal_name();
+inline const std::string& StatusRequest::text() const {
+  // @@protoc_insertion_point(field_get:msg.StatusRequest.text)
+  return _internal_text();
 }
-inline void StatusRequest::set_name(const std::string& value) {
-  _internal_set_name(value);
-  // @@protoc_insertion_point(field_set:msg.StatusRequest.name)
+inline void StatusRequest::set_text(const std::string& value) {
+  _internal_set_text(value);
+  // @@protoc_insertion_point(field_set:msg.StatusRequest.text)
 }
-inline std::string* StatusRequest::mutable_name() {
-  // @@protoc_insertion_point(field_mutable:msg.StatusRequest.name)
-  return _internal_mutable_name();
+inline std::string* StatusRequest::mutable_text() {
+  // @@protoc_insertion_point(field_mutable:msg.StatusRequest.text)
+  return _internal_mutable_text();
 }
-inline const std::string& StatusRequest::_internal_name() const {
-  return name_.Get();
+inline const std::string& StatusRequest::_internal_text() const {
+  return text_.Get();
 }
-inline void StatusRequest::_internal_set_name(const std::string& value) {
+inline void StatusRequest::_internal_set_text(const std::string& value) {
   _has_bits_[0] |= 0x00000001u;
-  name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value, GetArena());
+  text_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value, GetArena());
 }
-inline void StatusRequest::set_name(std::string&& value) {
+inline void StatusRequest::set_text(std::string&& value) {
   _has_bits_[0] |= 0x00000001u;
-  name_.Set(
+  text_.Set(
     &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
-  // @@protoc_insertion_point(field_set_rvalue:msg.StatusRequest.name)
+  // @@protoc_insertion_point(field_set_rvalue:msg.StatusRequest.text)
 }
-inline void StatusRequest::set_name(const char* value) {
+inline void StatusRequest::set_text(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   _has_bits_[0] |= 0x00000001u;
-  name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
+  text_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
               GetArena());
-  // @@protoc_insertion_point(field_set_char:msg.StatusRequest.name)
+  // @@protoc_insertion_point(field_set_char:msg.StatusRequest.text)
 }
-inline void StatusRequest::set_name(const char* value,
+inline void StatusRequest::set_text(const char* value,
     size_t size) {
   _has_bits_[0] |= 0x00000001u;
-  name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
+  text_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
       reinterpret_cast<const char*>(value), size), GetArena());
-  // @@protoc_insertion_point(field_set_pointer:msg.StatusRequest.name)
+  // @@protoc_insertion_point(field_set_pointer:msg.StatusRequest.text)
 }
-inline std::string* StatusRequest::_internal_mutable_name() {
+inline std::string* StatusRequest::_internal_mutable_text() {
   _has_bits_[0] |= 0x00000001u;
-  return name_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  return text_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
-inline std::string* StatusRequest::release_name() {
-  // @@protoc_insertion_point(field_release:msg.StatusRequest.name)
-  if (!_internal_has_name()) {
+inline std::string* StatusRequest::release_text() {
+  // @@protoc_insertion_point(field_release:msg.StatusRequest.text)
+  if (!_internal_has_text()) {
     return nullptr;
   }
   _has_bits_[0] &= ~0x00000001u;
-  return name_.ReleaseNonDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  return text_.ReleaseNonDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
-inline void StatusRequest::set_allocated_name(std::string* name) {
-  if (name != nullptr) {
+inline void StatusRequest::set_allocated_text(std::string* text) {
+  if (text != nullptr) {
     _has_bits_[0] |= 0x00000001u;
   } else {
     _has_bits_[0] &= ~0x00000001u;
   }
-  name_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), name,
+  text_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), text,
       GetArena());
-  // @@protoc_insertion_point(field_set_allocated:msg.StatusRequest.name)
+  // @@protoc_insertion_point(field_set_allocated:msg.StatusRequest.text)
 }
-inline std::string* StatusRequest::unsafe_arena_release_name() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:msg.StatusRequest.name)
+inline std::string* StatusRequest::unsafe_arena_release_text() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:msg.StatusRequest.text)
   GOOGLE_DCHECK(GetArena() != nullptr);
   _has_bits_[0] &= ~0x00000001u;
-  return name_.UnsafeArenaRelease(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+  return text_.UnsafeArenaRelease(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       GetArena());
 }
-inline void StatusRequest::unsafe_arena_set_allocated_name(
-    std::string* name) {
+inline void StatusRequest::unsafe_arena_set_allocated_text(
+    std::string* text) {
   GOOGLE_DCHECK(GetArena() != nullptr);
-  if (name != nullptr) {
+  if (text != nullptr) {
     _has_bits_[0] |= 0x00000001u;
   } else {
     _has_bits_[0] &= ~0x00000001u;
   }
-  name_.UnsafeArenaSetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
-      name, GetArena());
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:msg.StatusRequest.name)
+  text_.UnsafeArenaSetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      text, GetArena());
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:msg.StatusRequest.text)
 }
 
 // -------------------------------------------------------------------
@@ -988,97 +991,97 @@ inline void StatusResponse::set_flag(bool value) {
   // @@protoc_insertion_point(field_set:msg.StatusResponse.flag)
 }
 
-// optional string name = 3;
-inline bool StatusResponse::_internal_has_name() const {
+// optional string text = 3;
+inline bool StatusResponse::_internal_has_text() const {
   bool value = (_has_bits_[0] & 0x00000001u) != 0;
   return value;
 }
-inline bool StatusResponse::has_name() const {
-  return _internal_has_name();
+inline bool StatusResponse::has_text() const {
+  return _internal_has_text();
 }
-inline void StatusResponse::clear_name() {
-  name_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+inline void StatusResponse::clear_text() {
+  text_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   _has_bits_[0] &= ~0x00000001u;
 }
-inline const std::string& StatusResponse::name() const {
-  // @@protoc_insertion_point(field_get:msg.StatusResponse.name)
-  return _internal_name();
+inline const std::string& StatusResponse::text() const {
+  // @@protoc_insertion_point(field_get:msg.StatusResponse.text)
+  return _internal_text();
 }
-inline void StatusResponse::set_name(const std::string& value) {
-  _internal_set_name(value);
-  // @@protoc_insertion_point(field_set:msg.StatusResponse.name)
+inline void StatusResponse::set_text(const std::string& value) {
+  _internal_set_text(value);
+  // @@protoc_insertion_point(field_set:msg.StatusResponse.text)
 }
-inline std::string* StatusResponse::mutable_name() {
-  // @@protoc_insertion_point(field_mutable:msg.StatusResponse.name)
-  return _internal_mutable_name();
+inline std::string* StatusResponse::mutable_text() {
+  // @@protoc_insertion_point(field_mutable:msg.StatusResponse.text)
+  return _internal_mutable_text();
 }
-inline const std::string& StatusResponse::_internal_name() const {
-  return name_.Get();
+inline const std::string& StatusResponse::_internal_text() const {
+  return text_.Get();
 }
-inline void StatusResponse::_internal_set_name(const std::string& value) {
+inline void StatusResponse::_internal_set_text(const std::string& value) {
   _has_bits_[0] |= 0x00000001u;
-  name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value, GetArena());
+  text_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value, GetArena());
 }
-inline void StatusResponse::set_name(std::string&& value) {
+inline void StatusResponse::set_text(std::string&& value) {
   _has_bits_[0] |= 0x00000001u;
-  name_.Set(
+  text_.Set(
     &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
-  // @@protoc_insertion_point(field_set_rvalue:msg.StatusResponse.name)
+  // @@protoc_insertion_point(field_set_rvalue:msg.StatusResponse.text)
 }
-inline void StatusResponse::set_name(const char* value) {
+inline void StatusResponse::set_text(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   _has_bits_[0] |= 0x00000001u;
-  name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
+  text_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
               GetArena());
-  // @@protoc_insertion_point(field_set_char:msg.StatusResponse.name)
+  // @@protoc_insertion_point(field_set_char:msg.StatusResponse.text)
 }
-inline void StatusResponse::set_name(const char* value,
+inline void StatusResponse::set_text(const char* value,
     size_t size) {
   _has_bits_[0] |= 0x00000001u;
-  name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
+  text_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
       reinterpret_cast<const char*>(value), size), GetArena());
-  // @@protoc_insertion_point(field_set_pointer:msg.StatusResponse.name)
+  // @@protoc_insertion_point(field_set_pointer:msg.StatusResponse.text)
 }
-inline std::string* StatusResponse::_internal_mutable_name() {
+inline std::string* StatusResponse::_internal_mutable_text() {
   _has_bits_[0] |= 0x00000001u;
-  return name_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  return text_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
-inline std::string* StatusResponse::release_name() {
-  // @@protoc_insertion_point(field_release:msg.StatusResponse.name)
-  if (!_internal_has_name()) {
+inline std::string* StatusResponse::release_text() {
+  // @@protoc_insertion_point(field_release:msg.StatusResponse.text)
+  if (!_internal_has_text()) {
     return nullptr;
   }
   _has_bits_[0] &= ~0x00000001u;
-  return name_.ReleaseNonDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  return text_.ReleaseNonDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
-inline void StatusResponse::set_allocated_name(std::string* name) {
-  if (name != nullptr) {
+inline void StatusResponse::set_allocated_text(std::string* text) {
+  if (text != nullptr) {
     _has_bits_[0] |= 0x00000001u;
   } else {
     _has_bits_[0] &= ~0x00000001u;
   }
-  name_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), name,
+  text_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), text,
       GetArena());
-  // @@protoc_insertion_point(field_set_allocated:msg.StatusResponse.name)
+  // @@protoc_insertion_point(field_set_allocated:msg.StatusResponse.text)
 }
-inline std::string* StatusResponse::unsafe_arena_release_name() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:msg.StatusResponse.name)
+inline std::string* StatusResponse::unsafe_arena_release_text() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:msg.StatusResponse.text)
   GOOGLE_DCHECK(GetArena() != nullptr);
   _has_bits_[0] &= ~0x00000001u;
-  return name_.UnsafeArenaRelease(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+  return text_.UnsafeArenaRelease(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       GetArena());
 }
-inline void StatusResponse::unsafe_arena_set_allocated_name(
-    std::string* name) {
+inline void StatusResponse::unsafe_arena_set_allocated_text(
+    std::string* text) {
   GOOGLE_DCHECK(GetArena() != nullptr);
-  if (name != nullptr) {
+  if (text != nullptr) {
     _has_bits_[0] |= 0x00000001u;
   } else {
     _has_bits_[0] &= ~0x00000001u;
   }
-  name_.UnsafeArenaSetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
-      name, GetArena());
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:msg.StatusResponse.name)
+  text_.UnsafeArenaSetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      text, GetArena());
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:msg.StatusResponse.text)
 }
 
 // -------------------------------------------------------------------

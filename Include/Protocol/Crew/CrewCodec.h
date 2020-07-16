@@ -53,6 +53,24 @@ namespace base
 			CrewRequest req;
 			CrewResponse rep;
 		};//class CrewCodec
+
+		class CrewPacker
+		{
+		public:
+			CrewPacker(void);
+			~CrewPacker(void);
+
+		public:
+			//封装成员消息
+			//@command : 命令类型
+			//@result : 错误码
+			//@data : 消息数据
+			//@Return : 消息内容
+			void* packCrew(
+				const int command = 0,
+				const int result = 0,
+				void* data = nullptr);
+		};//class CrewPacker
 	}//namespace protocol
 }//namespace base
 

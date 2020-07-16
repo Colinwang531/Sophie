@@ -123,7 +123,7 @@ namespace mq
 						rbytes = zmq_msg_recv(&msg, dealer, ZMQ_DONTWAIT | ZMQ_RCVMORE);
 					}
 					//数据处理通知
-					afterClientPollMessage(reinterpret_cast<const char*>(zmq_msg_data(&msg)), rbytes);
+					afterClientPollMessage(zmq_msg_data(&msg), rbytes);
 					zmq_msg_close(&msg);
 				}
 			}

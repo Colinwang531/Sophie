@@ -48,7 +48,7 @@ namespace mq
 			//@msg : 数据内容
 			//@bytes : 数据字节数
 			virtual void afterUpstreamPollMessage(
-				const char* msg = nullptr, 
+				const void* msg = nullptr, 
 				const unsigned int bytes = 0) = 0;
 
 		private:

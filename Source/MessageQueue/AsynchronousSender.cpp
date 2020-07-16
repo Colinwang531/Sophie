@@ -2,38 +2,39 @@
 #include <string.h>
 #endif//_WINDOWS
 #include "zmq.h"
+#include "Define.h"
 #include "MessageQueue/AsynchronousSender.h"
 
 namespace mq
 {
 	namespace module
 	{
-		AsynchronousSender::AsynchronousSender(const unsigned int bytes /* = mtu */) : disassemblyDataBytes{ bytes }
-		{}
+		AsynchronousSender::AsynchronousSender() {}
 		AsynchronousSender::~AsynchronousSender() {}
 
-		const unsigned int AsynchronousSender::sendData(
-			void* s /* = nullptr */, const char* data /* = nullptr */, const unsigned int bytes /* = 0 */, const bool more /* = false */)
+		const unsigned long long AsynchronousSender::sendData(
+			void* s /* = nullptr */, 
+			const void* data /* = nullptr */, 
+			const unsigned long long bytes /* = 0 */, 
+			const bool forcemore /* = false */)
 		{
-			unsigned int sentBytes{ 0 };
+			unsigned long long sentPartialBytes{ 0 }, totalSendBytes{ bytes };
 
 			if (s && data && 0 < bytes)
 			{
-				//按照mtu限制将数据进行分包发送
-				unsigned int totalBytes{ bytes };
-
-				while (0 < totalBytes)
+				while (0 < totalSendBytes)
 				{
-					const bool anymore{ totalBytes > disassemblyDataBytes ? true : false };
-					const unsigned int sendingBytes{ 
-						totalBytes > disassemblyDataBytes ? disassemblyDataBytes : totalBytes };
-					const unsigned int actuallySentBytes{
-						sendDisassemblyData(s, data + sentBytes, sendingBytes, more ? true : anymore) };
+					const unsigned long long sentDataBytes{
+						sendPartialData(
+							s, 
+							data + sentPartialBytes, 
+							totalSendBytes > gMaxTransmitUnit ? gMaxTransmitUnit : totalSendBytes, 
+							forcemore ? true : (totalSendBytes > gMaxTransmitUnit ? true : false)) };
 
-					if (0 < actuallySentBytes)
+					if (0 < sentDataBytes)
 					{
-						sentBytes += actuallySentBytes;
-						totalBytes -= actuallySentBytes;
+						sentPartialBytes += sentDataBytes;
+						totalSendBytes -= sentDataBytes;
 					}
 					else
 					{
@@ -42,13 +43,16 @@ namespace mq
 				}
 			}
 
-			return sentBytes;
+			return sentPartialBytes;
 		}
 
-		const unsigned int AsynchronousSender::sendDisassemblyData(
-			void* s /* = nullptr */, const char* data /* = nullptr */, const unsigned int bytes /* = 0 */, const bool more /* = false */)
+		const unsigned long long AsynchronousSender::sendPartialData(
+			void* s /* = nullptr */, 
+			const void* data /* = nullptr */, 
+			const unsigned long long bytes /* = 0 */, 
+			const bool more /* = false */)
 		{
-			unsigned int sentBytes{ 0 };
+			unsigned long long sentBytes{ 0 };
 			zmq_msg_t msg;
 
 			if (!zmq_msg_init_size(&msg, bytes))

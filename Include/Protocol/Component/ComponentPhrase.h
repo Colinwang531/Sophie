@@ -11,13 +11,24 @@
 //										王科威									2020-05-29									添加数据结构和解析/封装方法
 //
 
-#ifndef COMPONENT_CODEC_H
-#define COMPONENT_CODEC_H
+#ifndef BASE_PROTOCOL_COMPONENT_PHRASE_H
+#define BASE_PROTOCOL_COMPONENT_PHRASE_H
 
 namespace base
 {
 	namespace protocol
 	{
+		typedef enum class tagComponentCommand_t : int
+		{
+			COMPONENT_COMMAND_NONE = 0,
+			COMPONENT_COMMAND_SIGNIN_REQ = 1,
+			COMPONENT_COMMAND_SIGNIN_REP = 2,
+			COMPONENT_COMMAND_SIGNOUT_REQ = 3,
+			COMPONENT_COMMAND_SIGNOUT_REP = 4,
+			COMPONENT_COMMAND_QUERY_REQ = 5,
+			COMPONENT_COMMAND_QUERY_REP = 6
+		}ComponentCommand;
+
 		class ComponentParser
 		{
 		public:
@@ -25,23 +36,10 @@ namespace base
 			~ComponentParser(void);
 
 		public:
-			//创建组件消息包
-			//@Return : 消息包实例
-			void* createNewComponent(void);
-
-			//销毁组件消息包
-			//@pkt : 组件消息包实例
-			//@Comment : 使用createNewComponent创建的组件消息包实例必须使用该方法进行销毁
-			//			 调用者也可以自行进行销毁
-			void destroyComponent(void* pkt = nullptr);
-
-			//解析组件消息
-			//@c : 组件消息数据
-			//@pkt : 消息包
-			//@Return : 错误码
-			int unpackComponent(
-				void* c = nullptr, 
-				void* pkt = nullptr);
+			//将Protocol Buffers的组件实例转化为AbstractPacket实例
+			//@c : 通过Protocol Buffers解析得到的Component实例
+			//@Return : AbstractPacket实例
+			void* unpackFromComponentMessage(void* c = nullptr);
 		};//class ComponentParser
 
 		class ComponentPacker
@@ -58,12 +56,12 @@ namespace base
 			//		  当COMPONENT_COMMAND_SIGNIN_REP == command时表示组件ID标识
 			//		  当COMPONENT_COMMAND_QUERY_REP == command时表示组件信息集合
 			//@Return : 消息内容
-			void* packComponent(
+			void* packToComponentMessage(
 				const int command = 0,
 				const int result = 0,
-				void* data = nullptr);
+				const void* data = nullptr);
 		};//class ComponentPacker
 	}//namespace protocol
 }//namespace base
 
-#endif//COMPONENT_CODEC_H
+#endif//BASE_PROTOCOL_COMPONENT_PHRASE_H

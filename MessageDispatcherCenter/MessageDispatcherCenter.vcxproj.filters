@@ -741,9 +741,6 @@
     <ClCompile Include="..\Source\Protocol\Component\Component.pb.cc">
       <Filter>Protocol\Component</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Protocol\Component\ComponentCodec.cpp">
-      <Filter>Protocol\Component</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Protocol\User\User.pb.cc">
       <Filter>Protocol\User</Filter>
     </ClCompile>
@@ -774,26 +771,47 @@
     <ClCompile Include="..\3rdPart\boost_1_72_0\libs\date_time\src\gregorian\gregorian_types.cpp">
       <Filter>3rd\boost</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Protocol\MessageCodec.cpp">
-      <Filter>Protocol</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Protocol\Alarm\AlarmCodec.cpp">
       <Filter>Protocol\Alarm</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Protocol\Algorithm\AlgorithmCodec.cpp">
-      <Filter>Protocol\Algorithm</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Protocol\Crew\CrewCodec.cpp">
       <Filter>Protocol\Crew</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Protocol\Device\DeviceCodec.cpp">
-      <Filter>Protocol\Device</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Protocol\Status\StatusCodec.cpp">
-      <Filter>Protocol\Status</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Thread\ThreadPool.cpp">
       <Filter>Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Component\AbstractComponent.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\Component\ComponentPhrase.cpp">
+      <Filter>Protocol\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Packet\AbstractPacket.cpp">
+      <Filter>Packet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Packet\Message\MessagePacket.cpp">
+      <Filter>Packet\Message</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\CommandPhrase.cpp">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\Device\DevicePhrase.cpp">
+      <Filter>Protocol\Device</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Device\AbstractDevice.cpp">
+      <Filter>Device</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Device\SurveillanceDevice.cpp">
+      <Filter>Device</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Device\Hikvision\HikvisionDevice.cpp">
+      <Filter>Device\Hikvision</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\Status\StatusPhrase.cpp">
+      <Filter>Protocol\Status</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\Algorithm\AlgorithmPhrase.cpp">
+      <Filter>Protocol\Algorithm</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1627,6 +1645,21 @@
     </Filter>
     <Filter Include="3rd\boost\function_types\detail\synthesize_impl">
       <UniqueIdentifier>{b6ad9431-9481-4382-9fc3-64c215a8a723}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component">
+      <UniqueIdentifier>{ceff91d9-6cb7-4f7b-ad02-96119fcb3aad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Packet">
+      <UniqueIdentifier>{1bb6c198-b90f-4b2f-8860-c0f4cdd67bbd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Packet\Message">
+      <UniqueIdentifier>{7a1b688a-1498-4668-9fc3-916572e8daf7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Device">
+      <UniqueIdentifier>{bbf69719-1672-48e7-a101-7b6da3a0f469}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Device\Hikvision">
+      <UniqueIdentifier>{c9deb8e0-9ffb-4775-97e9-8baaf3eccf03}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -11743,9 +11776,6 @@
     <ClInclude Include="..\Include\Protocol\Component\Component.pb.h">
       <Filter>Protocol\Component</Filter>
     </ClInclude>
-    <ClInclude Include="..\Include\Protocol\Component\ComponentCodec.h">
-      <Filter>Protocol\Component</Filter>
-    </ClInclude>
     <ClInclude Include="..\Include\Time\XTime.h">
       <Filter>Time</Filter>
     </ClInclude>
@@ -12325,23 +12355,11 @@
     <ClInclude Include="..\3rdPart\boost_1_72_0\libs\date_time\src\gregorian\greg_names.hpp">
       <Filter>3rd\boost</Filter>
     </ClInclude>
-    <ClInclude Include="..\Include\Protocol\MessageCodec.h">
-      <Filter>Protocol</Filter>
-    </ClInclude>
     <ClInclude Include="..\Include\Protocol\Alarm\AlarmCodec.h">
       <Filter>Protocol\Alarm</Filter>
     </ClInclude>
-    <ClInclude Include="..\Include\Protocol\Algorithm\AlgorithmCodec.h">
-      <Filter>Protocol\Algorithm</Filter>
-    </ClInclude>
     <ClInclude Include="..\Include\Protocol\Crew\CrewCodec.h">
       <Filter>Protocol\Crew</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Include\Protocol\Device\DeviceCodec.h">
-      <Filter>Protocol\Device</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Include\Protocol\Status\StatusCodec.h">
-      <Filter>Protocol\Status</Filter>
     </ClInclude>
     <ClInclude Include="..\Include\Thread\ThreadPool.h">
       <Filter>Thread</Filter>
@@ -12351,9 +12369,6 @@
     </ClInclude>
     <ClInclude Include="..\Include\Mutex\RWLock.h">
       <Filter>Mutex</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Include\Protocol\MessageDefs.h">
-      <Filter>Protocol</Filter>
     </ClInclude>
     <ClInclude Include="..\3rdPart\boost_1_72_0\boost\unordered\unordered_map.hpp">
       <Filter>3rd\boost\unordered</Filter>
@@ -13041,6 +13056,39 @@
     </ClInclude>
     <ClInclude Include="..\3rdPart\boost_1_72_0\boost\function_types\detail\pp_cc_loop\preprocessed.hpp">
       <Filter>3rd\boost\function_types\detail\pp_cc_loop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Component\AbstractComponent.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\Component\ComponentPhrase.h">
+      <Filter>Protocol\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Packet\AbstractPacket.h">
+      <Filter>Packet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Packet\Message\MessagePacket.h">
+      <Filter>Packet\Message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\CommandPhrase.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\Device\DevicePhrase.h">
+      <Filter>Protocol\Device</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Device\AbstractDevice.h">
+      <Filter>Device</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Device\SurveillanceDevice.h">
+      <Filter>Device</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Device\Hikvision\HikvisionDevice.h">
+      <Filter>Device\Hikvision</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\Status\StatusPhrase.h">
+      <Filter>Protocol\Status</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\Algorithm\AlgorithmPhrase.h">
+      <Filter>Protocol\Algorithm</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

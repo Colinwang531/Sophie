@@ -1,33 +1,15 @@
-#include "Error.h"
 #include "Device/AbstractDevice.h"
-using WriteLocker = base::locker::WriteLocker;
 
 namespace base
 {
 	namespace device
 	{
-		unsigned int AbstractDevice::gDeviceCounter = 0;
-
-		AbstractDevice::AbstractDevice(){}
+		AbstractDevice::AbstractDevice(
+			const std::string id,
+			const DeviceFactory factory /* = DeviceFactory::DEVICE_FACTORY_NONE */,
+			const DeviceType type /* = DeviceType::DEVICE_TYPE_NONE */)
+			: deviceID{ id }, deviceFactory{ factory }, deviceType{ type }
+		{}
 		AbstractDevice::~AbstractDevice(){}
-
-		int AbstractDevice::createNewDevice()
-		{
-			WriteLocker w{ wrl };
-			++gDeviceCounter;
-			return eSuccess;
-		}
-
-		int AbstractDevice::destoryDevice()
-		{
-			WriteLocker w{ wrl };
-			--gDeviceCounter;
-			return eSuccess;
-		}
-
-		int AbstractDevice::getDeviceConfig(void)
-		{
-			return eNotSupport;
-		}
 	}//namespace device
 }//namespace base
