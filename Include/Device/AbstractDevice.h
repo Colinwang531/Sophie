@@ -14,6 +14,7 @@
 #ifndef BASE_DEVICE_ABSTRACT_DEVICE_H
 #define BASE_DEVICE_ABSTRACT_DEVICE_H
 
+#include <string>
 #include "boost/noncopyable.hpp"
 
 namespace base

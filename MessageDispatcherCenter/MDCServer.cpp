@@ -20,6 +20,8 @@ using CommandParser = base::protocol::CommandParser;
 #include "Protocol/Component/ComponentPhrase.h"
 #include "Protocol/Device/DevicePhrase.h"
 #include "Protocol/Status/StatusPhrase.h"
+#include "Protocol/Algorithm/AlgorithmPhrase.h"
+#include "Protocol/Crew/CrewPhrase.h"
 #include "Packet/Message/MessagePacket.h"
 using AbstractPacket = base::packet::AbstractPacket;
 using MessagePacket = base::packet::MessagePacket;
@@ -326,7 +328,7 @@ void MDCServer::forwardStatusConfigureMessage(
 		{
 			LOG(WARNING) << "Forward request message of device configure failed, result = " << e << ".";
 			replyConfigureSetFailedMessage(
-				static_cast<int>(base::protocol::StatusCommand::STATUS_COMMAND_SET_REP), mp->getPacketSequence() + 1, s, commID, idbytes);
+				static_cast<int>(command) + 1, mp->getPacketSequence() + 1, s, commID, idbytes);
 		}
 	}
 	else if (base::protocol::StatusCommand::STATUS_COMMAND_SET_REP == command)
@@ -354,18 +356,18 @@ void MDCServer::forwardAlgorithmConfigureMessage(
 	const void* data /* = nullptr */, 
 	const unsigned int databytes /* = 0 */)
 {
-	MessagePacket* mp{ reinterpret_cast<MessagePacket*>(pkt) };
-	AlgorithmPacket* ap{ reinterpret_cast<AlgorithmPacket*>(mp->packet) };
-	const AlgorithmCommand command{ reinterpret_cast<AlgorithmCommand>(ap->command) };
+	AbstractPacket* mp{ reinterpret_cast<AbstractPacket*>(pkt) };
+	const base::protocol::AlgorithmCommand command{ 
+		static_cast<base::protocol::AlgorithmCommand>(mp->getPacketDataCommandType()) };
 
 	//由于事先无法得知有几个算法组件在线,所以每次都必须向全部类型的算法组件转发一次
 	//当没有算法组件在线时由服务端进行应答
 
-	if (AlgorithmCommand::ALGORITHM_COMMAND_SET_REQ == command)
+	if (base::protocol::AlgorithmCommand::ALGORITHM_COMMAND_SET_REQ == command)
 	{
 		int e{
 			forwardConfigureRequestOrResponseMessage(
-				s, static_cast<int>(ComponentType::COMPONENT_TYPE_AI), data, databytes) };
+				s, static_cast<int>(base::component::ComponentType::COMPONENT_TYPE_AI), data, databytes) };
 
 		if (eSuccess == e)
 		{
@@ -375,14 +377,14 @@ void MDCServer::forwardAlgorithmConfigureMessage(
 		{
 			LOG(WARNING) << "Forward request message of Algorithm configure failed, result = " << e << ".";
 			replyConfigureSetFailedMessage(
-				static_cast<int>(AlgorithmCommand::ALGORITHM_COMMAND_SET_REQ) + 1, mp->sequence + 1, s, commID, idbytes);
+				static_cast<int>(command) + 1, mp->getPacketSequence() + 1, s, commID, idbytes);
 		}
 	}
-	else if (AlgorithmCommand::ALGORITHM_COMMAND_SET_REP == command)
+	else if (base::protocol::AlgorithmCommand::ALGORITHM_COMMAND_SET_REP == command)
 	{
 		int e{
 			forwardConfigureRequestOrResponseMessage(
-				s, static_cast<int>(ComponentType::COMPONENT_TYPE_WEB), data, databytes) };
+				s, static_cast<int>(base::component::ComponentType::COMPONENT_TYPE_WEB), data, databytes) };
 
 		if (eSuccess == e)
 		{
@@ -402,7 +404,7 @@ void MDCServer::forwardAlarmInfoMessage(
 {
 	int e{
 		forwardConfigureRequestOrResponseMessage(
-			s, static_cast<int>(ComponentType::COMPONENT_TYPE_ALM), data, databytes) };
+			s, static_cast<int>(base::component::ComponentType::COMPONENT_TYPE_ALM), data, databytes) };
 
 	if (eSuccess == e)
 	{
@@ -422,20 +424,20 @@ void MDCServer::forwardCrewConfigureMessage(
 	const void* data /* = nullptr */,
 	const unsigned int databytes /* = 0 */)
 {
-	MessagePacket* mp{ reinterpret_cast<MessagePacket*>(pkt) };
-	CrewPacket* cp{ reinterpret_cast<CrewPacket*>(mp->packet) };
-	const CrewCommand command{ reinterpret_cast<CrewCommand>(cp->command) };
+	AbstractPacket* mp{ reinterpret_cast<AbstractPacket*>(pkt) };
+	const base::protocol::CrewCommand command{
+		static_cast<base::protocol::CrewCommand>(mp->getPacketDataCommandType()) };
 
 	//由于事先无法得知有几个算法组件在线,所以每次都必须向全部类型的算法组件转发一次
 	//当没有算法组件在线时由服务端进行应答
 
-	if (CrewCommand::CREW_COMMAND_NEW_REQ == command ||
-		CrewCommand::CREW_COMMAND_DELETE_REQ == command ||
-		CrewCommand::CREW_COMMAND_MODIFY_REQ == command)
+	if (base::protocol::CrewCommand::CREW_COMMAND_NEW_REQ == command ||
+		base::protocol::CrewCommand::CREW_COMMAND_DELETE_REQ == command ||
+		base::protocol::CrewCommand::CREW_COMMAND_MODIFY_REQ == command)
 	{
 		int e{
 			forwardConfigureRequestOrResponseMessage(
-				s, static_cast<int>(ComponentType::COMPONENT_TYPE_AI), data, databytes) };
+				s, static_cast<int>(base::component::ComponentType::COMPONENT_TYPE_AI), data, databytes) };
 
 		if (eSuccess == e)
 		{
@@ -445,16 +447,16 @@ void MDCServer::forwardCrewConfigureMessage(
 		{
 			LOG(WARNING) << "Forward request message of crew configure failed, result = " << e << ".";
 			replyConfigureSetFailedMessage(
-				static_cast<int>(command) + 1, mp->sequence + 1, s, commID, idbytes);
+				static_cast<int>(command) + 1, mp->getPacketSequence() + 1, s, commID, idbytes);
 		}
 	}
-	else if (CrewCommand::CREW_COMMAND_NEW_REP == command ||
-		CrewCommand::CREW_COMMAND_DELETE_REP == command ||
-		CrewCommand::CREW_COMMAND_MODIFY_REP == command)
+	else if (base::protocol::CrewCommand::CREW_COMMAND_NEW_REP == command ||
+		base::protocol::CrewCommand::CREW_COMMAND_DELETE_REP == command ||
+		base::protocol::CrewCommand::CREW_COMMAND_MODIFY_REP == command)
 	{
 		int e{
 			forwardConfigureRequestOrResponseMessage(
-				s, static_cast<int>(ComponentType::COMPONENT_TYPE_WEB), data, databytes) };
+				s, static_cast<int>(base::component::ComponentType::COMPONENT_TYPE_WEB), data, databytes) };
 
 		if (eSuccess == e)
 		{
@@ -613,28 +615,28 @@ int MDCServer::replyConfigureSetFailedMessage(
 		int msgType{ 0 };
 		void* data;
 
-		if (static_cast<int>(StatusCommand::STATUS_COMMAND_SET_REP) == command)
+		if (static_cast<int>(base::protocol::StatusCommand::STATUS_COMMAND_SET_REP) == command)
 		{
 			data = base::protocol::StatusPacker().packStatus(command, eBadOperate);
-			msgType = static_cast<int>(MessageType::MESSAGE_TYPE_STATUS);
+			msgType = static_cast<int>(base::packet::PacketType::PACKET_TYPE_STATUS);
 		} 
-		else if(static_cast<int>(AlgorithmCommand::ALGORITHM_COMMAND_SET_REP) == command)
+		else if(static_cast<int>(base::protocol::AlgorithmCommand::ALGORITHM_COMMAND_SET_REP) == command)
 		{
 			data = base::protocol::AlgorithmPacker().packAlgorithm(command, eBadOperate);
-			msgType = static_cast<int>(MessageType::MESSAGE_TYPE_ALGORITHM);
+			msgType = static_cast<int>(base::packet::PacketType::PACKET_TYPE_ALGORITHM);
 		}
-		else if (static_cast<int>(CrewCommand::CREW_COMMAND_NEW_REP) == command ||
-			static_cast<int>(CrewCommand::CREW_COMMAND_DELETE_REP) == command ||
-			static_cast<int>(CrewCommand::CREW_COMMAND_MODIFY_REP) == command)
+		else if (static_cast<int>(base::protocol::CrewCommand::CREW_COMMAND_NEW_REP) == command ||
+			static_cast<int>(base::protocol::CrewCommand::CREW_COMMAND_DELETE_REP) == command ||
+			static_cast<int>(base::protocol::CrewCommand::CREW_COMMAND_MODIFY_REP) == command)
 		{
 			data = base::protocol::CrewPacker().packCrew(command, eBadOperate);
-			msgType = static_cast<int>(MessageType::MESSAGE_TYPE_CREW);
+			msgType = static_cast<int>(base::packet::PacketType::PACKET_TYPE_CREW);
 		}
 
 		if (data && 0 < msgType)
 		{
 			const std::string rep{
-				base::protocol::MessagePacker().packMessage(msgType, sequence, data) };
+				base::protocol::CommandPacker().packPacketToArray(data) };
 			e = rep.empty() ? eBadPackProtocol : sendServerResponseMessage(s, commID, idbytes, rep.c_str(), rep.length());
 
 			if (eSuccess == e)

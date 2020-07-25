@@ -126,22 +126,22 @@ static int destroyAsynchronousClient(void)
 	return e;
 }
 
-static int testLoginDevice(void)
-{
-	base::device::AbstractDevice* abp{ 
-		new base::device::HikvisionDevice("admin", "eaton12345", "192.168.0.200", 8000) };
-	if (abp)
-	{
-		if (eSuccess == abp->createNewDevice())
-		{
-//			base::device::HikvisionDevice* hkdp{ std::dynamic_pointer_cast<base::device::HikvisionDevice*>(abp) };
-			((base::device::HikvisionDevice*)abp)->getDeviceConfig();
-		}
-		else
-		{
-		}
-	}
-}
+// static int testLoginDevice(void)
+// {
+// 	base::device::AbstractDevice* abp{ 
+// 		new base::device::HikvisionDevice("admin", "eaton12345", "192.168.0.200", 8000) };
+// 	if (abp)
+// 	{
+// 		if (eSuccess == abp->createNewDevice())
+// 		{
+// //			base::device::HikvisionDevice* hkdp{ std::dynamic_pointer_cast<base::device::HikvisionDevice*>(abp) };
+// 			((base::device::HikvisionDevice*)abp)->getDeviceConfig();
+// 		}
+// 		else
+// 		{
+// 		}
+// 	}
+// }
 
 int main(int argc, char** argv)
 {
@@ -162,7 +162,7 @@ int main(int argc, char** argv)
 	if (eSuccess == e)
 	{
 		LOG(INFO) << "Create new asynchronous client result = " << e << ".";
-		testLoginDevice();
+//		testLoginDevice();
 	}
 	else
 	{

@@ -14,6 +14,8 @@
 #ifndef BASE_PROTOCOL_COMPONENT_PHRASE_H
 #define BASE_PROTOCOL_COMPONENT_PHRASE_H
 
+#include "Protocol/CommandPhrase.h"
+
 namespace base
 {
 	namespace protocol
@@ -29,17 +31,14 @@ namespace base
 			COMPONENT_COMMAND_QUERY_REP = 6
 		}ComponentCommand;
 
-		class ComponentParser
+		class ComponentParser : public CommandParser
 		{
 		public:
 			ComponentParser(void);
 			~ComponentParser(void);
 
 		public:
-			//将Protocol Buffers的组件实例转化为AbstractPacket实例
-			//@c : 通过Protocol Buffers解析得到的Component实例
-			//@Return : AbstractPacket实例
-			void* unpackFromComponentMessage(void* c = nullptr);
+			void* parseComponentMessage(void* msg = nullptr) override;
 		};//class ComponentParser
 
 		class ComponentPacker

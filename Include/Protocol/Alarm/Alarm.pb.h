@@ -59,65 +59,66 @@ namespace msg {
 class Alarm;
 class AlarmDefaultTypeInternal;
 extern AlarmDefaultTypeInternal _Alarm_default_instance_;
-class Information;
-class InformationDefaultTypeInternal;
-extern InformationDefaultTypeInternal _Information_default_instance_;
-class Position;
-class PositionDefaultTypeInternal;
-extern PositionDefaultTypeInternal _Position_default_instance_;
+class AlarmInfo;
+class AlarmInfoDefaultTypeInternal;
+extern AlarmInfoDefaultTypeInternal _AlarmInfo_default_instance_;
+class AlarmPosition;
+class AlarmPositionDefaultTypeInternal;
+extern AlarmPositionDefaultTypeInternal _AlarmPosition_default_instance_;
 }  // namespace msg
 PROTOBUF_NAMESPACE_OPEN
 template<> ::msg::Alarm* Arena::CreateMaybeMessage<::msg::Alarm>(Arena*);
-template<> ::msg::Information* Arena::CreateMaybeMessage<::msg::Information>(Arena*);
-template<> ::msg::Position* Arena::CreateMaybeMessage<::msg::Position>(Arena*);
+template<> ::msg::AlarmInfo* Arena::CreateMaybeMessage<::msg::AlarmInfo>(Arena*);
+template<> ::msg::AlarmPosition* Arena::CreateMaybeMessage<::msg::AlarmPosition>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace msg {
 
-enum Information_Type : int {
-  Information_Type_SLEEP = 1,
-  Information_Type_FIGHT = 2,
-  Information_Type_HELMET = 3,
-  Information_Type_PHONE = 4,
-  Information_Type_FACE = 5
+enum AlarmInfo_Type : int {
+  AlarmInfo_Type_HELMET = 1,
+  AlarmInfo_Type_PHONE = 2,
+  AlarmInfo_Type_SLEEP = 3,
+  AlarmInfo_Type_FIGHT = 4,
+  AlarmInfo_Type_ATTENDANCE_IN = 5,
+  AlarmInfo_Type_ATTENDANCE_OUT = 6
 };
-bool Information_Type_IsValid(int value);
-constexpr Information_Type Information_Type_Type_MIN = Information_Type_SLEEP;
-constexpr Information_Type Information_Type_Type_MAX = Information_Type_FACE;
-constexpr int Information_Type_Type_ARRAYSIZE = Information_Type_Type_MAX + 1;
+bool AlarmInfo_Type_IsValid(int value);
+constexpr AlarmInfo_Type AlarmInfo_Type_Type_MIN = AlarmInfo_Type_HELMET;
+constexpr AlarmInfo_Type AlarmInfo_Type_Type_MAX = AlarmInfo_Type_ATTENDANCE_OUT;
+constexpr int AlarmInfo_Type_Type_ARRAYSIZE = AlarmInfo_Type_Type_MAX + 1;
 
-const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* Information_Type_descriptor();
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* AlarmInfo_Type_descriptor();
 template<typename T>
-inline const std::string& Information_Type_Name(T enum_t_value) {
-  static_assert(::std::is_same<T, Information_Type>::value ||
+inline const std::string& AlarmInfo_Type_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, AlarmInfo_Type>::value ||
     ::std::is_integral<T>::value,
-    "Incorrect type passed to function Information_Type_Name.");
+    "Incorrect type passed to function AlarmInfo_Type_Name.");
   return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
-    Information_Type_descriptor(), enum_t_value);
+    AlarmInfo_Type_descriptor(), enum_t_value);
 }
-inline bool Information_Type_Parse(
-    const std::string& name, Information_Type* value) {
-  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<Information_Type>(
-    Information_Type_descriptor(), name, value);
+inline bool AlarmInfo_Type_Parse(
+    const std::string& name, AlarmInfo_Type* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<AlarmInfo_Type>(
+    AlarmInfo_Type_descriptor(), name, value);
 }
 // ===================================================================
 
-class Position PROTOBUF_FINAL :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:msg.Position) */ {
+class AlarmPosition PROTOBUF_FINAL :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:msg.AlarmPosition) */ {
  public:
-  inline Position() : Position(nullptr) {};
-  virtual ~Position();
+  inline AlarmPosition() : AlarmPosition(nullptr) {};
+  virtual ~AlarmPosition();
 
-  Position(const Position& from);
-  Position(Position&& from) noexcept
-    : Position() {
+  AlarmPosition(const AlarmPosition& from);
+  AlarmPosition(AlarmPosition&& from) noexcept
+    : AlarmPosition() {
     *this = ::std::move(from);
   }
 
-  inline Position& operator=(const Position& from) {
+  inline AlarmPosition& operator=(const AlarmPosition& from) {
     CopyFrom(from);
     return *this;
   }
-  inline Position& operator=(Position&& from) noexcept {
+  inline AlarmPosition& operator=(AlarmPosition&& from) noexcept {
     if (GetArena() == from.GetArena()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -142,20 +143,20 @@ class Position PROTOBUF_FINAL :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return GetMetadataStatic().reflection;
   }
-  static const Position& default_instance();
+  static const AlarmPosition& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const Position* internal_default_instance() {
-    return reinterpret_cast<const Position*>(
-               &_Position_default_instance_);
+  static inline const AlarmPosition* internal_default_instance() {
+    return reinterpret_cast<const AlarmPosition*>(
+               &_AlarmPosition_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     0;
 
-  friend void swap(Position& a, Position& b) {
+  friend void swap(AlarmPosition& a, AlarmPosition& b) {
     a.Swap(&b);
   }
-  inline void Swap(Position* other) {
+  inline void Swap(AlarmPosition* other) {
     if (other == this) return;
     if (GetArena() == other->GetArena()) {
       InternalSwap(other);
@@ -163,7 +164,7 @@ class Position PROTOBUF_FINAL :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(Position* other) {
+  void UnsafeArenaSwap(AlarmPosition* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetArena() == other->GetArena());
     InternalSwap(other);
@@ -171,17 +172,17 @@ class Position PROTOBUF_FINAL :
 
   // implements Message ----------------------------------------------
 
-  inline Position* New() const final {
-    return CreateMaybeMessage<Position>(nullptr);
+  inline AlarmPosition* New() const final {
+    return CreateMaybeMessage<AlarmPosition>(nullptr);
   }
 
-  Position* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
-    return CreateMaybeMessage<Position>(arena);
+  AlarmPosition* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<AlarmPosition>(arena);
   }
   void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
   void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void CopyFrom(const Position& from);
-  void MergeFrom(const Position& from);
+  void CopyFrom(const AlarmPosition& from);
+  void MergeFrom(const AlarmPosition& from);
   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
   bool IsInitialized() const final;
 
@@ -195,13 +196,13 @@ class Position PROTOBUF_FINAL :
   inline void SharedCtor();
   inline void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(Position* other);
+  void InternalSwap(AlarmPosition* other);
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "msg.Position";
+    return "msg.AlarmPosition";
   }
   protected:
-  explicit Position(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  explicit AlarmPosition(::PROTOBUF_NAMESPACE_ID::Arena* arena);
   private:
   static void ArenaDtor(void* object);
   inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
@@ -278,7 +279,7 @@ class Position PROTOBUF_FINAL :
   void _internal_set_h(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // @@protoc_insertion_point(class_scope:msg.Position)
+  // @@protoc_insertion_point(class_scope:msg.AlarmPosition)
  private:
   class _Internal;
 
@@ -298,23 +299,23 @@ class Position PROTOBUF_FINAL :
 };
 // -------------------------------------------------------------------
 
-class Information PROTOBUF_FINAL :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:msg.Information) */ {
+class AlarmInfo PROTOBUF_FINAL :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:msg.AlarmInfo) */ {
  public:
-  inline Information() : Information(nullptr) {};
-  virtual ~Information();
+  inline AlarmInfo() : AlarmInfo(nullptr) {};
+  virtual ~AlarmInfo();
 
-  Information(const Information& from);
-  Information(Information&& from) noexcept
-    : Information() {
+  AlarmInfo(const AlarmInfo& from);
+  AlarmInfo(AlarmInfo&& from) noexcept
+    : AlarmInfo() {
     *this = ::std::move(from);
   }
 
-  inline Information& operator=(const Information& from) {
+  inline AlarmInfo& operator=(const AlarmInfo& from) {
     CopyFrom(from);
     return *this;
   }
-  inline Information& operator=(Information&& from) noexcept {
+  inline AlarmInfo& operator=(AlarmInfo&& from) noexcept {
     if (GetArena() == from.GetArena()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -339,20 +340,20 @@ class Information PROTOBUF_FINAL :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return GetMetadataStatic().reflection;
   }
-  static const Information& default_instance();
+  static const AlarmInfo& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const Information* internal_default_instance() {
-    return reinterpret_cast<const Information*>(
-               &_Information_default_instance_);
+  static inline const AlarmInfo* internal_default_instance() {
+    return reinterpret_cast<const AlarmInfo*>(
+               &_AlarmInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     1;
 
-  friend void swap(Information& a, Information& b) {
+  friend void swap(AlarmInfo& a, AlarmInfo& b) {
     a.Swap(&b);
   }
-  inline void Swap(Information* other) {
+  inline void Swap(AlarmInfo* other) {
     if (other == this) return;
     if (GetArena() == other->GetArena()) {
       InternalSwap(other);
@@ -360,7 +361,7 @@ class Information PROTOBUF_FINAL :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(Information* other) {
+  void UnsafeArenaSwap(AlarmInfo* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetArena() == other->GetArena());
     InternalSwap(other);
@@ -368,17 +369,17 @@ class Information PROTOBUF_FINAL :
 
   // implements Message ----------------------------------------------
 
-  inline Information* New() const final {
-    return CreateMaybeMessage<Information>(nullptr);
+  inline AlarmInfo* New() const final {
+    return CreateMaybeMessage<AlarmInfo>(nullptr);
   }
 
-  Information* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
-    return CreateMaybeMessage<Information>(arena);
+  AlarmInfo* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<AlarmInfo>(arena);
   }
   void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
   void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void CopyFrom(const Information& from);
-  void MergeFrom(const Information& from);
+  void CopyFrom(const AlarmInfo& from);
+  void MergeFrom(const AlarmInfo& from);
   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
   bool IsInitialized() const final;
 
@@ -392,13 +393,13 @@ class Information PROTOBUF_FINAL :
   inline void SharedCtor();
   inline void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(Information* other);
+  void InternalSwap(AlarmInfo* other);
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "msg.Information";
+    return "msg.AlarmInfo";
   }
   protected:
-  explicit Information(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  explicit AlarmInfo(::PROTOBUF_NAMESPACE_ID::Arena* arena);
   private:
   static void ArenaDtor(void* object);
   inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
@@ -415,66 +416,68 @@ class Information PROTOBUF_FINAL :
 
   // nested types ----------------------------------------------------
 
-  typedef Information_Type Type;
-  static constexpr Type SLEEP =
-    Information_Type_SLEEP;
-  static constexpr Type FIGHT =
-    Information_Type_FIGHT;
+  typedef AlarmInfo_Type Type;
   static constexpr Type HELMET =
-    Information_Type_HELMET;
+    AlarmInfo_Type_HELMET;
   static constexpr Type PHONE =
-    Information_Type_PHONE;
-  static constexpr Type FACE =
-    Information_Type_FACE;
+    AlarmInfo_Type_PHONE;
+  static constexpr Type SLEEP =
+    AlarmInfo_Type_SLEEP;
+  static constexpr Type FIGHT =
+    AlarmInfo_Type_FIGHT;
+  static constexpr Type ATTENDANCE_IN =
+    AlarmInfo_Type_ATTENDANCE_IN;
+  static constexpr Type ATTENDANCE_OUT =
+    AlarmInfo_Type_ATTENDANCE_OUT;
   static inline bool Type_IsValid(int value) {
-    return Information_Type_IsValid(value);
+    return AlarmInfo_Type_IsValid(value);
   }
   static constexpr Type Type_MIN =
-    Information_Type_Type_MIN;
+    AlarmInfo_Type_Type_MIN;
   static constexpr Type Type_MAX =
-    Information_Type_Type_MAX;
+    AlarmInfo_Type_Type_MAX;
   static constexpr int Type_ARRAYSIZE =
-    Information_Type_Type_ARRAYSIZE;
+    AlarmInfo_Type_Type_ARRAYSIZE;
   static inline const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor*
   Type_descriptor() {
-    return Information_Type_descriptor();
+    return AlarmInfo_Type_descriptor();
   }
   template<typename T>
   static inline const std::string& Type_Name(T enum_t_value) {
     static_assert(::std::is_same<T, Type>::value ||
       ::std::is_integral<T>::value,
       "Incorrect type passed to function Type_Name.");
-    return Information_Type_Name(enum_t_value);
+    return AlarmInfo_Type_Name(enum_t_value);
   }
   static inline bool Type_Parse(const std::string& name,
       Type* value) {
-    return Information_Type_Parse(name, value);
+    return AlarmInfo_Type_Parse(name, value);
   }
 
   // accessors -------------------------------------------------------
 
   enum : int {
-    kPositionFieldNumber = 2,
+    kAlarmpositionFieldNumber = 2,
     kUidFieldNumber = 3,
     kTypeFieldNumber = 1,
   };
-  // repeated .msg.Position position = 2;
-  int position_size() const;
+  // repeated .msg.AlarmPosition alarmposition = 2;
+  int alarmposition_size() const;
   private:
-  int _internal_position_size() const;
+  int _internal_alarmposition_size() const;
   public:
-  void clear_position();
-  ::msg::Position* mutable_position(int index);
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::Position >*
-      mutable_position();
+  void clear_alarmposition();
+  ::msg::AlarmPosition* mutable_alarmposition(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::AlarmPosition >*
+      mutable_alarmposition();
   private:
-  const ::msg::Position& _internal_position(int index) const;
-  ::msg::Position* _internal_add_position();
+  const ::msg::AlarmPosition& _internal_alarmposition(int index) const;
+  ::msg::AlarmPosition* _internal_add_alarmposition();
   public:
-  const ::msg::Position& position(int index) const;
-  ::msg::Position* add_position();
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::Position >&
-      position() const;
+  const ::msg::AlarmPosition& alarmposition(int index) const;
+  ::msg::AlarmPosition* add_alarmposition();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::AlarmPosition >&
+      alarmposition() const;
 
   // optional string uid = 3;
   bool has_uid() const;
@@ -505,20 +508,20 @@ class Information PROTOBUF_FINAL :
   std::string* _internal_mutable_uid();
   public:
 
-  // required .msg.Information.Type type = 1;
+  // required .msg.AlarmInfo.Type type = 1;
   bool has_type() const;
   private:
   bool _internal_has_type() const;
   public:
   void clear_type();
-  ::msg::Information_Type type() const;
-  void set_type(::msg::Information_Type value);
+  ::msg::AlarmInfo_Type type() const;
+  void set_type(::msg::AlarmInfo_Type value);
   private:
-  ::msg::Information_Type _internal_type() const;
-  void _internal_set_type(::msg::Information_Type value);
+  ::msg::AlarmInfo_Type _internal_type() const;
+  void _internal_set_type(::msg::AlarmInfo_Type value);
   public:
 
-  // @@protoc_insertion_point(class_scope:msg.Information)
+  // @@protoc_insertion_point(class_scope:msg.AlarmInfo)
  private:
   class _Internal;
 
@@ -527,7 +530,7 @@ class Information PROTOBUF_FINAL :
   typedef void DestructorSkippable_;
   ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::Position > position_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::AlarmPosition > alarmposition_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr uid_;
   int type_;
   friend struct ::TableStruct_Alarm_2eproto;
@@ -657,7 +660,7 @@ class Alarm PROTOBUF_FINAL :
     kCidFieldNumber = 1,
     kTimeFieldNumber = 2,
     kPictureFieldNumber = 3,
-    kInformationFieldNumber = 4,
+    kAlarminfoFieldNumber = 4,
   };
   // required string cid = 1;
   bool has_cid() const;
@@ -746,23 +749,23 @@ class Alarm PROTOBUF_FINAL :
   std::string* _internal_mutable_picture();
   public:
 
-  // required .msg.Information information = 4;
-  bool has_information() const;
+  // required .msg.AlarmInfo alarminfo = 4;
+  bool has_alarminfo() const;
   private:
-  bool _internal_has_information() const;
+  bool _internal_has_alarminfo() const;
   public:
-  void clear_information();
-  const ::msg::Information& information() const;
-  ::msg::Information* release_information();
-  ::msg::Information* mutable_information();
-  void set_allocated_information(::msg::Information* information);
+  void clear_alarminfo();
+  const ::msg::AlarmInfo& alarminfo() const;
+  ::msg::AlarmInfo* release_alarminfo();
+  ::msg::AlarmInfo* mutable_alarminfo();
+  void set_allocated_alarminfo(::msg::AlarmInfo* alarminfo);
   private:
-  const ::msg::Information& _internal_information() const;
-  ::msg::Information* _internal_mutable_information();
+  const ::msg::AlarmInfo& _internal_alarminfo() const;
+  ::msg::AlarmInfo* _internal_mutable_alarminfo();
   public:
-  void unsafe_arena_set_allocated_information(
-      ::msg::Information* information);
-  ::msg::Information* unsafe_arena_release_information();
+  void unsafe_arena_set_allocated_alarminfo(
+      ::msg::AlarmInfo* alarminfo);
+  ::msg::AlarmInfo* unsafe_arena_release_alarminfo();
 
   // @@protoc_insertion_point(class_scope:msg.Alarm)
  private:
@@ -779,7 +782,7 @@ class Alarm PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr cid_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr time_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr picture_;
-  ::msg::Information* information_;
+  ::msg::AlarmInfo* alarminfo_;
   friend struct ::TableStruct_Alarm_2eproto;
 };
 // ===================================================================
@@ -791,256 +794,256 @@ class Alarm PROTOBUF_FINAL :
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wstrict-aliasing"
 #endif  // __GNUC__
-// Position
+// AlarmPosition
 
 // required int32 x = 1;
-inline bool Position::_internal_has_x() const {
+inline bool AlarmPosition::_internal_has_x() const {
   bool value = (_has_bits_[0] & 0x00000001u) != 0;
   return value;
 }
-inline bool Position::has_x() const {
+inline bool AlarmPosition::has_x() const {
   return _internal_has_x();
 }
-inline void Position::clear_x() {
+inline void AlarmPosition::clear_x() {
   x_ = 0;
   _has_bits_[0] &= ~0x00000001u;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 Position::_internal_x() const {
+inline ::PROTOBUF_NAMESPACE_ID::int32 AlarmPosition::_internal_x() const {
   return x_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 Position::x() const {
-  // @@protoc_insertion_point(field_get:msg.Position.x)
+inline ::PROTOBUF_NAMESPACE_ID::int32 AlarmPosition::x() const {
+  // @@protoc_insertion_point(field_get:msg.AlarmPosition.x)
   return _internal_x();
 }
-inline void Position::_internal_set_x(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void AlarmPosition::_internal_set_x(::PROTOBUF_NAMESPACE_ID::int32 value) {
   _has_bits_[0] |= 0x00000001u;
   x_ = value;
 }
-inline void Position::set_x(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void AlarmPosition::set_x(::PROTOBUF_NAMESPACE_ID::int32 value) {
   _internal_set_x(value);
-  // @@protoc_insertion_point(field_set:msg.Position.x)
+  // @@protoc_insertion_point(field_set:msg.AlarmPosition.x)
 }
 
 // required int32 y = 2;
-inline bool Position::_internal_has_y() const {
+inline bool AlarmPosition::_internal_has_y() const {
   bool value = (_has_bits_[0] & 0x00000002u) != 0;
   return value;
 }
-inline bool Position::has_y() const {
+inline bool AlarmPosition::has_y() const {
   return _internal_has_y();
 }
-inline void Position::clear_y() {
+inline void AlarmPosition::clear_y() {
   y_ = 0;
   _has_bits_[0] &= ~0x00000002u;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 Position::_internal_y() const {
+inline ::PROTOBUF_NAMESPACE_ID::int32 AlarmPosition::_internal_y() const {
   return y_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 Position::y() const {
-  // @@protoc_insertion_point(field_get:msg.Position.y)
+inline ::PROTOBUF_NAMESPACE_ID::int32 AlarmPosition::y() const {
+  // @@protoc_insertion_point(field_get:msg.AlarmPosition.y)
   return _internal_y();
 }
-inline void Position::_internal_set_y(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void AlarmPosition::_internal_set_y(::PROTOBUF_NAMESPACE_ID::int32 value) {
   _has_bits_[0] |= 0x00000002u;
   y_ = value;
 }
-inline void Position::set_y(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void AlarmPosition::set_y(::PROTOBUF_NAMESPACE_ID::int32 value) {
   _internal_set_y(value);
-  // @@protoc_insertion_point(field_set:msg.Position.y)
+  // @@protoc_insertion_point(field_set:msg.AlarmPosition.y)
 }
 
 // required int32 w = 3;
-inline bool Position::_internal_has_w() const {
+inline bool AlarmPosition::_internal_has_w() const {
   bool value = (_has_bits_[0] & 0x00000004u) != 0;
   return value;
 }
-inline bool Position::has_w() const {
+inline bool AlarmPosition::has_w() const {
   return _internal_has_w();
 }
-inline void Position::clear_w() {
+inline void AlarmPosition::clear_w() {
   w_ = 0;
   _has_bits_[0] &= ~0x00000004u;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 Position::_internal_w() const {
+inline ::PROTOBUF_NAMESPACE_ID::int32 AlarmPosition::_internal_w() const {
   return w_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 Position::w() const {
-  // @@protoc_insertion_point(field_get:msg.Position.w)
+inline ::PROTOBUF_NAMESPACE_ID::int32 AlarmPosition::w() const {
+  // @@protoc_insertion_point(field_get:msg.AlarmPosition.w)
   return _internal_w();
 }
-inline void Position::_internal_set_w(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void AlarmPosition::_internal_set_w(::PROTOBUF_NAMESPACE_ID::int32 value) {
   _has_bits_[0] |= 0x00000004u;
   w_ = value;
 }
-inline void Position::set_w(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void AlarmPosition::set_w(::PROTOBUF_NAMESPACE_ID::int32 value) {
   _internal_set_w(value);
-  // @@protoc_insertion_point(field_set:msg.Position.w)
+  // @@protoc_insertion_point(field_set:msg.AlarmPosition.w)
 }
 
 // required int32 h = 4;
-inline bool Position::_internal_has_h() const {
+inline bool AlarmPosition::_internal_has_h() const {
   bool value = (_has_bits_[0] & 0x00000008u) != 0;
   return value;
 }
-inline bool Position::has_h() const {
+inline bool AlarmPosition::has_h() const {
   return _internal_has_h();
 }
-inline void Position::clear_h() {
+inline void AlarmPosition::clear_h() {
   h_ = 0;
   _has_bits_[0] &= ~0x00000008u;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 Position::_internal_h() const {
+inline ::PROTOBUF_NAMESPACE_ID::int32 AlarmPosition::_internal_h() const {
   return h_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 Position::h() const {
-  // @@protoc_insertion_point(field_get:msg.Position.h)
+inline ::PROTOBUF_NAMESPACE_ID::int32 AlarmPosition::h() const {
+  // @@protoc_insertion_point(field_get:msg.AlarmPosition.h)
   return _internal_h();
 }
-inline void Position::_internal_set_h(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void AlarmPosition::_internal_set_h(::PROTOBUF_NAMESPACE_ID::int32 value) {
   _has_bits_[0] |= 0x00000008u;
   h_ = value;
 }
-inline void Position::set_h(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void AlarmPosition::set_h(::PROTOBUF_NAMESPACE_ID::int32 value) {
   _internal_set_h(value);
-  // @@protoc_insertion_point(field_set:msg.Position.h)
+  // @@protoc_insertion_point(field_set:msg.AlarmPosition.h)
 }
 
 // -------------------------------------------------------------------
 
-// Information
+// AlarmInfo
 
-// required .msg.Information.Type type = 1;
-inline bool Information::_internal_has_type() const {
+// required .msg.AlarmInfo.Type type = 1;
+inline bool AlarmInfo::_internal_has_type() const {
   bool value = (_has_bits_[0] & 0x00000002u) != 0;
   return value;
 }
-inline bool Information::has_type() const {
+inline bool AlarmInfo::has_type() const {
   return _internal_has_type();
 }
-inline void Information::clear_type() {
+inline void AlarmInfo::clear_type() {
   type_ = 1;
   _has_bits_[0] &= ~0x00000002u;
 }
-inline ::msg::Information_Type Information::_internal_type() const {
-  return static_cast< ::msg::Information_Type >(type_);
+inline ::msg::AlarmInfo_Type AlarmInfo::_internal_type() const {
+  return static_cast< ::msg::AlarmInfo_Type >(type_);
 }
-inline ::msg::Information_Type Information::type() const {
-  // @@protoc_insertion_point(field_get:msg.Information.type)
+inline ::msg::AlarmInfo_Type AlarmInfo::type() const {
+  // @@protoc_insertion_point(field_get:msg.AlarmInfo.type)
   return _internal_type();
 }
-inline void Information::_internal_set_type(::msg::Information_Type value) {
-  assert(::msg::Information_Type_IsValid(value));
+inline void AlarmInfo::_internal_set_type(::msg::AlarmInfo_Type value) {
+  assert(::msg::AlarmInfo_Type_IsValid(value));
   _has_bits_[0] |= 0x00000002u;
   type_ = value;
 }
-inline void Information::set_type(::msg::Information_Type value) {
+inline void AlarmInfo::set_type(::msg::AlarmInfo_Type value) {
   _internal_set_type(value);
-  // @@protoc_insertion_point(field_set:msg.Information.type)
+  // @@protoc_insertion_point(field_set:msg.AlarmInfo.type)
 }
 
-// repeated .msg.Position position = 2;
-inline int Information::_internal_position_size() const {
-  return position_.size();
+// repeated .msg.AlarmPosition alarmposition = 2;
+inline int AlarmInfo::_internal_alarmposition_size() const {
+  return alarmposition_.size();
 }
-inline int Information::position_size() const {
-  return _internal_position_size();
+inline int AlarmInfo::alarmposition_size() const {
+  return _internal_alarmposition_size();
 }
-inline void Information::clear_position() {
-  position_.Clear();
+inline void AlarmInfo::clear_alarmposition() {
+  alarmposition_.Clear();
 }
-inline ::msg::Position* Information::mutable_position(int index) {
-  // @@protoc_insertion_point(field_mutable:msg.Information.position)
-  return position_.Mutable(index);
+inline ::msg::AlarmPosition* AlarmInfo::mutable_alarmposition(int index) {
+  // @@protoc_insertion_point(field_mutable:msg.AlarmInfo.alarmposition)
+  return alarmposition_.Mutable(index);
 }
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::Position >*
-Information::mutable_position() {
-  // @@protoc_insertion_point(field_mutable_list:msg.Information.position)
-  return &position_;
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::AlarmPosition >*
+AlarmInfo::mutable_alarmposition() {
+  // @@protoc_insertion_point(field_mutable_list:msg.AlarmInfo.alarmposition)
+  return &alarmposition_;
 }
-inline const ::msg::Position& Information::_internal_position(int index) const {
-  return position_.Get(index);
+inline const ::msg::AlarmPosition& AlarmInfo::_internal_alarmposition(int index) const {
+  return alarmposition_.Get(index);
 }
-inline const ::msg::Position& Information::position(int index) const {
-  // @@protoc_insertion_point(field_get:msg.Information.position)
-  return _internal_position(index);
+inline const ::msg::AlarmPosition& AlarmInfo::alarmposition(int index) const {
+  // @@protoc_insertion_point(field_get:msg.AlarmInfo.alarmposition)
+  return _internal_alarmposition(index);
 }
-inline ::msg::Position* Information::_internal_add_position() {
-  return position_.Add();
+inline ::msg::AlarmPosition* AlarmInfo::_internal_add_alarmposition() {
+  return alarmposition_.Add();
 }
-inline ::msg::Position* Information::add_position() {
-  // @@protoc_insertion_point(field_add:msg.Information.position)
-  return _internal_add_position();
+inline ::msg::AlarmPosition* AlarmInfo::add_alarmposition() {
+  // @@protoc_insertion_point(field_add:msg.AlarmInfo.alarmposition)
+  return _internal_add_alarmposition();
 }
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::Position >&
-Information::position() const {
-  // @@protoc_insertion_point(field_list:msg.Information.position)
-  return position_;
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::AlarmPosition >&
+AlarmInfo::alarmposition() const {
+  // @@protoc_insertion_point(field_list:msg.AlarmInfo.alarmposition)
+  return alarmposition_;
 }
 
 // optional string uid = 3;
-inline bool Information::_internal_has_uid() const {
+inline bool AlarmInfo::_internal_has_uid() const {
   bool value = (_has_bits_[0] & 0x00000001u) != 0;
   return value;
 }
-inline bool Information::has_uid() const {
+inline bool AlarmInfo::has_uid() const {
   return _internal_has_uid();
 }
-inline void Information::clear_uid() {
+inline void AlarmInfo::clear_uid() {
   uid_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   _has_bits_[0] &= ~0x00000001u;
 }
-inline const std::string& Information::uid() const {
-  // @@protoc_insertion_point(field_get:msg.Information.uid)
+inline const std::string& AlarmInfo::uid() const {
+  // @@protoc_insertion_point(field_get:msg.AlarmInfo.uid)
   return _internal_uid();
 }
-inline void Information::set_uid(const std::string& value) {
+inline void AlarmInfo::set_uid(const std::string& value) {
   _internal_set_uid(value);
-  // @@protoc_insertion_point(field_set:msg.Information.uid)
+  // @@protoc_insertion_point(field_set:msg.AlarmInfo.uid)
 }
-inline std::string* Information::mutable_uid() {
-  // @@protoc_insertion_point(field_mutable:msg.Information.uid)
+inline std::string* AlarmInfo::mutable_uid() {
+  // @@protoc_insertion_point(field_mutable:msg.AlarmInfo.uid)
   return _internal_mutable_uid();
 }
-inline const std::string& Information::_internal_uid() const {
+inline const std::string& AlarmInfo::_internal_uid() const {
   return uid_.Get();
 }
-inline void Information::_internal_set_uid(const std::string& value) {
+inline void AlarmInfo::_internal_set_uid(const std::string& value) {
   _has_bits_[0] |= 0x00000001u;
   uid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value, GetArena());
 }
-inline void Information::set_uid(std::string&& value) {
+inline void AlarmInfo::set_uid(std::string&& value) {
   _has_bits_[0] |= 0x00000001u;
   uid_.Set(
     &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
-  // @@protoc_insertion_point(field_set_rvalue:msg.Information.uid)
+  // @@protoc_insertion_point(field_set_rvalue:msg.AlarmInfo.uid)
 }
-inline void Information::set_uid(const char* value) {
+inline void AlarmInfo::set_uid(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   _has_bits_[0] |= 0x00000001u;
   uid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
               GetArena());
-  // @@protoc_insertion_point(field_set_char:msg.Information.uid)
+  // @@protoc_insertion_point(field_set_char:msg.AlarmInfo.uid)
 }
-inline void Information::set_uid(const char* value,
+inline void AlarmInfo::set_uid(const char* value,
     size_t size) {
   _has_bits_[0] |= 0x00000001u;
   uid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
       reinterpret_cast<const char*>(value), size), GetArena());
-  // @@protoc_insertion_point(field_set_pointer:msg.Information.uid)
+  // @@protoc_insertion_point(field_set_pointer:msg.AlarmInfo.uid)
 }
-inline std::string* Information::_internal_mutable_uid() {
+inline std::string* AlarmInfo::_internal_mutable_uid() {
   _has_bits_[0] |= 0x00000001u;
   return uid_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
-inline std::string* Information::release_uid() {
-  // @@protoc_insertion_point(field_release:msg.Information.uid)
+inline std::string* AlarmInfo::release_uid() {
+  // @@protoc_insertion_point(field_release:msg.AlarmInfo.uid)
   if (!_internal_has_uid()) {
     return nullptr;
   }
   _has_bits_[0] &= ~0x00000001u;
   return uid_.ReleaseNonDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
-inline void Information::set_allocated_uid(std::string* uid) {
+inline void AlarmInfo::set_allocated_uid(std::string* uid) {
   if (uid != nullptr) {
     _has_bits_[0] |= 0x00000001u;
   } else {
@@ -1048,16 +1051,16 @@ inline void Information::set_allocated_uid(std::string* uid) {
   }
   uid_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), uid,
       GetArena());
-  // @@protoc_insertion_point(field_set_allocated:msg.Information.uid)
+  // @@protoc_insertion_point(field_set_allocated:msg.AlarmInfo.uid)
 }
-inline std::string* Information::unsafe_arena_release_uid() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:msg.Information.uid)
+inline std::string* AlarmInfo::unsafe_arena_release_uid() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:msg.AlarmInfo.uid)
   GOOGLE_DCHECK(GetArena() != nullptr);
   _has_bits_[0] &= ~0x00000001u;
   return uid_.UnsafeArenaRelease(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       GetArena());
 }
-inline void Information::unsafe_arena_set_allocated_uid(
+inline void AlarmInfo::unsafe_arena_set_allocated_uid(
     std::string* uid) {
   GOOGLE_DCHECK(GetArena() != nullptr);
   if (uid != nullptr) {
@@ -1067,7 +1070,7 @@ inline void Information::unsafe_arena_set_allocated_uid(
   }
   uid_.UnsafeArenaSetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       uid, GetArena());
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:msg.Information.uid)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:msg.AlarmInfo.uid)
 }
 
 // -------------------------------------------------------------------
@@ -1353,87 +1356,87 @@ inline void Alarm::unsafe_arena_set_allocated_picture(
   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:msg.Alarm.picture)
 }
 
-// required .msg.Information information = 4;
-inline bool Alarm::_internal_has_information() const {
+// required .msg.AlarmInfo alarminfo = 4;
+inline bool Alarm::_internal_has_alarminfo() const {
   bool value = (_has_bits_[0] & 0x00000008u) != 0;
-  PROTOBUF_ASSUME(!value || information_ != nullptr);
+  PROTOBUF_ASSUME(!value || alarminfo_ != nullptr);
   return value;
 }
-inline bool Alarm::has_information() const {
-  return _internal_has_information();
+inline bool Alarm::has_alarminfo() const {
+  return _internal_has_alarminfo();
 }
-inline void Alarm::clear_information() {
-  if (information_ != nullptr) information_->Clear();
+inline void Alarm::clear_alarminfo() {
+  if (alarminfo_ != nullptr) alarminfo_->Clear();
   _has_bits_[0] &= ~0x00000008u;
 }
-inline const ::msg::Information& Alarm::_internal_information() const {
-  const ::msg::Information* p = information_;
-  return p != nullptr ? *p : *reinterpret_cast<const ::msg::Information*>(
-      &::msg::_Information_default_instance_);
+inline const ::msg::AlarmInfo& Alarm::_internal_alarminfo() const {
+  const ::msg::AlarmInfo* p = alarminfo_;
+  return p != nullptr ? *p : *reinterpret_cast<const ::msg::AlarmInfo*>(
+      &::msg::_AlarmInfo_default_instance_);
 }
-inline const ::msg::Information& Alarm::information() const {
-  // @@protoc_insertion_point(field_get:msg.Alarm.information)
-  return _internal_information();
+inline const ::msg::AlarmInfo& Alarm::alarminfo() const {
+  // @@protoc_insertion_point(field_get:msg.Alarm.alarminfo)
+  return _internal_alarminfo();
 }
-inline void Alarm::unsafe_arena_set_allocated_information(
-    ::msg::Information* information) {
+inline void Alarm::unsafe_arena_set_allocated_alarminfo(
+    ::msg::AlarmInfo* alarminfo) {
   if (GetArena() == nullptr) {
-    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(information_);
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(alarminfo_);
   }
-  information_ = information;
-  if (information) {
+  alarminfo_ = alarminfo;
+  if (alarminfo) {
     _has_bits_[0] |= 0x00000008u;
   } else {
     _has_bits_[0] &= ~0x00000008u;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:msg.Alarm.information)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:msg.Alarm.alarminfo)
 }
-inline ::msg::Information* Alarm::release_information() {
+inline ::msg::AlarmInfo* Alarm::release_alarminfo() {
   _has_bits_[0] &= ~0x00000008u;
-  ::msg::Information* temp = information_;
-  information_ = nullptr;
+  ::msg::AlarmInfo* temp = alarminfo_;
+  alarminfo_ = nullptr;
   if (GetArena() != nullptr) {
     temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
   }
   return temp;
 }
-inline ::msg::Information* Alarm::unsafe_arena_release_information() {
-  // @@protoc_insertion_point(field_release:msg.Alarm.information)
+inline ::msg::AlarmInfo* Alarm::unsafe_arena_release_alarminfo() {
+  // @@protoc_insertion_point(field_release:msg.Alarm.alarminfo)
   _has_bits_[0] &= ~0x00000008u;
-  ::msg::Information* temp = information_;
-  information_ = nullptr;
+  ::msg::AlarmInfo* temp = alarminfo_;
+  alarminfo_ = nullptr;
   return temp;
 }
-inline ::msg::Information* Alarm::_internal_mutable_information() {
+inline ::msg::AlarmInfo* Alarm::_internal_mutable_alarminfo() {
   _has_bits_[0] |= 0x00000008u;
-  if (information_ == nullptr) {
-    auto* p = CreateMaybeMessage<::msg::Information>(GetArena());
-    information_ = p;
+  if (alarminfo_ == nullptr) {
+    auto* p = CreateMaybeMessage<::msg::AlarmInfo>(GetArena());
+    alarminfo_ = p;
   }
-  return information_;
+  return alarminfo_;
 }
-inline ::msg::Information* Alarm::mutable_information() {
-  // @@protoc_insertion_point(field_mutable:msg.Alarm.information)
-  return _internal_mutable_information();
+inline ::msg::AlarmInfo* Alarm::mutable_alarminfo() {
+  // @@protoc_insertion_point(field_mutable:msg.Alarm.alarminfo)
+  return _internal_mutable_alarminfo();
 }
-inline void Alarm::set_allocated_information(::msg::Information* information) {
+inline void Alarm::set_allocated_alarminfo(::msg::AlarmInfo* alarminfo) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
   if (message_arena == nullptr) {
-    delete information_;
+    delete alarminfo_;
   }
-  if (information) {
+  if (alarminfo) {
     ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(information);
+      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(alarminfo);
     if (message_arena != submessage_arena) {
-      information = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, information, submessage_arena);
+      alarminfo = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, alarminfo, submessage_arena);
     }
     _has_bits_[0] |= 0x00000008u;
   } else {
     _has_bits_[0] &= ~0x00000008u;
   }
-  information_ = information;
-  // @@protoc_insertion_point(field_set_allocated:msg.Alarm.information)
+  alarminfo_ = alarminfo;
+  // @@protoc_insertion_point(field_set_allocated:msg.Alarm.alarminfo)
 }
 
 #ifdef __GNUC__
@@ -1450,10 +1453,10 @@ inline void Alarm::set_allocated_information(::msg::Information* information) {
 
 PROTOBUF_NAMESPACE_OPEN
 
-template <> struct is_proto_enum< ::msg::Information_Type> : ::std::true_type {};
+template <> struct is_proto_enum< ::msg::AlarmInfo_Type> : ::std::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::msg::Information_Type>() {
-  return ::msg::Information_Type_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor< ::msg::AlarmInfo_Type>() {
+  return ::msg::AlarmInfo_Type_descriptor();
 }
 
 PROTOBUF_NAMESPACE_CLOSE

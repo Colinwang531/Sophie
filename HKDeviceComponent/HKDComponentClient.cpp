@@ -11,10 +11,10 @@
 #include "Xml/XmlCodec.h"
 using XMLParser = base::xml::XMLParser;
 using XMLPacker = base::xml::XMLPacker;
+#include "Component/AbstractComponent.h"
 #include "Device/Hikvision/HikvisionDevice.h"
 using AbstractDevice = base::device::AbstractDevice;
 using HikvisionDevice = base::device::HikvisionDevice;
-#include "Protocol/MessageDefs.h"
 #include "HKDComponentClient.h"
 
 HKDComponentClient::HKDComponentClient() : DeviceComponentClient() {}
@@ -46,7 +46,7 @@ int HKDComponentClient::setClientName(const std::string name) const
 
 int HKDComponentClient::getClientType() const
 {
-	return static_cast<int>(ComponentType::COMPONENT_TYPE_HKD);
+	return static_cast<int>(base::component::ComponentType::COMPONENT_TYPE_HKD);
 }
 
 void HKDComponentClient::unpackMessageFailure()
@@ -74,44 +74,44 @@ int HKDComponentClient::afterParseDeviceCommandNewRequest(
 
 	if (eSuccess == e)
 	{
-		AbstractDevicePtr devicePtr{
-			boost::make_shared<HikvisionDevice>(name, password, address, port) };
-		if (devicePtr)
-		{
-			if (eSuccess == devicePtr->createNewDevice())
-			{
-				abstractDeviceGroup.insert(did, devicePtr);
-				LOG(INFO) <<
-					"Create and log in new device successfully" <<
-					", ID = " << did <<
-					", IP = " << address <<
-					", Port = " << port <<
-					", Name = " << name <<
-					", Password = " << password << ".";
-			}
-			else
-			{
-				e = eBadLoginDevice;
-				LOG(WARNING) <<
-					"Create and log in new device failed, result = " << e <<
-					", ID = " << did <<
-					", IP = " << address <<
-					", Port = " << port <<
-					", Name = " << name <<
-					", Password = " << password << ".";
-			}
-		}
-		else
-		{
-			e = eBadNewObject;
-			LOG(ERROR) <<
-				"Bad create new device object, result = " << e <<
-				", ID = " << did <<
-				", IP = " << address <<
-				", Port = " << port <<
-				", Name = " << name <<
-				", Password = " << password << ".";
-		}
+// 		AbstractDevicePtr devicePtr{
+// 			boost::make_shared<HikvisionDevice>(name, password, address, port) };
+// 		if (devicePtr)
+// 		{
+// 			if (eSuccess == devicePtr->createNewDevice())
+// 			{
+// 				abstractDeviceGroup.insert(did, devicePtr);
+// 				LOG(INFO) <<
+// 					"Create and log in new device successfully" <<
+// 					", ID = " << did <<
+// 					", IP = " << address <<
+// 					", Port = " << port <<
+// 					", Name = " << name <<
+// 					", Password = " << password << ".";
+// 			}
+// 			else
+// 			{
+// 				e = eBadLoginDevice;
+// 				LOG(WARNING) <<
+// 					"Create and log in new device failed, result = " << e <<
+// 					", ID = " << did <<
+// 					", IP = " << address <<
+// 					", Port = " << port <<
+// 					", Name = " << name <<
+// 					", Password = " << password << ".";
+// 			}
+// 		}
+// 		else
+// 		{
+// 			e = eBadNewObject;
+// 			LOG(ERROR) <<
+// 				"Bad create new device object, result = " << e <<
+// 				", ID = " << did <<
+// 				", IP = " << address <<
+// 				", Port = " << port <<
+// 				", Name = " << name <<
+// 				", Password = " << password << ".";
+// 		}
 	}
 
 	return e;
@@ -126,7 +126,7 @@ int HKDComponentClient::afterParseDeviceCommandDeleteRequest(const std::string d
 		boost::shared_ptr<AbstractDevice> adp{ abstractDeviceGroup.at(did) };
 		if (adp)
 		{
-			e = adp->destoryDevice();
+//			e = adp->destoryDevice();
 			abstractDeviceGroup.remove(did);
 			LOG(INFO) << "Delete device result = " << e << " with empty device ID = " << did << ".";
 		}

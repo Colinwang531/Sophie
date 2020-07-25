@@ -2,7 +2,7 @@ syntax = "proto2";
 
 package msg;
 
-message Position
+message AlarmPosition
 {
 	required int32 x = 1;
 	required int32 y = 2;
@@ -10,19 +10,20 @@ message Position
 	required int32 h = 4;
 }
 
-message Information
+message AlarmInfo
 {
 	enum Type
 	{
-		SLEEP = 1;
-		FIGHT = 2;
-		HELMET = 3;
-		PHONE = 4;
-		FACE = 5;
+		HELMET = 1;
+		PHONE = 2;
+		SLEEP = 3;
+		FIGHT = 4;
+		ATTENDANCE_IN = 5;
+		ATTENDANCE_OUT = 6;
 	}
 	
 	required Type type = 1;
-	repeated Position position = 2;
+	repeated AlarmPosition alarmposition = 2;
 	optional string uid = 3;
 }
 
@@ -31,5 +32,5 @@ message Alarm
 	required string cid = 1;
 	required string time = 2;
 	required string picture = 3;
-	required Information information = 4;
+	required AlarmInfo alarminfo = 4;
 }

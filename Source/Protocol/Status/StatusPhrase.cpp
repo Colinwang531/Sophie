@@ -14,10 +14,11 @@ namespace base
 		StatusParser::StatusParser(){}
 		StatusParser::~StatusParser(){}
 
-		void* StatusParser::unpackFromStatusMessage(void* s /* = nullptr */)
+		void* StatusParser::parseStatusMessage(void* msg /* = nullptr */)
 		{
+			msg::MSG* mm{ reinterpret_cast<msg::MSG*>(msg) };
 			AbstractPacket* ap{ nullptr };
-			msg::Status* ms{ reinterpret_cast<msg::Status*>(s) };
+			msg::Status* ms{ mm->release_status() };
 
 			if (ms)
 			{
@@ -82,7 +83,7 @@ namespace base
 					rep->set_result(result);
 					if (data)
 					{
-						rep->set_name(reinterpret_cast<const char*>(data));
+//						rep->set_name(reinterpret_cast<const char*>(data));
 					}
 				}
 			}

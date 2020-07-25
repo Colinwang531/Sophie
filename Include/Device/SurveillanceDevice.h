@@ -13,6 +13,7 @@
 #ifndef BASE_DEVICE_SURVEILLANCE_DEVICE_H
 #define BASE_DEVICE_SURVEILLANCE_DEVICE_H
 
+#include <string>
 #include "Device/AbstractDevice.h"
 
 namespace base

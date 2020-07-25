@@ -2,18 +2,17 @@
 #include "boost/date_time/posix_time/posix_time.hpp"
 #include "boost/thread.hpp"
 #include "Error.h"
-#include "Protocol/MessageDefs.h"
-#include "Protocol/Alarm/AlarmCodec.h"
-#include "Protocol/Algorithm/AlgorithmCodec.h"
-#include "Protocol/Component/ComponentCodec.h"
-using ComponentParser = base::protocol::ComponentParser;
-using ComponentPacker = base::protocol::ComponentPacker;
-#include "Protocol/Crew/CrewCodec.h"
-#include "Protocol/Device/DeviceCodec.h"
-#include "Protocol/Status/StatusCodec.h"
-#include "Protocol/MessageCodec.h"
-using MessageParser = base::protocol::MessageParser;
-using MessagePacker = base::protocol::MessagePacker;
+// #include "Protocol/Alarm/AlarmPhrase.h"
+// #include "Protocol/Algorithm/AlgorithmPhrase.h"
+// #include "Protocol/Component/ComponentPhrase.h"
+// using ComponentParser = base::protocol::ComponentParser;
+// using ComponentPacker = base::protocol::ComponentPacker;
+// #include "Protocol/Crew/CrewPhrase.h"
+// #include "Protocol/Device/DevicePhrase.h"
+// #include "Protocol/Status/StatusPhrase.h"
+#include "Protocol/CommandPhrase.h"
+using CommandParser = base::protocol::CommandParser;
+using CommandPacker = base::protocol::CommandPacker;
 #include "Thread/ThreadPool.h"
 using ThreadPool = base::thread::ThreadPool;
 #include "Time/XTime.h"
@@ -49,63 +48,63 @@ namespace base
 			const void* data /* = nullptr */, 
 			const unsigned int databytes /* = 0 */)
 		{
-			//解析MSG封装数据获取消息类型和内容
-			MessageParser parser;
-			MessagePacket* mp{ reinterpret_cast<MessagePacket*>(parser.createNewPacket()) };
-
-			if (eSuccess == parser.unpackMessage(data, databytes, mp) && mp)
-			{
-				switch (mp->type)
-				{
-					case MessageType::MESSAGE_TYPE_ALARM:
-					{
-						parseAlarmMessage(mp);
-						break;
-					}
-					case MessageType::MESSAGE_TYPE_ALGORITHM:
-					{
-						parseAlgorithmMessage(mp);
-						break;
-					}
-					case MessageType::MESSAGE_TYPE_COMPONENT:
-					{
-						parseComponentMessage(mp);
-						break;
-					}
-					case MessageType::MESSAGE_TYPE_CREW:
-					{
-						parseCrewMessage(mp);
-						break;
-					}
-					case MessageType::MESSAGE_TYPE_DEVICE:
-					{
-						parseDeviceMessage(mp);
-						break;
-					}
-					case MessageType::MESSAGE_TYPE_STATUS:
-					{
-						parseStatusMessage(mp);
-						break;
-					}
-					case MessageType::MESSAGE_TYPE_USER:
-					{
-						parseUserMessage(mp);
-						break;
-					}
-					default:
-					{
-						parseUnknownMessage();
-						break;
-					}
-				}
-			}
-			else
-			{
-				unpackMessageFailure();
-			}
-
-			//销毁消息包实例
-			parser.destroyPacket(mp);
+// 			//解析MSG封装数据获取消息类型和内容
+// 			MessageParser parser;
+// 			MessagePacket* mp{ reinterpret_cast<MessagePacket*>(parser.createNewPacket()) };
+// 
+// 			if (eSuccess == parser.unpackMessage(data, databytes, mp) && mp)
+// 			{
+// 				switch (mp->type)
+// 				{
+// 					case MessageType::MESSAGE_TYPE_ALARM:
+// 					{
+// 						parseAlarmMessage(mp);
+// 						break;
+// 					}
+// 					case MessageType::MESSAGE_TYPE_ALGORITHM:
+// 					{
+// 						parseAlgorithmMessage(mp);
+// 						break;
+// 					}
+// 					case MessageType::MESSAGE_TYPE_COMPONENT:
+// 					{
+// 						parseComponentMessage(mp);
+// 						break;
+// 					}
+// 					case MessageType::MESSAGE_TYPE_CREW:
+// 					{
+// 						parseCrewMessage(mp);
+// 						break;
+// 					}
+// 					case MessageType::MESSAGE_TYPE_DEVICE:
+// 					{
+// 						parseDeviceMessage(mp);
+// 						break;
+// 					}
+// 					case MessageType::MESSAGE_TYPE_STATUS:
+// 					{
+// 						parseStatusMessage(mp);
+// 						break;
+// 					}
+// 					case MessageType::MESSAGE_TYPE_USER:
+// 					{
+// 						parseUserMessage(mp);
+// 						break;
+// 					}
+// 					default:
+// 					{
+// 						parseUnknownMessage();
+// 						break;
+// 					}
+// 				}
+// 			}
+// 			else
+// 			{
+// 				unpackMessageFailure();
+// 			}
+// 
+// 			//销毁消息包实例
+// 			parser.destroyPacket(mp);
 		}
 
 		int NetworkAsynchronousClient::createNewSigninAndHeartbeatWorkerThread()
@@ -148,28 +147,28 @@ namespace base
 		int NetworkAsynchronousClient::sendSigninOrHeartbeatRequestMessage()
 		{
 			int e{ eBadPackProtocol };
-			ComponentInfo ci{
-				static_cast<ComponentType>(getClientType()), 
-				Time().tickcount(), 
-				"",
-				getClientID(), 
-				getClientName() };
-			const std::string req{
-				MessagePacker().packMessage(
-					static_cast<int>(MessageType::MESSAGE_TYPE_COMPONENT), 
-					getRequestSequenceNumber(), 
-					//注册和心跳都使用ComponentCommand::COMPONENT_COMMAND_SIGNIN_REQ类型
-					ComponentPacker().packComponent(static_cast<int>(ComponentCommand::COMPONENT_COMMAND_SIGNIN_REQ), 0, &ci)) };
-
-			if (!req.empty())
-			{
-				const std::string delimiter{" "};
-				AsynchronousSender as;
-				const unsigned int sentBytes{ 
-					as.sendData(dealer, delimiter.c_str(), delimiter.length(), true) +
-					as.sendData(dealer, req.c_str(), req.length()) };
-				e = 0 < sentBytes ? eSuccess : eBadSend;
-			}
+// 			ComponentInfo ci{
+// 				static_cast<ComponentType>(getClientType()), 
+// 				Time().tickcount(), 
+// 				"",
+// 				getClientID(), 
+// 				getClientName() };
+// 			const std::string req{
+// 				MessagePacker().packMessage(
+// 					static_cast<int>(MessageType::MESSAGE_TYPE_COMPONENT), 
+// 					getRequestSequenceNumber(), 
+// 					//注册和心跳都使用ComponentCommand::COMPONENT_COMMAND_SIGNIN_REQ类型
+// 					ComponentPacker().packComponent(static_cast<int>(ComponentCommand::COMPONENT_COMMAND_SIGNIN_REQ), 0, &ci)) };
+// 
+// 			if (!req.empty())
+// 			{
+// 				const std::string delimiter{" "};
+// 				AsynchronousSender as;
+// 				const unsigned int sentBytes{ 
+// 					as.sendData(dealer, delimiter.c_str(), delimiter.length(), true) +
+// 					as.sendData(dealer, req.c_str(), req.length()) };
+// 				e = 0 < sentBytes ? eSuccess : eBadSend;
+// 			}
 
 			return e;
 		}

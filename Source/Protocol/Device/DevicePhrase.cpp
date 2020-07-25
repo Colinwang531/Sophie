@@ -17,10 +17,11 @@ namespace base
 		DeviceParser::DeviceParser(){}
 		DeviceParser::~DeviceParser(){}
 
-		void* DeviceParser::unpackFromDeviceMessage(void* d /* = nullptr */)
+		void* DeviceParser::parseDeviceMessage(void* msg /* = nullptr */)
 		{
+			msg::MSG* mm{ reinterpret_cast<msg::MSG*>(msg) };
 			AbstractPacket* ap{ nullptr };
-			msg::Device* md{ reinterpret_cast<msg::Device*>(d) };
+			msg::Device* md{ mm->release_device() };
 
 			if (md)
 			{
@@ -37,14 +38,14 @@ namespace base
 					if (ap)
 					{
 						AbstractDevice* ad{ nullptr };
-						const msg::Embedded embedded{ md->release_devicerequest()->embedded() };
-						const msg::Embedded_Factory et{ embedded.factory() };
+						const msg::DeviceInfo& info{ md->release_devicerequest()->deviceinfo() };
+						const msg::DeviceInfo_Factory factory{ info.factory() };
 
-						if (base::device::DeviceFactory::DEVICE_FACTORY_HK == static_cast<base::device::DeviceFactory>(et))
+						if (base::device::DeviceFactory::DEVICE_FACTORY_HK == static_cast<base::device::DeviceFactory>(factory))
 						{
 							ad = new(std::nothrow) HikvisionDevice(
-								embedded.did(), 
-								static_cast<base::device::DeviceType>(embedded.type()));
+								info.did(), 
+								static_cast<base::device::DeviceType>(info.type()));
 						} 
 						else
 						{
@@ -52,11 +53,12 @@ namespace base
 
 						if (ad)
 						{
-							ad->setDeviceIPv4Address(embedded.ip());
-							ad->setDevicePortNumber(embedded.port());
-							ad->setLoginUserName(embedded.name());
-							ad->setLoginUserPassword(embedded.password());
+							ad->setDeviceIPv4Address(info.ip());
+							ad->setDevicePortNumber(info.port());
+							ad->setLoginUserName(info.name());
+							ad->setLoginUserPassword(info.password());
 							ap->setPacketData(ad);
+							ap->setPacketSequence(mm->sequence());
 						}
 						else
 						{

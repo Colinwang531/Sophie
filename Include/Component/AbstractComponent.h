@@ -13,6 +13,7 @@
 #ifndef BASE_COMPONENT_ABSTRACT_COMPONENT_H
 #define BASE_COMPONENT_ABSTRACT_COMPONENT_H
 
+#include <string>
 #include "boost/noncopyable.hpp"
 
 namespace base

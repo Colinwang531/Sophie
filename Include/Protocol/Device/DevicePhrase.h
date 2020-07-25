@@ -13,6 +13,8 @@
 #ifndef BASE_PROTOCOL_DEVICE_PHRASE_H
 #define BASE_PROTOCOL_DEVICE_PHRASE_H
 
+#include "Protocol/CommandPhrase.h"
+
 namespace base
 {
 	namespace protocol
@@ -30,17 +32,14 @@ namespace base
 			DEVICE_COMMAND_MODIFY_REP = 6
 		}DeviceCommand;
 
-		class DeviceParser
+		class DeviceParser : public CommandParser
 		{
 		public:
 			DeviceParser(void);
 			~DeviceParser(void);
 
 		public:
-			//将Protocol Buffers的组件实例转化为AbstractPacket实例
-			//@d : 通过Protocol Buffers解析得到的Device实例
-			//@Return : AbstractPacket实例
-			void* unpackFromDeviceMessage(void* d = nullptr);
+			void* parseDeviceMessage(void* msg = nullptr) override;
 		};//class DeviceParser
 	}//namespace protocol
 }//namespace base

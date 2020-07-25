@@ -2,7 +2,7 @@ syntax = "proto2";
 
 package msg;
 
-message Camera
+message CameraInfo
 {
 	required string cid = 1;
 	required int32 index = 2;
@@ -11,7 +11,7 @@ message Camera
 	optional string ip = 5;
 }
 
-message Embedded
+message DeviceInfo
 {
 	required bool enable = 1 [default = false];
 	
@@ -38,12 +38,12 @@ message Embedded
 	optional int32 port = 7;
 	optional string did = 8;
 	optional string nickname = 9;
-	repeated Camera cameras = 10;
+	repeated CameraInfo camerainfos = 10;
 }
 
 message DeviceRequest
 {
-	optional Embedded embedded = 1;
+	optional DeviceInfo deviceinfo = 1;
 	optional string did = 2;
 }
 
@@ -51,7 +51,7 @@ message DeviceResponse
 {
 	required int32 result = 1;
 	optional string did = 2;
-	repeated Embedded embeddeds = 3;
+	repeated DeviceInfo deviceinfos = 3;
 }
 
 message Device

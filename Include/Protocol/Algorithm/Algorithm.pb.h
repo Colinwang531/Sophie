@@ -59,24 +59,51 @@ namespace msg {
 class Algorithm;
 class AlgorithmDefaultTypeInternal;
 extern AlgorithmDefaultTypeInternal _Algorithm_default_instance_;
+class AlgorithmInfo;
+class AlgorithmInfoDefaultTypeInternal;
+extern AlgorithmInfoDefaultTypeInternal _AlgorithmInfo_default_instance_;
 class AlgorithmRequest;
 class AlgorithmRequestDefaultTypeInternal;
 extern AlgorithmRequestDefaultTypeInternal _AlgorithmRequest_default_instance_;
 class AlgorithmResponse;
 class AlgorithmResponseDefaultTypeInternal;
 extern AlgorithmResponseDefaultTypeInternal _AlgorithmResponse_default_instance_;
-class Configure;
-class ConfigureDefaultTypeInternal;
-extern ConfigureDefaultTypeInternal _Configure_default_instance_;
 }  // namespace msg
 PROTOBUF_NAMESPACE_OPEN
 template<> ::msg::Algorithm* Arena::CreateMaybeMessage<::msg::Algorithm>(Arena*);
+template<> ::msg::AlgorithmInfo* Arena::CreateMaybeMessage<::msg::AlgorithmInfo>(Arena*);
 template<> ::msg::AlgorithmRequest* Arena::CreateMaybeMessage<::msg::AlgorithmRequest>(Arena*);
 template<> ::msg::AlgorithmResponse* Arena::CreateMaybeMessage<::msg::AlgorithmResponse>(Arena*);
-template<> ::msg::Configure* Arena::CreateMaybeMessage<::msg::Configure>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace msg {
 
+enum AlgorithmInfo_Type : int {
+  AlgorithmInfo_Type_HELMET = 1,
+  AlgorithmInfo_Type_PHONE = 2,
+  AlgorithmInfo_Type_SLEEP = 3,
+  AlgorithmInfo_Type_FIGHT = 4,
+  AlgorithmInfo_Type_ATTENDANCE_IN = 5,
+  AlgorithmInfo_Type_ATTENDANCE_OUT = 6
+};
+bool AlgorithmInfo_Type_IsValid(int value);
+constexpr AlgorithmInfo_Type AlgorithmInfo_Type_Type_MIN = AlgorithmInfo_Type_HELMET;
+constexpr AlgorithmInfo_Type AlgorithmInfo_Type_Type_MAX = AlgorithmInfo_Type_ATTENDANCE_OUT;
+constexpr int AlgorithmInfo_Type_Type_ARRAYSIZE = AlgorithmInfo_Type_Type_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* AlgorithmInfo_Type_descriptor();
+template<typename T>
+inline const std::string& AlgorithmInfo_Type_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, AlgorithmInfo_Type>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function AlgorithmInfo_Type_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    AlgorithmInfo_Type_descriptor(), enum_t_value);
+}
+inline bool AlgorithmInfo_Type_Parse(
+    const std::string& name, AlgorithmInfo_Type* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<AlgorithmInfo_Type>(
+    AlgorithmInfo_Type_descriptor(), name, value);
+}
 enum Algorithm_Command : int {
   Algorithm_Command_CONFIGURE_REQ = 1,
   Algorithm_Command_CONFIGURE_REP = 2,
@@ -104,23 +131,23 @@ inline bool Algorithm_Command_Parse(
 }
 // ===================================================================
 
-class Configure PROTOBUF_FINAL :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:msg.Configure) */ {
+class AlgorithmInfo PROTOBUF_FINAL :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:msg.AlgorithmInfo) */ {
  public:
-  inline Configure() : Configure(nullptr) {};
-  virtual ~Configure();
+  inline AlgorithmInfo() : AlgorithmInfo(nullptr) {};
+  virtual ~AlgorithmInfo();
 
-  Configure(const Configure& from);
-  Configure(Configure&& from) noexcept
-    : Configure() {
+  AlgorithmInfo(const AlgorithmInfo& from);
+  AlgorithmInfo(AlgorithmInfo&& from) noexcept
+    : AlgorithmInfo() {
     *this = ::std::move(from);
   }
 
-  inline Configure& operator=(const Configure& from) {
+  inline AlgorithmInfo& operator=(const AlgorithmInfo& from) {
     CopyFrom(from);
     return *this;
   }
-  inline Configure& operator=(Configure&& from) noexcept {
+  inline AlgorithmInfo& operator=(AlgorithmInfo&& from) noexcept {
     if (GetArena() == from.GetArena()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -145,20 +172,20 @@ class Configure PROTOBUF_FINAL :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return GetMetadataStatic().reflection;
   }
-  static const Configure& default_instance();
+  static const AlgorithmInfo& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const Configure* internal_default_instance() {
-    return reinterpret_cast<const Configure*>(
-               &_Configure_default_instance_);
+  static inline const AlgorithmInfo* internal_default_instance() {
+    return reinterpret_cast<const AlgorithmInfo*>(
+               &_AlgorithmInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     0;
 
-  friend void swap(Configure& a, Configure& b) {
+  friend void swap(AlgorithmInfo& a, AlgorithmInfo& b) {
     a.Swap(&b);
   }
-  inline void Swap(Configure* other) {
+  inline void Swap(AlgorithmInfo* other) {
     if (other == this) return;
     if (GetArena() == other->GetArena()) {
       InternalSwap(other);
@@ -166,7 +193,7 @@ class Configure PROTOBUF_FINAL :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(Configure* other) {
+  void UnsafeArenaSwap(AlgorithmInfo* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetArena() == other->GetArena());
     InternalSwap(other);
@@ -174,17 +201,17 @@ class Configure PROTOBUF_FINAL :
 
   // implements Message ----------------------------------------------
 
-  inline Configure* New() const final {
-    return CreateMaybeMessage<Configure>(nullptr);
+  inline AlgorithmInfo* New() const final {
+    return CreateMaybeMessage<AlgorithmInfo>(nullptr);
   }
 
-  Configure* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
-    return CreateMaybeMessage<Configure>(arena);
+  AlgorithmInfo* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<AlgorithmInfo>(arena);
   }
   void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
   void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void CopyFrom(const Configure& from);
-  void MergeFrom(const Configure& from);
+  void CopyFrom(const AlgorithmInfo& from);
+  void MergeFrom(const AlgorithmInfo& from);
   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
   bool IsInitialized() const final;
 
@@ -198,13 +225,13 @@ class Configure PROTOBUF_FINAL :
   inline void SharedCtor();
   inline void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(Configure* other);
+  void InternalSwap(AlgorithmInfo* other);
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "msg.Configure";
+    return "msg.AlgorithmInfo";
   }
   protected:
-  explicit Configure(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  explicit AlgorithmInfo(::PROTOBUF_NAMESPACE_ID::Arena* arena);
   private:
   static void ArenaDtor(void* object);
   inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
@@ -221,20 +248,56 @@ class Configure PROTOBUF_FINAL :
 
   // nested types ----------------------------------------------------
 
+  typedef AlgorithmInfo_Type Type;
+  static constexpr Type HELMET =
+    AlgorithmInfo_Type_HELMET;
+  static constexpr Type PHONE =
+    AlgorithmInfo_Type_PHONE;
+  static constexpr Type SLEEP =
+    AlgorithmInfo_Type_SLEEP;
+  static constexpr Type FIGHT =
+    AlgorithmInfo_Type_FIGHT;
+  static constexpr Type ATTENDANCE_IN =
+    AlgorithmInfo_Type_ATTENDANCE_IN;
+  static constexpr Type ATTENDANCE_OUT =
+    AlgorithmInfo_Type_ATTENDANCE_OUT;
+  static inline bool Type_IsValid(int value) {
+    return AlgorithmInfo_Type_IsValid(value);
+  }
+  static constexpr Type Type_MIN =
+    AlgorithmInfo_Type_Type_MIN;
+  static constexpr Type Type_MAX =
+    AlgorithmInfo_Type_Type_MAX;
+  static constexpr int Type_ARRAYSIZE =
+    AlgorithmInfo_Type_Type_ARRAYSIZE;
+  static inline const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor*
+  Type_descriptor() {
+    return AlgorithmInfo_Type_descriptor();
+  }
+  template<typename T>
+  static inline const std::string& Type_Name(T enum_t_value) {
+    static_assert(::std::is_same<T, Type>::value ||
+      ::std::is_integral<T>::value,
+      "Incorrect type passed to function Type_Name.");
+    return AlgorithmInfo_Type_Name(enum_t_value);
+  }
+  static inline bool Type_Parse(const std::string& name,
+      Type* value) {
+    return AlgorithmInfo_Type_Parse(name, value);
+  }
+
   // accessors -------------------------------------------------------
 
   enum : int {
-    kCidFieldNumber = 1,
+    kCidFieldNumber = 3,
     kGpuFieldNumber = 2,
-    kEnablesleepFieldNumber = 3,
-    kEnablefightFieldNumber = 4,
-    kEnablehelmetFieldNumber = 5,
-    kEnablephoneFieldNumber = 6,
-    kEnableattendanceinFieldNumber = 7,
-    kEnableattendanceoutFieldNumber = 8,
-    kSimilarFieldNumber = 9,
+    kDectectfirstFieldNumber = 4,
+    kTrackFieldNumber = 5,
+    kDectectsecondFieldNumber = 6,
+    kSimilarFieldNumber = 7,
+    kTypeFieldNumber = 1,
   };
-  // required string cid = 1;
+  // required string cid = 3;
   bool has_cid() const;
   private:
   bool _internal_has_cid() const;
@@ -263,7 +326,7 @@ class Configure PROTOBUF_FINAL :
   std::string* _internal_mutable_cid();
   public:
 
-  // optional int32 gpu = 2;
+  // required int32 gpu = 2;
   bool has_gpu() const;
   private:
   bool _internal_has_gpu() const;
@@ -276,85 +339,46 @@ class Configure PROTOBUF_FINAL :
   void _internal_set_gpu(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // optional bool enablesleep = 3;
-  bool has_enablesleep() const;
+  // required float dectectfirst = 4;
+  bool has_dectectfirst() const;
   private:
-  bool _internal_has_enablesleep() const;
+  bool _internal_has_dectectfirst() const;
   public:
-  void clear_enablesleep();
-  bool enablesleep() const;
-  void set_enablesleep(bool value);
+  void clear_dectectfirst();
+  float dectectfirst() const;
+  void set_dectectfirst(float value);
   private:
-  bool _internal_enablesleep() const;
-  void _internal_set_enablesleep(bool value);
-  public:
-
-  // optional bool enablefight = 4;
-  bool has_enablefight() const;
-  private:
-  bool _internal_has_enablefight() const;
-  public:
-  void clear_enablefight();
-  bool enablefight() const;
-  void set_enablefight(bool value);
-  private:
-  bool _internal_enablefight() const;
-  void _internal_set_enablefight(bool value);
+  float _internal_dectectfirst() const;
+  void _internal_set_dectectfirst(float value);
   public:
 
-  // optional bool enablehelmet = 5;
-  bool has_enablehelmet() const;
+  // required float track = 5;
+  bool has_track() const;
   private:
-  bool _internal_has_enablehelmet() const;
+  bool _internal_has_track() const;
   public:
-  void clear_enablehelmet();
-  bool enablehelmet() const;
-  void set_enablehelmet(bool value);
+  void clear_track();
+  float track() const;
+  void set_track(float value);
   private:
-  bool _internal_enablehelmet() const;
-  void _internal_set_enablehelmet(bool value);
-  public:
-
-  // optional bool enablephone = 6;
-  bool has_enablephone() const;
-  private:
-  bool _internal_has_enablephone() const;
-  public:
-  void clear_enablephone();
-  bool enablephone() const;
-  void set_enablephone(bool value);
-  private:
-  bool _internal_enablephone() const;
-  void _internal_set_enablephone(bool value);
+  float _internal_track() const;
+  void _internal_set_track(float value);
   public:
 
-  // optional bool enableattendancein = 7;
-  bool has_enableattendancein() const;
+  // optional float dectectsecond = 6;
+  bool has_dectectsecond() const;
   private:
-  bool _internal_has_enableattendancein() const;
+  bool _internal_has_dectectsecond() const;
   public:
-  void clear_enableattendancein();
-  bool enableattendancein() const;
-  void set_enableattendancein(bool value);
+  void clear_dectectsecond();
+  float dectectsecond() const;
+  void set_dectectsecond(float value);
   private:
-  bool _internal_enableattendancein() const;
-  void _internal_set_enableattendancein(bool value);
-  public:
-
-  // optional bool enableattendanceout = 8;
-  bool has_enableattendanceout() const;
-  private:
-  bool _internal_has_enableattendanceout() const;
-  public:
-  void clear_enableattendanceout();
-  bool enableattendanceout() const;
-  void set_enableattendanceout(bool value);
-  private:
-  bool _internal_enableattendanceout() const;
-  void _internal_set_enableattendanceout(bool value);
+  float _internal_dectectsecond() const;
+  void _internal_set_dectectsecond(float value);
   public:
 
-  // optional float similar = 9;
+  // optional float similar = 7;
   bool has_similar() const;
   private:
   bool _internal_has_similar() const;
@@ -367,9 +391,25 @@ class Configure PROTOBUF_FINAL :
   void _internal_set_similar(float value);
   public:
 
-  // @@protoc_insertion_point(class_scope:msg.Configure)
+  // required .msg.AlgorithmInfo.Type type = 1;
+  bool has_type() const;
+  private:
+  bool _internal_has_type() const;
+  public:
+  void clear_type();
+  ::msg::AlgorithmInfo_Type type() const;
+  void set_type(::msg::AlgorithmInfo_Type value);
+  private:
+  ::msg::AlgorithmInfo_Type _internal_type() const;
+  void _internal_set_type(::msg::AlgorithmInfo_Type value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:msg.AlgorithmInfo)
  private:
   class _Internal;
+
+  // helper for ByteSizeLong()
+  size_t RequiredFieldsByteSizeFallback() const;
 
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
@@ -378,13 +418,11 @@ class Configure PROTOBUF_FINAL :
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr cid_;
   ::PROTOBUF_NAMESPACE_ID::int32 gpu_;
-  bool enablesleep_;
-  bool enablefight_;
-  bool enablehelmet_;
-  bool enablephone_;
-  bool enableattendancein_;
-  bool enableattendanceout_;
+  float dectectfirst_;
+  float track_;
+  float dectectsecond_;
   float similar_;
+  int type_;
   friend struct ::TableStruct_Algorithm_2eproto;
 };
 // -------------------------------------------------------------------
@@ -509,25 +547,25 @@ class AlgorithmRequest PROTOBUF_FINAL :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kConfiguresFieldNumber = 1,
+    kAlgorithminfoFieldNumber = 1,
   };
-  // repeated .msg.Configure configures = 1;
-  int configures_size() const;
+  // required .msg.AlgorithmInfo algorithminfo = 1;
+  bool has_algorithminfo() const;
   private:
-  int _internal_configures_size() const;
+  bool _internal_has_algorithminfo() const;
   public:
-  void clear_configures();
-  ::msg::Configure* mutable_configures(int index);
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::Configure >*
-      mutable_configures();
+  void clear_algorithminfo();
+  const ::msg::AlgorithmInfo& algorithminfo() const;
+  ::msg::AlgorithmInfo* release_algorithminfo();
+  ::msg::AlgorithmInfo* mutable_algorithminfo();
+  void set_allocated_algorithminfo(::msg::AlgorithmInfo* algorithminfo);
   private:
-  const ::msg::Configure& _internal_configures(int index) const;
-  ::msg::Configure* _internal_add_configures();
+  const ::msg::AlgorithmInfo& _internal_algorithminfo() const;
+  ::msg::AlgorithmInfo* _internal_mutable_algorithminfo();
   public:
-  const ::msg::Configure& configures(int index) const;
-  ::msg::Configure* add_configures();
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::Configure >&
-      configures() const;
+  void unsafe_arena_set_allocated_algorithminfo(
+      ::msg::AlgorithmInfo* algorithminfo);
+  ::msg::AlgorithmInfo* unsafe_arena_release_algorithminfo();
 
   // @@protoc_insertion_point(class_scope:msg.AlgorithmRequest)
  private:
@@ -536,8 +574,9 @@ class AlgorithmRequest PROTOBUF_FINAL :
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::Configure > configures_;
+  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  ::msg::AlgorithmInfo* algorithminfo_;
   friend struct ::TableStruct_Algorithm_2eproto;
 };
 // -------------------------------------------------------------------
@@ -662,26 +701,26 @@ class AlgorithmResponse PROTOBUF_FINAL :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kConfiguresFieldNumber = 2,
+    kAlgorithminfosFieldNumber = 2,
     kResultFieldNumber = 1,
   };
-  // repeated .msg.Configure configures = 2;
-  int configures_size() const;
+  // repeated .msg.AlgorithmInfo algorithminfos = 2;
+  int algorithminfos_size() const;
   private:
-  int _internal_configures_size() const;
+  int _internal_algorithminfos_size() const;
   public:
-  void clear_configures();
-  ::msg::Configure* mutable_configures(int index);
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::Configure >*
-      mutable_configures();
+  void clear_algorithminfos();
+  ::msg::AlgorithmInfo* mutable_algorithminfos(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::AlgorithmInfo >*
+      mutable_algorithminfos();
   private:
-  const ::msg::Configure& _internal_configures(int index) const;
-  ::msg::Configure* _internal_add_configures();
+  const ::msg::AlgorithmInfo& _internal_algorithminfos(int index) const;
+  ::msg::AlgorithmInfo* _internal_add_algorithminfos();
   public:
-  const ::msg::Configure& configures(int index) const;
-  ::msg::Configure* add_configures();
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::Configure >&
-      configures() const;
+  const ::msg::AlgorithmInfo& algorithminfos(int index) const;
+  ::msg::AlgorithmInfo* add_algorithminfos();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::AlgorithmInfo >&
+      algorithminfos() const;
 
   // required int32 result = 1;
   bool has_result() const;
@@ -705,7 +744,7 @@ class AlgorithmResponse PROTOBUF_FINAL :
   typedef void DestructorSkippable_;
   ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::Configure > configures_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::AlgorithmInfo > algorithminfos_;
   ::PROTOBUF_NAMESPACE_ID::int32 result_;
   friend struct ::TableStruct_Algorithm_2eproto;
 };
@@ -941,72 +980,129 @@ class Algorithm PROTOBUF_FINAL :
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wstrict-aliasing"
 #endif  // __GNUC__
-// Configure
+// AlgorithmInfo
 
-// required string cid = 1;
-inline bool Configure::_internal_has_cid() const {
+// required .msg.AlgorithmInfo.Type type = 1;
+inline bool AlgorithmInfo::_internal_has_type() const {
+  bool value = (_has_bits_[0] & 0x00000040u) != 0;
+  return value;
+}
+inline bool AlgorithmInfo::has_type() const {
+  return _internal_has_type();
+}
+inline void AlgorithmInfo::clear_type() {
+  type_ = 1;
+  _has_bits_[0] &= ~0x00000040u;
+}
+inline ::msg::AlgorithmInfo_Type AlgorithmInfo::_internal_type() const {
+  return static_cast< ::msg::AlgorithmInfo_Type >(type_);
+}
+inline ::msg::AlgorithmInfo_Type AlgorithmInfo::type() const {
+  // @@protoc_insertion_point(field_get:msg.AlgorithmInfo.type)
+  return _internal_type();
+}
+inline void AlgorithmInfo::_internal_set_type(::msg::AlgorithmInfo_Type value) {
+  assert(::msg::AlgorithmInfo_Type_IsValid(value));
+  _has_bits_[0] |= 0x00000040u;
+  type_ = value;
+}
+inline void AlgorithmInfo::set_type(::msg::AlgorithmInfo_Type value) {
+  _internal_set_type(value);
+  // @@protoc_insertion_point(field_set:msg.AlgorithmInfo.type)
+}
+
+// required int32 gpu = 2;
+inline bool AlgorithmInfo::_internal_has_gpu() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool AlgorithmInfo::has_gpu() const {
+  return _internal_has_gpu();
+}
+inline void AlgorithmInfo::clear_gpu() {
+  gpu_ = 0;
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 AlgorithmInfo::_internal_gpu() const {
+  return gpu_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 AlgorithmInfo::gpu() const {
+  // @@protoc_insertion_point(field_get:msg.AlgorithmInfo.gpu)
+  return _internal_gpu();
+}
+inline void AlgorithmInfo::_internal_set_gpu(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _has_bits_[0] |= 0x00000002u;
+  gpu_ = value;
+}
+inline void AlgorithmInfo::set_gpu(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_gpu(value);
+  // @@protoc_insertion_point(field_set:msg.AlgorithmInfo.gpu)
+}
+
+// required string cid = 3;
+inline bool AlgorithmInfo::_internal_has_cid() const {
   bool value = (_has_bits_[0] & 0x00000001u) != 0;
   return value;
 }
-inline bool Configure::has_cid() const {
+inline bool AlgorithmInfo::has_cid() const {
   return _internal_has_cid();
 }
-inline void Configure::clear_cid() {
+inline void AlgorithmInfo::clear_cid() {
   cid_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   _has_bits_[0] &= ~0x00000001u;
 }
-inline const std::string& Configure::cid() const {
-  // @@protoc_insertion_point(field_get:msg.Configure.cid)
+inline const std::string& AlgorithmInfo::cid() const {
+  // @@protoc_insertion_point(field_get:msg.AlgorithmInfo.cid)
   return _internal_cid();
 }
-inline void Configure::set_cid(const std::string& value) {
+inline void AlgorithmInfo::set_cid(const std::string& value) {
   _internal_set_cid(value);
-  // @@protoc_insertion_point(field_set:msg.Configure.cid)
+  // @@protoc_insertion_point(field_set:msg.AlgorithmInfo.cid)
 }
-inline std::string* Configure::mutable_cid() {
-  // @@protoc_insertion_point(field_mutable:msg.Configure.cid)
+inline std::string* AlgorithmInfo::mutable_cid() {
+  // @@protoc_insertion_point(field_mutable:msg.AlgorithmInfo.cid)
   return _internal_mutable_cid();
 }
-inline const std::string& Configure::_internal_cid() const {
+inline const std::string& AlgorithmInfo::_internal_cid() const {
   return cid_.Get();
 }
-inline void Configure::_internal_set_cid(const std::string& value) {
+inline void AlgorithmInfo::_internal_set_cid(const std::string& value) {
   _has_bits_[0] |= 0x00000001u;
   cid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value, GetArena());
 }
-inline void Configure::set_cid(std::string&& value) {
+inline void AlgorithmInfo::set_cid(std::string&& value) {
   _has_bits_[0] |= 0x00000001u;
   cid_.Set(
     &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
-  // @@protoc_insertion_point(field_set_rvalue:msg.Configure.cid)
+  // @@protoc_insertion_point(field_set_rvalue:msg.AlgorithmInfo.cid)
 }
-inline void Configure::set_cid(const char* value) {
+inline void AlgorithmInfo::set_cid(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   _has_bits_[0] |= 0x00000001u;
   cid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
               GetArena());
-  // @@protoc_insertion_point(field_set_char:msg.Configure.cid)
+  // @@protoc_insertion_point(field_set_char:msg.AlgorithmInfo.cid)
 }
-inline void Configure::set_cid(const char* value,
+inline void AlgorithmInfo::set_cid(const char* value,
     size_t size) {
   _has_bits_[0] |= 0x00000001u;
   cid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
       reinterpret_cast<const char*>(value), size), GetArena());
-  // @@protoc_insertion_point(field_set_pointer:msg.Configure.cid)
+  // @@protoc_insertion_point(field_set_pointer:msg.AlgorithmInfo.cid)
 }
-inline std::string* Configure::_internal_mutable_cid() {
+inline std::string* AlgorithmInfo::_internal_mutable_cid() {
   _has_bits_[0] |= 0x00000001u;
   return cid_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
-inline std::string* Configure::release_cid() {
-  // @@protoc_insertion_point(field_release:msg.Configure.cid)
+inline std::string* AlgorithmInfo::release_cid() {
+  // @@protoc_insertion_point(field_release:msg.AlgorithmInfo.cid)
   if (!_internal_has_cid()) {
     return nullptr;
   }
   _has_bits_[0] &= ~0x00000001u;
   return cid_.ReleaseNonDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
-inline void Configure::set_allocated_cid(std::string* cid) {
+inline void AlgorithmInfo::set_allocated_cid(std::string* cid) {
   if (cid != nullptr) {
     _has_bits_[0] |= 0x00000001u;
   } else {
@@ -1014,16 +1110,16 @@ inline void Configure::set_allocated_cid(std::string* cid) {
   }
   cid_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), cid,
       GetArena());
-  // @@protoc_insertion_point(field_set_allocated:msg.Configure.cid)
+  // @@protoc_insertion_point(field_set_allocated:msg.AlgorithmInfo.cid)
 }
-inline std::string* Configure::unsafe_arena_release_cid() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:msg.Configure.cid)
+inline std::string* AlgorithmInfo::unsafe_arena_release_cid() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:msg.AlgorithmInfo.cid)
   GOOGLE_DCHECK(GetArena() != nullptr);
   _has_bits_[0] &= ~0x00000001u;
   return cid_.UnsafeArenaRelease(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       GetArena());
 }
-inline void Configure::unsafe_arena_set_allocated_cid(
+inline void AlgorithmInfo::unsafe_arena_set_allocated_cid(
     std::string* cid) {
   GOOGLE_DCHECK(GetArena() != nullptr);
   if (cid != nullptr) {
@@ -1033,274 +1129,206 @@ inline void Configure::unsafe_arena_set_allocated_cid(
   }
   cid_.UnsafeArenaSetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       cid, GetArena());
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:msg.Configure.cid)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:msg.AlgorithmInfo.cid)
 }
 
-// optional int32 gpu = 2;
-inline bool Configure::_internal_has_gpu() const {
-  bool value = (_has_bits_[0] & 0x00000002u) != 0;
-  return value;
-}
-inline bool Configure::has_gpu() const {
-  return _internal_has_gpu();
-}
-inline void Configure::clear_gpu() {
-  gpu_ = 0;
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline ::PROTOBUF_NAMESPACE_ID::int32 Configure::_internal_gpu() const {
-  return gpu_;
-}
-inline ::PROTOBUF_NAMESPACE_ID::int32 Configure::gpu() const {
-  // @@protoc_insertion_point(field_get:msg.Configure.gpu)
-  return _internal_gpu();
-}
-inline void Configure::_internal_set_gpu(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _has_bits_[0] |= 0x00000002u;
-  gpu_ = value;
-}
-inline void Configure::set_gpu(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _internal_set_gpu(value);
-  // @@protoc_insertion_point(field_set:msg.Configure.gpu)
-}
-
-// optional bool enablesleep = 3;
-inline bool Configure::_internal_has_enablesleep() const {
+// required float dectectfirst = 4;
+inline bool AlgorithmInfo::_internal_has_dectectfirst() const {
   bool value = (_has_bits_[0] & 0x00000004u) != 0;
   return value;
 }
-inline bool Configure::has_enablesleep() const {
-  return _internal_has_enablesleep();
+inline bool AlgorithmInfo::has_dectectfirst() const {
+  return _internal_has_dectectfirst();
 }
-inline void Configure::clear_enablesleep() {
-  enablesleep_ = false;
+inline void AlgorithmInfo::clear_dectectfirst() {
+  dectectfirst_ = 0;
   _has_bits_[0] &= ~0x00000004u;
 }
-inline bool Configure::_internal_enablesleep() const {
-  return enablesleep_;
+inline float AlgorithmInfo::_internal_dectectfirst() const {
+  return dectectfirst_;
 }
-inline bool Configure::enablesleep() const {
-  // @@protoc_insertion_point(field_get:msg.Configure.enablesleep)
-  return _internal_enablesleep();
+inline float AlgorithmInfo::dectectfirst() const {
+  // @@protoc_insertion_point(field_get:msg.AlgorithmInfo.dectectfirst)
+  return _internal_dectectfirst();
 }
-inline void Configure::_internal_set_enablesleep(bool value) {
+inline void AlgorithmInfo::_internal_set_dectectfirst(float value) {
   _has_bits_[0] |= 0x00000004u;
-  enablesleep_ = value;
+  dectectfirst_ = value;
 }
-inline void Configure::set_enablesleep(bool value) {
-  _internal_set_enablesleep(value);
-  // @@protoc_insertion_point(field_set:msg.Configure.enablesleep)
+inline void AlgorithmInfo::set_dectectfirst(float value) {
+  _internal_set_dectectfirst(value);
+  // @@protoc_insertion_point(field_set:msg.AlgorithmInfo.dectectfirst)
 }
 
-// optional bool enablefight = 4;
-inline bool Configure::_internal_has_enablefight() const {
+// required float track = 5;
+inline bool AlgorithmInfo::_internal_has_track() const {
   bool value = (_has_bits_[0] & 0x00000008u) != 0;
   return value;
 }
-inline bool Configure::has_enablefight() const {
-  return _internal_has_enablefight();
+inline bool AlgorithmInfo::has_track() const {
+  return _internal_has_track();
 }
-inline void Configure::clear_enablefight() {
-  enablefight_ = false;
+inline void AlgorithmInfo::clear_track() {
+  track_ = 0;
   _has_bits_[0] &= ~0x00000008u;
 }
-inline bool Configure::_internal_enablefight() const {
-  return enablefight_;
+inline float AlgorithmInfo::_internal_track() const {
+  return track_;
 }
-inline bool Configure::enablefight() const {
-  // @@protoc_insertion_point(field_get:msg.Configure.enablefight)
-  return _internal_enablefight();
+inline float AlgorithmInfo::track() const {
+  // @@protoc_insertion_point(field_get:msg.AlgorithmInfo.track)
+  return _internal_track();
 }
-inline void Configure::_internal_set_enablefight(bool value) {
+inline void AlgorithmInfo::_internal_set_track(float value) {
   _has_bits_[0] |= 0x00000008u;
-  enablefight_ = value;
+  track_ = value;
 }
-inline void Configure::set_enablefight(bool value) {
-  _internal_set_enablefight(value);
-  // @@protoc_insertion_point(field_set:msg.Configure.enablefight)
+inline void AlgorithmInfo::set_track(float value) {
+  _internal_set_track(value);
+  // @@protoc_insertion_point(field_set:msg.AlgorithmInfo.track)
 }
 
-// optional bool enablehelmet = 5;
-inline bool Configure::_internal_has_enablehelmet() const {
+// optional float dectectsecond = 6;
+inline bool AlgorithmInfo::_internal_has_dectectsecond() const {
   bool value = (_has_bits_[0] & 0x00000010u) != 0;
   return value;
 }
-inline bool Configure::has_enablehelmet() const {
-  return _internal_has_enablehelmet();
+inline bool AlgorithmInfo::has_dectectsecond() const {
+  return _internal_has_dectectsecond();
 }
-inline void Configure::clear_enablehelmet() {
-  enablehelmet_ = false;
+inline void AlgorithmInfo::clear_dectectsecond() {
+  dectectsecond_ = 0;
   _has_bits_[0] &= ~0x00000010u;
 }
-inline bool Configure::_internal_enablehelmet() const {
-  return enablehelmet_;
+inline float AlgorithmInfo::_internal_dectectsecond() const {
+  return dectectsecond_;
 }
-inline bool Configure::enablehelmet() const {
-  // @@protoc_insertion_point(field_get:msg.Configure.enablehelmet)
-  return _internal_enablehelmet();
+inline float AlgorithmInfo::dectectsecond() const {
+  // @@protoc_insertion_point(field_get:msg.AlgorithmInfo.dectectsecond)
+  return _internal_dectectsecond();
 }
-inline void Configure::_internal_set_enablehelmet(bool value) {
+inline void AlgorithmInfo::_internal_set_dectectsecond(float value) {
   _has_bits_[0] |= 0x00000010u;
-  enablehelmet_ = value;
+  dectectsecond_ = value;
 }
-inline void Configure::set_enablehelmet(bool value) {
-  _internal_set_enablehelmet(value);
-  // @@protoc_insertion_point(field_set:msg.Configure.enablehelmet)
+inline void AlgorithmInfo::set_dectectsecond(float value) {
+  _internal_set_dectectsecond(value);
+  // @@protoc_insertion_point(field_set:msg.AlgorithmInfo.dectectsecond)
 }
 
-// optional bool enablephone = 6;
-inline bool Configure::_internal_has_enablephone() const {
+// optional float similar = 7;
+inline bool AlgorithmInfo::_internal_has_similar() const {
   bool value = (_has_bits_[0] & 0x00000020u) != 0;
   return value;
 }
-inline bool Configure::has_enablephone() const {
-  return _internal_has_enablephone();
-}
-inline void Configure::clear_enablephone() {
-  enablephone_ = false;
-  _has_bits_[0] &= ~0x00000020u;
-}
-inline bool Configure::_internal_enablephone() const {
-  return enablephone_;
-}
-inline bool Configure::enablephone() const {
-  // @@protoc_insertion_point(field_get:msg.Configure.enablephone)
-  return _internal_enablephone();
-}
-inline void Configure::_internal_set_enablephone(bool value) {
-  _has_bits_[0] |= 0x00000020u;
-  enablephone_ = value;
-}
-inline void Configure::set_enablephone(bool value) {
-  _internal_set_enablephone(value);
-  // @@protoc_insertion_point(field_set:msg.Configure.enablephone)
-}
-
-// optional bool enableattendancein = 7;
-inline bool Configure::_internal_has_enableattendancein() const {
-  bool value = (_has_bits_[0] & 0x00000040u) != 0;
-  return value;
-}
-inline bool Configure::has_enableattendancein() const {
-  return _internal_has_enableattendancein();
-}
-inline void Configure::clear_enableattendancein() {
-  enableattendancein_ = false;
-  _has_bits_[0] &= ~0x00000040u;
-}
-inline bool Configure::_internal_enableattendancein() const {
-  return enableattendancein_;
-}
-inline bool Configure::enableattendancein() const {
-  // @@protoc_insertion_point(field_get:msg.Configure.enableattendancein)
-  return _internal_enableattendancein();
-}
-inline void Configure::_internal_set_enableattendancein(bool value) {
-  _has_bits_[0] |= 0x00000040u;
-  enableattendancein_ = value;
-}
-inline void Configure::set_enableattendancein(bool value) {
-  _internal_set_enableattendancein(value);
-  // @@protoc_insertion_point(field_set:msg.Configure.enableattendancein)
-}
-
-// optional bool enableattendanceout = 8;
-inline bool Configure::_internal_has_enableattendanceout() const {
-  bool value = (_has_bits_[0] & 0x00000080u) != 0;
-  return value;
-}
-inline bool Configure::has_enableattendanceout() const {
-  return _internal_has_enableattendanceout();
-}
-inline void Configure::clear_enableattendanceout() {
-  enableattendanceout_ = false;
-  _has_bits_[0] &= ~0x00000080u;
-}
-inline bool Configure::_internal_enableattendanceout() const {
-  return enableattendanceout_;
-}
-inline bool Configure::enableattendanceout() const {
-  // @@protoc_insertion_point(field_get:msg.Configure.enableattendanceout)
-  return _internal_enableattendanceout();
-}
-inline void Configure::_internal_set_enableattendanceout(bool value) {
-  _has_bits_[0] |= 0x00000080u;
-  enableattendanceout_ = value;
-}
-inline void Configure::set_enableattendanceout(bool value) {
-  _internal_set_enableattendanceout(value);
-  // @@protoc_insertion_point(field_set:msg.Configure.enableattendanceout)
-}
-
-// optional float similar = 9;
-inline bool Configure::_internal_has_similar() const {
-  bool value = (_has_bits_[0] & 0x00000100u) != 0;
-  return value;
-}
-inline bool Configure::has_similar() const {
+inline bool AlgorithmInfo::has_similar() const {
   return _internal_has_similar();
 }
-inline void Configure::clear_similar() {
+inline void AlgorithmInfo::clear_similar() {
   similar_ = 0;
-  _has_bits_[0] &= ~0x00000100u;
+  _has_bits_[0] &= ~0x00000020u;
 }
-inline float Configure::_internal_similar() const {
+inline float AlgorithmInfo::_internal_similar() const {
   return similar_;
 }
-inline float Configure::similar() const {
-  // @@protoc_insertion_point(field_get:msg.Configure.similar)
+inline float AlgorithmInfo::similar() const {
+  // @@protoc_insertion_point(field_get:msg.AlgorithmInfo.similar)
   return _internal_similar();
 }
-inline void Configure::_internal_set_similar(float value) {
-  _has_bits_[0] |= 0x00000100u;
+inline void AlgorithmInfo::_internal_set_similar(float value) {
+  _has_bits_[0] |= 0x00000020u;
   similar_ = value;
 }
-inline void Configure::set_similar(float value) {
+inline void AlgorithmInfo::set_similar(float value) {
   _internal_set_similar(value);
-  // @@protoc_insertion_point(field_set:msg.Configure.similar)
+  // @@protoc_insertion_point(field_set:msg.AlgorithmInfo.similar)
 }
 
 // -------------------------------------------------------------------
 
 // AlgorithmRequest
 
-// repeated .msg.Configure configures = 1;
-inline int AlgorithmRequest::_internal_configures_size() const {
-  return configures_.size();
+// required .msg.AlgorithmInfo algorithminfo = 1;
+inline bool AlgorithmRequest::_internal_has_algorithminfo() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  PROTOBUF_ASSUME(!value || algorithminfo_ != nullptr);
+  return value;
 }
-inline int AlgorithmRequest::configures_size() const {
-  return _internal_configures_size();
+inline bool AlgorithmRequest::has_algorithminfo() const {
+  return _internal_has_algorithminfo();
 }
-inline void AlgorithmRequest::clear_configures() {
-  configures_.Clear();
+inline void AlgorithmRequest::clear_algorithminfo() {
+  if (algorithminfo_ != nullptr) algorithminfo_->Clear();
+  _has_bits_[0] &= ~0x00000001u;
 }
-inline ::msg::Configure* AlgorithmRequest::mutable_configures(int index) {
-  // @@protoc_insertion_point(field_mutable:msg.AlgorithmRequest.configures)
-  return configures_.Mutable(index);
+inline const ::msg::AlgorithmInfo& AlgorithmRequest::_internal_algorithminfo() const {
+  const ::msg::AlgorithmInfo* p = algorithminfo_;
+  return p != nullptr ? *p : *reinterpret_cast<const ::msg::AlgorithmInfo*>(
+      &::msg::_AlgorithmInfo_default_instance_);
 }
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::Configure >*
-AlgorithmRequest::mutable_configures() {
-  // @@protoc_insertion_point(field_mutable_list:msg.AlgorithmRequest.configures)
-  return &configures_;
+inline const ::msg::AlgorithmInfo& AlgorithmRequest::algorithminfo() const {
+  // @@protoc_insertion_point(field_get:msg.AlgorithmRequest.algorithminfo)
+  return _internal_algorithminfo();
 }
-inline const ::msg::Configure& AlgorithmRequest::_internal_configures(int index) const {
-  return configures_.Get(index);
+inline void AlgorithmRequest::unsafe_arena_set_allocated_algorithminfo(
+    ::msg::AlgorithmInfo* algorithminfo) {
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(algorithminfo_);
+  }
+  algorithminfo_ = algorithminfo;
+  if (algorithminfo) {
+    _has_bits_[0] |= 0x00000001u;
+  } else {
+    _has_bits_[0] &= ~0x00000001u;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:msg.AlgorithmRequest.algorithminfo)
 }
-inline const ::msg::Configure& AlgorithmRequest::configures(int index) const {
-  // @@protoc_insertion_point(field_get:msg.AlgorithmRequest.configures)
-  return _internal_configures(index);
+inline ::msg::AlgorithmInfo* AlgorithmRequest::release_algorithminfo() {
+  _has_bits_[0] &= ~0x00000001u;
+  ::msg::AlgorithmInfo* temp = algorithminfo_;
+  algorithminfo_ = nullptr;
+  if (GetArena() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
 }
-inline ::msg::Configure* AlgorithmRequest::_internal_add_configures() {
-  return configures_.Add();
+inline ::msg::AlgorithmInfo* AlgorithmRequest::unsafe_arena_release_algorithminfo() {
+  // @@protoc_insertion_point(field_release:msg.AlgorithmRequest.algorithminfo)
+  _has_bits_[0] &= ~0x00000001u;
+  ::msg::AlgorithmInfo* temp = algorithminfo_;
+  algorithminfo_ = nullptr;
+  return temp;
 }
-inline ::msg::Configure* AlgorithmRequest::add_configures() {
-  // @@protoc_insertion_point(field_add:msg.AlgorithmRequest.configures)
-  return _internal_add_configures();
+inline ::msg::AlgorithmInfo* AlgorithmRequest::_internal_mutable_algorithminfo() {
+  _has_bits_[0] |= 0x00000001u;
+  if (algorithminfo_ == nullptr) {
+    auto* p = CreateMaybeMessage<::msg::AlgorithmInfo>(GetArena());
+    algorithminfo_ = p;
+  }
+  return algorithminfo_;
 }
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::Configure >&
-AlgorithmRequest::configures() const {
-  // @@protoc_insertion_point(field_list:msg.AlgorithmRequest.configures)
-  return configures_;
+inline ::msg::AlgorithmInfo* AlgorithmRequest::mutable_algorithminfo() {
+  // @@protoc_insertion_point(field_mutable:msg.AlgorithmRequest.algorithminfo)
+  return _internal_mutable_algorithminfo();
+}
+inline void AlgorithmRequest::set_allocated_algorithminfo(::msg::AlgorithmInfo* algorithminfo) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
+  if (message_arena == nullptr) {
+    delete algorithminfo_;
+  }
+  if (algorithminfo) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(algorithminfo);
+    if (message_arena != submessage_arena) {
+      algorithminfo = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, algorithminfo, submessage_arena);
+    }
+    _has_bits_[0] |= 0x00000001u;
+  } else {
+    _has_bits_[0] &= ~0x00000001u;
+  }
+  algorithminfo_ = algorithminfo;
+  // @@protoc_insertion_point(field_set_allocated:msg.AlgorithmRequest.algorithminfo)
 }
 
 // -------------------------------------------------------------------
@@ -1335,43 +1363,43 @@ inline void AlgorithmResponse::set_result(::PROTOBUF_NAMESPACE_ID::int32 value) 
   // @@protoc_insertion_point(field_set:msg.AlgorithmResponse.result)
 }
 
-// repeated .msg.Configure configures = 2;
-inline int AlgorithmResponse::_internal_configures_size() const {
-  return configures_.size();
+// repeated .msg.AlgorithmInfo algorithminfos = 2;
+inline int AlgorithmResponse::_internal_algorithminfos_size() const {
+  return algorithminfos_.size();
 }
-inline int AlgorithmResponse::configures_size() const {
-  return _internal_configures_size();
+inline int AlgorithmResponse::algorithminfos_size() const {
+  return _internal_algorithminfos_size();
 }
-inline void AlgorithmResponse::clear_configures() {
-  configures_.Clear();
+inline void AlgorithmResponse::clear_algorithminfos() {
+  algorithminfos_.Clear();
 }
-inline ::msg::Configure* AlgorithmResponse::mutable_configures(int index) {
-  // @@protoc_insertion_point(field_mutable:msg.AlgorithmResponse.configures)
-  return configures_.Mutable(index);
+inline ::msg::AlgorithmInfo* AlgorithmResponse::mutable_algorithminfos(int index) {
+  // @@protoc_insertion_point(field_mutable:msg.AlgorithmResponse.algorithminfos)
+  return algorithminfos_.Mutable(index);
 }
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::Configure >*
-AlgorithmResponse::mutable_configures() {
-  // @@protoc_insertion_point(field_mutable_list:msg.AlgorithmResponse.configures)
-  return &configures_;
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::AlgorithmInfo >*
+AlgorithmResponse::mutable_algorithminfos() {
+  // @@protoc_insertion_point(field_mutable_list:msg.AlgorithmResponse.algorithminfos)
+  return &algorithminfos_;
 }
-inline const ::msg::Configure& AlgorithmResponse::_internal_configures(int index) const {
-  return configures_.Get(index);
+inline const ::msg::AlgorithmInfo& AlgorithmResponse::_internal_algorithminfos(int index) const {
+  return algorithminfos_.Get(index);
 }
-inline const ::msg::Configure& AlgorithmResponse::configures(int index) const {
-  // @@protoc_insertion_point(field_get:msg.AlgorithmResponse.configures)
-  return _internal_configures(index);
+inline const ::msg::AlgorithmInfo& AlgorithmResponse::algorithminfos(int index) const {
+  // @@protoc_insertion_point(field_get:msg.AlgorithmResponse.algorithminfos)
+  return _internal_algorithminfos(index);
 }
-inline ::msg::Configure* AlgorithmResponse::_internal_add_configures() {
-  return configures_.Add();
+inline ::msg::AlgorithmInfo* AlgorithmResponse::_internal_add_algorithminfos() {
+  return algorithminfos_.Add();
 }
-inline ::msg::Configure* AlgorithmResponse::add_configures() {
-  // @@protoc_insertion_point(field_add:msg.AlgorithmResponse.configures)
-  return _internal_add_configures();
+inline ::msg::AlgorithmInfo* AlgorithmResponse::add_algorithminfos() {
+  // @@protoc_insertion_point(field_add:msg.AlgorithmResponse.algorithminfos)
+  return _internal_add_algorithminfos();
 }
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::Configure >&
-AlgorithmResponse::configures() const {
-  // @@protoc_insertion_point(field_list:msg.AlgorithmResponse.configures)
-  return configures_;
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::AlgorithmInfo >&
+AlgorithmResponse::algorithminfos() const {
+  // @@protoc_insertion_point(field_list:msg.AlgorithmResponse.algorithminfos)
+  return algorithminfos_;
 }
 
 // -------------------------------------------------------------------
@@ -1589,6 +1617,11 @@ inline void Algorithm::set_allocated_algorithmresponse(::msg::AlgorithmResponse*
 
 PROTOBUF_NAMESPACE_OPEN
 
+template <> struct is_proto_enum< ::msg::AlgorithmInfo_Type> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::msg::AlgorithmInfo_Type>() {
+  return ::msg::AlgorithmInfo_Type_descriptor();
+}
 template <> struct is_proto_enum< ::msg::Algorithm_Command> : ::std::true_type {};
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::msg::Algorithm_Command>() {

@@ -33,13 +33,13 @@
 #include <google/protobuf/extension_set.h>  // IWYU pragma: export
 #include <google/protobuf/generated_enum_reflection.h>
 #include <google/protobuf/unknown_field_set.h>
-#include "Alarm.pb.h"
-#include "Algorithm.pb.h"
-#include "Component.pb.h"
-#include "Crew.pb.h"
-#include "Device.pb.h"
-#include "Status.pb.h"
-#include "User.pb.h"
+#include "Protocol/Alarm/Alarm.pb.h"
+#include "Protocol/Algorithm/Algorithm.pb.h"
+#include "Protocol/Component/Component.pb.h"
+#include "Protocol/Crew/Crew.pb.h"
+#include "Protocol/Device/Device.pb.h"
+#include "Protocol/Status/Status.pb.h"
+#include "Protocol/User/User.pb.h"
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
 #define PROTOBUF_INTERNAL_EXPORT_Message_2eproto

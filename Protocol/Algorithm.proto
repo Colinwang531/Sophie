@@ -2,28 +2,36 @@ syntax = "proto2";
 
 package msg;
 
-message Configure
+message AlgorithmInfo
 {
-	required string cid = 1;
-	optional int32 gpu = 2;
-	optional bool enablesleep = 3;
-	optional bool enablefight = 4;
-	optional bool enablehelmet = 5;
-	optional bool enablephone = 6;
-	optional bool enableattendancein = 7;
-	optional bool enableattendanceout = 8;
-	optional float similar = 9;
+	enum Type
+	{
+		HELMET = 1;
+		PHONE = 2;
+		SLEEP = 3;
+		FIGHT = 4;
+		ATTENDANCE_IN = 5;
+		ATTENDANCE_OUT = 6;
+	}
+	
+	required Type type = 1;
+	required int32 gpu = 2;
+	required string cid = 3;
+	required float dectectfirst = 4;
+	required float track = 5;
+	optional float dectectsecond = 6;
+	optional float similar = 7;
 }
 
 message AlgorithmRequest
 {
-	repeated Configure configures = 1;
+	required AlgorithmInfo algorithminfo = 1;
 }
 
 message AlgorithmResponse
 {
 	required int32 result = 1;
-	repeated Configure configures = 2;
+	repeated AlgorithmInfo algorithminfos = 2;
 }
 
 message Algorithm

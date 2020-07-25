@@ -56,78 +56,78 @@ struct TableStruct_Device_2eproto {
 };
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Device_2eproto;
 namespace msg {
-class Camera;
-class CameraDefaultTypeInternal;
-extern CameraDefaultTypeInternal _Camera_default_instance_;
+class CameraInfo;
+class CameraInfoDefaultTypeInternal;
+extern CameraInfoDefaultTypeInternal _CameraInfo_default_instance_;
 class Device;
 class DeviceDefaultTypeInternal;
 extern DeviceDefaultTypeInternal _Device_default_instance_;
+class DeviceInfo;
+class DeviceInfoDefaultTypeInternal;
+extern DeviceInfoDefaultTypeInternal _DeviceInfo_default_instance_;
 class DeviceRequest;
 class DeviceRequestDefaultTypeInternal;
 extern DeviceRequestDefaultTypeInternal _DeviceRequest_default_instance_;
 class DeviceResponse;
 class DeviceResponseDefaultTypeInternal;
 extern DeviceResponseDefaultTypeInternal _DeviceResponse_default_instance_;
-class Embedded;
-class EmbeddedDefaultTypeInternal;
-extern EmbeddedDefaultTypeInternal _Embedded_default_instance_;
 }  // namespace msg
 PROTOBUF_NAMESPACE_OPEN
-template<> ::msg::Camera* Arena::CreateMaybeMessage<::msg::Camera>(Arena*);
+template<> ::msg::CameraInfo* Arena::CreateMaybeMessage<::msg::CameraInfo>(Arena*);
 template<> ::msg::Device* Arena::CreateMaybeMessage<::msg::Device>(Arena*);
+template<> ::msg::DeviceInfo* Arena::CreateMaybeMessage<::msg::DeviceInfo>(Arena*);
 template<> ::msg::DeviceRequest* Arena::CreateMaybeMessage<::msg::DeviceRequest>(Arena*);
 template<> ::msg::DeviceResponse* Arena::CreateMaybeMessage<::msg::DeviceResponse>(Arena*);
-template<> ::msg::Embedded* Arena::CreateMaybeMessage<::msg::Embedded>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace msg {
 
-enum Embedded_Factory : int {
-  Embedded_Factory_HIKVISION = 1,
-  Embedded_Factory_DAHUA = 2,
-  Embedded_Factory_EATON = 3
+enum DeviceInfo_Factory : int {
+  DeviceInfo_Factory_HIKVISION = 1,
+  DeviceInfo_Factory_DAHUA = 2,
+  DeviceInfo_Factory_EATON = 3
 };
-bool Embedded_Factory_IsValid(int value);
-constexpr Embedded_Factory Embedded_Factory_Factory_MIN = Embedded_Factory_HIKVISION;
-constexpr Embedded_Factory Embedded_Factory_Factory_MAX = Embedded_Factory_EATON;
-constexpr int Embedded_Factory_Factory_ARRAYSIZE = Embedded_Factory_Factory_MAX + 1;
+bool DeviceInfo_Factory_IsValid(int value);
+constexpr DeviceInfo_Factory DeviceInfo_Factory_Factory_MIN = DeviceInfo_Factory_HIKVISION;
+constexpr DeviceInfo_Factory DeviceInfo_Factory_Factory_MAX = DeviceInfo_Factory_EATON;
+constexpr int DeviceInfo_Factory_Factory_ARRAYSIZE = DeviceInfo_Factory_Factory_MAX + 1;
 
-const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* Embedded_Factory_descriptor();
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* DeviceInfo_Factory_descriptor();
 template<typename T>
-inline const std::string& Embedded_Factory_Name(T enum_t_value) {
-  static_assert(::std::is_same<T, Embedded_Factory>::value ||
+inline const std::string& DeviceInfo_Factory_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, DeviceInfo_Factory>::value ||
     ::std::is_integral<T>::value,
-    "Incorrect type passed to function Embedded_Factory_Name.");
+    "Incorrect type passed to function DeviceInfo_Factory_Name.");
   return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
-    Embedded_Factory_descriptor(), enum_t_value);
+    DeviceInfo_Factory_descriptor(), enum_t_value);
 }
-inline bool Embedded_Factory_Parse(
-    const std::string& name, Embedded_Factory* value) {
-  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<Embedded_Factory>(
-    Embedded_Factory_descriptor(), name, value);
+inline bool DeviceInfo_Factory_Parse(
+    const std::string& name, DeviceInfo_Factory* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<DeviceInfo_Factory>(
+    DeviceInfo_Factory_descriptor(), name, value);
 }
-enum Embedded_Type : int {
-  Embedded_Type_DVR = 1,
-  Embedded_Type_NVR = 2,
-  Embedded_Type_IPC = 3
+enum DeviceInfo_Type : int {
+  DeviceInfo_Type_DVR = 1,
+  DeviceInfo_Type_NVR = 2,
+  DeviceInfo_Type_IPC = 3
 };
-bool Embedded_Type_IsValid(int value);
-constexpr Embedded_Type Embedded_Type_Type_MIN = Embedded_Type_DVR;
-constexpr Embedded_Type Embedded_Type_Type_MAX = Embedded_Type_IPC;
-constexpr int Embedded_Type_Type_ARRAYSIZE = Embedded_Type_Type_MAX + 1;
+bool DeviceInfo_Type_IsValid(int value);
+constexpr DeviceInfo_Type DeviceInfo_Type_Type_MIN = DeviceInfo_Type_DVR;
+constexpr DeviceInfo_Type DeviceInfo_Type_Type_MAX = DeviceInfo_Type_IPC;
+constexpr int DeviceInfo_Type_Type_ARRAYSIZE = DeviceInfo_Type_Type_MAX + 1;
 
-const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* Embedded_Type_descriptor();
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* DeviceInfo_Type_descriptor();
 template<typename T>
-inline const std::string& Embedded_Type_Name(T enum_t_value) {
-  static_assert(::std::is_same<T, Embedded_Type>::value ||
+inline const std::string& DeviceInfo_Type_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, DeviceInfo_Type>::value ||
     ::std::is_integral<T>::value,
-    "Incorrect type passed to function Embedded_Type_Name.");
+    "Incorrect type passed to function DeviceInfo_Type_Name.");
   return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
-    Embedded_Type_descriptor(), enum_t_value);
+    DeviceInfo_Type_descriptor(), enum_t_value);
 }
-inline bool Embedded_Type_Parse(
-    const std::string& name, Embedded_Type* value) {
-  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<Embedded_Type>(
-    Embedded_Type_descriptor(), name, value);
+inline bool DeviceInfo_Type_Parse(
+    const std::string& name, DeviceInfo_Type* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<DeviceInfo_Type>(
+    DeviceInfo_Type_descriptor(), name, value);
 }
 enum Device_Command : int {
   Device_Command_NEW_REQ = 1,
@@ -160,23 +160,23 @@ inline bool Device_Command_Parse(
 }
 // ===================================================================
 
-class Camera PROTOBUF_FINAL :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:msg.Camera) */ {
+class CameraInfo PROTOBUF_FINAL :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:msg.CameraInfo) */ {
  public:
-  inline Camera() : Camera(nullptr) {};
-  virtual ~Camera();
+  inline CameraInfo() : CameraInfo(nullptr) {};
+  virtual ~CameraInfo();
 
-  Camera(const Camera& from);
-  Camera(Camera&& from) noexcept
-    : Camera() {
+  CameraInfo(const CameraInfo& from);
+  CameraInfo(CameraInfo&& from) noexcept
+    : CameraInfo() {
     *this = ::std::move(from);
   }
 
-  inline Camera& operator=(const Camera& from) {
+  inline CameraInfo& operator=(const CameraInfo& from) {
     CopyFrom(from);
     return *this;
   }
-  inline Camera& operator=(Camera&& from) noexcept {
+  inline CameraInfo& operator=(CameraInfo&& from) noexcept {
     if (GetArena() == from.GetArena()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -201,20 +201,20 @@ class Camera PROTOBUF_FINAL :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return GetMetadataStatic().reflection;
   }
-  static const Camera& default_instance();
+  static const CameraInfo& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const Camera* internal_default_instance() {
-    return reinterpret_cast<const Camera*>(
-               &_Camera_default_instance_);
+  static inline const CameraInfo* internal_default_instance() {
+    return reinterpret_cast<const CameraInfo*>(
+               &_CameraInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     0;
 
-  friend void swap(Camera& a, Camera& b) {
+  friend void swap(CameraInfo& a, CameraInfo& b) {
     a.Swap(&b);
   }
-  inline void Swap(Camera* other) {
+  inline void Swap(CameraInfo* other) {
     if (other == this) return;
     if (GetArena() == other->GetArena()) {
       InternalSwap(other);
@@ -222,7 +222,7 @@ class Camera PROTOBUF_FINAL :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(Camera* other) {
+  void UnsafeArenaSwap(CameraInfo* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetArena() == other->GetArena());
     InternalSwap(other);
@@ -230,17 +230,17 @@ class Camera PROTOBUF_FINAL :
 
   // implements Message ----------------------------------------------
 
-  inline Camera* New() const final {
-    return CreateMaybeMessage<Camera>(nullptr);
+  inline CameraInfo* New() const final {
+    return CreateMaybeMessage<CameraInfo>(nullptr);
   }
 
-  Camera* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
-    return CreateMaybeMessage<Camera>(arena);
+  CameraInfo* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<CameraInfo>(arena);
   }
   void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
   void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void CopyFrom(const Camera& from);
-  void MergeFrom(const Camera& from);
+  void CopyFrom(const CameraInfo& from);
+  void MergeFrom(const CameraInfo& from);
   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
   bool IsInitialized() const final;
 
@@ -254,13 +254,13 @@ class Camera PROTOBUF_FINAL :
   inline void SharedCtor();
   inline void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(Camera* other);
+  void InternalSwap(CameraInfo* other);
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "msg.Camera";
+    return "msg.CameraInfo";
   }
   protected:
-  explicit Camera(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  explicit CameraInfo(::PROTOBUF_NAMESPACE_ID::Arena* arena);
   private:
   static void ArenaDtor(void* object);
   inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
@@ -399,7 +399,7 @@ class Camera PROTOBUF_FINAL :
   void _internal_set_enable(bool value);
   public:
 
-  // @@protoc_insertion_point(class_scope:msg.Camera)
+  // @@protoc_insertion_point(class_scope:msg.CameraInfo)
  private:
   class _Internal;
 
@@ -420,23 +420,23 @@ class Camera PROTOBUF_FINAL :
 };
 // -------------------------------------------------------------------
 
-class Embedded PROTOBUF_FINAL :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:msg.Embedded) */ {
+class DeviceInfo PROTOBUF_FINAL :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:msg.DeviceInfo) */ {
  public:
-  inline Embedded() : Embedded(nullptr) {};
-  virtual ~Embedded();
+  inline DeviceInfo() : DeviceInfo(nullptr) {};
+  virtual ~DeviceInfo();
 
-  Embedded(const Embedded& from);
-  Embedded(Embedded&& from) noexcept
-    : Embedded() {
+  DeviceInfo(const DeviceInfo& from);
+  DeviceInfo(DeviceInfo&& from) noexcept
+    : DeviceInfo() {
     *this = ::std::move(from);
   }
 
-  inline Embedded& operator=(const Embedded& from) {
+  inline DeviceInfo& operator=(const DeviceInfo& from) {
     CopyFrom(from);
     return *this;
   }
-  inline Embedded& operator=(Embedded&& from) noexcept {
+  inline DeviceInfo& operator=(DeviceInfo&& from) noexcept {
     if (GetArena() == from.GetArena()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -461,20 +461,20 @@ class Embedded PROTOBUF_FINAL :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return GetMetadataStatic().reflection;
   }
-  static const Embedded& default_instance();
+  static const DeviceInfo& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const Embedded* internal_default_instance() {
-    return reinterpret_cast<const Embedded*>(
-               &_Embedded_default_instance_);
+  static inline const DeviceInfo* internal_default_instance() {
+    return reinterpret_cast<const DeviceInfo*>(
+               &_DeviceInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     1;
 
-  friend void swap(Embedded& a, Embedded& b) {
+  friend void swap(DeviceInfo& a, DeviceInfo& b) {
     a.Swap(&b);
   }
-  inline void Swap(Embedded* other) {
+  inline void Swap(DeviceInfo* other) {
     if (other == this) return;
     if (GetArena() == other->GetArena()) {
       InternalSwap(other);
@@ -482,7 +482,7 @@ class Embedded PROTOBUF_FINAL :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(Embedded* other) {
+  void UnsafeArenaSwap(DeviceInfo* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetArena() == other->GetArena());
     InternalSwap(other);
@@ -490,17 +490,17 @@ class Embedded PROTOBUF_FINAL :
 
   // implements Message ----------------------------------------------
 
-  inline Embedded* New() const final {
-    return CreateMaybeMessage<Embedded>(nullptr);
+  inline DeviceInfo* New() const final {
+    return CreateMaybeMessage<DeviceInfo>(nullptr);
   }
 
-  Embedded* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
-    return CreateMaybeMessage<Embedded>(arena);
+  DeviceInfo* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<DeviceInfo>(arena);
   }
   void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
   void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void CopyFrom(const Embedded& from);
-  void MergeFrom(const Embedded& from);
+  void CopyFrom(const DeviceInfo& from);
+  void MergeFrom(const DeviceInfo& from);
   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
   bool IsInitialized() const final;
 
@@ -514,13 +514,13 @@ class Embedded PROTOBUF_FINAL :
   inline void SharedCtor();
   inline void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(Embedded* other);
+  void InternalSwap(DeviceInfo* other);
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "msg.Embedded";
+    return "msg.DeviceInfo";
   }
   protected:
-  explicit Embedded(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  explicit DeviceInfo(::PROTOBUF_NAMESPACE_ID::Arena* arena);
   private:
   static void ArenaDtor(void* object);
   inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
@@ -537,74 +537,74 @@ class Embedded PROTOBUF_FINAL :
 
   // nested types ----------------------------------------------------
 
-  typedef Embedded_Factory Factory;
+  typedef DeviceInfo_Factory Factory;
   static constexpr Factory HIKVISION =
-    Embedded_Factory_HIKVISION;
+    DeviceInfo_Factory_HIKVISION;
   static constexpr Factory DAHUA =
-    Embedded_Factory_DAHUA;
+    DeviceInfo_Factory_DAHUA;
   static constexpr Factory EATON =
-    Embedded_Factory_EATON;
+    DeviceInfo_Factory_EATON;
   static inline bool Factory_IsValid(int value) {
-    return Embedded_Factory_IsValid(value);
+    return DeviceInfo_Factory_IsValid(value);
   }
   static constexpr Factory Factory_MIN =
-    Embedded_Factory_Factory_MIN;
+    DeviceInfo_Factory_Factory_MIN;
   static constexpr Factory Factory_MAX =
-    Embedded_Factory_Factory_MAX;
+    DeviceInfo_Factory_Factory_MAX;
   static constexpr int Factory_ARRAYSIZE =
-    Embedded_Factory_Factory_ARRAYSIZE;
+    DeviceInfo_Factory_Factory_ARRAYSIZE;
   static inline const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor*
   Factory_descriptor() {
-    return Embedded_Factory_descriptor();
+    return DeviceInfo_Factory_descriptor();
   }
   template<typename T>
   static inline const std::string& Factory_Name(T enum_t_value) {
     static_assert(::std::is_same<T, Factory>::value ||
       ::std::is_integral<T>::value,
       "Incorrect type passed to function Factory_Name.");
-    return Embedded_Factory_Name(enum_t_value);
+    return DeviceInfo_Factory_Name(enum_t_value);
   }
   static inline bool Factory_Parse(const std::string& name,
       Factory* value) {
-    return Embedded_Factory_Parse(name, value);
+    return DeviceInfo_Factory_Parse(name, value);
   }
 
-  typedef Embedded_Type Type;
+  typedef DeviceInfo_Type Type;
   static constexpr Type DVR =
-    Embedded_Type_DVR;
+    DeviceInfo_Type_DVR;
   static constexpr Type NVR =
-    Embedded_Type_NVR;
+    DeviceInfo_Type_NVR;
   static constexpr Type IPC =
-    Embedded_Type_IPC;
+    DeviceInfo_Type_IPC;
   static inline bool Type_IsValid(int value) {
-    return Embedded_Type_IsValid(value);
+    return DeviceInfo_Type_IsValid(value);
   }
   static constexpr Type Type_MIN =
-    Embedded_Type_Type_MIN;
+    DeviceInfo_Type_Type_MIN;
   static constexpr Type Type_MAX =
-    Embedded_Type_Type_MAX;
+    DeviceInfo_Type_Type_MAX;
   static constexpr int Type_ARRAYSIZE =
-    Embedded_Type_Type_ARRAYSIZE;
+    DeviceInfo_Type_Type_ARRAYSIZE;
   static inline const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor*
   Type_descriptor() {
-    return Embedded_Type_descriptor();
+    return DeviceInfo_Type_descriptor();
   }
   template<typename T>
   static inline const std::string& Type_Name(T enum_t_value) {
     static_assert(::std::is_same<T, Type>::value ||
       ::std::is_integral<T>::value,
       "Incorrect type passed to function Type_Name.");
-    return Embedded_Type_Name(enum_t_value);
+    return DeviceInfo_Type_Name(enum_t_value);
   }
   static inline bool Type_Parse(const std::string& name,
       Type* value) {
-    return Embedded_Type_Parse(name, value);
+    return DeviceInfo_Type_Parse(name, value);
   }
 
   // accessors -------------------------------------------------------
 
   enum : int {
-    kCamerasFieldNumber = 10,
+    kCamerainfosFieldNumber = 10,
     kNameFieldNumber = 4,
     kPasswordFieldNumber = 5,
     kIpFieldNumber = 6,
@@ -615,23 +615,23 @@ class Embedded PROTOBUF_FINAL :
     kFactoryFieldNumber = 2,
     kTypeFieldNumber = 3,
   };
-  // repeated .msg.Camera cameras = 10;
-  int cameras_size() const;
+  // repeated .msg.CameraInfo camerainfos = 10;
+  int camerainfos_size() const;
   private:
-  int _internal_cameras_size() const;
+  int _internal_camerainfos_size() const;
   public:
-  void clear_cameras();
-  ::msg::Camera* mutable_cameras(int index);
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::Camera >*
-      mutable_cameras();
+  void clear_camerainfos();
+  ::msg::CameraInfo* mutable_camerainfos(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::CameraInfo >*
+      mutable_camerainfos();
   private:
-  const ::msg::Camera& _internal_cameras(int index) const;
-  ::msg::Camera* _internal_add_cameras();
+  const ::msg::CameraInfo& _internal_camerainfos(int index) const;
+  ::msg::CameraInfo* _internal_add_camerainfos();
   public:
-  const ::msg::Camera& cameras(int index) const;
-  ::msg::Camera* add_cameras();
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::Camera >&
-      cameras() const;
+  const ::msg::CameraInfo& camerainfos(int index) const;
+  ::msg::CameraInfo* add_camerainfos();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::CameraInfo >&
+      camerainfos() const;
 
   // optional string name = 4;
   bool has_name() const;
@@ -804,33 +804,33 @@ class Embedded PROTOBUF_FINAL :
   void _internal_set_port(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // optional .msg.Embedded.Factory factory = 2;
+  // optional .msg.DeviceInfo.Factory factory = 2;
   bool has_factory() const;
   private:
   bool _internal_has_factory() const;
   public:
   void clear_factory();
-  ::msg::Embedded_Factory factory() const;
-  void set_factory(::msg::Embedded_Factory value);
+  ::msg::DeviceInfo_Factory factory() const;
+  void set_factory(::msg::DeviceInfo_Factory value);
   private:
-  ::msg::Embedded_Factory _internal_factory() const;
-  void _internal_set_factory(::msg::Embedded_Factory value);
+  ::msg::DeviceInfo_Factory _internal_factory() const;
+  void _internal_set_factory(::msg::DeviceInfo_Factory value);
   public:
 
-  // optional .msg.Embedded.Type type = 3;
+  // optional .msg.DeviceInfo.Type type = 3;
   bool has_type() const;
   private:
   bool _internal_has_type() const;
   public:
   void clear_type();
-  ::msg::Embedded_Type type() const;
-  void set_type(::msg::Embedded_Type value);
+  ::msg::DeviceInfo_Type type() const;
+  void set_type(::msg::DeviceInfo_Type value);
   private:
-  ::msg::Embedded_Type _internal_type() const;
-  void _internal_set_type(::msg::Embedded_Type value);
+  ::msg::DeviceInfo_Type _internal_type() const;
+  void _internal_set_type(::msg::DeviceInfo_Type value);
   public:
 
-  // @@protoc_insertion_point(class_scope:msg.Embedded)
+  // @@protoc_insertion_point(class_scope:msg.DeviceInfo)
  private:
   class _Internal;
 
@@ -839,7 +839,7 @@ class Embedded PROTOBUF_FINAL :
   typedef void DestructorSkippable_;
   ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::Camera > cameras_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::CameraInfo > camerainfos_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr password_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr ip_;
@@ -974,7 +974,7 @@ class DeviceRequest PROTOBUF_FINAL :
 
   enum : int {
     kDidFieldNumber = 2,
-    kEmbeddedFieldNumber = 1,
+    kDeviceinfoFieldNumber = 1,
   };
   // optional string did = 2;
   bool has_did() const;
@@ -1005,23 +1005,23 @@ class DeviceRequest PROTOBUF_FINAL :
   std::string* _internal_mutable_did();
   public:
 
-  // optional .msg.Embedded embedded = 1;
-  bool has_embedded() const;
+  // optional .msg.DeviceInfo deviceinfo = 1;
+  bool has_deviceinfo() const;
   private:
-  bool _internal_has_embedded() const;
+  bool _internal_has_deviceinfo() const;
   public:
-  void clear_embedded();
-  const ::msg::Embedded& embedded() const;
-  ::msg::Embedded* release_embedded();
-  ::msg::Embedded* mutable_embedded();
-  void set_allocated_embedded(::msg::Embedded* embedded);
+  void clear_deviceinfo();
+  const ::msg::DeviceInfo& deviceinfo() const;
+  ::msg::DeviceInfo* release_deviceinfo();
+  ::msg::DeviceInfo* mutable_deviceinfo();
+  void set_allocated_deviceinfo(::msg::DeviceInfo* deviceinfo);
   private:
-  const ::msg::Embedded& _internal_embedded() const;
-  ::msg::Embedded* _internal_mutable_embedded();
+  const ::msg::DeviceInfo& _internal_deviceinfo() const;
+  ::msg::DeviceInfo* _internal_mutable_deviceinfo();
   public:
-  void unsafe_arena_set_allocated_embedded(
-      ::msg::Embedded* embedded);
-  ::msg::Embedded* unsafe_arena_release_embedded();
+  void unsafe_arena_set_allocated_deviceinfo(
+      ::msg::DeviceInfo* deviceinfo);
+  ::msg::DeviceInfo* unsafe_arena_release_deviceinfo();
 
   // @@protoc_insertion_point(class_scope:msg.DeviceRequest)
  private:
@@ -1033,7 +1033,7 @@ class DeviceRequest PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr did_;
-  ::msg::Embedded* embedded_;
+  ::msg::DeviceInfo* deviceinfo_;
   friend struct ::TableStruct_Device_2eproto;
 };
 // -------------------------------------------------------------------
@@ -1158,27 +1158,27 @@ class DeviceResponse PROTOBUF_FINAL :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kEmbeddedsFieldNumber = 3,
+    kDeviceinfosFieldNumber = 3,
     kDidFieldNumber = 2,
     kResultFieldNumber = 1,
   };
-  // repeated .msg.Embedded embeddeds = 3;
-  int embeddeds_size() const;
+  // repeated .msg.DeviceInfo deviceinfos = 3;
+  int deviceinfos_size() const;
   private:
-  int _internal_embeddeds_size() const;
+  int _internal_deviceinfos_size() const;
   public:
-  void clear_embeddeds();
-  ::msg::Embedded* mutable_embeddeds(int index);
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::Embedded >*
-      mutable_embeddeds();
+  void clear_deviceinfos();
+  ::msg::DeviceInfo* mutable_deviceinfos(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::DeviceInfo >*
+      mutable_deviceinfos();
   private:
-  const ::msg::Embedded& _internal_embeddeds(int index) const;
-  ::msg::Embedded* _internal_add_embeddeds();
+  const ::msg::DeviceInfo& _internal_deviceinfos(int index) const;
+  ::msg::DeviceInfo* _internal_add_deviceinfos();
   public:
-  const ::msg::Embedded& embeddeds(int index) const;
-  ::msg::Embedded* add_embeddeds();
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::Embedded >&
-      embeddeds() const;
+  const ::msg::DeviceInfo& deviceinfos(int index) const;
+  ::msg::DeviceInfo* add_deviceinfos();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::DeviceInfo >&
+      deviceinfos() const;
 
   // optional string did = 2;
   bool has_did() const;
@@ -1231,7 +1231,7 @@ class DeviceResponse PROTOBUF_FINAL :
   typedef void DestructorSkippable_;
   ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::Embedded > embeddeds_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::DeviceInfo > deviceinfos_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr did_;
   ::PROTOBUF_NAMESPACE_ID::int32 result_;
   friend struct ::TableStruct_Device_2eproto;
@@ -1476,72 +1476,72 @@ class Device PROTOBUF_FINAL :
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wstrict-aliasing"
 #endif  // __GNUC__
-// Camera
+// CameraInfo
 
 // required string cid = 1;
-inline bool Camera::_internal_has_cid() const {
+inline bool CameraInfo::_internal_has_cid() const {
   bool value = (_has_bits_[0] & 0x00000001u) != 0;
   return value;
 }
-inline bool Camera::has_cid() const {
+inline bool CameraInfo::has_cid() const {
   return _internal_has_cid();
 }
-inline void Camera::clear_cid() {
+inline void CameraInfo::clear_cid() {
   cid_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   _has_bits_[0] &= ~0x00000001u;
 }
-inline const std::string& Camera::cid() const {
-  // @@protoc_insertion_point(field_get:msg.Camera.cid)
+inline const std::string& CameraInfo::cid() const {
+  // @@protoc_insertion_point(field_get:msg.CameraInfo.cid)
   return _internal_cid();
 }
-inline void Camera::set_cid(const std::string& value) {
+inline void CameraInfo::set_cid(const std::string& value) {
   _internal_set_cid(value);
-  // @@protoc_insertion_point(field_set:msg.Camera.cid)
+  // @@protoc_insertion_point(field_set:msg.CameraInfo.cid)
 }
-inline std::string* Camera::mutable_cid() {
-  // @@protoc_insertion_point(field_mutable:msg.Camera.cid)
+inline std::string* CameraInfo::mutable_cid() {
+  // @@protoc_insertion_point(field_mutable:msg.CameraInfo.cid)
   return _internal_mutable_cid();
 }
-inline const std::string& Camera::_internal_cid() const {
+inline const std::string& CameraInfo::_internal_cid() const {
   return cid_.Get();
 }
-inline void Camera::_internal_set_cid(const std::string& value) {
+inline void CameraInfo::_internal_set_cid(const std::string& value) {
   _has_bits_[0] |= 0x00000001u;
   cid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value, GetArena());
 }
-inline void Camera::set_cid(std::string&& value) {
+inline void CameraInfo::set_cid(std::string&& value) {
   _has_bits_[0] |= 0x00000001u;
   cid_.Set(
     &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
-  // @@protoc_insertion_point(field_set_rvalue:msg.Camera.cid)
+  // @@protoc_insertion_point(field_set_rvalue:msg.CameraInfo.cid)
 }
-inline void Camera::set_cid(const char* value) {
+inline void CameraInfo::set_cid(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   _has_bits_[0] |= 0x00000001u;
   cid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
               GetArena());
-  // @@protoc_insertion_point(field_set_char:msg.Camera.cid)
+  // @@protoc_insertion_point(field_set_char:msg.CameraInfo.cid)
 }
-inline void Camera::set_cid(const char* value,
+inline void CameraInfo::set_cid(const char* value,
     size_t size) {
   _has_bits_[0] |= 0x00000001u;
   cid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
       reinterpret_cast<const char*>(value), size), GetArena());
-  // @@protoc_insertion_point(field_set_pointer:msg.Camera.cid)
+  // @@protoc_insertion_point(field_set_pointer:msg.CameraInfo.cid)
 }
-inline std::string* Camera::_internal_mutable_cid() {
+inline std::string* CameraInfo::_internal_mutable_cid() {
   _has_bits_[0] |= 0x00000001u;
   return cid_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
-inline std::string* Camera::release_cid() {
-  // @@protoc_insertion_point(field_release:msg.Camera.cid)
+inline std::string* CameraInfo::release_cid() {
+  // @@protoc_insertion_point(field_release:msg.CameraInfo.cid)
   if (!_internal_has_cid()) {
     return nullptr;
   }
   _has_bits_[0] &= ~0x00000001u;
   return cid_.ReleaseNonDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
-inline void Camera::set_allocated_cid(std::string* cid) {
+inline void CameraInfo::set_allocated_cid(std::string* cid) {
   if (cid != nullptr) {
     _has_bits_[0] |= 0x00000001u;
   } else {
@@ -1549,16 +1549,16 @@ inline void Camera::set_allocated_cid(std::string* cid) {
   }
   cid_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), cid,
       GetArena());
-  // @@protoc_insertion_point(field_set_allocated:msg.Camera.cid)
+  // @@protoc_insertion_point(field_set_allocated:msg.CameraInfo.cid)
 }
-inline std::string* Camera::unsafe_arena_release_cid() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:msg.Camera.cid)
+inline std::string* CameraInfo::unsafe_arena_release_cid() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:msg.CameraInfo.cid)
   GOOGLE_DCHECK(GetArena() != nullptr);
   _has_bits_[0] &= ~0x00000001u;
   return cid_.UnsafeArenaRelease(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       GetArena());
 }
-inline void Camera::unsafe_arena_set_allocated_cid(
+inline void CameraInfo::unsafe_arena_set_allocated_cid(
     std::string* cid) {
   GOOGLE_DCHECK(GetArena() != nullptr);
   if (cid != nullptr) {
@@ -1568,129 +1568,129 @@ inline void Camera::unsafe_arena_set_allocated_cid(
   }
   cid_.UnsafeArenaSetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       cid, GetArena());
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:msg.Camera.cid)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:msg.CameraInfo.cid)
 }
 
 // required int32 index = 2;
-inline bool Camera::_internal_has_index() const {
+inline bool CameraInfo::_internal_has_index() const {
   bool value = (_has_bits_[0] & 0x00000008u) != 0;
   return value;
 }
-inline bool Camera::has_index() const {
+inline bool CameraInfo::has_index() const {
   return _internal_has_index();
 }
-inline void Camera::clear_index() {
+inline void CameraInfo::clear_index() {
   index_ = 0;
   _has_bits_[0] &= ~0x00000008u;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 Camera::_internal_index() const {
+inline ::PROTOBUF_NAMESPACE_ID::int32 CameraInfo::_internal_index() const {
   return index_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 Camera::index() const {
-  // @@protoc_insertion_point(field_get:msg.Camera.index)
+inline ::PROTOBUF_NAMESPACE_ID::int32 CameraInfo::index() const {
+  // @@protoc_insertion_point(field_get:msg.CameraInfo.index)
   return _internal_index();
 }
-inline void Camera::_internal_set_index(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void CameraInfo::_internal_set_index(::PROTOBUF_NAMESPACE_ID::int32 value) {
   _has_bits_[0] |= 0x00000008u;
   index_ = value;
 }
-inline void Camera::set_index(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void CameraInfo::set_index(::PROTOBUF_NAMESPACE_ID::int32 value) {
   _internal_set_index(value);
-  // @@protoc_insertion_point(field_set:msg.Camera.index)
+  // @@protoc_insertion_point(field_set:msg.CameraInfo.index)
 }
 
 // required bool enable = 3;
-inline bool Camera::_internal_has_enable() const {
+inline bool CameraInfo::_internal_has_enable() const {
   bool value = (_has_bits_[0] & 0x00000010u) != 0;
   return value;
 }
-inline bool Camera::has_enable() const {
+inline bool CameraInfo::has_enable() const {
   return _internal_has_enable();
 }
-inline void Camera::clear_enable() {
+inline void CameraInfo::clear_enable() {
   enable_ = false;
   _has_bits_[0] &= ~0x00000010u;
 }
-inline bool Camera::_internal_enable() const {
+inline bool CameraInfo::_internal_enable() const {
   return enable_;
 }
-inline bool Camera::enable() const {
-  // @@protoc_insertion_point(field_get:msg.Camera.enable)
+inline bool CameraInfo::enable() const {
+  // @@protoc_insertion_point(field_get:msg.CameraInfo.enable)
   return _internal_enable();
 }
-inline void Camera::_internal_set_enable(bool value) {
+inline void CameraInfo::_internal_set_enable(bool value) {
   _has_bits_[0] |= 0x00000010u;
   enable_ = value;
 }
-inline void Camera::set_enable(bool value) {
+inline void CameraInfo::set_enable(bool value) {
   _internal_set_enable(value);
-  // @@protoc_insertion_point(field_set:msg.Camera.enable)
+  // @@protoc_insertion_point(field_set:msg.CameraInfo.enable)
 }
 
 // optional string nickname = 4;
-inline bool Camera::_internal_has_nickname() const {
+inline bool CameraInfo::_internal_has_nickname() const {
   bool value = (_has_bits_[0] & 0x00000002u) != 0;
   return value;
 }
-inline bool Camera::has_nickname() const {
+inline bool CameraInfo::has_nickname() const {
   return _internal_has_nickname();
 }
-inline void Camera::clear_nickname() {
+inline void CameraInfo::clear_nickname() {
   nickname_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   _has_bits_[0] &= ~0x00000002u;
 }
-inline const std::string& Camera::nickname() const {
-  // @@protoc_insertion_point(field_get:msg.Camera.nickname)
+inline const std::string& CameraInfo::nickname() const {
+  // @@protoc_insertion_point(field_get:msg.CameraInfo.nickname)
   return _internal_nickname();
 }
-inline void Camera::set_nickname(const std::string& value) {
+inline void CameraInfo::set_nickname(const std::string& value) {
   _internal_set_nickname(value);
-  // @@protoc_insertion_point(field_set:msg.Camera.nickname)
+  // @@protoc_insertion_point(field_set:msg.CameraInfo.nickname)
 }
-inline std::string* Camera::mutable_nickname() {
-  // @@protoc_insertion_point(field_mutable:msg.Camera.nickname)
+inline std::string* CameraInfo::mutable_nickname() {
+  // @@protoc_insertion_point(field_mutable:msg.CameraInfo.nickname)
   return _internal_mutable_nickname();
 }
-inline const std::string& Camera::_internal_nickname() const {
+inline const std::string& CameraInfo::_internal_nickname() const {
   return nickname_.Get();
 }
-inline void Camera::_internal_set_nickname(const std::string& value) {
+inline void CameraInfo::_internal_set_nickname(const std::string& value) {
   _has_bits_[0] |= 0x00000002u;
   nickname_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value, GetArena());
 }
-inline void Camera::set_nickname(std::string&& value) {
+inline void CameraInfo::set_nickname(std::string&& value) {
   _has_bits_[0] |= 0x00000002u;
   nickname_.Set(
     &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
-  // @@protoc_insertion_point(field_set_rvalue:msg.Camera.nickname)
+  // @@protoc_insertion_point(field_set_rvalue:msg.CameraInfo.nickname)
 }
-inline void Camera::set_nickname(const char* value) {
+inline void CameraInfo::set_nickname(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   _has_bits_[0] |= 0x00000002u;
   nickname_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
               GetArena());
-  // @@protoc_insertion_point(field_set_char:msg.Camera.nickname)
+  // @@protoc_insertion_point(field_set_char:msg.CameraInfo.nickname)
 }
-inline void Camera::set_nickname(const char* value,
+inline void CameraInfo::set_nickname(const char* value,
     size_t size) {
   _has_bits_[0] |= 0x00000002u;
   nickname_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
       reinterpret_cast<const char*>(value), size), GetArena());
-  // @@protoc_insertion_point(field_set_pointer:msg.Camera.nickname)
+  // @@protoc_insertion_point(field_set_pointer:msg.CameraInfo.nickname)
 }
-inline std::string* Camera::_internal_mutable_nickname() {
+inline std::string* CameraInfo::_internal_mutable_nickname() {
   _has_bits_[0] |= 0x00000002u;
   return nickname_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
-inline std::string* Camera::release_nickname() {
-  // @@protoc_insertion_point(field_release:msg.Camera.nickname)
+inline std::string* CameraInfo::release_nickname() {
+  // @@protoc_insertion_point(field_release:msg.CameraInfo.nickname)
   if (!_internal_has_nickname()) {
     return nullptr;
   }
   _has_bits_[0] &= ~0x00000002u;
   return nickname_.ReleaseNonDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
-inline void Camera::set_allocated_nickname(std::string* nickname) {
+inline void CameraInfo::set_allocated_nickname(std::string* nickname) {
   if (nickname != nullptr) {
     _has_bits_[0] |= 0x00000002u;
   } else {
@@ -1698,16 +1698,16 @@ inline void Camera::set_allocated_nickname(std::string* nickname) {
   }
   nickname_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), nickname,
       GetArena());
-  // @@protoc_insertion_point(field_set_allocated:msg.Camera.nickname)
+  // @@protoc_insertion_point(field_set_allocated:msg.CameraInfo.nickname)
 }
-inline std::string* Camera::unsafe_arena_release_nickname() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:msg.Camera.nickname)
+inline std::string* CameraInfo::unsafe_arena_release_nickname() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:msg.CameraInfo.nickname)
   GOOGLE_DCHECK(GetArena() != nullptr);
   _has_bits_[0] &= ~0x00000002u;
   return nickname_.UnsafeArenaRelease(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       GetArena());
 }
-inline void Camera::unsafe_arena_set_allocated_nickname(
+inline void CameraInfo::unsafe_arena_set_allocated_nickname(
     std::string* nickname) {
   GOOGLE_DCHECK(GetArena() != nullptr);
   if (nickname != nullptr) {
@@ -1717,73 +1717,73 @@ inline void Camera::unsafe_arena_set_allocated_nickname(
   }
   nickname_.UnsafeArenaSetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       nickname, GetArena());
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:msg.Camera.nickname)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:msg.CameraInfo.nickname)
 }
 
 // optional string ip = 5;
-inline bool Camera::_internal_has_ip() const {
+inline bool CameraInfo::_internal_has_ip() const {
   bool value = (_has_bits_[0] & 0x00000004u) != 0;
   return value;
 }
-inline bool Camera::has_ip() const {
+inline bool CameraInfo::has_ip() const {
   return _internal_has_ip();
 }
-inline void Camera::clear_ip() {
+inline void CameraInfo::clear_ip() {
   ip_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   _has_bits_[0] &= ~0x00000004u;
 }
-inline const std::string& Camera::ip() const {
-  // @@protoc_insertion_point(field_get:msg.Camera.ip)
+inline const std::string& CameraInfo::ip() const {
+  // @@protoc_insertion_point(field_get:msg.CameraInfo.ip)
   return _internal_ip();
 }
-inline void Camera::set_ip(const std::string& value) {
+inline void CameraInfo::set_ip(const std::string& value) {
   _internal_set_ip(value);
-  // @@protoc_insertion_point(field_set:msg.Camera.ip)
+  // @@protoc_insertion_point(field_set:msg.CameraInfo.ip)
 }
-inline std::string* Camera::mutable_ip() {
-  // @@protoc_insertion_point(field_mutable:msg.Camera.ip)
+inline std::string* CameraInfo::mutable_ip() {
+  // @@protoc_insertion_point(field_mutable:msg.CameraInfo.ip)
   return _internal_mutable_ip();
 }
-inline const std::string& Camera::_internal_ip() const {
+inline const std::string& CameraInfo::_internal_ip() const {
   return ip_.Get();
 }
-inline void Camera::_internal_set_ip(const std::string& value) {
+inline void CameraInfo::_internal_set_ip(const std::string& value) {
   _has_bits_[0] |= 0x00000004u;
   ip_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value, GetArena());
 }
-inline void Camera::set_ip(std::string&& value) {
+inline void CameraInfo::set_ip(std::string&& value) {
   _has_bits_[0] |= 0x00000004u;
   ip_.Set(
     &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
-  // @@protoc_insertion_point(field_set_rvalue:msg.Camera.ip)
+  // @@protoc_insertion_point(field_set_rvalue:msg.CameraInfo.ip)
 }
-inline void Camera::set_ip(const char* value) {
+inline void CameraInfo::set_ip(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   _has_bits_[0] |= 0x00000004u;
   ip_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
               GetArena());
-  // @@protoc_insertion_point(field_set_char:msg.Camera.ip)
+  // @@protoc_insertion_point(field_set_char:msg.CameraInfo.ip)
 }
-inline void Camera::set_ip(const char* value,
+inline void CameraInfo::set_ip(const char* value,
     size_t size) {
   _has_bits_[0] |= 0x00000004u;
   ip_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
       reinterpret_cast<const char*>(value), size), GetArena());
-  // @@protoc_insertion_point(field_set_pointer:msg.Camera.ip)
+  // @@protoc_insertion_point(field_set_pointer:msg.CameraInfo.ip)
 }
-inline std::string* Camera::_internal_mutable_ip() {
+inline std::string* CameraInfo::_internal_mutable_ip() {
   _has_bits_[0] |= 0x00000004u;
   return ip_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
-inline std::string* Camera::release_ip() {
-  // @@protoc_insertion_point(field_release:msg.Camera.ip)
+inline std::string* CameraInfo::release_ip() {
+  // @@protoc_insertion_point(field_release:msg.CameraInfo.ip)
   if (!_internal_has_ip()) {
     return nullptr;
   }
   _has_bits_[0] &= ~0x00000004u;
   return ip_.ReleaseNonDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
-inline void Camera::set_allocated_ip(std::string* ip) {
+inline void CameraInfo::set_allocated_ip(std::string* ip) {
   if (ip != nullptr) {
     _has_bits_[0] |= 0x00000004u;
   } else {
@@ -1791,16 +1791,16 @@ inline void Camera::set_allocated_ip(std::string* ip) {
   }
   ip_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ip,
       GetArena());
-  // @@protoc_insertion_point(field_set_allocated:msg.Camera.ip)
+  // @@protoc_insertion_point(field_set_allocated:msg.CameraInfo.ip)
 }
-inline std::string* Camera::unsafe_arena_release_ip() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:msg.Camera.ip)
+inline std::string* CameraInfo::unsafe_arena_release_ip() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:msg.CameraInfo.ip)
   GOOGLE_DCHECK(GetArena() != nullptr);
   _has_bits_[0] &= ~0x00000004u;
   return ip_.UnsafeArenaRelease(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       GetArena());
 }
-inline void Camera::unsafe_arena_set_allocated_ip(
+inline void CameraInfo::unsafe_arena_set_allocated_ip(
     std::string* ip) {
   GOOGLE_DCHECK(GetArena() != nullptr);
   if (ip != nullptr) {
@@ -1810,163 +1810,163 @@ inline void Camera::unsafe_arena_set_allocated_ip(
   }
   ip_.UnsafeArenaSetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       ip, GetArena());
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:msg.Camera.ip)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:msg.CameraInfo.ip)
 }
 
 // -------------------------------------------------------------------
 
-// Embedded
+// DeviceInfo
 
 // required bool enable = 1 [default = false];
-inline bool Embedded::_internal_has_enable() const {
+inline bool DeviceInfo::_internal_has_enable() const {
   bool value = (_has_bits_[0] & 0x00000020u) != 0;
   return value;
 }
-inline bool Embedded::has_enable() const {
+inline bool DeviceInfo::has_enable() const {
   return _internal_has_enable();
 }
-inline void Embedded::clear_enable() {
+inline void DeviceInfo::clear_enable() {
   enable_ = false;
   _has_bits_[0] &= ~0x00000020u;
 }
-inline bool Embedded::_internal_enable() const {
+inline bool DeviceInfo::_internal_enable() const {
   return enable_;
 }
-inline bool Embedded::enable() const {
-  // @@protoc_insertion_point(field_get:msg.Embedded.enable)
+inline bool DeviceInfo::enable() const {
+  // @@protoc_insertion_point(field_get:msg.DeviceInfo.enable)
   return _internal_enable();
 }
-inline void Embedded::_internal_set_enable(bool value) {
+inline void DeviceInfo::_internal_set_enable(bool value) {
   _has_bits_[0] |= 0x00000020u;
   enable_ = value;
 }
-inline void Embedded::set_enable(bool value) {
+inline void DeviceInfo::set_enable(bool value) {
   _internal_set_enable(value);
-  // @@protoc_insertion_point(field_set:msg.Embedded.enable)
+  // @@protoc_insertion_point(field_set:msg.DeviceInfo.enable)
 }
 
-// optional .msg.Embedded.Factory factory = 2;
-inline bool Embedded::_internal_has_factory() const {
+// optional .msg.DeviceInfo.Factory factory = 2;
+inline bool DeviceInfo::_internal_has_factory() const {
   bool value = (_has_bits_[0] & 0x00000080u) != 0;
   return value;
 }
-inline bool Embedded::has_factory() const {
+inline bool DeviceInfo::has_factory() const {
   return _internal_has_factory();
 }
-inline void Embedded::clear_factory() {
+inline void DeviceInfo::clear_factory() {
   factory_ = 1;
   _has_bits_[0] &= ~0x00000080u;
 }
-inline ::msg::Embedded_Factory Embedded::_internal_factory() const {
-  return static_cast< ::msg::Embedded_Factory >(factory_);
+inline ::msg::DeviceInfo_Factory DeviceInfo::_internal_factory() const {
+  return static_cast< ::msg::DeviceInfo_Factory >(factory_);
 }
-inline ::msg::Embedded_Factory Embedded::factory() const {
-  // @@protoc_insertion_point(field_get:msg.Embedded.factory)
+inline ::msg::DeviceInfo_Factory DeviceInfo::factory() const {
+  // @@protoc_insertion_point(field_get:msg.DeviceInfo.factory)
   return _internal_factory();
 }
-inline void Embedded::_internal_set_factory(::msg::Embedded_Factory value) {
-  assert(::msg::Embedded_Factory_IsValid(value));
+inline void DeviceInfo::_internal_set_factory(::msg::DeviceInfo_Factory value) {
+  assert(::msg::DeviceInfo_Factory_IsValid(value));
   _has_bits_[0] |= 0x00000080u;
   factory_ = value;
 }
-inline void Embedded::set_factory(::msg::Embedded_Factory value) {
+inline void DeviceInfo::set_factory(::msg::DeviceInfo_Factory value) {
   _internal_set_factory(value);
-  // @@protoc_insertion_point(field_set:msg.Embedded.factory)
+  // @@protoc_insertion_point(field_set:msg.DeviceInfo.factory)
 }
 
-// optional .msg.Embedded.Type type = 3;
-inline bool Embedded::_internal_has_type() const {
+// optional .msg.DeviceInfo.Type type = 3;
+inline bool DeviceInfo::_internal_has_type() const {
   bool value = (_has_bits_[0] & 0x00000100u) != 0;
   return value;
 }
-inline bool Embedded::has_type() const {
+inline bool DeviceInfo::has_type() const {
   return _internal_has_type();
 }
-inline void Embedded::clear_type() {
+inline void DeviceInfo::clear_type() {
   type_ = 1;
   _has_bits_[0] &= ~0x00000100u;
 }
-inline ::msg::Embedded_Type Embedded::_internal_type() const {
-  return static_cast< ::msg::Embedded_Type >(type_);
+inline ::msg::DeviceInfo_Type DeviceInfo::_internal_type() const {
+  return static_cast< ::msg::DeviceInfo_Type >(type_);
 }
-inline ::msg::Embedded_Type Embedded::type() const {
-  // @@protoc_insertion_point(field_get:msg.Embedded.type)
+inline ::msg::DeviceInfo_Type DeviceInfo::type() const {
+  // @@protoc_insertion_point(field_get:msg.DeviceInfo.type)
   return _internal_type();
 }
-inline void Embedded::_internal_set_type(::msg::Embedded_Type value) {
-  assert(::msg::Embedded_Type_IsValid(value));
+inline void DeviceInfo::_internal_set_type(::msg::DeviceInfo_Type value) {
+  assert(::msg::DeviceInfo_Type_IsValid(value));
   _has_bits_[0] |= 0x00000100u;
   type_ = value;
 }
-inline void Embedded::set_type(::msg::Embedded_Type value) {
+inline void DeviceInfo::set_type(::msg::DeviceInfo_Type value) {
   _internal_set_type(value);
-  // @@protoc_insertion_point(field_set:msg.Embedded.type)
+  // @@protoc_insertion_point(field_set:msg.DeviceInfo.type)
 }
 
 // optional string name = 4;
-inline bool Embedded::_internal_has_name() const {
+inline bool DeviceInfo::_internal_has_name() const {
   bool value = (_has_bits_[0] & 0x00000001u) != 0;
   return value;
 }
-inline bool Embedded::has_name() const {
+inline bool DeviceInfo::has_name() const {
   return _internal_has_name();
 }
-inline void Embedded::clear_name() {
+inline void DeviceInfo::clear_name() {
   name_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   _has_bits_[0] &= ~0x00000001u;
 }
-inline const std::string& Embedded::name() const {
-  // @@protoc_insertion_point(field_get:msg.Embedded.name)
+inline const std::string& DeviceInfo::name() const {
+  // @@protoc_insertion_point(field_get:msg.DeviceInfo.name)
   return _internal_name();
 }
-inline void Embedded::set_name(const std::string& value) {
+inline void DeviceInfo::set_name(const std::string& value) {
   _internal_set_name(value);
-  // @@protoc_insertion_point(field_set:msg.Embedded.name)
+  // @@protoc_insertion_point(field_set:msg.DeviceInfo.name)
 }
-inline std::string* Embedded::mutable_name() {
-  // @@protoc_insertion_point(field_mutable:msg.Embedded.name)
+inline std::string* DeviceInfo::mutable_name() {
+  // @@protoc_insertion_point(field_mutable:msg.DeviceInfo.name)
   return _internal_mutable_name();
 }
-inline const std::string& Embedded::_internal_name() const {
+inline const std::string& DeviceInfo::_internal_name() const {
   return name_.Get();
 }
-inline void Embedded::_internal_set_name(const std::string& value) {
+inline void DeviceInfo::_internal_set_name(const std::string& value) {
   _has_bits_[0] |= 0x00000001u;
   name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value, GetArena());
 }
-inline void Embedded::set_name(std::string&& value) {
+inline void DeviceInfo::set_name(std::string&& value) {
   _has_bits_[0] |= 0x00000001u;
   name_.Set(
     &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
-  // @@protoc_insertion_point(field_set_rvalue:msg.Embedded.name)
+  // @@protoc_insertion_point(field_set_rvalue:msg.DeviceInfo.name)
 }
-inline void Embedded::set_name(const char* value) {
+inline void DeviceInfo::set_name(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   _has_bits_[0] |= 0x00000001u;
   name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
               GetArena());
-  // @@protoc_insertion_point(field_set_char:msg.Embedded.name)
+  // @@protoc_insertion_point(field_set_char:msg.DeviceInfo.name)
 }
-inline void Embedded::set_name(const char* value,
+inline void DeviceInfo::set_name(const char* value,
     size_t size) {
   _has_bits_[0] |= 0x00000001u;
   name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
       reinterpret_cast<const char*>(value), size), GetArena());
-  // @@protoc_insertion_point(field_set_pointer:msg.Embedded.name)
+  // @@protoc_insertion_point(field_set_pointer:msg.DeviceInfo.name)
 }
-inline std::string* Embedded::_internal_mutable_name() {
+inline std::string* DeviceInfo::_internal_mutable_name() {
   _has_bits_[0] |= 0x00000001u;
   return name_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
-inline std::string* Embedded::release_name() {
-  // @@protoc_insertion_point(field_release:msg.Embedded.name)
+inline std::string* DeviceInfo::release_name() {
+  // @@protoc_insertion_point(field_release:msg.DeviceInfo.name)
   if (!_internal_has_name()) {
     return nullptr;
   }
   _has_bits_[0] &= ~0x00000001u;
   return name_.ReleaseNonDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
-inline void Embedded::set_allocated_name(std::string* name) {
+inline void DeviceInfo::set_allocated_name(std::string* name) {
   if (name != nullptr) {
     _has_bits_[0] |= 0x00000001u;
   } else {
@@ -1974,16 +1974,16 @@ inline void Embedded::set_allocated_name(std::string* name) {
   }
   name_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), name,
       GetArena());
-  // @@protoc_insertion_point(field_set_allocated:msg.Embedded.name)
+  // @@protoc_insertion_point(field_set_allocated:msg.DeviceInfo.name)
 }
-inline std::string* Embedded::unsafe_arena_release_name() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:msg.Embedded.name)
+inline std::string* DeviceInfo::unsafe_arena_release_name() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:msg.DeviceInfo.name)
   GOOGLE_DCHECK(GetArena() != nullptr);
   _has_bits_[0] &= ~0x00000001u;
   return name_.UnsafeArenaRelease(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       GetArena());
 }
-inline void Embedded::unsafe_arena_set_allocated_name(
+inline void DeviceInfo::unsafe_arena_set_allocated_name(
     std::string* name) {
   GOOGLE_DCHECK(GetArena() != nullptr);
   if (name != nullptr) {
@@ -1993,73 +1993,73 @@ inline void Embedded::unsafe_arena_set_allocated_name(
   }
   name_.UnsafeArenaSetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       name, GetArena());
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:msg.Embedded.name)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:msg.DeviceInfo.name)
 }
 
 // optional string password = 5;
-inline bool Embedded::_internal_has_password() const {
+inline bool DeviceInfo::_internal_has_password() const {
   bool value = (_has_bits_[0] & 0x00000002u) != 0;
   return value;
 }
-inline bool Embedded::has_password() const {
+inline bool DeviceInfo::has_password() const {
   return _internal_has_password();
 }
-inline void Embedded::clear_password() {
+inline void DeviceInfo::clear_password() {
   password_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   _has_bits_[0] &= ~0x00000002u;
 }
-inline const std::string& Embedded::password() const {
-  // @@protoc_insertion_point(field_get:msg.Embedded.password)
+inline const std::string& DeviceInfo::password() const {
+  // @@protoc_insertion_point(field_get:msg.DeviceInfo.password)
   return _internal_password();
 }
-inline void Embedded::set_password(const std::string& value) {
+inline void DeviceInfo::set_password(const std::string& value) {
   _internal_set_password(value);
-  // @@protoc_insertion_point(field_set:msg.Embedded.password)
+  // @@protoc_insertion_point(field_set:msg.DeviceInfo.password)
 }
-inline std::string* Embedded::mutable_password() {
-  // @@protoc_insertion_point(field_mutable:msg.Embedded.password)
+inline std::string* DeviceInfo::mutable_password() {
+  // @@protoc_insertion_point(field_mutable:msg.DeviceInfo.password)
   return _internal_mutable_password();
 }
-inline const std::string& Embedded::_internal_password() const {
+inline const std::string& DeviceInfo::_internal_password() const {
   return password_.Get();
 }
-inline void Embedded::_internal_set_password(const std::string& value) {
+inline void DeviceInfo::_internal_set_password(const std::string& value) {
   _has_bits_[0] |= 0x00000002u;
   password_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value, GetArena());
 }
-inline void Embedded::set_password(std::string&& value) {
+inline void DeviceInfo::set_password(std::string&& value) {
   _has_bits_[0] |= 0x00000002u;
   password_.Set(
     &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
-  // @@protoc_insertion_point(field_set_rvalue:msg.Embedded.password)
+  // @@protoc_insertion_point(field_set_rvalue:msg.DeviceInfo.password)
 }
-inline void Embedded::set_password(const char* value) {
+inline void DeviceInfo::set_password(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   _has_bits_[0] |= 0x00000002u;
   password_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
               GetArena());
-  // @@protoc_insertion_point(field_set_char:msg.Embedded.password)
+  // @@protoc_insertion_point(field_set_char:msg.DeviceInfo.password)
 }
-inline void Embedded::set_password(const char* value,
+inline void DeviceInfo::set_password(const char* value,
     size_t size) {
   _has_bits_[0] |= 0x00000002u;
   password_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
       reinterpret_cast<const char*>(value), size), GetArena());
-  // @@protoc_insertion_point(field_set_pointer:msg.Embedded.password)
+  // @@protoc_insertion_point(field_set_pointer:msg.DeviceInfo.password)
 }
-inline std::string* Embedded::_internal_mutable_password() {
+inline std::string* DeviceInfo::_internal_mutable_password() {
   _has_bits_[0] |= 0x00000002u;
   return password_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
-inline std::string* Embedded::release_password() {
-  // @@protoc_insertion_point(field_release:msg.Embedded.password)
+inline std::string* DeviceInfo::release_password() {
+  // @@protoc_insertion_point(field_release:msg.DeviceInfo.password)
   if (!_internal_has_password()) {
     return nullptr;
   }
   _has_bits_[0] &= ~0x00000002u;
   return password_.ReleaseNonDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
-inline void Embedded::set_allocated_password(std::string* password) {
+inline void DeviceInfo::set_allocated_password(std::string* password) {
   if (password != nullptr) {
     _has_bits_[0] |= 0x00000002u;
   } else {
@@ -2067,16 +2067,16 @@ inline void Embedded::set_allocated_password(std::string* password) {
   }
   password_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), password,
       GetArena());
-  // @@protoc_insertion_point(field_set_allocated:msg.Embedded.password)
+  // @@protoc_insertion_point(field_set_allocated:msg.DeviceInfo.password)
 }
-inline std::string* Embedded::unsafe_arena_release_password() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:msg.Embedded.password)
+inline std::string* DeviceInfo::unsafe_arena_release_password() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:msg.DeviceInfo.password)
   GOOGLE_DCHECK(GetArena() != nullptr);
   _has_bits_[0] &= ~0x00000002u;
   return password_.UnsafeArenaRelease(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       GetArena());
 }
-inline void Embedded::unsafe_arena_set_allocated_password(
+inline void DeviceInfo::unsafe_arena_set_allocated_password(
     std::string* password) {
   GOOGLE_DCHECK(GetArena() != nullptr);
   if (password != nullptr) {
@@ -2086,73 +2086,73 @@ inline void Embedded::unsafe_arena_set_allocated_password(
   }
   password_.UnsafeArenaSetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       password, GetArena());
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:msg.Embedded.password)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:msg.DeviceInfo.password)
 }
 
 // optional string ip = 6;
-inline bool Embedded::_internal_has_ip() const {
+inline bool DeviceInfo::_internal_has_ip() const {
   bool value = (_has_bits_[0] & 0x00000004u) != 0;
   return value;
 }
-inline bool Embedded::has_ip() const {
+inline bool DeviceInfo::has_ip() const {
   return _internal_has_ip();
 }
-inline void Embedded::clear_ip() {
+inline void DeviceInfo::clear_ip() {
   ip_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   _has_bits_[0] &= ~0x00000004u;
 }
-inline const std::string& Embedded::ip() const {
-  // @@protoc_insertion_point(field_get:msg.Embedded.ip)
+inline const std::string& DeviceInfo::ip() const {
+  // @@protoc_insertion_point(field_get:msg.DeviceInfo.ip)
   return _internal_ip();
 }
-inline void Embedded::set_ip(const std::string& value) {
+inline void DeviceInfo::set_ip(const std::string& value) {
   _internal_set_ip(value);
-  // @@protoc_insertion_point(field_set:msg.Embedded.ip)
+  // @@protoc_insertion_point(field_set:msg.DeviceInfo.ip)
 }
-inline std::string* Embedded::mutable_ip() {
-  // @@protoc_insertion_point(field_mutable:msg.Embedded.ip)
+inline std::string* DeviceInfo::mutable_ip() {
+  // @@protoc_insertion_point(field_mutable:msg.DeviceInfo.ip)
   return _internal_mutable_ip();
 }
-inline const std::string& Embedded::_internal_ip() const {
+inline const std::string& DeviceInfo::_internal_ip() const {
   return ip_.Get();
 }
-inline void Embedded::_internal_set_ip(const std::string& value) {
+inline void DeviceInfo::_internal_set_ip(const std::string& value) {
   _has_bits_[0] |= 0x00000004u;
   ip_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value, GetArena());
 }
-inline void Embedded::set_ip(std::string&& value) {
+inline void DeviceInfo::set_ip(std::string&& value) {
   _has_bits_[0] |= 0x00000004u;
   ip_.Set(
     &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
-  // @@protoc_insertion_point(field_set_rvalue:msg.Embedded.ip)
+  // @@protoc_insertion_point(field_set_rvalue:msg.DeviceInfo.ip)
 }
-inline void Embedded::set_ip(const char* value) {
+inline void DeviceInfo::set_ip(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   _has_bits_[0] |= 0x00000004u;
   ip_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
               GetArena());
-  // @@protoc_insertion_point(field_set_char:msg.Embedded.ip)
+  // @@protoc_insertion_point(field_set_char:msg.DeviceInfo.ip)
 }
-inline void Embedded::set_ip(const char* value,
+inline void DeviceInfo::set_ip(const char* value,
     size_t size) {
   _has_bits_[0] |= 0x00000004u;
   ip_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
       reinterpret_cast<const char*>(value), size), GetArena());
-  // @@protoc_insertion_point(field_set_pointer:msg.Embedded.ip)
+  // @@protoc_insertion_point(field_set_pointer:msg.DeviceInfo.ip)
 }
-inline std::string* Embedded::_internal_mutable_ip() {
+inline std::string* DeviceInfo::_internal_mutable_ip() {
   _has_bits_[0] |= 0x00000004u;
   return ip_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
-inline std::string* Embedded::release_ip() {
-  // @@protoc_insertion_point(field_release:msg.Embedded.ip)
+inline std::string* DeviceInfo::release_ip() {
+  // @@protoc_insertion_point(field_release:msg.DeviceInfo.ip)
   if (!_internal_has_ip()) {
     return nullptr;
   }
   _has_bits_[0] &= ~0x00000004u;
   return ip_.ReleaseNonDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
-inline void Embedded::set_allocated_ip(std::string* ip) {
+inline void DeviceInfo::set_allocated_ip(std::string* ip) {
   if (ip != nullptr) {
     _has_bits_[0] |= 0x00000004u;
   } else {
@@ -2160,16 +2160,16 @@ inline void Embedded::set_allocated_ip(std::string* ip) {
   }
   ip_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ip,
       GetArena());
-  // @@protoc_insertion_point(field_set_allocated:msg.Embedded.ip)
+  // @@protoc_insertion_point(field_set_allocated:msg.DeviceInfo.ip)
 }
-inline std::string* Embedded::unsafe_arena_release_ip() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:msg.Embedded.ip)
+inline std::string* DeviceInfo::unsafe_arena_release_ip() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:msg.DeviceInfo.ip)
   GOOGLE_DCHECK(GetArena() != nullptr);
   _has_bits_[0] &= ~0x00000004u;
   return ip_.UnsafeArenaRelease(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       GetArena());
 }
-inline void Embedded::unsafe_arena_set_allocated_ip(
+inline void DeviceInfo::unsafe_arena_set_allocated_ip(
     std::string* ip) {
   GOOGLE_DCHECK(GetArena() != nullptr);
   if (ip != nullptr) {
@@ -2179,101 +2179,101 @@ inline void Embedded::unsafe_arena_set_allocated_ip(
   }
   ip_.UnsafeArenaSetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       ip, GetArena());
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:msg.Embedded.ip)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:msg.DeviceInfo.ip)
 }
 
 // optional int32 port = 7;
-inline bool Embedded::_internal_has_port() const {
+inline bool DeviceInfo::_internal_has_port() const {
   bool value = (_has_bits_[0] & 0x00000040u) != 0;
   return value;
 }
-inline bool Embedded::has_port() const {
+inline bool DeviceInfo::has_port() const {
   return _internal_has_port();
 }
-inline void Embedded::clear_port() {
+inline void DeviceInfo::clear_port() {
   port_ = 0;
   _has_bits_[0] &= ~0x00000040u;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 Embedded::_internal_port() const {
+inline ::PROTOBUF_NAMESPACE_ID::int32 DeviceInfo::_internal_port() const {
   return port_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 Embedded::port() const {
-  // @@protoc_insertion_point(field_get:msg.Embedded.port)
+inline ::PROTOBUF_NAMESPACE_ID::int32 DeviceInfo::port() const {
+  // @@protoc_insertion_point(field_get:msg.DeviceInfo.port)
   return _internal_port();
 }
-inline void Embedded::_internal_set_port(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void DeviceInfo::_internal_set_port(::PROTOBUF_NAMESPACE_ID::int32 value) {
   _has_bits_[0] |= 0x00000040u;
   port_ = value;
 }
-inline void Embedded::set_port(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void DeviceInfo::set_port(::PROTOBUF_NAMESPACE_ID::int32 value) {
   _internal_set_port(value);
-  // @@protoc_insertion_point(field_set:msg.Embedded.port)
+  // @@protoc_insertion_point(field_set:msg.DeviceInfo.port)
 }
 
 // optional string did = 8;
-inline bool Embedded::_internal_has_did() const {
+inline bool DeviceInfo::_internal_has_did() const {
   bool value = (_has_bits_[0] & 0x00000008u) != 0;
   return value;
 }
-inline bool Embedded::has_did() const {
+inline bool DeviceInfo::has_did() const {
   return _internal_has_did();
 }
-inline void Embedded::clear_did() {
+inline void DeviceInfo::clear_did() {
   did_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   _has_bits_[0] &= ~0x00000008u;
 }
-inline const std::string& Embedded::did() const {
-  // @@protoc_insertion_point(field_get:msg.Embedded.did)
+inline const std::string& DeviceInfo::did() const {
+  // @@protoc_insertion_point(field_get:msg.DeviceInfo.did)
   return _internal_did();
 }
-inline void Embedded::set_did(const std::string& value) {
+inline void DeviceInfo::set_did(const std::string& value) {
   _internal_set_did(value);
-  // @@protoc_insertion_point(field_set:msg.Embedded.did)
+  // @@protoc_insertion_point(field_set:msg.DeviceInfo.did)
 }
-inline std::string* Embedded::mutable_did() {
-  // @@protoc_insertion_point(field_mutable:msg.Embedded.did)
+inline std::string* DeviceInfo::mutable_did() {
+  // @@protoc_insertion_point(field_mutable:msg.DeviceInfo.did)
   return _internal_mutable_did();
 }
-inline const std::string& Embedded::_internal_did() const {
+inline const std::string& DeviceInfo::_internal_did() const {
   return did_.Get();
 }
-inline void Embedded::_internal_set_did(const std::string& value) {
+inline void DeviceInfo::_internal_set_did(const std::string& value) {
   _has_bits_[0] |= 0x00000008u;
   did_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value, GetArena());
 }
-inline void Embedded::set_did(std::string&& value) {
+inline void DeviceInfo::set_did(std::string&& value) {
   _has_bits_[0] |= 0x00000008u;
   did_.Set(
     &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
-  // @@protoc_insertion_point(field_set_rvalue:msg.Embedded.did)
+  // @@protoc_insertion_point(field_set_rvalue:msg.DeviceInfo.did)
 }
-inline void Embedded::set_did(const char* value) {
+inline void DeviceInfo::set_did(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   _has_bits_[0] |= 0x00000008u;
   did_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
               GetArena());
-  // @@protoc_insertion_point(field_set_char:msg.Embedded.did)
+  // @@protoc_insertion_point(field_set_char:msg.DeviceInfo.did)
 }
-inline void Embedded::set_did(const char* value,
+inline void DeviceInfo::set_did(const char* value,
     size_t size) {
   _has_bits_[0] |= 0x00000008u;
   did_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
       reinterpret_cast<const char*>(value), size), GetArena());
-  // @@protoc_insertion_point(field_set_pointer:msg.Embedded.did)
+  // @@protoc_insertion_point(field_set_pointer:msg.DeviceInfo.did)
 }
-inline std::string* Embedded::_internal_mutable_did() {
+inline std::string* DeviceInfo::_internal_mutable_did() {
   _has_bits_[0] |= 0x00000008u;
   return did_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
-inline std::string* Embedded::release_did() {
-  // @@protoc_insertion_point(field_release:msg.Embedded.did)
+inline std::string* DeviceInfo::release_did() {
+  // @@protoc_insertion_point(field_release:msg.DeviceInfo.did)
   if (!_internal_has_did()) {
     return nullptr;
   }
   _has_bits_[0] &= ~0x00000008u;
   return did_.ReleaseNonDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
-inline void Embedded::set_allocated_did(std::string* did) {
+inline void DeviceInfo::set_allocated_did(std::string* did) {
   if (did != nullptr) {
     _has_bits_[0] |= 0x00000008u;
   } else {
@@ -2281,16 +2281,16 @@ inline void Embedded::set_allocated_did(std::string* did) {
   }
   did_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), did,
       GetArena());
-  // @@protoc_insertion_point(field_set_allocated:msg.Embedded.did)
+  // @@protoc_insertion_point(field_set_allocated:msg.DeviceInfo.did)
 }
-inline std::string* Embedded::unsafe_arena_release_did() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:msg.Embedded.did)
+inline std::string* DeviceInfo::unsafe_arena_release_did() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:msg.DeviceInfo.did)
   GOOGLE_DCHECK(GetArena() != nullptr);
   _has_bits_[0] &= ~0x00000008u;
   return did_.UnsafeArenaRelease(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       GetArena());
 }
-inline void Embedded::unsafe_arena_set_allocated_did(
+inline void DeviceInfo::unsafe_arena_set_allocated_did(
     std::string* did) {
   GOOGLE_DCHECK(GetArena() != nullptr);
   if (did != nullptr) {
@@ -2300,73 +2300,73 @@ inline void Embedded::unsafe_arena_set_allocated_did(
   }
   did_.UnsafeArenaSetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       did, GetArena());
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:msg.Embedded.did)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:msg.DeviceInfo.did)
 }
 
 // optional string nickname = 9;
-inline bool Embedded::_internal_has_nickname() const {
+inline bool DeviceInfo::_internal_has_nickname() const {
   bool value = (_has_bits_[0] & 0x00000010u) != 0;
   return value;
 }
-inline bool Embedded::has_nickname() const {
+inline bool DeviceInfo::has_nickname() const {
   return _internal_has_nickname();
 }
-inline void Embedded::clear_nickname() {
+inline void DeviceInfo::clear_nickname() {
   nickname_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   _has_bits_[0] &= ~0x00000010u;
 }
-inline const std::string& Embedded::nickname() const {
-  // @@protoc_insertion_point(field_get:msg.Embedded.nickname)
+inline const std::string& DeviceInfo::nickname() const {
+  // @@protoc_insertion_point(field_get:msg.DeviceInfo.nickname)
   return _internal_nickname();
 }
-inline void Embedded::set_nickname(const std::string& value) {
+inline void DeviceInfo::set_nickname(const std::string& value) {
   _internal_set_nickname(value);
-  // @@protoc_insertion_point(field_set:msg.Embedded.nickname)
+  // @@protoc_insertion_point(field_set:msg.DeviceInfo.nickname)
 }
-inline std::string* Embedded::mutable_nickname() {
-  // @@protoc_insertion_point(field_mutable:msg.Embedded.nickname)
+inline std::string* DeviceInfo::mutable_nickname() {
+  // @@protoc_insertion_point(field_mutable:msg.DeviceInfo.nickname)
   return _internal_mutable_nickname();
 }
-inline const std::string& Embedded::_internal_nickname() const {
+inline const std::string& DeviceInfo::_internal_nickname() const {
   return nickname_.Get();
 }
-inline void Embedded::_internal_set_nickname(const std::string& value) {
+inline void DeviceInfo::_internal_set_nickname(const std::string& value) {
   _has_bits_[0] |= 0x00000010u;
   nickname_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value, GetArena());
 }
-inline void Embedded::set_nickname(std::string&& value) {
+inline void DeviceInfo::set_nickname(std::string&& value) {
   _has_bits_[0] |= 0x00000010u;
   nickname_.Set(
     &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
-  // @@protoc_insertion_point(field_set_rvalue:msg.Embedded.nickname)
+  // @@protoc_insertion_point(field_set_rvalue:msg.DeviceInfo.nickname)
 }
-inline void Embedded::set_nickname(const char* value) {
+inline void DeviceInfo::set_nickname(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   _has_bits_[0] |= 0x00000010u;
   nickname_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
               GetArena());
-  // @@protoc_insertion_point(field_set_char:msg.Embedded.nickname)
+  // @@protoc_insertion_point(field_set_char:msg.DeviceInfo.nickname)
 }
-inline void Embedded::set_nickname(const char* value,
+inline void DeviceInfo::set_nickname(const char* value,
     size_t size) {
   _has_bits_[0] |= 0x00000010u;
   nickname_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
       reinterpret_cast<const char*>(value), size), GetArena());
-  // @@protoc_insertion_point(field_set_pointer:msg.Embedded.nickname)
+  // @@protoc_insertion_point(field_set_pointer:msg.DeviceInfo.nickname)
 }
-inline std::string* Embedded::_internal_mutable_nickname() {
+inline std::string* DeviceInfo::_internal_mutable_nickname() {
   _has_bits_[0] |= 0x00000010u;
   return nickname_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
-inline std::string* Embedded::release_nickname() {
-  // @@protoc_insertion_point(field_release:msg.Embedded.nickname)
+inline std::string* DeviceInfo::release_nickname() {
+  // @@protoc_insertion_point(field_release:msg.DeviceInfo.nickname)
   if (!_internal_has_nickname()) {
     return nullptr;
   }
   _has_bits_[0] &= ~0x00000010u;
   return nickname_.ReleaseNonDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
-inline void Embedded::set_allocated_nickname(std::string* nickname) {
+inline void DeviceInfo::set_allocated_nickname(std::string* nickname) {
   if (nickname != nullptr) {
     _has_bits_[0] |= 0x00000010u;
   } else {
@@ -2374,16 +2374,16 @@ inline void Embedded::set_allocated_nickname(std::string* nickname) {
   }
   nickname_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), nickname,
       GetArena());
-  // @@protoc_insertion_point(field_set_allocated:msg.Embedded.nickname)
+  // @@protoc_insertion_point(field_set_allocated:msg.DeviceInfo.nickname)
 }
-inline std::string* Embedded::unsafe_arena_release_nickname() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:msg.Embedded.nickname)
+inline std::string* DeviceInfo::unsafe_arena_release_nickname() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:msg.DeviceInfo.nickname)
   GOOGLE_DCHECK(GetArena() != nullptr);
   _has_bits_[0] &= ~0x00000010u;
   return nickname_.UnsafeArenaRelease(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       GetArena());
 }
-inline void Embedded::unsafe_arena_set_allocated_nickname(
+inline void DeviceInfo::unsafe_arena_set_allocated_nickname(
     std::string* nickname) {
   GOOGLE_DCHECK(GetArena() != nullptr);
   if (nickname != nullptr) {
@@ -2393,133 +2393,133 @@ inline void Embedded::unsafe_arena_set_allocated_nickname(
   }
   nickname_.UnsafeArenaSetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       nickname, GetArena());
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:msg.Embedded.nickname)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:msg.DeviceInfo.nickname)
 }
 
-// repeated .msg.Camera cameras = 10;
-inline int Embedded::_internal_cameras_size() const {
-  return cameras_.size();
+// repeated .msg.CameraInfo camerainfos = 10;
+inline int DeviceInfo::_internal_camerainfos_size() const {
+  return camerainfos_.size();
 }
-inline int Embedded::cameras_size() const {
-  return _internal_cameras_size();
+inline int DeviceInfo::camerainfos_size() const {
+  return _internal_camerainfos_size();
 }
-inline void Embedded::clear_cameras() {
-  cameras_.Clear();
+inline void DeviceInfo::clear_camerainfos() {
+  camerainfos_.Clear();
 }
-inline ::msg::Camera* Embedded::mutable_cameras(int index) {
-  // @@protoc_insertion_point(field_mutable:msg.Embedded.cameras)
-  return cameras_.Mutable(index);
+inline ::msg::CameraInfo* DeviceInfo::mutable_camerainfos(int index) {
+  // @@protoc_insertion_point(field_mutable:msg.DeviceInfo.camerainfos)
+  return camerainfos_.Mutable(index);
 }
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::Camera >*
-Embedded::mutable_cameras() {
-  // @@protoc_insertion_point(field_mutable_list:msg.Embedded.cameras)
-  return &cameras_;
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::CameraInfo >*
+DeviceInfo::mutable_camerainfos() {
+  // @@protoc_insertion_point(field_mutable_list:msg.DeviceInfo.camerainfos)
+  return &camerainfos_;
 }
-inline const ::msg::Camera& Embedded::_internal_cameras(int index) const {
-  return cameras_.Get(index);
+inline const ::msg::CameraInfo& DeviceInfo::_internal_camerainfos(int index) const {
+  return camerainfos_.Get(index);
 }
-inline const ::msg::Camera& Embedded::cameras(int index) const {
-  // @@protoc_insertion_point(field_get:msg.Embedded.cameras)
-  return _internal_cameras(index);
+inline const ::msg::CameraInfo& DeviceInfo::camerainfos(int index) const {
+  // @@protoc_insertion_point(field_get:msg.DeviceInfo.camerainfos)
+  return _internal_camerainfos(index);
 }
-inline ::msg::Camera* Embedded::_internal_add_cameras() {
-  return cameras_.Add();
+inline ::msg::CameraInfo* DeviceInfo::_internal_add_camerainfos() {
+  return camerainfos_.Add();
 }
-inline ::msg::Camera* Embedded::add_cameras() {
-  // @@protoc_insertion_point(field_add:msg.Embedded.cameras)
-  return _internal_add_cameras();
+inline ::msg::CameraInfo* DeviceInfo::add_camerainfos() {
+  // @@protoc_insertion_point(field_add:msg.DeviceInfo.camerainfos)
+  return _internal_add_camerainfos();
 }
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::Camera >&
-Embedded::cameras() const {
-  // @@protoc_insertion_point(field_list:msg.Embedded.cameras)
-  return cameras_;
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::CameraInfo >&
+DeviceInfo::camerainfos() const {
+  // @@protoc_insertion_point(field_list:msg.DeviceInfo.camerainfos)
+  return camerainfos_;
 }
 
 // -------------------------------------------------------------------
 
 // DeviceRequest
 
-// optional .msg.Embedded embedded = 1;
-inline bool DeviceRequest::_internal_has_embedded() const {
+// optional .msg.DeviceInfo deviceinfo = 1;
+inline bool DeviceRequest::_internal_has_deviceinfo() const {
   bool value = (_has_bits_[0] & 0x00000002u) != 0;
-  PROTOBUF_ASSUME(!value || embedded_ != nullptr);
+  PROTOBUF_ASSUME(!value || deviceinfo_ != nullptr);
   return value;
 }
-inline bool DeviceRequest::has_embedded() const {
-  return _internal_has_embedded();
+inline bool DeviceRequest::has_deviceinfo() const {
+  return _internal_has_deviceinfo();
 }
-inline void DeviceRequest::clear_embedded() {
-  if (embedded_ != nullptr) embedded_->Clear();
+inline void DeviceRequest::clear_deviceinfo() {
+  if (deviceinfo_ != nullptr) deviceinfo_->Clear();
   _has_bits_[0] &= ~0x00000002u;
 }
-inline const ::msg::Embedded& DeviceRequest::_internal_embedded() const {
-  const ::msg::Embedded* p = embedded_;
-  return p != nullptr ? *p : *reinterpret_cast<const ::msg::Embedded*>(
-      &::msg::_Embedded_default_instance_);
+inline const ::msg::DeviceInfo& DeviceRequest::_internal_deviceinfo() const {
+  const ::msg::DeviceInfo* p = deviceinfo_;
+  return p != nullptr ? *p : *reinterpret_cast<const ::msg::DeviceInfo*>(
+      &::msg::_DeviceInfo_default_instance_);
 }
-inline const ::msg::Embedded& DeviceRequest::embedded() const {
-  // @@protoc_insertion_point(field_get:msg.DeviceRequest.embedded)
-  return _internal_embedded();
+inline const ::msg::DeviceInfo& DeviceRequest::deviceinfo() const {
+  // @@protoc_insertion_point(field_get:msg.DeviceRequest.deviceinfo)
+  return _internal_deviceinfo();
 }
-inline void DeviceRequest::unsafe_arena_set_allocated_embedded(
-    ::msg::Embedded* embedded) {
+inline void DeviceRequest::unsafe_arena_set_allocated_deviceinfo(
+    ::msg::DeviceInfo* deviceinfo) {
   if (GetArena() == nullptr) {
-    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(embedded_);
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(deviceinfo_);
   }
-  embedded_ = embedded;
-  if (embedded) {
+  deviceinfo_ = deviceinfo;
+  if (deviceinfo) {
     _has_bits_[0] |= 0x00000002u;
   } else {
     _has_bits_[0] &= ~0x00000002u;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:msg.DeviceRequest.embedded)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:msg.DeviceRequest.deviceinfo)
 }
-inline ::msg::Embedded* DeviceRequest::release_embedded() {
+inline ::msg::DeviceInfo* DeviceRequest::release_deviceinfo() {
   _has_bits_[0] &= ~0x00000002u;
-  ::msg::Embedded* temp = embedded_;
-  embedded_ = nullptr;
+  ::msg::DeviceInfo* temp = deviceinfo_;
+  deviceinfo_ = nullptr;
   if (GetArena() != nullptr) {
     temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
   }
   return temp;
 }
-inline ::msg::Embedded* DeviceRequest::unsafe_arena_release_embedded() {
-  // @@protoc_insertion_point(field_release:msg.DeviceRequest.embedded)
+inline ::msg::DeviceInfo* DeviceRequest::unsafe_arena_release_deviceinfo() {
+  // @@protoc_insertion_point(field_release:msg.DeviceRequest.deviceinfo)
   _has_bits_[0] &= ~0x00000002u;
-  ::msg::Embedded* temp = embedded_;
-  embedded_ = nullptr;
+  ::msg::DeviceInfo* temp = deviceinfo_;
+  deviceinfo_ = nullptr;
   return temp;
 }
-inline ::msg::Embedded* DeviceRequest::_internal_mutable_embedded() {
+inline ::msg::DeviceInfo* DeviceRequest::_internal_mutable_deviceinfo() {
   _has_bits_[0] |= 0x00000002u;
-  if (embedded_ == nullptr) {
-    auto* p = CreateMaybeMessage<::msg::Embedded>(GetArena());
-    embedded_ = p;
+  if (deviceinfo_ == nullptr) {
+    auto* p = CreateMaybeMessage<::msg::DeviceInfo>(GetArena());
+    deviceinfo_ = p;
   }
-  return embedded_;
+  return deviceinfo_;
 }
-inline ::msg::Embedded* DeviceRequest::mutable_embedded() {
-  // @@protoc_insertion_point(field_mutable:msg.DeviceRequest.embedded)
-  return _internal_mutable_embedded();
+inline ::msg::DeviceInfo* DeviceRequest::mutable_deviceinfo() {
+  // @@protoc_insertion_point(field_mutable:msg.DeviceRequest.deviceinfo)
+  return _internal_mutable_deviceinfo();
 }
-inline void DeviceRequest::set_allocated_embedded(::msg::Embedded* embedded) {
+inline void DeviceRequest::set_allocated_deviceinfo(::msg::DeviceInfo* deviceinfo) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
   if (message_arena == nullptr) {
-    delete embedded_;
+    delete deviceinfo_;
   }
-  if (embedded) {
+  if (deviceinfo) {
     ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(embedded);
+      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(deviceinfo);
     if (message_arena != submessage_arena) {
-      embedded = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, embedded, submessage_arena);
+      deviceinfo = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, deviceinfo, submessage_arena);
     }
     _has_bits_[0] |= 0x00000002u;
   } else {
     _has_bits_[0] &= ~0x00000002u;
   }
-  embedded_ = embedded;
-  // @@protoc_insertion_point(field_set_allocated:msg.DeviceRequest.embedded)
+  deviceinfo_ = deviceinfo;
+  // @@protoc_insertion_point(field_set_allocated:msg.DeviceRequest.deviceinfo)
 }
 
 // optional string did = 2;
@@ -2740,43 +2740,43 @@ inline void DeviceResponse::unsafe_arena_set_allocated_did(
   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:msg.DeviceResponse.did)
 }
 
-// repeated .msg.Embedded embeddeds = 3;
-inline int DeviceResponse::_internal_embeddeds_size() const {
-  return embeddeds_.size();
+// repeated .msg.DeviceInfo deviceinfos = 3;
+inline int DeviceResponse::_internal_deviceinfos_size() const {
+  return deviceinfos_.size();
 }
-inline int DeviceResponse::embeddeds_size() const {
-  return _internal_embeddeds_size();
+inline int DeviceResponse::deviceinfos_size() const {
+  return _internal_deviceinfos_size();
 }
-inline void DeviceResponse::clear_embeddeds() {
-  embeddeds_.Clear();
+inline void DeviceResponse::clear_deviceinfos() {
+  deviceinfos_.Clear();
 }
-inline ::msg::Embedded* DeviceResponse::mutable_embeddeds(int index) {
-  // @@protoc_insertion_point(field_mutable:msg.DeviceResponse.embeddeds)
-  return embeddeds_.Mutable(index);
+inline ::msg::DeviceInfo* DeviceResponse::mutable_deviceinfos(int index) {
+  // @@protoc_insertion_point(field_mutable:msg.DeviceResponse.deviceinfos)
+  return deviceinfos_.Mutable(index);
 }
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::Embedded >*
-DeviceResponse::mutable_embeddeds() {
-  // @@protoc_insertion_point(field_mutable_list:msg.DeviceResponse.embeddeds)
-  return &embeddeds_;
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::DeviceInfo >*
+DeviceResponse::mutable_deviceinfos() {
+  // @@protoc_insertion_point(field_mutable_list:msg.DeviceResponse.deviceinfos)
+  return &deviceinfos_;
 }
-inline const ::msg::Embedded& DeviceResponse::_internal_embeddeds(int index) const {
-  return embeddeds_.Get(index);
+inline const ::msg::DeviceInfo& DeviceResponse::_internal_deviceinfos(int index) const {
+  return deviceinfos_.Get(index);
 }
-inline const ::msg::Embedded& DeviceResponse::embeddeds(int index) const {
-  // @@protoc_insertion_point(field_get:msg.DeviceResponse.embeddeds)
-  return _internal_embeddeds(index);
+inline const ::msg::DeviceInfo& DeviceResponse::deviceinfos(int index) const {
+  // @@protoc_insertion_point(field_get:msg.DeviceResponse.deviceinfos)
+  return _internal_deviceinfos(index);
 }
-inline ::msg::Embedded* DeviceResponse::_internal_add_embeddeds() {
-  return embeddeds_.Add();
+inline ::msg::DeviceInfo* DeviceResponse::_internal_add_deviceinfos() {
+  return deviceinfos_.Add();
 }
-inline ::msg::Embedded* DeviceResponse::add_embeddeds() {
-  // @@protoc_insertion_point(field_add:msg.DeviceResponse.embeddeds)
-  return _internal_add_embeddeds();
+inline ::msg::DeviceInfo* DeviceResponse::add_deviceinfos() {
+  // @@protoc_insertion_point(field_add:msg.DeviceResponse.deviceinfos)
+  return _internal_add_deviceinfos();
 }
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::Embedded >&
-DeviceResponse::embeddeds() const {
-  // @@protoc_insertion_point(field_list:msg.DeviceResponse.embeddeds)
-  return embeddeds_;
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::DeviceInfo >&
+DeviceResponse::deviceinfos() const {
+  // @@protoc_insertion_point(field_list:msg.DeviceResponse.deviceinfos)
+  return deviceinfos_;
 }
 
 // -------------------------------------------------------------------
@@ -2996,15 +2996,15 @@ inline void Device::set_allocated_deviceresponse(::msg::DeviceResponse* devicere
 
 PROTOBUF_NAMESPACE_OPEN
 
-template <> struct is_proto_enum< ::msg::Embedded_Factory> : ::std::true_type {};
+template <> struct is_proto_enum< ::msg::DeviceInfo_Factory> : ::std::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::msg::Embedded_Factory>() {
-  return ::msg::Embedded_Factory_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor< ::msg::DeviceInfo_Factory>() {
+  return ::msg::DeviceInfo_Factory_descriptor();
 }
-template <> struct is_proto_enum< ::msg::Embedded_Type> : ::std::true_type {};
+template <> struct is_proto_enum< ::msg::DeviceInfo_Type> : ::std::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::msg::Embedded_Type>() {
-  return ::msg::Embedded_Type_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor< ::msg::DeviceInfo_Type>() {
+  return ::msg::DeviceInfo_Type_descriptor();
 }
 template <> struct is_proto_enum< ::msg::Device_Command> : ::std::true_type {};
 template <>

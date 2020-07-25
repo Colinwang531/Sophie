@@ -14,13 +14,14 @@ namespace base
 {
 	namespace protocol
 	{
-		ComponentParser::ComponentParser(){}
+		ComponentParser::ComponentParser() : CommandParser() {}
 		ComponentParser::~ComponentParser(){}
 
-		void* ComponentParser::unpackFromComponentMessage(void* c /* = nullptr */)
+		void* ComponentParser::parseComponentMessage(void* msg /* = nullptr */)
 		{
+			msg::MSG* mm{ reinterpret_cast<msg::MSG*>(msg) };
 			AbstractPacket* ap{ nullptr };
-			msg::Component* mc{ reinterpret_cast<msg::Component*>(c) };
+			msg::Component* mc{ mm->release_component() };
 
 			if (mc)
 			{
@@ -51,6 +52,7 @@ namespace base
 								ac->setComponentName(componentInfo.cname());
 							}
 							ap->setPacketData(ac);
+							ap->setPacketSequence(mm->sequence());
 						}
 						else
 						{
@@ -62,32 +64,32 @@ namespace base
 				else if (ComponentCommand::COMPONENT_COMMAND_SIGNIN_REP == command ||
 					ComponentCommand::COMPONENT_COMMAND_SIGNOUT_REP == command)
 				{
-					ComponentResponse* rep{ new(std::nothrow) ComponentResponse };
-
-					if (rep)
-					{
-						msg::ComponentResponse* response{ mc->release_componentresponse() };
-						rep->result = response->result();
-						if (response->has_cid())
-						{
-							rep->cid = response->cid();
-						}
-						const int infosize{ response->componentinfos_size() };
-						for (int i = 0; i != infosize; ++i)
-						{
-							const msg::ComponentInfo cinfo{ response->componentinfos(i) };
-							ComponentInfo info;
-							info.type = static_cast<ComponentType>(cinfo.type());
-							info.cname = cinfo.cname();
-							info.cid = cinfo.cid();
-							rep->cinfos.push_back(info);
-						}
-						cp->data = rep;
-					} 
-					else
-					{
-						e = eBadNewObject;
-					}
+// 					ComponentResponse* rep{ new(std::nothrow) ComponentResponse };
+// 
+// 					if (rep)
+// 					{
+// 						msg::ComponentResponse* response{ mc->release_componentresponse() };
+// 						rep->result = response->result();
+// 						if (response->has_cid())
+// 						{
+// 							rep->cid = response->cid();
+// 						}
+// 						const int infosize{ response->componentinfos_size() };
+// 						for (int i = 0; i != infosize; ++i)
+// 						{
+// 							const msg::ComponentInfo cinfo{ response->componentinfos(i) };
+// 							ComponentInfo info;
+// 							info.type = static_cast<ComponentType>(cinfo.type());
+// 							info.cname = cinfo.cname();
+// 							info.cid = cinfo.cid();
+// 							rep->cinfos.push_back(info);
+// 						}
+// 						cp->data = rep;
+// 					} 
+// 					else
+// 					{
+// 						e = eBadNewObject;
+// 					}
 				}
 			}
 

@@ -24,7 +24,7 @@ namespace base
 		{
 		public:
 			CommandParser(void);
-			~CommandParser(void);
+			virtual ~CommandParser(void);
 
 		public:
 			//消息解析
@@ -35,13 +35,16 @@ namespace base
 				const void* data = nullptr, 
 				const unsigned int databytes = 0);
 
-		private:
-// 			int parseAlarmMessage(void* msg = nullptr);
- 			void* parseAlgorithmMessage(void* msg = nullptr);
-			void* parseComponentMessage(void* msg = nullptr);
-// 			int parseCrewMessage(void* msg = nullptr);
- 			void* parseDeviceMessage(void* msg = nullptr);
- 			void* parseStatusMessage(void* msg = nullptr);
+		protected:
+			//将Protocol Buffers的组件实例转化为AbstractPacket实例
+			//@msg : MSG实例
+			//@Return : AbstractPacket实例
+ 			virtual void* parseAlarmMessage(void* msg = nullptr);
+			virtual void* parseAlgorithmMessage(void* msg = nullptr);
+			virtual void* parseComponentMessage(void* msg = nullptr);
+			virtual void* parseCrewMessage(void* msg = nullptr);
+			virtual void* parseDeviceMessage(void* msg = nullptr);
+			virtual void* parseStatusMessage(void* msg = nullptr);
 // 			int parseUserMessage(void* msg = nullptr);
 		};//class CommandParser
 

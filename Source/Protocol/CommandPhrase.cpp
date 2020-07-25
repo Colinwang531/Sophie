@@ -1,10 +1,12 @@
 #include "Protocol/Message.pb.h"
-#include "packet/AbstractPacket.h"
+#include "Packet/AbstractPacket.h"
 using AbstractPacket = base::packet::AbstractPacket;
-#include "Protocol/Algorithm/AlgorithmPhrase.h"
-#include "Protocol/Component/ComponentPhrase.h"
-#include "Protocol/Device/DevicePhrase.h"
-#include "Protocol/Status/StatusPhrase.h"
+//#include "Protocol/Algorithm/AlgorithmPhrase.h"
+//#include "Protocol/Component/ComponentPhrase.h"
+// #include "Protocol/Device/DevicePhrase.h"
+// #include "Protocol/Status/StatusPhrase.h"
+// #include "Protocol/Crew/CrewPhrase.h"
+// #include "Protocol/Alarm/AlarmPhrase.h"
 #include "Protocol/CommandPhrase.h"
 
 namespace base
@@ -27,7 +29,7 @@ namespace base
 				{
 					case msg::MSG_Type::MSG_Type_ALARM:
 					{
-//						parseAlarmMessage(m.release_alarm(), mp);
+						parseAlarmMessage(&mm);
 						break;
 					}
 					case msg::MSG_Type::MSG_Type_ALGORITHM:
@@ -42,7 +44,7 @@ namespace base
 					}
 					case msg::MSG_Type::MSG_Type_CREW:
 					{
-//						parseCrewMessage(m.release_crew(), mp);
+						obj = parseCrewMessage(&mm);
 						break;
 					}
 					case msg::MSG_Type::MSG_Type_DEVICE:
@@ -59,7 +61,7 @@ namespace base
 					{
 						break;
 					}
-					default:
+					default: 
 						break;
 				}
 			}
@@ -67,64 +69,101 @@ namespace base
 			return obj;
 		}
 
+		void* CommandParser::parseAlarmMessage(void* msg /* = nullptr */)
+		{
+// 			msg::MSG* mm{ reinterpret_cast<msg::MSG*>(msg) };
+// 			AbstractPacket* ap{
+// 				reinterpret_cast<AbstractPacket*>(
+// 					AlarmParser().unpackFromAlarmMessage(mm->release_alarm())) };
+// 
+// 			if (ap)
+// 			{
+// 				ap->setPacketSequence(mm->sequence());
+// 			}
+// 
+// 			return ap;
+			return nullptr;
+		}
+
 		void* CommandParser::parseAlgorithmMessage(void* msg /* = nullptr */)
 		{
-			msg::MSG* mm{ reinterpret_cast<msg::MSG*>(msg) };
-			AbstractPacket* ap{
-				reinterpret_cast<AbstractPacket*>(
-					AlgorithmParser().unpackFromAlgorithmMessage(mm->release_algorithm())) };
-
-			if (ap)
-			{
-				ap->setPacketSequence(mm->sequence());
-			}
-
-			return ap;
+// 			msg::MSG* mm{ reinterpret_cast<msg::MSG*>(msg) };
+// 			AbstractPacket* ap{
+// 				reinterpret_cast<AbstractPacket*>(
+// 					AlgorithmParser().unpackFromAlgorithmMessage(mm->release_algorithm())) };
+// 
+// 			if (ap)
+// 			{
+// 				ap->setPacketSequence(mm->sequence());
+// 			}
+// 
+// 			return ap;
+			return nullptr;
 		}
 
 		void* CommandParser::parseComponentMessage(void* msg /* = nullptr */)
 		{
-			msg::MSG* mm{ reinterpret_cast<msg::MSG*>(msg) };
-			AbstractPacket* ap{
-				reinterpret_cast<AbstractPacket*>(
-					ComponentParser().unpackFromComponentMessage(mm->release_component())) };
-
-			if (ap)
-			{
-				ap->setPacketSequence(mm->sequence());
-			}
-
-			return ap;
+			return nullptr;
+// 			msg::MSG* mm{ reinterpret_cast<msg::MSG*>(msg) };
+// 			AbstractPacket* ap{
+// 				reinterpret_cast<AbstractPacket*>(
+// 					ComponentParser().unpackFromComponentMessage(mm->release_component())) };
+// 
+// 			if (ap)
+// 			{
+// 				ap->setPacketSequence(mm->sequence());
+// 			}
+// 
+// 			return ap;
+			return nullptr;
 		}
 
 		void* CommandParser::parseDeviceMessage(void* msg /* = nullptr */)
 		{
-			msg::MSG* mm{ reinterpret_cast<msg::MSG*>(msg) };
-			AbstractPacket* ap{
-				reinterpret_cast<AbstractPacket*>(
-					DeviceParser().unpackFromDeviceMessage(mm->release_device())) };
-
-			if (ap)
-			{
-				ap->setPacketSequence(mm->sequence());
-			}
-
-			return ap;
+// 			msg::MSG* mm{ reinterpret_cast<msg::MSG*>(msg) };
+// 			AbstractPacket* ap{
+// 				reinterpret_cast<AbstractPacket*>(
+// 					DeviceParser().unpackFromDeviceMessage(mm->release_device())) };
+// 
+// 			if (ap)
+// 			{
+// 				ap->setPacketSequence(mm->sequence());
+// 			}
+// 
+// 			return ap;
+			return nullptr;
 		}
 
 		void* CommandParser::parseStatusMessage(void* msg /* = nullptr */)
 		{
-			msg::MSG* mm{ reinterpret_cast<msg::MSG*>(msg) };
-			AbstractPacket* ap{
-				reinterpret_cast<AbstractPacket*>(
-					StatusParser().unpackFromDeviceMessage(mm->release_status())) };
+// 			msg::MSG* mm{ reinterpret_cast<msg::MSG*>(msg) };
+// 			AbstractPacket* ap{
+// 				reinterpret_cast<AbstractPacket*>(
+// 					StatusParser().unpackFromStatusMessage(mm->release_status())) };
+// 
+// 			if (ap)
+// 			{
+// 				ap->setPacketSequence(mm->sequence());
+// 			}
+// 
+// 			return ap;
+			return nullptr;
+		}
 
-			if (ap)
-			{
-				ap->setPacketSequence(mm->sequence());
-			}
-
-			return ap;
+		void* CommandParser::parseCrewMessage(void* msg /* = nullptr */)
+		{
+// 			msg::MSG* mm{ reinterpret_cast<msg::MSG*>(msg) };
+// 			AbstractPacket* ap{
+// 				reinterpret_cast<AbstractPacket*>(
+// 					CrewParser().unpackFromCrewMessage(mm->release_crew())) };
+// 
+// 			if (ap)
+// 			{
+// 				ap->setPacketSequence(mm->sequence());
+// 			}
+// 
+// 			return ap;
+			return nullptr;
 		}
 
 		CommandPacker::CommandPacker()
@@ -159,16 +198,16 @@ namespace base
 					}
 					case base::packet::PacketType::PACKET_TYPE_COMPONENT:
 					{
-						msg::Component* mc{ 
-							reinterpret_cast<msg::Component*>(
-								ComponentPacker().packToComponentMessage(
-									ap->getPacketDataCommandType(), 
-									ap->getPacketDataReplyResult(), 
-									ap->getPacketData())) };
-						;
-						mm.set_allocated_component(mc);
-						mm.SerializeToString(&rep);
-						mm.release_component();
+// 						msg::Component* mc{ 
+// 							reinterpret_cast<msg::Component*>(
+// 								ComponentPacker().packToComponentMessage(
+// 									ap->getPacketDataCommandType(), 
+// 									ap->getPacketDataReplyResult(), 
+// 									ap->getPacketData())) };
+// 						;
+// 						mm.set_allocated_component(mc);
+// 						mm.SerializeToString(&rep);
+// 						mm.release_component();
 
 						break;
 					}

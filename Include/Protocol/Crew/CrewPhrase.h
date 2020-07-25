@@ -10,49 +10,37 @@
 //										王科威									2020-05-29									创建
 //
 
-#ifndef CREW_CODEC_H
-#define CREW_CODEC_H
+#ifndef BASE_PROTOCOL_CREW_PHRASE_H
+#define BASE_PROTOCOL_CREW_PHRASE_H
 
-#include <vector>
+#include "Protocol/CommandPhrase.h"
 
 namespace base
 {
 	namespace protocol
 	{
-		typedef struct tagEmployee_t
+		typedef enum class tagCrewCommand_t : int
 		{
-			std::string name;
-			std::string job;
-			std::vector<std::string> pictures;
-		}Employee;//struct tagEmployee_t
+			CREW_COMMAND_NONE = 0,
+			CREW_COMMAND_NEW_REQ = 1,
+			CREW_COMMAND_NEW_REP = 2,
+			CREW_COMMAND_DELETE_REQ = 3,
+			CREW_COMMAND_DELETE_REP = 4,
+			CREW_COMMAND_MODIFY_REQ = 5,
+			CREW_COMMAND_MODIFY_REP = 6,
+			CREW_COMMAND_QUERY_REQ = 7,
+			CREW_COMMAND_QUERY_REP = 8
+		}CrewCommand;
 
-		typedef struct tagCrewRequest_t
-		{
-			Employee employee;
-			std::string uid;
-		}CrewRequest;//struct tagCrewRequest_t
-
-		typedef struct tagCrewResponse_t
-		{
-			int result;
-			std::string uid;
-			std::vector<Employee> configures;
-		}CrewResponse;//struct tagCrewResponse_t
-
-		class CrewCodec
+		class CrewParser : public CommandParser
 		{
 		public:
-			CrewCodec(void);
-			virtual ~CrewCodec(void);
+			CrewParser(void);
+			~CrewParser(void);
 
 		public:
-			int unpackCrew(void* msg = nullptr);
-
-		private:
-			int command;
-			CrewRequest req;
-			CrewResponse rep;
-		};//class CrewCodec
+			void* parseCrewMessage(void* msg = nullptr) override;
+		};//class CrewParser
 
 		class CrewPacker
 		{
@@ -74,4 +62,4 @@ namespace base
 	}//namespace protocol
 }//namespace base
 
-#endif//CREW_CODEC_H
+#endif//BASE_PROTOCOL_CREW_PHRASE_H

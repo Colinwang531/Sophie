@@ -13,6 +13,8 @@
 #ifndef BASE_PROTOCOL_ALGORITHM_PHRASE_H
 #define BASE_PROTOCOL_ALGORITHM_PHRASE_H
 
+#include "Protocol/CommandPhrase.h"
+
 namespace base
 {
 	namespace protocol
@@ -26,17 +28,14 @@ namespace base
 			ALGORITHM_COMMAND_QUERY_REP = 3,
 		}AlgorithmCommand;
 
-		class AlgorithmParser
+		class AlgorithmParser : public CommandParser
 		{
 		public:
 			AlgorithmParser(void);
 			~AlgorithmParser(void);
 
 		public:
-			//将Protocol Buffers的状态实例转化为AbstractPacket实例
-			//@a : 通过Protocol Buffers解析得到的Algorithm实例
-			//@Return : AbstractPacket实例
-			void* unpackFromAlgorithmMessage(void* a = nullptr);
+			void* parseAlgorithmMessage(void* msg = nullptr) override;
 		};//class AlgorithmParser
 
 		class AlgorithmPacker

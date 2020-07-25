@@ -14,6 +14,8 @@
 #ifndef BASE_PROTOCOL_STATUS_PHRASE_H
 #define BASE_PROTOCOL_STATUS_PHRASE_H
 
+#include "Protocol/CommandPhrase.h"
+
 namespace base
 {
 	namespace protocol
@@ -35,17 +37,14 @@ namespace base
 			STATUS_TYPE_NAME = 3
 		}StatusType;
 
-		class StatusParser
+		class StatusParser : public CommandParser
 		{
 		public:
 			StatusParser(void);
 			~StatusParser(void);
 
 		public:
-			//将Protocol Buffers的状态实例转化为AbstractPacket实例
-			//@s : 通过Protocol Buffers解析得到的Status实例
-			//@Return : AbstractPacket实例
-			void* unpackFromStatusMessage(void* s = nullptr);
+			void* parseStatusMessage(void* msg = nullptr) override;
 		};//class StatusParser
 
 		class StatusPacker

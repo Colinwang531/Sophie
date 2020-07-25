@@ -771,12 +771,6 @@
     <ClCompile Include="..\3rdPart\boost_1_72_0\libs\date_time\src\gregorian\gregorian_types.cpp">
       <Filter>3rd\boost</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Protocol\Alarm\AlarmCodec.cpp">
-      <Filter>Protocol\Alarm</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Protocol\Crew\CrewCodec.cpp">
-      <Filter>Protocol\Crew</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Thread\ThreadPool.cpp">
       <Filter>Thread</Filter>
     </ClCompile>
@@ -812,6 +806,42 @@
     </ClCompile>
     <ClCompile Include="..\Source\Protocol\Algorithm\AlgorithmPhrase.cpp">
       <Filter>Protocol\Algorithm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\AI\AbstractAlgorithm.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\AI\HelmetDetect\HelmetDetect.cpp">
+      <Filter>AI\Helmet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\AI\FaceRecognition\FaceRecognition.cpp">
+      <Filter>AI\Face</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\AI\SleepDetect\SleepDetect.cpp">
+      <Filter>AI\Sleep</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\AI\PhoneDetect\PhoneDetect.cpp">
+      <Filter>AI\Phone</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\AI\FightDetect\FightDetect.cpp">
+      <Filter>AI\Fight</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\Crew\CrewPhrase.cpp">
+      <Filter>Protocol\Crew</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Person\AbstractPerson.cpp">
+      <Filter>Person</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Person\Crew\Crew.cpp">
+      <Filter>Person\Crew</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\Alarm\AlarmPhrase.cpp">
+      <Filter>Protocol\Alarm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Alarm\AbstractAlarm.cpp">
+      <Filter>Alarm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Alarm\FaceAlarm\FaceAlarm.cpp">
+      <Filter>Alarm\Face</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1660,6 +1690,36 @@
     </Filter>
     <Filter Include="Device\Hikvision">
       <UniqueIdentifier>{c9deb8e0-9ffb-4775-97e9-8baaf3eccf03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI">
+      <UniqueIdentifier>{b8e9f81c-c2a5-49b7-8571-710e5cb3ef37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI\Helmet">
+      <UniqueIdentifier>{4ce7ddc8-2951-4817-9211-495d82808a8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI\Face">
+      <UniqueIdentifier>{429d6239-e528-45dd-9e44-8cbcfe8f652c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI\Phone">
+      <UniqueIdentifier>{13180615-0dd8-4f9c-8120-c3d5b907122a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI\Sleep">
+      <UniqueIdentifier>{0206eeb6-9b40-476d-bf96-ff61222cef33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI\Fight">
+      <UniqueIdentifier>{c7e2341a-59c9-42ef-967c-756a6ef5f3c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Person">
+      <UniqueIdentifier>{e0f260d0-8102-44e8-933c-d783cd956029}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Person\Crew">
+      <UniqueIdentifier>{c23d7779-3e2b-4fa9-8be5-c4d5a43342f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Alarm">
+      <UniqueIdentifier>{fbe46295-e740-4a76-babb-93fe28a31c97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Alarm\Face">
+      <UniqueIdentifier>{f3f9715c-57ce-4a24-b422-c1659f862eef}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -12355,12 +12415,6 @@
     <ClInclude Include="..\3rdPart\boost_1_72_0\libs\date_time\src\gregorian\greg_names.hpp">
       <Filter>3rd\boost</Filter>
     </ClInclude>
-    <ClInclude Include="..\Include\Protocol\Alarm\AlarmCodec.h">
-      <Filter>Protocol\Alarm</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Include\Protocol\Crew\CrewCodec.h">
-      <Filter>Protocol\Crew</Filter>
-    </ClInclude>
     <ClInclude Include="..\Include\Thread\ThreadPool.h">
       <Filter>Thread</Filter>
     </ClInclude>
@@ -13089,6 +13143,42 @@
     </ClInclude>
     <ClInclude Include="..\Include\Protocol\Algorithm\AlgorithmPhrase.h">
       <Filter>Protocol\Algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\AI\AbstractAlgorithm.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\AI\HelmetDetect\HelmetDetect.h">
+      <Filter>AI\Helmet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\AI\FaceRecognition\FaceRecognition.h">
+      <Filter>AI\Face</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\AI\SleepDetect\SleepDetect.h">
+      <Filter>AI\Sleep</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\AI\PhoneDetect\PhoneDetect.h">
+      <Filter>AI\Phone</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\AI\FightDetect\FightDetect.h">
+      <Filter>AI\Fight</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\Crew\CrewPhrase.h">
+      <Filter>Protocol\Crew</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Person\AbstractPerson.h">
+      <Filter>Person</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Person\Crew\Crew.h">
+      <Filter>Person\Crew</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\Alarm\AlarmPhrase.h">
+      <Filter>Protocol\Alarm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Alarm\AbstractAlarm.h">
+      <Filter>Alarm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Alarm\FaceAlarm\FaceAlarm.h">
+      <Filter>Alarm\Face</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
