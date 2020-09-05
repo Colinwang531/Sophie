@@ -3,3 +3,8 @@
 /.vscode/
 /3rdPart/
 /SDK/
+/bin/
+/AlarmPusherComponent/obj/
+/HKDeviceComponent/obj/
+/MessageDispatcherCenter/obj/
+/SmartWebComponent/
