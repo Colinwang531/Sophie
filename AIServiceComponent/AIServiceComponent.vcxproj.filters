@@ -347,9 +347,6 @@
     <ClCompile Include="..\Source\Hardware\Cpu.cpp">
       <Filter>Hardware</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\MessageQueue\AsynchronousClient.cpp">
-      <Filter>MessageQueue</Filter>
-    </ClCompile>
     <ClCompile Include="..\3rdPart\boost_1_72_0\libs\thread\src\future.cpp">
       <Filter>3rd\boost</Filter>
     </ClCompile>
@@ -388,6 +385,16 @@
     </ClCompile>
     <ClCompile Include="..\3rdPart\glog-master\src\vlog_is_on.cc">
       <Filter>3rd\glog</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Network\AlgorithmComponentClient.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="AIServiceComponentClient.cpp" />
+    <ClCompile Include="..\Source\MessageQueue\AbstractMQClient.cpp">
+      <Filter>MessageQueue</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Network\AbstractComponentClient.cpp">
+      <Filter>Network</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1071,6 +1078,9 @@
     </Filter>
     <Filter Include="3rd\glog">
       <UniqueIdentifier>{3f7c3ae8-62a5-44e0-bace-f0a49274975c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network">
+      <UniqueIdentifier>{47e0d280-9464-4aee-9fd8-7d7cd4aebe6a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -10607,9 +10617,6 @@
     <ClInclude Include="..\3rdPart\boost_1_72_0\boost\math\policies\policy.hpp">
       <Filter>3rd\boost\math\policies</Filter>
     </ClInclude>
-    <ClInclude Include="..\Include\MessageQueue\AsynchronousClient.h">
-      <Filter>MessageQueue</Filter>
-    </ClInclude>
     <ClInclude Include="..\3rdPart\glog-master\src\config.h">
       <Filter>3rd\glog</Filter>
     </ClInclude>
@@ -10666,6 +10673,16 @@
     </ClInclude>
     <ClInclude Include="..\3rdPart\glog-master\src\base\mutex.h">
       <Filter>3rd\glog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Network\AlgorithmComponentClient.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="AIServiceComponentClient.h" />
+    <ClInclude Include="..\Include\MessageQueue\AbstractMQClient.h">
+      <Filter>MessageQueue</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Network\AbstractComponentClient.h">
+      <Filter>Network</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

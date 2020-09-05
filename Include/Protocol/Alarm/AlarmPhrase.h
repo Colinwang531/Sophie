@@ -13,8 +13,6 @@
 #ifndef BASE_PROTOCOL_ALARM_PHRASE_H
 #define BASE_PROTOCOL_ALARM_PHRASE_H
 
-#include "Protocol/CommandPhrase.h"
-
 namespace base
 {
 	namespace protocol
@@ -30,14 +28,14 @@ namespace base
 			ALARM_TYPE_ATTENDANCE_OUT = 6
 		}AlarmType;
 
-		class AlarmParser : public CommandParser
+		class AlarmParser
 		{
 		public:
 			AlarmParser(void);
 			~AlarmParser(void);
 
 		public:
-			void* parseAlarmMessage(void* msg = nullptr) override;
+			void* parseAlarmMessage(void* msg = nullptr);
 		};//class AlarmParser
 	}//namespace protocol
 }//namespace base

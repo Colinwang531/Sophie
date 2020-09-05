@@ -100,6 +100,28 @@ inline bool AlarmInfo_Type_Parse(
   return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<AlarmInfo_Type>(
     AlarmInfo_Type_descriptor(), name, value);
 }
+enum Alarm_Command : int {
+  Alarm_Command_NOTIFY = 1
+};
+bool Alarm_Command_IsValid(int value);
+constexpr Alarm_Command Alarm_Command_Command_MIN = Alarm_Command_NOTIFY;
+constexpr Alarm_Command Alarm_Command_Command_MAX = Alarm_Command_NOTIFY;
+constexpr int Alarm_Command_Command_ARRAYSIZE = Alarm_Command_Command_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* Alarm_Command_descriptor();
+template<typename T>
+inline const std::string& Alarm_Command_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, Alarm_Command>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function Alarm_Command_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    Alarm_Command_descriptor(), enum_t_value);
+}
+inline bool Alarm_Command_Parse(
+    const std::string& name, Alarm_Command* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<Alarm_Command>(
+    Alarm_Command_descriptor(), name, value);
+}
 // ===================================================================
 
 class AlarmPosition PROTOBUF_FINAL :
@@ -457,11 +479,14 @@ class AlarmInfo PROTOBUF_FINAL :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kAlarmpositionFieldNumber = 2,
-    kUidFieldNumber = 3,
+    kAlarmpositionFieldNumber = 5,
+    kCidFieldNumber = 2,
+    kTimeFieldNumber = 3,
+    kPictureFieldNumber = 4,
+    kUidFieldNumber = 6,
     kTypeFieldNumber = 1,
   };
-  // repeated .msg.AlarmPosition alarmposition = 2;
+  // repeated .msg.AlarmPosition alarmposition = 5;
   int alarmposition_size() const;
   private:
   int _internal_alarmposition_size() const;
@@ -479,7 +504,94 @@ class AlarmInfo PROTOBUF_FINAL :
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::AlarmPosition >&
       alarmposition() const;
 
-  // optional string uid = 3;
+  // required string cid = 2;
+  bool has_cid() const;
+  private:
+  bool _internal_has_cid() const;
+  public:
+  void clear_cid();
+  const std::string& cid() const;
+  void set_cid(const std::string& value);
+  void set_cid(std::string&& value);
+  void set_cid(const char* value);
+  void set_cid(const char* value, size_t size);
+  std::string* mutable_cid();
+  std::string* release_cid();
+  void set_allocated_cid(std::string* cid);
+  GOOGLE_PROTOBUF_RUNTIME_DEPRECATED("The unsafe_arena_ accessors for"
+  "    string fields are deprecated and will be removed in a"
+  "    future release.")
+  std::string* unsafe_arena_release_cid();
+  GOOGLE_PROTOBUF_RUNTIME_DEPRECATED("The unsafe_arena_ accessors for"
+  "    string fields are deprecated and will be removed in a"
+  "    future release.")
+  void unsafe_arena_set_allocated_cid(
+      std::string* cid);
+  private:
+  const std::string& _internal_cid() const;
+  void _internal_set_cid(const std::string& value);
+  std::string* _internal_mutable_cid();
+  public:
+
+  // required string time = 3;
+  bool has_time() const;
+  private:
+  bool _internal_has_time() const;
+  public:
+  void clear_time();
+  const std::string& time() const;
+  void set_time(const std::string& value);
+  void set_time(std::string&& value);
+  void set_time(const char* value);
+  void set_time(const char* value, size_t size);
+  std::string* mutable_time();
+  std::string* release_time();
+  void set_allocated_time(std::string* time);
+  GOOGLE_PROTOBUF_RUNTIME_DEPRECATED("The unsafe_arena_ accessors for"
+  "    string fields are deprecated and will be removed in a"
+  "    future release.")
+  std::string* unsafe_arena_release_time();
+  GOOGLE_PROTOBUF_RUNTIME_DEPRECATED("The unsafe_arena_ accessors for"
+  "    string fields are deprecated and will be removed in a"
+  "    future release.")
+  void unsafe_arena_set_allocated_time(
+      std::string* time);
+  private:
+  const std::string& _internal_time() const;
+  void _internal_set_time(const std::string& value);
+  std::string* _internal_mutable_time();
+  public:
+
+  // required string picture = 4;
+  bool has_picture() const;
+  private:
+  bool _internal_has_picture() const;
+  public:
+  void clear_picture();
+  const std::string& picture() const;
+  void set_picture(const std::string& value);
+  void set_picture(std::string&& value);
+  void set_picture(const char* value);
+  void set_picture(const char* value, size_t size);
+  std::string* mutable_picture();
+  std::string* release_picture();
+  void set_allocated_picture(std::string* picture);
+  GOOGLE_PROTOBUF_RUNTIME_DEPRECATED("The unsafe_arena_ accessors for"
+  "    string fields are deprecated and will be removed in a"
+  "    future release.")
+  std::string* unsafe_arena_release_picture();
+  GOOGLE_PROTOBUF_RUNTIME_DEPRECATED("The unsafe_arena_ accessors for"
+  "    string fields are deprecated and will be removed in a"
+  "    future release.")
+  void unsafe_arena_set_allocated_picture(
+      std::string* picture);
+  private:
+  const std::string& _internal_picture() const;
+  void _internal_set_picture(const std::string& value);
+  std::string* _internal_mutable_picture();
+  public:
+
+  // optional string uid = 6;
   bool has_uid() const;
   private:
   bool _internal_has_uid() const;
@@ -525,12 +637,18 @@ class AlarmInfo PROTOBUF_FINAL :
  private:
   class _Internal;
 
+  // helper for ByteSizeLong()
+  size_t RequiredFieldsByteSizeFallback() const;
+
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::AlarmPosition > alarmposition_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr cid_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr time_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr picture_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr uid_;
   int type_;
   friend struct ::TableStruct_Alarm_2eproto;
@@ -654,102 +772,41 @@ class Alarm PROTOBUF_FINAL :
 
   // nested types ----------------------------------------------------
 
+  typedef Alarm_Command Command;
+  static constexpr Command NOTIFY =
+    Alarm_Command_NOTIFY;
+  static inline bool Command_IsValid(int value) {
+    return Alarm_Command_IsValid(value);
+  }
+  static constexpr Command Command_MIN =
+    Alarm_Command_Command_MIN;
+  static constexpr Command Command_MAX =
+    Alarm_Command_Command_MAX;
+  static constexpr int Command_ARRAYSIZE =
+    Alarm_Command_Command_ARRAYSIZE;
+  static inline const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor*
+  Command_descriptor() {
+    return Alarm_Command_descriptor();
+  }
+  template<typename T>
+  static inline const std::string& Command_Name(T enum_t_value) {
+    static_assert(::std::is_same<T, Command>::value ||
+      ::std::is_integral<T>::value,
+      "Incorrect type passed to function Command_Name.");
+    return Alarm_Command_Name(enum_t_value);
+  }
+  static inline bool Command_Parse(const std::string& name,
+      Command* value) {
+    return Alarm_Command_Parse(name, value);
+  }
+
   // accessors -------------------------------------------------------
 
   enum : int {
-    kCidFieldNumber = 1,
-    kTimeFieldNumber = 2,
-    kPictureFieldNumber = 3,
-    kAlarminfoFieldNumber = 4,
+    kAlarminfoFieldNumber = 2,
+    kCommandFieldNumber = 1,
   };
-  // required string cid = 1;
-  bool has_cid() const;
-  private:
-  bool _internal_has_cid() const;
-  public:
-  void clear_cid();
-  const std::string& cid() const;
-  void set_cid(const std::string& value);
-  void set_cid(std::string&& value);
-  void set_cid(const char* value);
-  void set_cid(const char* value, size_t size);
-  std::string* mutable_cid();
-  std::string* release_cid();
-  void set_allocated_cid(std::string* cid);
-  GOOGLE_PROTOBUF_RUNTIME_DEPRECATED("The unsafe_arena_ accessors for"
-  "    string fields are deprecated and will be removed in a"
-  "    future release.")
-  std::string* unsafe_arena_release_cid();
-  GOOGLE_PROTOBUF_RUNTIME_DEPRECATED("The unsafe_arena_ accessors for"
-  "    string fields are deprecated and will be removed in a"
-  "    future release.")
-  void unsafe_arena_set_allocated_cid(
-      std::string* cid);
-  private:
-  const std::string& _internal_cid() const;
-  void _internal_set_cid(const std::string& value);
-  std::string* _internal_mutable_cid();
-  public:
-
-  // required string time = 2;
-  bool has_time() const;
-  private:
-  bool _internal_has_time() const;
-  public:
-  void clear_time();
-  const std::string& time() const;
-  void set_time(const std::string& value);
-  void set_time(std::string&& value);
-  void set_time(const char* value);
-  void set_time(const char* value, size_t size);
-  std::string* mutable_time();
-  std::string* release_time();
-  void set_allocated_time(std::string* time);
-  GOOGLE_PROTOBUF_RUNTIME_DEPRECATED("The unsafe_arena_ accessors for"
-  "    string fields are deprecated and will be removed in a"
-  "    future release.")
-  std::string* unsafe_arena_release_time();
-  GOOGLE_PROTOBUF_RUNTIME_DEPRECATED("The unsafe_arena_ accessors for"
-  "    string fields are deprecated and will be removed in a"
-  "    future release.")
-  void unsafe_arena_set_allocated_time(
-      std::string* time);
-  private:
-  const std::string& _internal_time() const;
-  void _internal_set_time(const std::string& value);
-  std::string* _internal_mutable_time();
-  public:
-
-  // required string picture = 3;
-  bool has_picture() const;
-  private:
-  bool _internal_has_picture() const;
-  public:
-  void clear_picture();
-  const std::string& picture() const;
-  void set_picture(const std::string& value);
-  void set_picture(std::string&& value);
-  void set_picture(const char* value);
-  void set_picture(const char* value, size_t size);
-  std::string* mutable_picture();
-  std::string* release_picture();
-  void set_allocated_picture(std::string* picture);
-  GOOGLE_PROTOBUF_RUNTIME_DEPRECATED("The unsafe_arena_ accessors for"
-  "    string fields are deprecated and will be removed in a"
-  "    future release.")
-  std::string* unsafe_arena_release_picture();
-  GOOGLE_PROTOBUF_RUNTIME_DEPRECATED("The unsafe_arena_ accessors for"
-  "    string fields are deprecated and will be removed in a"
-  "    future release.")
-  void unsafe_arena_set_allocated_picture(
-      std::string* picture);
-  private:
-  const std::string& _internal_picture() const;
-  void _internal_set_picture(const std::string& value);
-  std::string* _internal_mutable_picture();
-  public:
-
-  // required .msg.AlarmInfo alarminfo = 4;
+  // required .msg.AlarmInfo alarminfo = 2;
   bool has_alarminfo() const;
   private:
   bool _internal_has_alarminfo() const;
@@ -767,6 +824,19 @@ class Alarm PROTOBUF_FINAL :
       ::msg::AlarmInfo* alarminfo);
   ::msg::AlarmInfo* unsafe_arena_release_alarminfo();
 
+  // required .msg.Alarm.Command command = 1;
+  bool has_command() const;
+  private:
+  bool _internal_has_command() const;
+  public:
+  void clear_command();
+  ::msg::Alarm_Command command() const;
+  void set_command(::msg::Alarm_Command value);
+  private:
+  ::msg::Alarm_Command _internal_command() const;
+  void _internal_set_command(::msg::Alarm_Command value);
+  public:
+
   // @@protoc_insertion_point(class_scope:msg.Alarm)
  private:
   class _Internal;
@@ -779,10 +849,8 @@ class Alarm PROTOBUF_FINAL :
   typedef void DestructorSkippable_;
   ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr cid_;
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr time_;
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr picture_;
   ::msg::AlarmInfo* alarminfo_;
+  int command_;
   friend struct ::TableStruct_Alarm_2eproto;
 };
 // ===================================================================
@@ -914,7 +982,7 @@ inline void AlarmPosition::set_h(::PROTOBUF_NAMESPACE_ID::int32 value) {
 
 // required .msg.AlarmInfo.Type type = 1;
 inline bool AlarmInfo::_internal_has_type() const {
-  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  bool value = (_has_bits_[0] & 0x00000010u) != 0;
   return value;
 }
 inline bool AlarmInfo::has_type() const {
@@ -922,7 +990,7 @@ inline bool AlarmInfo::has_type() const {
 }
 inline void AlarmInfo::clear_type() {
   type_ = 1;
-  _has_bits_[0] &= ~0x00000002u;
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline ::msg::AlarmInfo_Type AlarmInfo::_internal_type() const {
   return static_cast< ::msg::AlarmInfo_Type >(type_);
@@ -933,7 +1001,7 @@ inline ::msg::AlarmInfo_Type AlarmInfo::type() const {
 }
 inline void AlarmInfo::_internal_set_type(::msg::AlarmInfo_Type value) {
   assert(::msg::AlarmInfo_Type_IsValid(value));
-  _has_bits_[0] |= 0x00000002u;
+  _has_bits_[0] |= 0x00000010u;
   type_ = value;
 }
 inline void AlarmInfo::set_type(::msg::AlarmInfo_Type value) {
@@ -941,7 +1009,286 @@ inline void AlarmInfo::set_type(::msg::AlarmInfo_Type value) {
   // @@protoc_insertion_point(field_set:msg.AlarmInfo.type)
 }
 
-// repeated .msg.AlarmPosition alarmposition = 2;
+// required string cid = 2;
+inline bool AlarmInfo::_internal_has_cid() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool AlarmInfo::has_cid() const {
+  return _internal_has_cid();
+}
+inline void AlarmInfo::clear_cid() {
+  cid_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline const std::string& AlarmInfo::cid() const {
+  // @@protoc_insertion_point(field_get:msg.AlarmInfo.cid)
+  return _internal_cid();
+}
+inline void AlarmInfo::set_cid(const std::string& value) {
+  _internal_set_cid(value);
+  // @@protoc_insertion_point(field_set:msg.AlarmInfo.cid)
+}
+inline std::string* AlarmInfo::mutable_cid() {
+  // @@protoc_insertion_point(field_mutable:msg.AlarmInfo.cid)
+  return _internal_mutable_cid();
+}
+inline const std::string& AlarmInfo::_internal_cid() const {
+  return cid_.Get();
+}
+inline void AlarmInfo::_internal_set_cid(const std::string& value) {
+  _has_bits_[0] |= 0x00000001u;
+  cid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value, GetArena());
+}
+inline void AlarmInfo::set_cid(std::string&& value) {
+  _has_bits_[0] |= 0x00000001u;
+  cid_.Set(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
+  // @@protoc_insertion_point(field_set_rvalue:msg.AlarmInfo.cid)
+}
+inline void AlarmInfo::set_cid(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000001u;
+  cid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
+              GetArena());
+  // @@protoc_insertion_point(field_set_char:msg.AlarmInfo.cid)
+}
+inline void AlarmInfo::set_cid(const char* value,
+    size_t size) {
+  _has_bits_[0] |= 0x00000001u;
+  cid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArena());
+  // @@protoc_insertion_point(field_set_pointer:msg.AlarmInfo.cid)
+}
+inline std::string* AlarmInfo::_internal_mutable_cid() {
+  _has_bits_[0] |= 0x00000001u;
+  return cid_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline std::string* AlarmInfo::release_cid() {
+  // @@protoc_insertion_point(field_release:msg.AlarmInfo.cid)
+  if (!_internal_has_cid()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000001u;
+  return cid_.ReleaseNonDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline void AlarmInfo::set_allocated_cid(std::string* cid) {
+  if (cid != nullptr) {
+    _has_bits_[0] |= 0x00000001u;
+  } else {
+    _has_bits_[0] &= ~0x00000001u;
+  }
+  cid_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), cid,
+      GetArena());
+  // @@protoc_insertion_point(field_set_allocated:msg.AlarmInfo.cid)
+}
+inline std::string* AlarmInfo::unsafe_arena_release_cid() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:msg.AlarmInfo.cid)
+  GOOGLE_DCHECK(GetArena() != nullptr);
+  _has_bits_[0] &= ~0x00000001u;
+  return cid_.UnsafeArenaRelease(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      GetArena());
+}
+inline void AlarmInfo::unsafe_arena_set_allocated_cid(
+    std::string* cid) {
+  GOOGLE_DCHECK(GetArena() != nullptr);
+  if (cid != nullptr) {
+    _has_bits_[0] |= 0x00000001u;
+  } else {
+    _has_bits_[0] &= ~0x00000001u;
+  }
+  cid_.UnsafeArenaSetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      cid, GetArena());
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:msg.AlarmInfo.cid)
+}
+
+// required string time = 3;
+inline bool AlarmInfo::_internal_has_time() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool AlarmInfo::has_time() const {
+  return _internal_has_time();
+}
+inline void AlarmInfo::clear_time() {
+  time_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline const std::string& AlarmInfo::time() const {
+  // @@protoc_insertion_point(field_get:msg.AlarmInfo.time)
+  return _internal_time();
+}
+inline void AlarmInfo::set_time(const std::string& value) {
+  _internal_set_time(value);
+  // @@protoc_insertion_point(field_set:msg.AlarmInfo.time)
+}
+inline std::string* AlarmInfo::mutable_time() {
+  // @@protoc_insertion_point(field_mutable:msg.AlarmInfo.time)
+  return _internal_mutable_time();
+}
+inline const std::string& AlarmInfo::_internal_time() const {
+  return time_.Get();
+}
+inline void AlarmInfo::_internal_set_time(const std::string& value) {
+  _has_bits_[0] |= 0x00000002u;
+  time_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value, GetArena());
+}
+inline void AlarmInfo::set_time(std::string&& value) {
+  _has_bits_[0] |= 0x00000002u;
+  time_.Set(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
+  // @@protoc_insertion_point(field_set_rvalue:msg.AlarmInfo.time)
+}
+inline void AlarmInfo::set_time(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000002u;
+  time_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
+              GetArena());
+  // @@protoc_insertion_point(field_set_char:msg.AlarmInfo.time)
+}
+inline void AlarmInfo::set_time(const char* value,
+    size_t size) {
+  _has_bits_[0] |= 0x00000002u;
+  time_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArena());
+  // @@protoc_insertion_point(field_set_pointer:msg.AlarmInfo.time)
+}
+inline std::string* AlarmInfo::_internal_mutable_time() {
+  _has_bits_[0] |= 0x00000002u;
+  return time_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline std::string* AlarmInfo::release_time() {
+  // @@protoc_insertion_point(field_release:msg.AlarmInfo.time)
+  if (!_internal_has_time()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000002u;
+  return time_.ReleaseNonDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline void AlarmInfo::set_allocated_time(std::string* time) {
+  if (time != nullptr) {
+    _has_bits_[0] |= 0x00000002u;
+  } else {
+    _has_bits_[0] &= ~0x00000002u;
+  }
+  time_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), time,
+      GetArena());
+  // @@protoc_insertion_point(field_set_allocated:msg.AlarmInfo.time)
+}
+inline std::string* AlarmInfo::unsafe_arena_release_time() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:msg.AlarmInfo.time)
+  GOOGLE_DCHECK(GetArena() != nullptr);
+  _has_bits_[0] &= ~0x00000002u;
+  return time_.UnsafeArenaRelease(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      GetArena());
+}
+inline void AlarmInfo::unsafe_arena_set_allocated_time(
+    std::string* time) {
+  GOOGLE_DCHECK(GetArena() != nullptr);
+  if (time != nullptr) {
+    _has_bits_[0] |= 0x00000002u;
+  } else {
+    _has_bits_[0] &= ~0x00000002u;
+  }
+  time_.UnsafeArenaSetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      time, GetArena());
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:msg.AlarmInfo.time)
+}
+
+// required string picture = 4;
+inline bool AlarmInfo::_internal_has_picture() const {
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  return value;
+}
+inline bool AlarmInfo::has_picture() const {
+  return _internal_has_picture();
+}
+inline void AlarmInfo::clear_picture() {
+  picture_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline const std::string& AlarmInfo::picture() const {
+  // @@protoc_insertion_point(field_get:msg.AlarmInfo.picture)
+  return _internal_picture();
+}
+inline void AlarmInfo::set_picture(const std::string& value) {
+  _internal_set_picture(value);
+  // @@protoc_insertion_point(field_set:msg.AlarmInfo.picture)
+}
+inline std::string* AlarmInfo::mutable_picture() {
+  // @@protoc_insertion_point(field_mutable:msg.AlarmInfo.picture)
+  return _internal_mutable_picture();
+}
+inline const std::string& AlarmInfo::_internal_picture() const {
+  return picture_.Get();
+}
+inline void AlarmInfo::_internal_set_picture(const std::string& value) {
+  _has_bits_[0] |= 0x00000004u;
+  picture_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value, GetArena());
+}
+inline void AlarmInfo::set_picture(std::string&& value) {
+  _has_bits_[0] |= 0x00000004u;
+  picture_.Set(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
+  // @@protoc_insertion_point(field_set_rvalue:msg.AlarmInfo.picture)
+}
+inline void AlarmInfo::set_picture(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000004u;
+  picture_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
+              GetArena());
+  // @@protoc_insertion_point(field_set_char:msg.AlarmInfo.picture)
+}
+inline void AlarmInfo::set_picture(const char* value,
+    size_t size) {
+  _has_bits_[0] |= 0x00000004u;
+  picture_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArena());
+  // @@protoc_insertion_point(field_set_pointer:msg.AlarmInfo.picture)
+}
+inline std::string* AlarmInfo::_internal_mutable_picture() {
+  _has_bits_[0] |= 0x00000004u;
+  return picture_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline std::string* AlarmInfo::release_picture() {
+  // @@protoc_insertion_point(field_release:msg.AlarmInfo.picture)
+  if (!_internal_has_picture()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000004u;
+  return picture_.ReleaseNonDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline void AlarmInfo::set_allocated_picture(std::string* picture) {
+  if (picture != nullptr) {
+    _has_bits_[0] |= 0x00000004u;
+  } else {
+    _has_bits_[0] &= ~0x00000004u;
+  }
+  picture_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), picture,
+      GetArena());
+  // @@protoc_insertion_point(field_set_allocated:msg.AlarmInfo.picture)
+}
+inline std::string* AlarmInfo::unsafe_arena_release_picture() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:msg.AlarmInfo.picture)
+  GOOGLE_DCHECK(GetArena() != nullptr);
+  _has_bits_[0] &= ~0x00000004u;
+  return picture_.UnsafeArenaRelease(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      GetArena());
+}
+inline void AlarmInfo::unsafe_arena_set_allocated_picture(
+    std::string* picture) {
+  GOOGLE_DCHECK(GetArena() != nullptr);
+  if (picture != nullptr) {
+    _has_bits_[0] |= 0x00000004u;
+  } else {
+    _has_bits_[0] &= ~0x00000004u;
+  }
+  picture_.UnsafeArenaSetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      picture, GetArena());
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:msg.AlarmInfo.picture)
+}
+
+// repeated .msg.AlarmPosition alarmposition = 5;
 inline int AlarmInfo::_internal_alarmposition_size() const {
   return alarmposition_.size();
 }
@@ -980,9 +1327,9 @@ AlarmInfo::alarmposition() const {
   return alarmposition_;
 }
 
-// optional string uid = 3;
+// optional string uid = 6;
 inline bool AlarmInfo::_internal_has_uid() const {
-  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  bool value = (_has_bits_[0] & 0x00000008u) != 0;
   return value;
 }
 inline bool AlarmInfo::has_uid() const {
@@ -990,7 +1337,7 @@ inline bool AlarmInfo::has_uid() const {
 }
 inline void AlarmInfo::clear_uid() {
   uid_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
-  _has_bits_[0] &= ~0x00000001u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline const std::string& AlarmInfo::uid() const {
   // @@protoc_insertion_point(field_get:msg.AlarmInfo.uid)
@@ -1008,31 +1355,31 @@ inline const std::string& AlarmInfo::_internal_uid() const {
   return uid_.Get();
 }
 inline void AlarmInfo::_internal_set_uid(const std::string& value) {
-  _has_bits_[0] |= 0x00000001u;
+  _has_bits_[0] |= 0x00000008u;
   uid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value, GetArena());
 }
 inline void AlarmInfo::set_uid(std::string&& value) {
-  _has_bits_[0] |= 0x00000001u;
+  _has_bits_[0] |= 0x00000008u;
   uid_.Set(
     &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
   // @@protoc_insertion_point(field_set_rvalue:msg.AlarmInfo.uid)
 }
 inline void AlarmInfo::set_uid(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
-  _has_bits_[0] |= 0x00000001u;
+  _has_bits_[0] |= 0x00000008u;
   uid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
               GetArena());
   // @@protoc_insertion_point(field_set_char:msg.AlarmInfo.uid)
 }
 inline void AlarmInfo::set_uid(const char* value,
     size_t size) {
-  _has_bits_[0] |= 0x00000001u;
+  _has_bits_[0] |= 0x00000008u;
   uid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
       reinterpret_cast<const char*>(value), size), GetArena());
   // @@protoc_insertion_point(field_set_pointer:msg.AlarmInfo.uid)
 }
 inline std::string* AlarmInfo::_internal_mutable_uid() {
-  _has_bits_[0] |= 0x00000001u;
+  _has_bits_[0] |= 0x00000008u;
   return uid_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline std::string* AlarmInfo::release_uid() {
@@ -1040,14 +1387,14 @@ inline std::string* AlarmInfo::release_uid() {
   if (!_internal_has_uid()) {
     return nullptr;
   }
-  _has_bits_[0] &= ~0x00000001u;
+  _has_bits_[0] &= ~0x00000008u;
   return uid_.ReleaseNonDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline void AlarmInfo::set_allocated_uid(std::string* uid) {
   if (uid != nullptr) {
-    _has_bits_[0] |= 0x00000001u;
+    _has_bits_[0] |= 0x00000008u;
   } else {
-    _has_bits_[0] &= ~0x00000001u;
+    _has_bits_[0] &= ~0x00000008u;
   }
   uid_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), uid,
       GetArena());
@@ -1056,7 +1403,7 @@ inline void AlarmInfo::set_allocated_uid(std::string* uid) {
 inline std::string* AlarmInfo::unsafe_arena_release_uid() {
   // @@protoc_insertion_point(field_unsafe_arena_release:msg.AlarmInfo.uid)
   GOOGLE_DCHECK(GetArena() != nullptr);
-  _has_bits_[0] &= ~0x00000001u;
+  _has_bits_[0] &= ~0x00000008u;
   return uid_.UnsafeArenaRelease(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       GetArena());
 }
@@ -1064,9 +1411,9 @@ inline void AlarmInfo::unsafe_arena_set_allocated_uid(
     std::string* uid) {
   GOOGLE_DCHECK(GetArena() != nullptr);
   if (uid != nullptr) {
-    _has_bits_[0] |= 0x00000001u;
+    _has_bits_[0] |= 0x00000008u;
   } else {
-    _has_bits_[0] &= ~0x00000001u;
+    _has_bits_[0] &= ~0x00000008u;
   }
   uid_.UnsafeArenaSetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       uid, GetArena());
@@ -1077,288 +1424,38 @@ inline void AlarmInfo::unsafe_arena_set_allocated_uid(
 
 // Alarm
 
-// required string cid = 1;
-inline bool Alarm::_internal_has_cid() const {
-  bool value = (_has_bits_[0] & 0x00000001u) != 0;
-  return value;
-}
-inline bool Alarm::has_cid() const {
-  return _internal_has_cid();
-}
-inline void Alarm::clear_cid() {
-  cid_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline const std::string& Alarm::cid() const {
-  // @@protoc_insertion_point(field_get:msg.Alarm.cid)
-  return _internal_cid();
-}
-inline void Alarm::set_cid(const std::string& value) {
-  _internal_set_cid(value);
-  // @@protoc_insertion_point(field_set:msg.Alarm.cid)
-}
-inline std::string* Alarm::mutable_cid() {
-  // @@protoc_insertion_point(field_mutable:msg.Alarm.cid)
-  return _internal_mutable_cid();
-}
-inline const std::string& Alarm::_internal_cid() const {
-  return cid_.Get();
-}
-inline void Alarm::_internal_set_cid(const std::string& value) {
-  _has_bits_[0] |= 0x00000001u;
-  cid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value, GetArena());
-}
-inline void Alarm::set_cid(std::string&& value) {
-  _has_bits_[0] |= 0x00000001u;
-  cid_.Set(
-    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
-  // @@protoc_insertion_point(field_set_rvalue:msg.Alarm.cid)
-}
-inline void Alarm::set_cid(const char* value) {
-  GOOGLE_DCHECK(value != nullptr);
-  _has_bits_[0] |= 0x00000001u;
-  cid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
-              GetArena());
-  // @@protoc_insertion_point(field_set_char:msg.Alarm.cid)
-}
-inline void Alarm::set_cid(const char* value,
-    size_t size) {
-  _has_bits_[0] |= 0x00000001u;
-  cid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
-      reinterpret_cast<const char*>(value), size), GetArena());
-  // @@protoc_insertion_point(field_set_pointer:msg.Alarm.cid)
-}
-inline std::string* Alarm::_internal_mutable_cid() {
-  _has_bits_[0] |= 0x00000001u;
-  return cid_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
-}
-inline std::string* Alarm::release_cid() {
-  // @@protoc_insertion_point(field_release:msg.Alarm.cid)
-  if (!_internal_has_cid()) {
-    return nullptr;
-  }
-  _has_bits_[0] &= ~0x00000001u;
-  return cid_.ReleaseNonDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
-}
-inline void Alarm::set_allocated_cid(std::string* cid) {
-  if (cid != nullptr) {
-    _has_bits_[0] |= 0x00000001u;
-  } else {
-    _has_bits_[0] &= ~0x00000001u;
-  }
-  cid_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), cid,
-      GetArena());
-  // @@protoc_insertion_point(field_set_allocated:msg.Alarm.cid)
-}
-inline std::string* Alarm::unsafe_arena_release_cid() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:msg.Alarm.cid)
-  GOOGLE_DCHECK(GetArena() != nullptr);
-  _has_bits_[0] &= ~0x00000001u;
-  return cid_.UnsafeArenaRelease(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
-      GetArena());
-}
-inline void Alarm::unsafe_arena_set_allocated_cid(
-    std::string* cid) {
-  GOOGLE_DCHECK(GetArena() != nullptr);
-  if (cid != nullptr) {
-    _has_bits_[0] |= 0x00000001u;
-  } else {
-    _has_bits_[0] &= ~0x00000001u;
-  }
-  cid_.UnsafeArenaSetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
-      cid, GetArena());
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:msg.Alarm.cid)
-}
-
-// required string time = 2;
-inline bool Alarm::_internal_has_time() const {
+// required .msg.Alarm.Command command = 1;
+inline bool Alarm::_internal_has_command() const {
   bool value = (_has_bits_[0] & 0x00000002u) != 0;
   return value;
 }
-inline bool Alarm::has_time() const {
-  return _internal_has_time();
+inline bool Alarm::has_command() const {
+  return _internal_has_command();
 }
-inline void Alarm::clear_time() {
-  time_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+inline void Alarm::clear_command() {
+  command_ = 1;
   _has_bits_[0] &= ~0x00000002u;
 }
-inline const std::string& Alarm::time() const {
-  // @@protoc_insertion_point(field_get:msg.Alarm.time)
-  return _internal_time();
+inline ::msg::Alarm_Command Alarm::_internal_command() const {
+  return static_cast< ::msg::Alarm_Command >(command_);
 }
-inline void Alarm::set_time(const std::string& value) {
-  _internal_set_time(value);
-  // @@protoc_insertion_point(field_set:msg.Alarm.time)
+inline ::msg::Alarm_Command Alarm::command() const {
+  // @@protoc_insertion_point(field_get:msg.Alarm.command)
+  return _internal_command();
 }
-inline std::string* Alarm::mutable_time() {
-  // @@protoc_insertion_point(field_mutable:msg.Alarm.time)
-  return _internal_mutable_time();
-}
-inline const std::string& Alarm::_internal_time() const {
-  return time_.Get();
-}
-inline void Alarm::_internal_set_time(const std::string& value) {
+inline void Alarm::_internal_set_command(::msg::Alarm_Command value) {
+  assert(::msg::Alarm_Command_IsValid(value));
   _has_bits_[0] |= 0x00000002u;
-  time_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value, GetArena());
+  command_ = value;
 }
-inline void Alarm::set_time(std::string&& value) {
-  _has_bits_[0] |= 0x00000002u;
-  time_.Set(
-    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
-  // @@protoc_insertion_point(field_set_rvalue:msg.Alarm.time)
-}
-inline void Alarm::set_time(const char* value) {
-  GOOGLE_DCHECK(value != nullptr);
-  _has_bits_[0] |= 0x00000002u;
-  time_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
-              GetArena());
-  // @@protoc_insertion_point(field_set_char:msg.Alarm.time)
-}
-inline void Alarm::set_time(const char* value,
-    size_t size) {
-  _has_bits_[0] |= 0x00000002u;
-  time_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
-      reinterpret_cast<const char*>(value), size), GetArena());
-  // @@protoc_insertion_point(field_set_pointer:msg.Alarm.time)
-}
-inline std::string* Alarm::_internal_mutable_time() {
-  _has_bits_[0] |= 0x00000002u;
-  return time_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
-}
-inline std::string* Alarm::release_time() {
-  // @@protoc_insertion_point(field_release:msg.Alarm.time)
-  if (!_internal_has_time()) {
-    return nullptr;
-  }
-  _has_bits_[0] &= ~0x00000002u;
-  return time_.ReleaseNonDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
-}
-inline void Alarm::set_allocated_time(std::string* time) {
-  if (time != nullptr) {
-    _has_bits_[0] |= 0x00000002u;
-  } else {
-    _has_bits_[0] &= ~0x00000002u;
-  }
-  time_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), time,
-      GetArena());
-  // @@protoc_insertion_point(field_set_allocated:msg.Alarm.time)
-}
-inline std::string* Alarm::unsafe_arena_release_time() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:msg.Alarm.time)
-  GOOGLE_DCHECK(GetArena() != nullptr);
-  _has_bits_[0] &= ~0x00000002u;
-  return time_.UnsafeArenaRelease(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
-      GetArena());
-}
-inline void Alarm::unsafe_arena_set_allocated_time(
-    std::string* time) {
-  GOOGLE_DCHECK(GetArena() != nullptr);
-  if (time != nullptr) {
-    _has_bits_[0] |= 0x00000002u;
-  } else {
-    _has_bits_[0] &= ~0x00000002u;
-  }
-  time_.UnsafeArenaSetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
-      time, GetArena());
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:msg.Alarm.time)
+inline void Alarm::set_command(::msg::Alarm_Command value) {
+  _internal_set_command(value);
+  // @@protoc_insertion_point(field_set:msg.Alarm.command)
 }
 
-// required string picture = 3;
-inline bool Alarm::_internal_has_picture() const {
-  bool value = (_has_bits_[0] & 0x00000004u) != 0;
-  return value;
-}
-inline bool Alarm::has_picture() const {
-  return _internal_has_picture();
-}
-inline void Alarm::clear_picture() {
-  picture_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
-  _has_bits_[0] &= ~0x00000004u;
-}
-inline const std::string& Alarm::picture() const {
-  // @@protoc_insertion_point(field_get:msg.Alarm.picture)
-  return _internal_picture();
-}
-inline void Alarm::set_picture(const std::string& value) {
-  _internal_set_picture(value);
-  // @@protoc_insertion_point(field_set:msg.Alarm.picture)
-}
-inline std::string* Alarm::mutable_picture() {
-  // @@protoc_insertion_point(field_mutable:msg.Alarm.picture)
-  return _internal_mutable_picture();
-}
-inline const std::string& Alarm::_internal_picture() const {
-  return picture_.Get();
-}
-inline void Alarm::_internal_set_picture(const std::string& value) {
-  _has_bits_[0] |= 0x00000004u;
-  picture_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value, GetArena());
-}
-inline void Alarm::set_picture(std::string&& value) {
-  _has_bits_[0] |= 0x00000004u;
-  picture_.Set(
-    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
-  // @@protoc_insertion_point(field_set_rvalue:msg.Alarm.picture)
-}
-inline void Alarm::set_picture(const char* value) {
-  GOOGLE_DCHECK(value != nullptr);
-  _has_bits_[0] |= 0x00000004u;
-  picture_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
-              GetArena());
-  // @@protoc_insertion_point(field_set_char:msg.Alarm.picture)
-}
-inline void Alarm::set_picture(const char* value,
-    size_t size) {
-  _has_bits_[0] |= 0x00000004u;
-  picture_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
-      reinterpret_cast<const char*>(value), size), GetArena());
-  // @@protoc_insertion_point(field_set_pointer:msg.Alarm.picture)
-}
-inline std::string* Alarm::_internal_mutable_picture() {
-  _has_bits_[0] |= 0x00000004u;
-  return picture_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
-}
-inline std::string* Alarm::release_picture() {
-  // @@protoc_insertion_point(field_release:msg.Alarm.picture)
-  if (!_internal_has_picture()) {
-    return nullptr;
-  }
-  _has_bits_[0] &= ~0x00000004u;
-  return picture_.ReleaseNonDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
-}
-inline void Alarm::set_allocated_picture(std::string* picture) {
-  if (picture != nullptr) {
-    _has_bits_[0] |= 0x00000004u;
-  } else {
-    _has_bits_[0] &= ~0x00000004u;
-  }
-  picture_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), picture,
-      GetArena());
-  // @@protoc_insertion_point(field_set_allocated:msg.Alarm.picture)
-}
-inline std::string* Alarm::unsafe_arena_release_picture() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:msg.Alarm.picture)
-  GOOGLE_DCHECK(GetArena() != nullptr);
-  _has_bits_[0] &= ~0x00000004u;
-  return picture_.UnsafeArenaRelease(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
-      GetArena());
-}
-inline void Alarm::unsafe_arena_set_allocated_picture(
-    std::string* picture) {
-  GOOGLE_DCHECK(GetArena() != nullptr);
-  if (picture != nullptr) {
-    _has_bits_[0] |= 0x00000004u;
-  } else {
-    _has_bits_[0] &= ~0x00000004u;
-  }
-  picture_.UnsafeArenaSetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
-      picture, GetArena());
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:msg.Alarm.picture)
-}
-
-// required .msg.AlarmInfo alarminfo = 4;
+// required .msg.AlarmInfo alarminfo = 2;
 inline bool Alarm::_internal_has_alarminfo() const {
-  bool value = (_has_bits_[0] & 0x00000008u) != 0;
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
   PROTOBUF_ASSUME(!value || alarminfo_ != nullptr);
   return value;
 }
@@ -1367,7 +1464,7 @@ inline bool Alarm::has_alarminfo() const {
 }
 inline void Alarm::clear_alarminfo() {
   if (alarminfo_ != nullptr) alarminfo_->Clear();
-  _has_bits_[0] &= ~0x00000008u;
+  _has_bits_[0] &= ~0x00000001u;
 }
 inline const ::msg::AlarmInfo& Alarm::_internal_alarminfo() const {
   const ::msg::AlarmInfo* p = alarminfo_;
@@ -1385,14 +1482,14 @@ inline void Alarm::unsafe_arena_set_allocated_alarminfo(
   }
   alarminfo_ = alarminfo;
   if (alarminfo) {
-    _has_bits_[0] |= 0x00000008u;
+    _has_bits_[0] |= 0x00000001u;
   } else {
-    _has_bits_[0] &= ~0x00000008u;
+    _has_bits_[0] &= ~0x00000001u;
   }
   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:msg.Alarm.alarminfo)
 }
 inline ::msg::AlarmInfo* Alarm::release_alarminfo() {
-  _has_bits_[0] &= ~0x00000008u;
+  _has_bits_[0] &= ~0x00000001u;
   ::msg::AlarmInfo* temp = alarminfo_;
   alarminfo_ = nullptr;
   if (GetArena() != nullptr) {
@@ -1402,13 +1499,13 @@ inline ::msg::AlarmInfo* Alarm::release_alarminfo() {
 }
 inline ::msg::AlarmInfo* Alarm::unsafe_arena_release_alarminfo() {
   // @@protoc_insertion_point(field_release:msg.Alarm.alarminfo)
-  _has_bits_[0] &= ~0x00000008u;
+  _has_bits_[0] &= ~0x00000001u;
   ::msg::AlarmInfo* temp = alarminfo_;
   alarminfo_ = nullptr;
   return temp;
 }
 inline ::msg::AlarmInfo* Alarm::_internal_mutable_alarminfo() {
-  _has_bits_[0] |= 0x00000008u;
+  _has_bits_[0] |= 0x00000001u;
   if (alarminfo_ == nullptr) {
     auto* p = CreateMaybeMessage<::msg::AlarmInfo>(GetArena());
     alarminfo_ = p;
@@ -1431,9 +1528,9 @@ inline void Alarm::set_allocated_alarminfo(::msg::AlarmInfo* alarminfo) {
       alarminfo = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
           message_arena, alarminfo, submessage_arena);
     }
-    _has_bits_[0] |= 0x00000008u;
+    _has_bits_[0] |= 0x00000001u;
   } else {
-    _has_bits_[0] &= ~0x00000008u;
+    _has_bits_[0] &= ~0x00000001u;
   }
   alarminfo_ = alarminfo;
   // @@protoc_insertion_point(field_set_allocated:msg.Alarm.alarminfo)
@@ -1457,6 +1554,11 @@ template <> struct is_proto_enum< ::msg::AlarmInfo_Type> : ::std::true_type {};
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::msg::AlarmInfo_Type>() {
   return ::msg::AlarmInfo_Type_descriptor();
+}
+template <> struct is_proto_enum< ::msg::Alarm_Command> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::msg::Alarm_Command>() {
+  return ::msg::Alarm_Command_descriptor();
 }
 
 PROTOBUF_NAMESPACE_CLOSE

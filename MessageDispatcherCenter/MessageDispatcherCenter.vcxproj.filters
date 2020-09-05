@@ -347,9 +347,6 @@
     <ClCompile Include="..\Source\Hardware\Cpu.cpp">
       <Filter>Hardware</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\MessageQueue\AsynchronousServer.cpp">
-      <Filter>MessageQueue</Filter>
-    </ClCompile>
     <ClCompile Include="..\3rdPart\boost_1_72_0\libs\thread\src\future.cpp">
       <Filter>3rd\boost</Filter>
     </ClCompile>
@@ -364,9 +361,6 @@
     </ClCompile>
     <ClCompile Include="..\3rdPart\boost_1_72_0\libs\thread\src\pthread\once_atomic.cpp">
       <Filter>3rd\boost</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\MessageQueue\AsynchronousUpstreamServer.cpp">
-      <Filter>MessageQueue</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\CommandLine\CommandLine.cpp">
       <Filter>CommandLine</Filter>
@@ -421,9 +415,6 @@
     </ClCompile>
     <ClCompile Include="..\3rdPart\glog-master\src\vlog_is_on.cc">
       <Filter>3rd\glog</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\MessageQueue\AsynchronousReceiver.cpp">
-      <Filter>MessageQueue</Filter>
     </ClCompile>
     <ClCompile Include="MDCServer.cpp" />
     <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\any.cc">
@@ -723,9 +714,6 @@
     <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\io\io_win32.cc">
       <Filter>3rd\protobuf\io</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\MessageQueue\AsynchronousSender.cpp">
-      <Filter>MessageQueue</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Protocol\Alarm\Alarm.pb.cc">
       <Filter>Protocol\Alarm</Filter>
     </ClCompile>
@@ -780,26 +768,11 @@
     <ClCompile Include="..\Source\Protocol\Component\ComponentPhrase.cpp">
       <Filter>Protocol\Component</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Packet\AbstractPacket.cpp">
-      <Filter>Packet</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Packet\Message\MessagePacket.cpp">
       <Filter>Packet\Message</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Protocol\CommandPhrase.cpp">
-      <Filter>Protocol</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Protocol\Device\DevicePhrase.cpp">
       <Filter>Protocol\Device</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Device\AbstractDevice.cpp">
-      <Filter>Device</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Device\SurveillanceDevice.cpp">
-      <Filter>Device</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Device\Hikvision\HikvisionDevice.cpp">
-      <Filter>Device\Hikvision</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Protocol\Status\StatusPhrase.cpp">
       <Filter>Protocol\Status</Filter>
@@ -807,41 +780,44 @@
     <ClCompile Include="..\Source\Protocol\Algorithm\AlgorithmPhrase.cpp">
       <Filter>Protocol\Algorithm</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\AI\AbstractAlgorithm.cpp">
-      <Filter>AI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\AI\HelmetDetect\HelmetDetect.cpp">
-      <Filter>AI\Helmet</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\AI\FaceRecognition\FaceRecognition.cpp">
-      <Filter>AI\Face</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\AI\SleepDetect\SleepDetect.cpp">
-      <Filter>AI\Sleep</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\AI\PhoneDetect\PhoneDetect.cpp">
-      <Filter>AI\Phone</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\AI\FightDetect\FightDetect.cpp">
-      <Filter>AI\Fight</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Protocol\Crew\CrewPhrase.cpp">
       <Filter>Protocol\Crew</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Person\AbstractPerson.cpp">
-      <Filter>Person</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Person\Crew\Crew.cpp">
-      <Filter>Person\Crew</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Protocol\Alarm\AlarmPhrase.cpp">
       <Filter>Protocol\Alarm</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Alarm\AbstractAlarm.cpp">
-      <Filter>Alarm</Filter>
+    <ClCompile Include="..\Source\MessageQueue\MajordomoBroker.cpp">
+      <Filter>MessageQueue</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Alarm\FaceAlarm\FaceAlarm.cpp">
-      <Filter>Alarm\Face</Filter>
+    <ClCompile Include="..\Source\Network\AbstractServer.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\MessageQueue\MessageData.cpp">
+      <Filter>MessageQueue</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Network\AbstractUpstreamServer.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\MessageQueue\MajordomoWorker.cpp">
+      <Filter>MessageQueue</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Packet\DataPacket.cpp">
+      <Filter>Packet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\DataPhrase.cpp">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Network\AbstractClient.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Xml\XmlCodec.cpp">
+      <Filter>XML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Device\AbstractDevice.cpp">
+      <Filter>Device</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Device\SurveillanceDevice.cpp">
+      <Filter>Device</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1685,41 +1661,32 @@
     <Filter Include="Packet\Message">
       <UniqueIdentifier>{7a1b688a-1498-4668-9fc3-916572e8daf7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Network">
+      <UniqueIdentifier>{13b1d00c-30b4-4a30-91f5-710a94197f2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="XML">
+      <UniqueIdentifier>{b4cffc97-bc76-4c91-8d1c-6696d2f6493e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\boost\property_tree">
+      <UniqueIdentifier>{004a2663-30f4-4b67-aac5-85bedb6779c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\boost\property_tree\detail">
+      <UniqueIdentifier>{d5850ad4-c7bf-4de6-ab07-4470757d5cd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\boost\property_tree\json_parser">
+      <UniqueIdentifier>{4722f5fa-f2b0-478e-be4f-311368c7499f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\boost\property_tree\json_parser\detail">
+      <UniqueIdentifier>{a7230255-7f5b-4ddf-9ec5-73bebdc7fed2}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Device">
-      <UniqueIdentifier>{bbf69719-1672-48e7-a101-7b6da3a0f469}</UniqueIdentifier>
+      <UniqueIdentifier>{16994ee2-bc53-48a2-8af3-78fcad92c6a8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Device\Hikvision">
-      <UniqueIdentifier>{c9deb8e0-9ffb-4775-97e9-8baaf3eccf03}</UniqueIdentifier>
+    <Filter Include="3rd\boost\multi_index">
+      <UniqueIdentifier>{bff8e010-17c0-43f6-b776-266cde0ce576}</UniqueIdentifier>
     </Filter>
-    <Filter Include="AI">
-      <UniqueIdentifier>{b8e9f81c-c2a5-49b7-8571-710e5cb3ef37}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="AI\Helmet">
-      <UniqueIdentifier>{4ce7ddc8-2951-4817-9211-495d82808a8b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="AI\Face">
-      <UniqueIdentifier>{429d6239-e528-45dd-9e44-8cbcfe8f652c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="AI\Phone">
-      <UniqueIdentifier>{13180615-0dd8-4f9c-8120-c3d5b907122a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="AI\Sleep">
-      <UniqueIdentifier>{0206eeb6-9b40-476d-bf96-ff61222cef33}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="AI\Fight">
-      <UniqueIdentifier>{c7e2341a-59c9-42ef-967c-756a6ef5f3c3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Person">
-      <UniqueIdentifier>{e0f260d0-8102-44e8-933c-d783cd956029}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Person\Crew">
-      <UniqueIdentifier>{c23d7779-3e2b-4fa9-8be5-c4d5a43342f6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Alarm">
-      <UniqueIdentifier>{fbe46295-e740-4a76-babb-93fe28a31c97}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Alarm\Face">
-      <UniqueIdentifier>{f3f9715c-57ce-4a24-b422-c1659f862eef}</UniqueIdentifier>
+    <Filter Include="3rd\boost\multi_index\detail">
+      <UniqueIdentifier>{9c30fe70-ca6a-4a56-8451-968b060b5517}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -2609,9 +2576,6 @@
     </ClInclude>
     <ClInclude Include="..\3rdPart\boost_1_72_0\boost\weak_ptr.hpp">
       <Filter>3rd\boost</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Include\MessageQueue\AsynchronousServer.h">
-      <Filter>MessageQueue</Filter>
     </ClInclude>
     <ClInclude Include="..\3rdPart\boost_1_72_0\boost\bind\apply.hpp">
       <Filter>3rd\boost\bind</Filter>
@@ -11259,9 +11223,6 @@
     <ClInclude Include="..\3rdPart\boost_1_72_0\boost\math\policies\policy.hpp">
       <Filter>3rd\boost\math\policies</Filter>
     </ClInclude>
-    <ClInclude Include="..\Include\MessageQueue\AsynchronousUpstreamServer.h">
-      <Filter>MessageQueue</Filter>
-    </ClInclude>
     <ClInclude Include="..\Include\CommandLine\CommandLine.h">
       <Filter>CommandLine</Filter>
     </ClInclude>
@@ -11375,9 +11336,6 @@
     </ClInclude>
     <ClInclude Include="..\3rdPart\glog-master\src\stacktrace_x86-inl.h">
       <Filter>3rd\glog</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Include\MessageQueue\AsynchronousReceiver.h">
-      <Filter>MessageQueue</Filter>
     </ClInclude>
     <ClInclude Include="MDCServer.h" />
     <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\any.h">
@@ -11808,9 +11766,6 @@
     </ClInclude>
     <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\io\io_win32.h">
       <Filter>3rd\protobuf\io</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Include\MessageQueue\AsynchronousSender.h">
-      <Filter>MessageQueue</Filter>
     </ClInclude>
     <ClInclude Include="..\Include\Protocol\Message.pb.h">
       <Filter>Protocol</Filter>
@@ -13117,26 +13072,11 @@
     <ClInclude Include="..\Include\Protocol\Component\ComponentPhrase.h">
       <Filter>Protocol\Component</Filter>
     </ClInclude>
-    <ClInclude Include="..\Include\Packet\AbstractPacket.h">
-      <Filter>Packet</Filter>
-    </ClInclude>
     <ClInclude Include="..\Include\Packet\Message\MessagePacket.h">
       <Filter>Packet\Message</Filter>
     </ClInclude>
-    <ClInclude Include="..\Include\Protocol\CommandPhrase.h">
-      <Filter>Protocol</Filter>
-    </ClInclude>
     <ClInclude Include="..\Include\Protocol\Device\DevicePhrase.h">
       <Filter>Protocol\Device</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Include\Device\AbstractDevice.h">
-      <Filter>Device</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Include\Device\SurveillanceDevice.h">
-      <Filter>Device</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Include\Device\Hikvision\HikvisionDevice.h">
-      <Filter>Device\Hikvision</Filter>
     </ClInclude>
     <ClInclude Include="..\Include\Protocol\Status\StatusPhrase.h">
       <Filter>Protocol\Status</Filter>
@@ -13144,41 +13084,374 @@
     <ClInclude Include="..\Include\Protocol\Algorithm\AlgorithmPhrase.h">
       <Filter>Protocol\Algorithm</Filter>
     </ClInclude>
-    <ClInclude Include="..\Include\AI\AbstractAlgorithm.h">
-      <Filter>AI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Include\AI\HelmetDetect\HelmetDetect.h">
-      <Filter>AI\Helmet</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Include\AI\FaceRecognition\FaceRecognition.h">
-      <Filter>AI\Face</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Include\AI\SleepDetect\SleepDetect.h">
-      <Filter>AI\Sleep</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Include\AI\PhoneDetect\PhoneDetect.h">
-      <Filter>AI\Phone</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Include\AI\FightDetect\FightDetect.h">
-      <Filter>AI\Fight</Filter>
-    </ClInclude>
     <ClInclude Include="..\Include\Protocol\Crew\CrewPhrase.h">
       <Filter>Protocol\Crew</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Include\Person\AbstractPerson.h">
-      <Filter>Person</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Include\Person\Crew\Crew.h">
-      <Filter>Person\Crew</Filter>
     </ClInclude>
     <ClInclude Include="..\Include\Protocol\Alarm\AlarmPhrase.h">
       <Filter>Protocol\Alarm</Filter>
     </ClInclude>
-    <ClInclude Include="..\Include\Alarm\AbstractAlarm.h">
-      <Filter>Alarm</Filter>
+    <ClInclude Include="..\Include\MessageQueue\MajordomoBroker.h">
+      <Filter>MessageQueue</Filter>
     </ClInclude>
-    <ClInclude Include="..\Include\Alarm\FaceAlarm\FaceAlarm.h">
-      <Filter>Alarm\Face</Filter>
+    <ClInclude Include="..\Include\Network\AbstractServer.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\MessageQueue\MessageData.h">
+      <Filter>MessageQueue</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Network\AbstractUpstreamServer.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\MessageQueue\MajordomoWorker.h">
+      <Filter>MessageQueue</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Packet\DataPacket.h">
+      <Filter>Packet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\DataPhrase.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Network\AbstractClient.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Xml\XmlCodec.h">
+      <Filter>XML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\property_tree\exceptions.hpp">
+      <Filter>3rd\boost\property_tree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\property_tree\id_translator.hpp">
+      <Filter>3rd\boost\property_tree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\property_tree\info_parser.hpp">
+      <Filter>3rd\boost\property_tree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\property_tree\ini_parser.hpp">
+      <Filter>3rd\boost\property_tree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\property_tree\json_parser.hpp">
+      <Filter>3rd\boost\property_tree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\property_tree\ptree.hpp">
+      <Filter>3rd\boost\property_tree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\property_tree\ptree_fwd.hpp">
+      <Filter>3rd\boost\property_tree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\property_tree\ptree_serialization.hpp">
+      <Filter>3rd\boost\property_tree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\property_tree\stream_translator.hpp">
+      <Filter>3rd\boost\property_tree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\property_tree\string_path.hpp">
+      <Filter>3rd\boost\property_tree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\property_tree\xml_parser.hpp">
+      <Filter>3rd\boost\property_tree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\property_tree\detail\exception_implementation.hpp">
+      <Filter>3rd\boost\property_tree\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\property_tree\detail\file_parser_error.hpp">
+      <Filter>3rd\boost\property_tree\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\property_tree\detail\info_parser_error.hpp">
+      <Filter>3rd\boost\property_tree\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\property_tree\detail\info_parser_read.hpp">
+      <Filter>3rd\boost\property_tree\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\property_tree\detail\info_parser_utils.hpp">
+      <Filter>3rd\boost\property_tree\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\property_tree\detail\info_parser_write.hpp">
+      <Filter>3rd\boost\property_tree\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\property_tree\detail\info_parser_writer_settings.hpp">
+      <Filter>3rd\boost\property_tree\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\property_tree\detail\ptree_implementation.hpp">
+      <Filter>3rd\boost\property_tree\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\property_tree\detail\ptree_utils.hpp">
+      <Filter>3rd\boost\property_tree\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\property_tree\detail\rapidxml.hpp">
+      <Filter>3rd\boost\property_tree\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\property_tree\detail\xml_parser_error.hpp">
+      <Filter>3rd\boost\property_tree\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\property_tree\detail\xml_parser_flags.hpp">
+      <Filter>3rd\boost\property_tree\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\property_tree\detail\xml_parser_read_rapidxml.hpp">
+      <Filter>3rd\boost\property_tree\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\property_tree\detail\xml_parser_utils.hpp">
+      <Filter>3rd\boost\property_tree\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\property_tree\detail\xml_parser_write.hpp">
+      <Filter>3rd\boost\property_tree\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\property_tree\detail\xml_parser_writer_settings.hpp">
+      <Filter>3rd\boost\property_tree\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\property_tree\json_parser\error.hpp">
+      <Filter>3rd\boost\property_tree\json_parser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\property_tree\json_parser\detail\narrow_encoding.hpp">
+      <Filter>3rd\boost\property_tree\json_parser\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\property_tree\json_parser\detail\parser.hpp">
+      <Filter>3rd\boost\property_tree\json_parser\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\property_tree\json_parser\detail\read.hpp">
+      <Filter>3rd\boost\property_tree\json_parser\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\property_tree\json_parser\detail\standard_callbacks.hpp">
+      <Filter>3rd\boost\property_tree\json_parser\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\property_tree\json_parser\detail\wide_encoding.hpp">
+      <Filter>3rd\boost\property_tree\json_parser\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\property_tree\json_parser\detail\write.hpp">
+      <Filter>3rd\boost\property_tree\json_parser\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Device\AbstractDevice.h">
+      <Filter>Device</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Device\SurveillanceDevice.h">
+      <Filter>Device</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\composite_key.hpp">
+      <Filter>3rd\boost\multi_index</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\global_fun.hpp">
+      <Filter>3rd\boost\multi_index</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\hashed_index.hpp">
+      <Filter>3rd\boost\multi_index</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\hashed_index_fwd.hpp">
+      <Filter>3rd\boost\multi_index</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\identity.hpp">
+      <Filter>3rd\boost\multi_index</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\identity_fwd.hpp">
+      <Filter>3rd\boost\multi_index</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\indexed_by.hpp">
+      <Filter>3rd\boost\multi_index</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\key.hpp">
+      <Filter>3rd\boost\multi_index</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\key_extractors.hpp">
+      <Filter>3rd\boost\multi_index</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\mem_fun.hpp">
+      <Filter>3rd\boost\multi_index</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\member.hpp">
+      <Filter>3rd\boost\multi_index</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\ordered_index.hpp">
+      <Filter>3rd\boost\multi_index</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\ordered_index_fwd.hpp">
+      <Filter>3rd\boost\multi_index</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\random_access_index.hpp">
+      <Filter>3rd\boost\multi_index</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\random_access_index_fwd.hpp">
+      <Filter>3rd\boost\multi_index</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\ranked_index.hpp">
+      <Filter>3rd\boost\multi_index</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\ranked_index_fwd.hpp">
+      <Filter>3rd\boost\multi_index</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\safe_mode_errors.hpp">
+      <Filter>3rd\boost\multi_index</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\sequenced_index.hpp">
+      <Filter>3rd\boost\multi_index</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\sequenced_index_fwd.hpp">
+      <Filter>3rd\boost\multi_index</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\tag.hpp">
+      <Filter>3rd\boost\multi_index</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\access_specifier.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\adl_swap.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\allocator_traits.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\archive_constructed.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\auto_space.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\base_type.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\bidir_node_iterator.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\bucket_array.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\cons_stdtuple.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\converter.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\copy_map.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\do_not_copy_elements_tag.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\duplicates_iterator.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\has_tag.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\hash_index_args.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\hash_index_iterator.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\hash_index_node.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\header_holder.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\ignore_wstrict_aliasing.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\index_base.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\index_loader.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\index_matcher.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\index_node_base.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\index_saver.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\invariant_assert.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\is_function.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\is_index_list.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\is_transparent.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\iter_adaptor.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\modify_key_adaptor.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\no_duplicate_tags.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\node_type.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\ord_index_args.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\ord_index_impl.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\ord_index_impl_fwd.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\ord_index_node.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\ord_index_ops.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\promotes_arg.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\raw_ptr.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\restore_wstrict_aliasing.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\rnd_index_loader.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\rnd_index_node.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\rnd_index_ops.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\rnd_index_ptr_array.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\rnd_node_iterator.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\rnk_index_ops.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\safe_mode.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\scope_guard.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\seq_index_node.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\seq_index_ops.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\serialization_version.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\uintptr_type.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\unbounded.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\value_compare.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\vartempl_support.hpp">
+      <Filter>3rd\boost\multi_index\detail</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

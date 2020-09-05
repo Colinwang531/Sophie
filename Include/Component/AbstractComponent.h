@@ -46,9 +46,9 @@ namespace base
 				return componentType;
 			}
 
-			//读/写组件ID
-			//@name : 组件ID,可以空表示注册请求
-			//@Return : 组件ID
+			//读/写组件ID标识
+			//@id : 组件ID标识
+			//@Return : 组件ID标识
 			inline void setComponentID(const std::string id)
 			{
 				componentID = id;
@@ -58,9 +58,9 @@ namespace base
 				return componentID;
 			}
 
-			//读/写通信ID
-			//@name : 通信ID,可以空
-			//@Return : 通信ID
+			//读/写通信ID标识
+			//@id : 通信ID标识
+			//@Return : 通信ID标识
 			inline void setCommunicationID(const std::string id)
 			{
 				communicationID = id;
@@ -97,7 +97,7 @@ namespace base
 		private:
 			const ComponentType componentType;
 			std::string componentID;
-			//通信ID标识用于主动向组件发送数据
+			//通信ID标识
 			std::string communicationID;
 			std::string componentName;
 			long long keepliveTimestamp;

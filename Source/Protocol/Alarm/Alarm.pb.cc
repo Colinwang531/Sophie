@@ -75,7 +75,7 @@ static void InitDefaultsscc_info_AlarmPosition_Alarm_2eproto() {
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_AlarmPosition_Alarm_2eproto}, {}};
 
 static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_Alarm_2eproto[3];
-static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_Alarm_2eproto[1];
+static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_Alarm_2eproto[2];
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_Alarm_2eproto = nullptr;
 
 const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_Alarm_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
@@ -98,29 +98,31 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_Alarm_2eproto::offsets[] PROTO
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::msg::AlarmInfo, type_),
+  PROTOBUF_FIELD_OFFSET(::msg::AlarmInfo, cid_),
+  PROTOBUF_FIELD_OFFSET(::msg::AlarmInfo, time_),
+  PROTOBUF_FIELD_OFFSET(::msg::AlarmInfo, picture_),
   PROTOBUF_FIELD_OFFSET(::msg::AlarmInfo, alarmposition_),
   PROTOBUF_FIELD_OFFSET(::msg::AlarmInfo, uid_),
-  1,
-  ~0u,
+  4,
   0,
+  1,
+  2,
+  ~0u,
+  3,
   PROTOBUF_FIELD_OFFSET(::msg::Alarm, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::msg::Alarm, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::msg::Alarm, cid_),
-  PROTOBUF_FIELD_OFFSET(::msg::Alarm, time_),
-  PROTOBUF_FIELD_OFFSET(::msg::Alarm, picture_),
+  PROTOBUF_FIELD_OFFSET(::msg::Alarm, command_),
   PROTOBUF_FIELD_OFFSET(::msg::Alarm, alarminfo_),
-  0,
   1,
-  2,
-  3,
+  0,
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, 9, sizeof(::msg::AlarmPosition)},
-  { 13, 21, sizeof(::msg::AlarmInfo)},
-  { 24, 33, sizeof(::msg::Alarm)},
+  { 13, 24, sizeof(::msg::AlarmInfo)},
+  { 30, 37, sizeof(::msg::Alarm)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -132,14 +134,15 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 const char descriptor_table_protodef_Alarm_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\013Alarm.proto\022\003msg\";\n\rAlarmPosition\022\t\n\001x"
   "\030\001 \002(\005\022\t\n\001y\030\002 \002(\005\022\t\n\001w\030\003 \002(\005\022\t\n\001h\030\004 \002(\005\""
-  "\302\001\n\tAlarmInfo\022!\n\004type\030\001 \002(\0162\023.msg.AlarmI"
-  "nfo.Type\022)\n\ralarmposition\030\002 \003(\0132\022.msg.Al"
-  "armPosition\022\013\n\003uid\030\003 \001(\t\"Z\n\004Type\022\n\n\006HELM"
-  "ET\020\001\022\t\n\005PHONE\020\002\022\t\n\005SLEEP\020\003\022\t\n\005FIGHT\020\004\022\021\n"
-  "\rATTENDANCE_IN\020\005\022\022\n\016ATTENDANCE_OUT\020\006\"V\n\005"
-  "Alarm\022\013\n\003cid\030\001 \002(\t\022\014\n\004time\030\002 \002(\t\022\017\n\007pict"
-  "ure\030\003 \002(\t\022!\n\talarminfo\030\004 \002(\0132\016.msg.Alarm"
-  "Info"
+  "\356\001\n\tAlarmInfo\022!\n\004type\030\001 \002(\0162\023.msg.AlarmI"
+  "nfo.Type\022\013\n\003cid\030\002 \002(\t\022\014\n\004time\030\003 \002(\t\022\017\n\007p"
+  "icture\030\004 \002(\t\022)\n\ralarmposition\030\005 \003(\0132\022.ms"
+  "g.AlarmPosition\022\013\n\003uid\030\006 \001(\t\"Z\n\004Type\022\n\n\006"
+  "HELMET\020\001\022\t\n\005PHONE\020\002\022\t\n\005SLEEP\020\003\022\t\n\005FIGHT\020"
+  "\004\022\021\n\rATTENDANCE_IN\020\005\022\022\n\016ATTENDANCE_OUT\020\006"
+  "\"f\n\005Alarm\022#\n\007command\030\001 \002(\0162\022.msg.Alarm.C"
+  "ommand\022!\n\talarminfo\030\002 \002(\0132\016.msg.AlarmInf"
+  "o\"\025\n\007Command\022\n\n\006NOTIFY\020\001"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_Alarm_2eproto_deps[1] = {
 };
@@ -150,7 +153,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_Ala
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_Alarm_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Alarm_2eproto = {
-  false, false, descriptor_table_protodef_Alarm_2eproto, "Alarm.proto", 364,
+  false, false, descriptor_table_protodef_Alarm_2eproto, "Alarm.proto", 424,
   &descriptor_table_Alarm_2eproto_once, descriptor_table_Alarm_2eproto_sccs, descriptor_table_Alarm_2eproto_deps, 3, 0,
   schemas, file_default_instances, TableStruct_Alarm_2eproto::offsets,
   file_level_metadata_Alarm_2eproto, 3, file_level_enum_descriptors_Alarm_2eproto, file_level_service_descriptors_Alarm_2eproto,
@@ -187,6 +190,25 @@ constexpr AlarmInfo_Type AlarmInfo::ATTENDANCE_OUT;
 constexpr AlarmInfo_Type AlarmInfo::Type_MIN;
 constexpr AlarmInfo_Type AlarmInfo::Type_MAX;
 constexpr int AlarmInfo::Type_ARRAYSIZE;
+#endif  // (__cplusplus < 201703) && (!defined(_MSC_VER) || _MSC_VER >= 1900)
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* Alarm_Command_descriptor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_Alarm_2eproto);
+  return file_level_enum_descriptors_Alarm_2eproto[1];
+}
+bool Alarm_Command_IsValid(int value) {
+  switch (value) {
+    case 1:
+      return true;
+    default:
+      return false;
+  }
+}
+
+#if (__cplusplus < 201703) && (!defined(_MSC_VER) || _MSC_VER >= 1900)
+constexpr Alarm_Command Alarm::NOTIFY;
+constexpr Alarm_Command Alarm::Command_MIN;
+constexpr Alarm_Command Alarm::Command_MAX;
+constexpr int Alarm::Command_ARRAYSIZE;
 #endif  // (__cplusplus < 201703) && (!defined(_MSC_VER) || _MSC_VER >= 1900)
 
 // ===================================================================
@@ -538,13 +560,22 @@ class AlarmInfo::_Internal {
  public:
   using HasBits = decltype(std::declval<AlarmInfo>()._has_bits_);
   static void set_has_type(HasBits* has_bits) {
-    (*has_bits)[0] |= 2u;
+    (*has_bits)[0] |= 16u;
   }
-  static void set_has_uid(HasBits* has_bits) {
+  static void set_has_cid(HasBits* has_bits) {
     (*has_bits)[0] |= 1u;
   }
+  static void set_has_time(HasBits* has_bits) {
+    (*has_bits)[0] |= 2u;
+  }
+  static void set_has_picture(HasBits* has_bits) {
+    (*has_bits)[0] |= 4u;
+  }
+  static void set_has_uid(HasBits* has_bits) {
+    (*has_bits)[0] |= 8u;
+  }
   static bool MissingRequiredFields(const HasBits& has_bits) {
-    return ((has_bits[0] & 0x00000002) ^ 0x00000002) != 0;
+    return ((has_bits[0] & 0x00000017) ^ 0x00000017) != 0;
   }
 };
 
@@ -560,6 +591,21 @@ AlarmInfo::AlarmInfo(const AlarmInfo& from)
       _has_bits_(from._has_bits_),
       alarmposition_(from.alarmposition_) {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  cid_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from._internal_has_cid()) {
+    cid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_cid(),
+      GetArena());
+  }
+  time_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from._internal_has_time()) {
+    time_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_time(),
+      GetArena());
+  }
+  picture_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from._internal_has_picture()) {
+    picture_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_picture(),
+      GetArena());
+  }
   uid_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   if (from._internal_has_uid()) {
     uid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_uid(),
@@ -571,6 +617,9 @@ AlarmInfo::AlarmInfo(const AlarmInfo& from)
 
 void AlarmInfo::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_AlarmInfo_Alarm_2eproto.base);
+  cid_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  time_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  picture_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   uid_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   type_ = 1;
 }
@@ -583,6 +632,9 @@ AlarmInfo::~AlarmInfo() {
 
 void AlarmInfo::SharedDtor() {
   GOOGLE_DCHECK(GetArena() == nullptr);
+  cid_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  time_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  picture_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   uid_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
@@ -609,8 +661,17 @@ void AlarmInfo::Clear() {
 
   alarmposition_.Clear();
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000003u) {
+  if (cached_has_bits & 0x0000001fu) {
     if (cached_has_bits & 0x00000001u) {
+      cid_.ClearNonDefaultToEmpty();
+    }
+    if (cached_has_bits & 0x00000002u) {
+      time_.ClearNonDefaultToEmpty();
+    }
+    if (cached_has_bits & 0x00000004u) {
+      picture_.ClearNonDefaultToEmpty();
+    }
+    if (cached_has_bits & 0x00000008u) {
       uid_.ClearNonDefaultToEmpty();
     }
     type_ = 1;
@@ -640,21 +701,54 @@ const char* AlarmInfo::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::
           }
         } else goto handle_unusual;
         continue;
-      // repeated .msg.AlarmPosition alarmposition = 2;
+      // required string cid = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+          auto str = _internal_mutable_cid();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          #ifndef NDEBUG
+          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "msg.AlarmInfo.cid");
+          #endif  // !NDEBUG
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // required string time = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
+          auto str = _internal_mutable_time();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          #ifndef NDEBUG
+          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "msg.AlarmInfo.time");
+          #endif  // !NDEBUG
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // required string picture = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
+          auto str = _internal_mutable_picture();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          #ifndef NDEBUG
+          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "msg.AlarmInfo.picture");
+          #endif  // !NDEBUG
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // repeated .msg.AlarmPosition alarmposition = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 42)) {
           ptr -= 1;
           do {
             ptr += 1;
             ptr = ctx->ParseMessage(_internal_add_alarmposition(), ptr);
             CHK_(ptr);
             if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<18>(ptr));
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<42>(ptr));
         } else goto handle_unusual;
         continue;
-      // optional string uid = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
+      // optional string uid = 6;
+      case 6:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 50)) {
           auto str = _internal_mutable_uid();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
           #ifndef NDEBUG
@@ -694,28 +788,58 @@ failure:
 
   cached_has_bits = _has_bits_[0];
   // required .msg.AlarmInfo.Type type = 1;
-  if (cached_has_bits & 0x00000002u) {
+  if (cached_has_bits & 0x00000010u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
       1, this->_internal_type(), target);
   }
 
-  // repeated .msg.AlarmPosition alarmposition = 2;
+  // required string cid = 2;
+  if (cached_has_bits & 0x00000001u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->_internal_cid().data(), static_cast<int>(this->_internal_cid().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "msg.AlarmInfo.cid");
+    target = stream->WriteStringMaybeAliased(
+        2, this->_internal_cid(), target);
+  }
+
+  // required string time = 3;
+  if (cached_has_bits & 0x00000002u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->_internal_time().data(), static_cast<int>(this->_internal_time().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "msg.AlarmInfo.time");
+    target = stream->WriteStringMaybeAliased(
+        3, this->_internal_time(), target);
+  }
+
+  // required string picture = 4;
+  if (cached_has_bits & 0x00000004u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->_internal_picture().data(), static_cast<int>(this->_internal_picture().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "msg.AlarmInfo.picture");
+    target = stream->WriteStringMaybeAliased(
+        4, this->_internal_picture(), target);
+  }
+
+  // repeated .msg.AlarmPosition alarmposition = 5;
   for (unsigned int i = 0,
       n = static_cast<unsigned int>(this->_internal_alarmposition_size()); i < n; i++) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(2, this->_internal_alarmposition(i), target, stream);
+      InternalWriteMessage(5, this->_internal_alarmposition(i), target, stream);
   }
 
-  // optional string uid = 3;
-  if (cached_has_bits & 0x00000001u) {
+  // optional string uid = 6;
+  if (cached_has_bits & 0x00000008u) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
       this->_internal_uid().data(), static_cast<int>(this->_internal_uid().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
       "msg.AlarmInfo.uid");
     target = stream->WriteStringMaybeAliased(
-        3, this->_internal_uid(), target);
+        6, this->_internal_uid(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -726,29 +850,80 @@ failure:
   return target;
 }
 
+size_t AlarmInfo::RequiredFieldsByteSizeFallback() const {
+// @@protoc_insertion_point(required_fields_byte_size_fallback_start:msg.AlarmInfo)
+  size_t total_size = 0;
+
+  if (_internal_has_cid()) {
+    // required string cid = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_cid());
+  }
+
+  if (_internal_has_time()) {
+    // required string time = 3;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_time());
+  }
+
+  if (_internal_has_picture()) {
+    // required string picture = 4;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_picture());
+  }
+
+  if (_internal_has_type()) {
+    // required .msg.AlarmInfo.Type type = 1;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_type());
+  }
+
+  return total_size;
+}
 size_t AlarmInfo::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:msg.AlarmInfo)
   size_t total_size = 0;
 
-  // required .msg.AlarmInfo.Type type = 1;
-  if (_internal_has_type()) {
+  if (((_has_bits_[0] & 0x00000017) ^ 0x00000017) == 0) {  // All required fields are present.
+    // required string cid = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_cid());
+
+    // required string time = 3;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_time());
+
+    // required string picture = 4;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_picture());
+
+    // required .msg.AlarmInfo.Type type = 1;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_type());
+
+  } else {
+    total_size += RequiredFieldsByteSizeFallback();
   }
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // repeated .msg.AlarmPosition alarmposition = 2;
+  // repeated .msg.AlarmPosition alarmposition = 5;
   total_size += 1UL * this->_internal_alarmposition_size();
   for (const auto& msg : this->alarmposition_) {
     total_size +=
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
   }
 
-  // optional string uid = 3;
+  // optional string uid = 6;
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000001u) {
+  if (cached_has_bits & 0x00000008u) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_uid());
@@ -787,11 +962,20 @@ void AlarmInfo::MergeFrom(const AlarmInfo& from) {
 
   alarmposition_.MergeFrom(from.alarmposition_);
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x00000003u) {
+  if (cached_has_bits & 0x0000001fu) {
     if (cached_has_bits & 0x00000001u) {
-      _internal_set_uid(from._internal_uid());
+      _internal_set_cid(from._internal_cid());
     }
     if (cached_has_bits & 0x00000002u) {
+      _internal_set_time(from._internal_time());
+    }
+    if (cached_has_bits & 0x00000004u) {
+      _internal_set_picture(from._internal_picture());
+    }
+    if (cached_has_bits & 0x00000008u) {
+      _internal_set_uid(from._internal_uid());
+    }
+    if (cached_has_bits & 0x00000010u) {
       type_ = from.type_;
     }
     _has_bits_[0] |= cached_has_bits;
@@ -823,6 +1007,9 @@ void AlarmInfo::InternalSwap(AlarmInfo* other) {
   _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
   swap(_has_bits_[0], other->_has_bits_[0]);
   alarmposition_.InternalSwap(&other->alarmposition_);
+  cid_.Swap(&other->cid_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  time_.Swap(&other->time_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  picture_.Swap(&other->picture_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   uid_.Swap(&other->uid_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   swap(type_, other->type_);
 }
@@ -841,21 +1028,15 @@ void Alarm::InitAsDefaultInstance() {
 class Alarm::_Internal {
  public:
   using HasBits = decltype(std::declval<Alarm>()._has_bits_);
-  static void set_has_cid(HasBits* has_bits) {
-    (*has_bits)[0] |= 1u;
-  }
-  static void set_has_time(HasBits* has_bits) {
+  static void set_has_command(HasBits* has_bits) {
     (*has_bits)[0] |= 2u;
-  }
-  static void set_has_picture(HasBits* has_bits) {
-    (*has_bits)[0] |= 4u;
   }
   static const ::msg::AlarmInfo& alarminfo(const Alarm* msg);
   static void set_has_alarminfo(HasBits* has_bits) {
-    (*has_bits)[0] |= 8u;
+    (*has_bits)[0] |= 1u;
   }
   static bool MissingRequiredFields(const HasBits& has_bits) {
-    return ((has_bits[0] & 0x0000000f) ^ 0x0000000f) != 0;
+    return ((has_bits[0] & 0x00000003) ^ 0x00000003) != 0;
   }
 };
 
@@ -873,35 +1054,19 @@ Alarm::Alarm(const Alarm& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
       _has_bits_(from._has_bits_) {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  cid_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  if (from._internal_has_cid()) {
-    cid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_cid(),
-      GetArena());
-  }
-  time_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  if (from._internal_has_time()) {
-    time_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_time(),
-      GetArena());
-  }
-  picture_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  if (from._internal_has_picture()) {
-    picture_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_picture(),
-      GetArena());
-  }
   if (from._internal_has_alarminfo()) {
     alarminfo_ = new ::msg::AlarmInfo(*from.alarminfo_);
   } else {
     alarminfo_ = nullptr;
   }
+  command_ = from.command_;
   // @@protoc_insertion_point(copy_constructor:msg.Alarm)
 }
 
 void Alarm::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_Alarm_Alarm_2eproto.base);
-  cid_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  time_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  picture_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   alarminfo_ = nullptr;
+  command_ = 1;
 }
 
 Alarm::~Alarm() {
@@ -912,9 +1077,6 @@ Alarm::~Alarm() {
 
 void Alarm::SharedDtor() {
   GOOGLE_DCHECK(GetArena() == nullptr);
-  cid_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  time_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  picture_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   if (this != internal_default_instance()) delete alarminfo_;
 }
 
@@ -940,20 +1102,12 @@ void Alarm::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x0000000fu) {
+  if (cached_has_bits & 0x00000003u) {
     if (cached_has_bits & 0x00000001u) {
-      cid_.ClearNonDefaultToEmpty();
-    }
-    if (cached_has_bits & 0x00000002u) {
-      time_.ClearNonDefaultToEmpty();
-    }
-    if (cached_has_bits & 0x00000004u) {
-      picture_.ClearNonDefaultToEmpty();
-    }
-    if (cached_has_bits & 0x00000008u) {
       GOOGLE_DCHECK(alarminfo_ != nullptr);
       alarminfo_->Clear();
     }
+    command_ = 1;
   }
   _has_bits_.Clear();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
@@ -968,42 +1122,21 @@ const char* Alarm::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::inte
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     CHK_(ptr);
     switch (tag >> 3) {
-      // required string cid = 1;
+      // required .msg.Alarm.Command command = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
-          auto str = _internal_mutable_cid();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          #ifndef NDEBUG
-          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "msg.Alarm.cid");
-          #endif  // !NDEBUG
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
+          ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
+          if (PROTOBUF_PREDICT_TRUE(::msg::Alarm_Command_IsValid(val))) {
+            _internal_set_command(static_cast<::msg::Alarm_Command>(val));
+          } else {
+            ::PROTOBUF_NAMESPACE_ID::internal::WriteVarint(1, val, mutable_unknown_fields());
+          }
         } else goto handle_unusual;
         continue;
-      // required string time = 2;
+      // required .msg.AlarmInfo alarminfo = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
-          auto str = _internal_mutable_time();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          #ifndef NDEBUG
-          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "msg.Alarm.time");
-          #endif  // !NDEBUG
-          CHK_(ptr);
-        } else goto handle_unusual;
-        continue;
-      // required string picture = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
-          auto str = _internal_mutable_picture();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          #ifndef NDEBUG
-          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "msg.Alarm.picture");
-          #endif  // !NDEBUG
-          CHK_(ptr);
-        } else goto handle_unusual;
-        continue;
-      // required .msg.AlarmInfo alarminfo = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
           ptr = ctx->ParseMessage(_internal_mutable_alarminfo(), ptr);
           CHK_(ptr);
         } else goto handle_unusual;
@@ -1038,42 +1171,19 @@ failure:
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  // required string cid = 1;
-  if (cached_has_bits & 0x00000001u) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->_internal_cid().data(), static_cast<int>(this->_internal_cid().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
-      "msg.Alarm.cid");
-    target = stream->WriteStringMaybeAliased(
-        1, this->_internal_cid(), target);
-  }
-
-  // required string time = 2;
+  // required .msg.Alarm.Command command = 1;
   if (cached_has_bits & 0x00000002u) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->_internal_time().data(), static_cast<int>(this->_internal_time().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
-      "msg.Alarm.time");
-    target = stream->WriteStringMaybeAliased(
-        2, this->_internal_time(), target);
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
+      1, this->_internal_command(), target);
   }
 
-  // required string picture = 3;
-  if (cached_has_bits & 0x00000004u) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->_internal_picture().data(), static_cast<int>(this->_internal_picture().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
-      "msg.Alarm.picture");
-    target = stream->WriteStringMaybeAliased(
-        3, this->_internal_picture(), target);
-  }
-
-  // required .msg.AlarmInfo alarminfo = 4;
-  if (cached_has_bits & 0x00000008u) {
+  // required .msg.AlarmInfo alarminfo = 2;
+  if (cached_has_bits & 0x00000001u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(
-        4, _Internal::alarminfo(this), target, stream);
+        2, _Internal::alarminfo(this), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -1088,32 +1198,17 @@ size_t Alarm::RequiredFieldsByteSizeFallback() const {
 // @@protoc_insertion_point(required_fields_byte_size_fallback_start:msg.Alarm)
   size_t total_size = 0;
 
-  if (_internal_has_cid()) {
-    // required string cid = 1;
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_cid());
-  }
-
-  if (_internal_has_time()) {
-    // required string time = 2;
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_time());
-  }
-
-  if (_internal_has_picture()) {
-    // required string picture = 3;
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_picture());
-  }
-
   if (_internal_has_alarminfo()) {
-    // required .msg.AlarmInfo alarminfo = 4;
+    // required .msg.AlarmInfo alarminfo = 2;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
         *alarminfo_);
+  }
+
+  if (_internal_has_command()) {
+    // required .msg.Alarm.Command command = 1;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_command());
   }
 
   return total_size;
@@ -1122,26 +1217,15 @@ size_t Alarm::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:msg.Alarm)
   size_t total_size = 0;
 
-  if (((_has_bits_[0] & 0x0000000f) ^ 0x0000000f) == 0) {  // All required fields are present.
-    // required string cid = 1;
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_cid());
-
-    // required string time = 2;
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_time());
-
-    // required string picture = 3;
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_picture());
-
-    // required .msg.AlarmInfo alarminfo = 4;
+  if (((_has_bits_[0] & 0x00000003) ^ 0x00000003) == 0) {  // All required fields are present.
+    // required .msg.AlarmInfo alarminfo = 2;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
         *alarminfo_);
+
+    // required .msg.Alarm.Command command = 1;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_command());
 
   } else {
     total_size += RequiredFieldsByteSizeFallback();
@@ -1182,19 +1266,14 @@ void Alarm::MergeFrom(const Alarm& from) {
   (void) cached_has_bits;
 
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x0000000fu) {
+  if (cached_has_bits & 0x00000003u) {
     if (cached_has_bits & 0x00000001u) {
-      _internal_set_cid(from._internal_cid());
-    }
-    if (cached_has_bits & 0x00000002u) {
-      _internal_set_time(from._internal_time());
-    }
-    if (cached_has_bits & 0x00000004u) {
-      _internal_set_picture(from._internal_picture());
-    }
-    if (cached_has_bits & 0x00000008u) {
       _internal_mutable_alarminfo()->::msg::AlarmInfo::MergeFrom(from._internal_alarminfo());
     }
+    if (cached_has_bits & 0x00000002u) {
+      command_ = from.command_;
+    }
+    _has_bits_[0] |= cached_has_bits;
   }
 }
 
@@ -1224,10 +1303,8 @@ void Alarm::InternalSwap(Alarm* other) {
   using std::swap;
   _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
   swap(_has_bits_[0], other->_has_bits_[0]);
-  cid_.Swap(&other->cid_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
-  time_.Swap(&other->time_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
-  picture_.Swap(&other->picture_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   swap(alarminfo_, other->alarminfo_);
+  swap(command_, other->command_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata Alarm::GetMetadata() const {

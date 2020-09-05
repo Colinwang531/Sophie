@@ -13,53 +13,72 @@
 #ifndef BASE_PACKET_MESSAGE_PACKET_H
 #define BASE_PACKET_MESSAGE_PACKET_H
 
-#include "Packet/AbstractPacket.h"
+#include "Packet/DataPacket.h"
 
 namespace base
 {
 	namespace packet
 	{
-		class MessagePacket : public AbstractPacket
+		typedef enum tagMessagePacketType_t : int
+		{
+			MESSAGE_PACKET_TYPE_NONE = 0,
+			MESSAGE_PACKET_TYPE_ALARM,
+			MESSAGE_PACKET_TYPE_ALGORITHM,
+			MESSAGE_PACKET_TYPE_COMPONENT,
+			MESSAGE_PACKET_TYPE_CREW,
+			MESSAGE_PACKET_TYPE_DEVICE,
+			MESSAGE_PACKET_TYPE_STATUS,
+			MESSAGE_PACKET_TYPE_USER
+		}MessagePacketType;
+
+		class MessagePacket : public DataPacket
 		{
 		public:
 			MessagePacket(
-				const PacketType type = PacketType::PACKET_TYPE_NONE,
-				const int command = 0,
-				const int result = 0);
+				const MessagePacketType type = MessagePacketType::MESSAGE_PACKET_TYPE_NONE);
 			virtual ~MessagePacket(void);
 
-		protected:
-			//获取消息命令类型
-			//@Return : 消息命令类型
-			inline const int getPacketDataCommandType(void) const override
+		public:
+			//获取消息类型
+			//@Return : 消息类型
+			inline const MessagePacketType getMessagePacketType(void) const
 			{
-				return messageCommand;
+				return messagePacketType;
 			}
 
-			//读/写应答消息结果
-			//@Return : 应答消息结果
-			inline const int getPacketDataReplyResult(void) const override
+			//读/写消息命令
+			//@command : 消息命令
+			//@Return : 消息命令
+			inline void setMessagePacketCommand(const int command = -1)
 			{
-				return replyResult;
+				messagePacketCommand = command;
+			}
+			inline const int getMessagePacketCommand(void) const
+			{
+				return messagePacketCommand;
 			}
 
-			//读/写包数据
-			//@pkt : 包数据
-			//@Return : 包数据类型
-			inline void setPacketData(void* pkt = nullptr) override
+			//读/写消息状态
+			//@status : 消息状态
+			//@Return : 消息状态
+			//@Comment : 用于记录消息应答的错误码
+			inline void setMessageStatus(const int status = -1)
 			{
-				messageData = pkt;
+				messageStatus = status;
 			}
-			inline const void* getPacketData(void) const override
+			inline const int getMessageStatus(void) const
 			{
-				return messageData;
+				return messageStatus;
 			}
 
 		private:
-			const int messageCommand;
-			const int replyResult;
-			void* messageData;
-		};//class AbstractPacket
+			void cleanupPacketData(void);
+
+		private:
+ 			const MessagePacketType messagePacketType;
+			int messagePacketCommand;
+			int messageStatus;
+		};//class MessagePacket
 	}//namespace packet
 }//namespace base
 

@@ -64,7 +64,7 @@ namespace mq
 				if (zmq_bind(router, (boost::format("tcp://*:%d") % listenPort).str().c_str()))
 				{
 					zmq_close(router);
-					return eBindPortFail;
+					return eBadBind;
 				}
 			}
 
@@ -74,7 +74,7 @@ namespace mq
 				if (zmq_bind(dealer, gInprocCommID))
 				{
 					zmq_close(dealer);
-					return eBindInprocFail;
+					return eBadBind;
 				}
 			}
 

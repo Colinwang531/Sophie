@@ -24,12 +24,12 @@ static const int eNotSupport = -100;
 static const int eObjectExisted = -101;
 static const int eObjectNotExist = -102;
 //网络类
-static const int eBindPortFail = -1000;
-static const int eBindInprocFail = -1001;
-static const int eBadNewSocket = -1002;
-static const int eBadConnect = -1003;
-static const int eBadClose = -1004;
-static const int eBadSend = -1005;
+static const int eBadNewSocket = -1000;
+static const int eBadBind = -1001;
+static const int eBadConnect = -1002;
+static const int eBadClose = -1003;
+static const int eBadSend = -1004;
+static const int eBadRecv = -1005;
 //SDK调用类
 static const int eBadInitSDK = -2000;
 static const int eBadCleanupSDK = -2001;

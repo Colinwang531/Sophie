@@ -1,4 +1,5 @@
 #include <iostream>
+#include "boost/format.hpp"
 #include "boost/make_shared.hpp"
 #ifdef _WINDOWS
 #include "glog/log_severity.h"
@@ -12,12 +13,13 @@
 #include "CommandLine/CommandLine.h"
 using CommandLine = base::commandline::CommandLine;
 #include "MDCServer.h"
-using MDCServerPtr = boost::shared_ptr<MDCServer>;
+using AbstractServerPtr = boost::shared_ptr<base::network::AbstractServer>;
 
+static std::string gServiceName;
 static std::string gUpstreamIP;
 static unsigned short gUpstreamPort{ 0 };
 static unsigned short gListenPort{ 0 };
-static MDCServerPtr gMDCServerPtr;
+static AbstractServerPtr gMDCServerPtr;
 
 static void parseCommandLine(int argc, char** argv)
 {
@@ -25,6 +27,7 @@ static void parseCommandLine(int argc, char** argv)
 	cl.setCommandOptions("listen,l", "61001");
 	cl.setCommandOptions("upstream,u", "127.0.0.1");
 	cl.setCommandOptions("port,p", "61101");
+	cl.setCommandOptions("name,n", "WEB");
 
 	if (eSuccess == cl.parseCommandLine(argc, argv))
 	{
@@ -45,6 +48,12 @@ static void parseCommandLine(int argc, char** argv)
 		{
 			gListenPort = atoi(listenPort);
 		}
+
+		const char* serviceName{ cl.getParameterByOption("name") };
+		if (serviceName)
+		{
+			gServiceName.append(serviceName);
+		}
 	}
 }
 
@@ -52,14 +61,19 @@ static int createNewAsynchronousServer(void)
 {
 	int e{ gMDCServerPtr ? eObjectExisted : eSuccess };
 
-	MDCServerPtr mdc{ boost::make_shared<MDCServer>() };
-	if (mdc)
+	AbstractServerPtr server{ 
+		boost::make_shared<MDCServer>(
+			ServerModuleType::SERVER_MODULE_TYPE_MAJORDOMO_BROKER,
+			ClientModuleType::CLIENT_MODULE_TYPE_MAJORDOMO_WORKER,
+			(boost::format("tcp://%s:%d") % gUpstreamIP % gUpstreamPort).str(),
+			gServiceName) };
+	if (server)
 	{
-		e = mdc->startServer(gListenPort, gUpstreamIP.c_str(), gUpstreamPort);
+		e = server->startServer(gListenPort);
 
 		if (eSuccess == e)
 		{
-			gMDCServerPtr.swap(mdc);
+			gMDCServerPtr.swap(server);
 		}
 		else
 		{

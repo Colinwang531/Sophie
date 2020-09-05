@@ -1,15 +1,23 @@
+#include "Error.h"
 #include "Device/AbstractDevice.h"
 
 namespace base
 {
 	namespace device
 	{
-		AbstractDevice::AbstractDevice(
-			const std::string id,
-			const DeviceFactory factory /* = DeviceFactory::DEVICE_FACTORY_NONE */,
-			const DeviceType type /* = DeviceType::DEVICE_TYPE_NONE */)
-			: deviceID{ id }, deviceFactory{ factory }, deviceType{ type }
+		AbstractDevice::AbstractDevice(const std::string did)
+			: deviceID{ did }
 		{}
 		AbstractDevice::~AbstractDevice(){}
+
+		int AbstractDevice::startDevice()
+		{
+			return eSuccess;
+		}
+
+		int AbstractDevice::stopDevice()
+		{
+			return eSuccess;
+		}
 	}//namespace device
 }//namespace base

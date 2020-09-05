@@ -1,4 +1,5 @@
 #include "boost/bind.hpp"
+#include "boost/format.hpp"
 #include "boost/make_shared.hpp"
 #ifdef _WINDOWS
 #include "glog/log_severity.h"
@@ -15,15 +16,14 @@ using CommandLine = base::commandline::CommandLine;
 using XMLParser = base::xml::XMLParser;
 using XMLPacker = base::xml::XMLPacker;
 #include "HKDComponentClient.h"
-using AsynchronousClientPtr = boost::shared_ptr<mq::module::AsynchronousClient>;
-
+using HKDComponentClientPtr = boost::shared_ptr</*mq::module::*/MajordomoWorker/*AbstractMQClient*/>;
 #include "Device/Hikvision/HikvisionDevice.h"
 using AbstractDevice = base::device::AbstractDevice;
 using HikvisionDevice = base::device::HikvisionDevice;
 
 static std::string gMessageDispatcherCenterIP{ "127.0.0.1" };
 static unsigned short gMessageDispatcherCenterPort{ 61001 };
-static AsynchronousClientPtr gHKDeviceComponentClientPtr{ nullptr };
+HKDComponentClientPtr gHKDeviceComponentClientPtr;
 
 static void parseCommandLine(int argc, char** argv)
 {
@@ -77,10 +77,13 @@ static int createNewAsynchronousClient(void)
 	{
 		if (!gMessageDispatcherCenterIP.empty() && gMinPortNumber < gMessageDispatcherCenterPort && gMaxPortNumber > gMessageDispatcherCenterPort)
 		{
-			AsynchronousClientPtr acp{ boost::make_shared<HKDComponentClient>() };
+			HKDComponentClientPtr acp{ 
+				boost::make_shared<HKDComponentClient>(
+					(boost::format("tcp://%s:%d") % gMessageDispatcherCenterIP % gMessageDispatcherCenterPort).str(), "HKD") };
 			if (acp)
 			{
-				e = acp->startClient(gMessageDispatcherCenterIP.c_str(), gMessageDispatcherCenterPort);
+				//e = acp->startClient(gMessageDispatcherCenterIP.c_str(), gMessageDispatcherCenterPort);
+				e = acp->startWorker();
 
 				if (eSuccess == e)
 				{
@@ -111,7 +114,8 @@ static int destroyAsynchronousClient(void)
 
 	if (eSuccess == e)
 	{
-		e = gHKDeviceComponentClientPtr->stopClient();
+		//e = gHKDeviceComponentClientPtr->stopClient();
+		e = gHKDeviceComponentClientPtr->stopWorker();
 
 		if (eSuccess == e)
 		{

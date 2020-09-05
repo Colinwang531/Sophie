@@ -14,7 +14,9 @@
 #ifndef BASE_PROTOCOL_COMPONENT_PHRASE_H
 #define BASE_PROTOCOL_COMPONENT_PHRASE_H
 
-#include "Protocol/CommandPhrase.h"
+#include "boost/shared_ptr.hpp"
+#include "Packet/DataPacket.h"
+using DataPacketPtr = boost::shared_ptr<base::packet::DataPacket>;
 
 namespace base
 {
@@ -31,14 +33,17 @@ namespace base
 			COMPONENT_COMMAND_QUERY_REP = 6
 		}ComponentCommand;
 
-		class ComponentParser : public CommandParser
+		class ComponentParser
 		{
 		public:
 			ComponentParser(void);
 			~ComponentParser(void);
 
 		public:
-			void* parseComponentMessage(void* msg = nullptr) override;
+			//将Protocol Buffers的组件实例转化为MessagePacket实例
+			//@c : Protocol Buffers封装的Component实例
+			//@Return : MessagePacket实例
+			DataPacketPtr parseMessage(void* c = nullptr);
 		};//class ComponentParser
 
 		class ComponentPacker
@@ -48,17 +53,10 @@ namespace base
 			~ComponentPacker(void);
 
 		public:
-			//封装组件消息
-			//@command : 命令类型
-			//@result : 当COMPONENT_COMMAND_*_REP == command时该参数有效,表示应答状态
-			//@data : 消息数据
-			//		  当COMPONENT_COMMAND_SIGNIN_REP == command时表示组件ID标识
-			//		  当COMPONENT_COMMAND_QUERY_REP == command时表示组件信息集合
-			//@Return : 消息内容
-			void* packToComponentMessage(
-				const int command = 0,
-				const int result = 0,
-				const void* data = nullptr);
+			//将DataPacket实例转换为Protocol buffers的序列化字符串
+			//@pkt : DataPacket实例
+			//@Return : 序列化字符串
+			const std::string packMessage(DataPacketPtr pkt);
 		};//class ComponentPacker
 	}//namespace protocol
 }//namespace base

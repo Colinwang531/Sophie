@@ -13,7 +13,9 @@
 #ifndef BASE_PROTOCOL_DEVICE_PHRASE_H
 #define BASE_PROTOCOL_DEVICE_PHRASE_H
 
-#include "Protocol/CommandPhrase.h"
+#include "boost/shared_ptr.hpp"
+#include "Packet/DataPacket.h"
+using DataPacketPtr = boost::shared_ptr<base::packet::DataPacket>;
 
 namespace base
 {
@@ -32,15 +34,28 @@ namespace base
 			DEVICE_COMMAND_MODIFY_REP = 6
 		}DeviceCommand;
 
-		class DeviceParser : public CommandParser
+		class DeviceParser
 		{
 		public:
 			DeviceParser(void);
 			~DeviceParser(void);
 
 		public:
-			void* parseDeviceMessage(void* msg = nullptr) override;
+			DataPacketPtr parseMessage(void* d = nullptr);
 		};//class DeviceParser
+
+		class DevicePacker
+		{
+		public:
+			DevicePacker(void);
+			~DevicePacker(void);
+
+		public:
+			//将MessagePacket实例转换为Protocol buffers的序列化字符串
+			//@pkt : DataPacket实例
+			//@Return : 序列化字符串
+			const std::string packMessage(DataPacketPtr pkt);
+		};//class StatusPacker
 	}//namespace protocol
 }//namespace base
 

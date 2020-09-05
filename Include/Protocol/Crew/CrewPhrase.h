@@ -13,8 +13,6 @@
 #ifndef BASE_PROTOCOL_CREW_PHRASE_H
 #define BASE_PROTOCOL_CREW_PHRASE_H
 
-#include "Protocol/CommandPhrase.h"
-
 namespace base
 {
 	namespace protocol
@@ -32,14 +30,14 @@ namespace base
 			CREW_COMMAND_QUERY_REP = 8
 		}CrewCommand;
 
-		class CrewParser : public CommandParser
+		class CrewParser
 		{
 		public:
 			CrewParser(void);
 			~CrewParser(void);
 
 		public:
-			void* parseCrewMessage(void* msg = nullptr) override;
+			void* parseCrewMessage(void* c = nullptr);
 		};//class CrewParser
 
 		class CrewPacker

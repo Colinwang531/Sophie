@@ -347,9 +347,6 @@
     <ClCompile Include="..\Source\Hardware\Cpu.cpp">
       <Filter>Hardware</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\MessageQueue\AsynchronousClient.cpp">
-      <Filter>MessageQueue</Filter>
-    </ClCompile>
     <ClCompile Include="..\3rdPart\boost_1_72_0\libs\thread\src\future.cpp">
       <Filter>3rd\boost</Filter>
     </ClCompile>
@@ -364,9 +361,6 @@
     </ClCompile>
     <ClCompile Include="..\3rdPart\boost_1_72_0\libs\thread\src\pthread\once_atomic.cpp">
       <Filter>3rd\boost</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\MessageQueue\AsynchronousClient.cpp">
-      <Filter>MessageQueue</Filter>
     </ClCompile>
     <ClCompile Include="..\3rdPart\glog-master\src\demangle.cc">
       <Filter>3rd\glog</Filter>
@@ -422,14 +416,8 @@
     <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\variables_map.cpp">
       <Filter>3rd\boost</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Device\Hikvision\HikvisionDevice.cpp">
-      <Filter>Device\Hikvision</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Device\AbstractDevice.cpp">
       <Filter>Device</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\MessageQueue\AsynchronousSender.cpp">
-      <Filter>MessageQueue</Filter>
     </ClCompile>
     <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\any.cc">
       <Filter>3rd\protobuf</Filter>
@@ -728,9 +716,6 @@
     <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\io\io_win32.cc">
       <Filter>3rd\protobuf\io</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\MessageQueue\AsynchronousReceiver.cpp">
-      <Filter>MessageQueue</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Protocol\Component\Component.pb.cc">
       <Filter>Protocol\Component</Filter>
     </ClCompile>
@@ -761,22 +746,13 @@
     <ClCompile Include="..\3rdPart\boost_1_72_0\libs\date_time\src\gregorian\gregorian_types.cpp">
       <Filter>3rd\boost</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Network\NetworkAsynchronousClient.cpp">
-      <Filter>Network</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Thread\ThreadPool.cpp">
       <Filter>Thread</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Xml\XmlCodec.cpp">
       <Filter>Xml</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Network\DeviceComponentClient.cpp">
-      <Filter>Network</Filter>
-    </ClCompile>
     <ClCompile Include="HKDComponentClient.cpp" />
-    <ClCompile Include="..\Source\Protocol\CommandPhrase.cpp">
-      <Filter>Protocol</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Protocol\Component\ComponentPhrase.cpp">
       <Filter>Protocol\Component</Filter>
     </ClCompile>
@@ -785,9 +761,6 @@
     </ClCompile>
     <ClCompile Include="..\Source\Device\SurveillanceDevice.cpp">
       <Filter>Device</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Packet\AbstractPacket.cpp">
-      <Filter>Packet</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Packet\Message\MessagePacket.cpp">
       <Filter>Packet\Message</Filter>
@@ -809,6 +782,33 @@
     </ClCompile>
     <ClCompile Include="..\Source\Protocol\Status\Status.pb.cc">
       <Filter>Protocol\Status</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\Alarm\AlarmPhrase.cpp">
+      <Filter>Protocol\Alarm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\Algorithm\AlgorithmPhrase.cpp">
+      <Filter>Protocol\Algorithm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\Crew\CrewPhrase.cpp">
+      <Filter>Protocol\Crew</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\Status\StatusPhrase.cpp">
+      <Filter>Protocol\Status</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\MessageQueue\MajordomoWorker.cpp">
+      <Filter>MessageQueue</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Network\AbstractClient.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\MessageQueue\MessageData.cpp">
+      <Filter>MessageQueue</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Packet\DataPacket.cpp">
+      <Filter>Packet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Device\Hikvision\HikvisionDevice.cpp">
+      <Filter>Device\Hikvision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1505,9 +1505,6 @@
     <Filter Include="Device">
       <UniqueIdentifier>{fd22def8-b3d9-45e3-91b7-fc45ef0e58d9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Device\Hikvision">
-      <UniqueIdentifier>{5433f4ec-d22c-4099-ba6b-294486ea7317}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Locker">
       <UniqueIdentifier>{7b55411b-348d-4e93-b822-8bcd8965b204}</UniqueIdentifier>
     </Filter>
@@ -1693,6 +1690,9 @@
     </Filter>
     <Filter Include="Protocol\User">
       <UniqueIdentifier>{87fa7717-678e-4556-8308-2eadea9cca5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Device\Hikvision">
+      <UniqueIdentifier>{6381b4e2-a178-4f5a-bc35-635aae97d4fc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -11229,9 +11229,6 @@
     <ClInclude Include="..\3rdPart\boost_1_72_0\boost\math\policies\policy.hpp">
       <Filter>3rd\boost\math\policies</Filter>
     </ClInclude>
-    <ClInclude Include="..\Include\MessageQueue\AsynchronousClient.h">
-      <Filter>MessageQueue</Filter>
-    </ClInclude>
     <ClInclude Include="..\3rdPart\glog-master\src\config.h">
       <Filter>3rd\glog</Filter>
     </ClInclude>
@@ -11349,12 +11346,6 @@
     <ClInclude Include="..\Include\Device\AbstractDevice.h">
       <Filter>Device</Filter>
     </ClInclude>
-    <ClInclude Include="..\Include\Device\EnableLoggingDevice.h">
-      <Filter>Device</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Include\Device\Hikvision\HikvisionDevice.h">
-      <Filter>Device\Hikvision</Filter>
-    </ClInclude>
     <ClInclude Include="..\Include\Locker\Locker.h">
       <Filter>Locker</Filter>
     </ClInclude>
@@ -11369,9 +11360,6 @@
     </ClInclude>
     <ClInclude Include="..\SDK\CH-HCNetSDKV6.1.4.17_build20200331_Linux64\plaympeg4.h">
       <Filter>SDK\HCNet</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Include\MessageQueue\AsynchronousSender.h">
-      <Filter>MessageQueue</Filter>
     </ClInclude>
     <ClInclude Include="..\3rdPart\boost_1_72_0\boost\uuid\basic_name_generator.hpp">
       <Filter>3rd\boost\uuid</Filter>
@@ -12465,9 +12453,6 @@
     <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\io\io_win32.h">
       <Filter>3rd\protobuf\io</Filter>
     </ClInclude>
-    <ClInclude Include="..\Include\MessageQueue\AsynchronousReceiver.h">
-      <Filter>MessageQueue</Filter>
-    </ClInclude>
     <ClInclude Include="..\Include\Protocol\Component\Component.pb.h">
       <Filter>Protocol\Component</Filter>
     </ClInclude>
@@ -13056,9 +13041,6 @@
     <ClInclude Include="..\3rdPart\boost_1_72_0\libs\date_time\src\gregorian\greg_names.hpp">
       <Filter>3rd\boost</Filter>
     </ClInclude>
-    <ClInclude Include="..\Include\Network\NetworkAsynchronousClient.h">
-      <Filter>Network</Filter>
-    </ClInclude>
     <ClInclude Include="..\Include\Mutex\RWLock.h">
       <Filter>Mutex</Filter>
     </ClInclude>
@@ -13398,9 +13380,6 @@
     <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\vartempl_support.hpp">
       <Filter>3rd\boost\multi_index\detail</Filter>
     </ClInclude>
-    <ClInclude Include="..\Include\Network\DeviceComponentClient.h">
-      <Filter>Network</Filter>
-    </ClInclude>
     <ClInclude Include="HKDComponentClient.h" />
     <ClInclude Include="..\Include\DataStruct\UnorderedMap.h">
       <Filter>DataStruct</Filter>
@@ -13429,9 +13408,6 @@
     <ClInclude Include="..\3rdPart\boost_1_72_0\boost\unordered\detail\set.hpp">
       <Filter>3rd\boost\unordered\detail</Filter>
     </ClInclude>
-    <ClInclude Include="..\Include\Protocol\CommandPhrase.h">
-      <Filter>Protocol</Filter>
-    </ClInclude>
     <ClInclude Include="..\Include\Protocol\Component\ComponentPhrase.h">
       <Filter>Protocol\Component</Filter>
     </ClInclude>
@@ -13440,9 +13416,6 @@
     </ClInclude>
     <ClInclude Include="..\Include\Device\SurveillanceDevice.h">
       <Filter>Device</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Include\Packet\AbstractPacket.h">
-      <Filter>Packet</Filter>
     </ClInclude>
     <ClInclude Include="..\Include\Packet\Message\MessagePacket.h">
       <Filter>Packet\Message</Filter>
@@ -13464,6 +13437,33 @@
     </ClInclude>
     <ClInclude Include="..\Include\Protocol\Status\Status.pb.h">
       <Filter>Protocol\Status</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\Alarm\AlarmPhrase.h">
+      <Filter>Protocol\Alarm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\Algorithm\AlgorithmPhrase.h">
+      <Filter>Protocol\Algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\Crew\CrewPhrase.h">
+      <Filter>Protocol\Crew</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\Status\StatusPhrase.h">
+      <Filter>Protocol\Status</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\MessageQueue\MajordomoWorker.h">
+      <Filter>MessageQueue</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Network\AbstractClient.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\MessageQueue\MessageData.h">
+      <Filter>MessageQueue</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Packet\DataPacket.h">
+      <Filter>Packet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Device\Hikvision\HikvisionDevice.h">
+      <Filter>Device\Hikvision</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

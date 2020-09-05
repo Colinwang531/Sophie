@@ -4,26 +4,38 @@
 //		Author :						王科威
 //		E-mail :						wangkw531@icloud.com
 //		Date :							2020-04-26
-//		Description :					异步服务端类
+//		Description :					服务端抽象类
 //
 //		History:						Author									Date										Description
 //										王科威									2020-04-26									创建
+//										王科威									2020-08-17									1.定义为抽象基类
+//										     									          									2.新增服务端类型标识
+//										     									          									3.分离服务端实例和实例接口
 //
 
-#ifndef ASYNCHRONOUS_SERVER_H
-#define ASYNCHRONOUS_SERVER_H
+#ifndef ABSTRACT_SERVER_H
+#define ABSTRACT_SERVER_H
 
 #include <vector>
 
-namespace mq
+namespace base
 {
-	namespace module
+	namespace network
 	{
-		class AsynchronousServer
+		typedef enum class tagNetworkServerType_t : int
+		{
+			NETWORK_SERVER_TYPE_NONE = 0,
+			NETWORK_SERVER_TYPE_ASIO,
+			NETWORK_SERVER_TYPE_MAJORDOMO_BROKER,
+			NETWORK_SERVER_TYPE_ASYNC_DISPATHER
+		}NetworkServerType;
+
+		class AbstractServer
 		{
 		public:
-			AsynchronousServer(void);
-			virtual ~AsynchronousServer(void);
+			AbstractServer(
+				const NetworkServerType type = NetworkServerType::NETWORK_SERVER_TYPE_NONE);
+			virtual ~AbstractServer(void);
 
 		public:
 			//启动服务端
@@ -106,4 +118,4 @@ namespace mq
 	}//namespace module
 }//namespace mq
 
-#endif//ASYNCHRONOUS_SERVER_H
+#endif//ABSTRACT_SERVER_H

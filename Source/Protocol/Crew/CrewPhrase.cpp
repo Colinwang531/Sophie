@@ -1,11 +1,3 @@
-#include "boost/checked_delete.hpp"
-#include "boost/polymorphic_cast.hpp"
-#include "Packet/Message/MessagePacket.h"
-using AbstractPacket = base::packet::AbstractPacket;
-using MessagePacket = base::packet::MessagePacket;
-#include "Person/Crew/Crew.h"
-using Crew = base::person::Crew;
-using AbstractPerson = base::person::AbstractPerson;
 #include "Protocol/Message.pb.h"
 #include "Protocol/Crew/Crew.pb.h"
 #include "Protocol/Crew/CrewPhrase.h"
@@ -17,59 +9,60 @@ namespace base
 		CrewParser::CrewParser(){}
 		CrewParser::~CrewParser(){}
 
-		void* CrewParser::parseCrewMessage(void* msg /* = nullptr */)
+		void* CrewParser::parseCrewMessage(void* c /* = nullptr */)
 		{
-			msg::MSG* mm{ reinterpret_cast<msg::MSG*>(msg) };
-			AbstractPacket* ap{ nullptr };
-			msg::Crew* mc{ mm->release_crew() };
-
-			if (mc)
-			{
-				const CrewCommand command{ 
-					static_cast<CrewCommand>(mc->command()) };
-
-				if (CrewCommand::CREW_COMMAND_NEW_REQ == command ||
-					CrewCommand::CREW_COMMAND_DELETE_REQ == command || 
-					CrewCommand::CREW_COMMAND_MODIFY_REQ == command || 
-					CrewCommand::CREW_COMMAND_QUERY_REQ == command)
-				{
-					ap = new(std::nothrow) MessagePacket(
-						base::packet::PacketType::PACKET_TYPE_CREW, static_cast<int>(command));
-
-					if (ap)
-					{
-						const msg::CrewInfo& info{ mc->release_crewrequest()->crewinfo() };
-						AbstractPerson* person{ new(std::nothrow) Crew(info.uid()) };
-
-						if (person)
-						{
-							person->setPersonName(info.name());
-							person->setPersonJob(info.job());
-							for (int i = 0; i != info.pictures().size(); ++i)
-							{
-								person->addPersonPicture(info.pictures()[i]);
-							}
-							ap->setPacketData(person);
-						}
-						else
-						{
-							boost::checked_delete(boost::polymorphic_downcast<MessagePacket*>(ap));
-							ap = nullptr;
-						}
-					}
-				}
-				else if (CrewCommand::CREW_COMMAND_NEW_REP == command ||
-					CrewCommand::CREW_COMMAND_DELETE_REP == command ||
-					CrewCommand::CREW_COMMAND_MODIFY_REP == command ||
-					CrewCommand::CREW_COMMAND_QUERY_REP == command)
-				{
-					const int result{ mc->release_crewresponse()->result() };
-					ap = new(std::nothrow) MessagePacket(
-						base::packet::PacketType::PACKET_TYPE_CREW, static_cast<int>(command), result);
-				}
-			}
-
-			return ap;
+			return nullptr;
+// 			msg::MSG* mm{ reinterpret_cast<msg::MSG*>(msg) };
+// 			AbstractPacket* ap{ nullptr };
+// 			msg::Crew* mc{ mm->release_crew() };
+// 
+// 			if (mc)
+// 			{
+// 				const CrewCommand command{ 
+// 					static_cast<CrewCommand>(mc->command()) };
+// 
+// 				if (CrewCommand::CREW_COMMAND_NEW_REQ == command ||
+// 					CrewCommand::CREW_COMMAND_DELETE_REQ == command || 
+// 					CrewCommand::CREW_COMMAND_MODIFY_REQ == command || 
+// 					CrewCommand::CREW_COMMAND_QUERY_REQ == command)
+// 				{
+// 					ap = new(std::nothrow) MessagePacket(
+// 						base::packet::PacketType::PACKET_TYPE_CREW, static_cast<int>(command));
+// 
+// 					if (ap)
+// 					{
+// 						const msg::CrewInfo& info{ mc->release_crewrequest()->crewinfo() };
+// 						AbstractPerson* person{ new(std::nothrow) Crew(info.uid()) };
+// 
+// 						if (person)
+// 						{
+// 							person->setPersonName(info.name());
+// 							person->setPersonJob(info.job());
+// 							for (int i = 0; i != info.pictures().size(); ++i)
+// 							{
+// 								person->addPersonPicture(info.pictures()[i]);
+// 							}
+// 							ap->setPacketData(person);
+// 						}
+// 						else
+// 						{
+// 							boost::checked_delete(boost::polymorphic_downcast<MessagePacket*>(ap));
+// 							ap = nullptr;
+// 						}
+// 					}
+// 				}
+// 				else if (CrewCommand::CREW_COMMAND_NEW_REP == command ||
+// 					CrewCommand::CREW_COMMAND_DELETE_REP == command ||
+// 					CrewCommand::CREW_COMMAND_MODIFY_REP == command ||
+// 					CrewCommand::CREW_COMMAND_QUERY_REP == command)
+// 				{
+// 					const int result{ mc->release_crewresponse()->result() };
+// 					ap = new(std::nothrow) MessagePacket(
+// 						base::packet::PacketType::PACKET_TYPE_CREW, static_cast<int>(command), result);
+// 				}
+// 			}
+// 
+// 			return ap;
 		}
 
 		CrewPacker::CrewPacker() {}

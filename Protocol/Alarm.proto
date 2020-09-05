@@ -23,14 +23,20 @@ message AlarmInfo
 	}
 	
 	required Type type = 1;
-	repeated AlarmPosition alarmposition = 2;
-	optional string uid = 3;
+	required string cid = 2;
+	required string time = 3;
+	required string picture = 4;
+	repeated AlarmPosition alarmposition = 5;
+	optional string uid = 6;
 }
 
 message Alarm
 {
-	required string cid = 1;
-	required string time = 2;
-	required string picture = 3;
-	required AlarmInfo alarminfo = 4;
+	enum Command
+	{
+		NOTIFY = 1;
+	}
+	
+	required Command command = 1;
+	required AlarmInfo alarminfo = 2;
 }

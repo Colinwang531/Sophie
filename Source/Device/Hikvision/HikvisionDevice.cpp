@@ -1,3 +1,7 @@
+#include <string.h>
+#include "CH-HCNetSDKV6.1.4.17_build20200331_Linux64/HCNetSDK.h"
+#include "Error.h"
+#include "Define.h"
 #include "Device/Hikvision/HikvisionDevice.h"
 
 namespace base
@@ -5,49 +9,24 @@ namespace base
 	namespace device
 	{
 		HikvisionDevice::HikvisionDevice(
-			const std::string id, 
-			const DeviceType type /* = DeviceType::DEVICE_TYPE_NONE */)
-			: SurveillanceDevice(id, DeviceFactory::DEVICE_FACTORY_HK, type)
+			const std::string did, 
+			const SurveillanceDeviceType type /* = SurveillanceDeviceType::SURVEILLANCE_DEVICE_TYPE_NONE */)
+			: SurveillanceDevice(did, SurveillanceDeviceFactory::SURVEILLANCE_DEVICE_FACTORY_HK, type)
 		{}
 
 		HikvisionDevice::~HikvisionDevice()
 		{}
 
-// 		int HikvisionDevice::createNewDevice()
-// 		{
-// 			int e{ eSuccess };
-// 
-// 			if (0 == AbstractDevice::gDeviceCounter)
-// 			{
-// 				e = NET_DVR_Init() ? eSuccess : eBadInitSDK;
-// 			}
-// 
-// 			if (eSuccess == e)
-// 			{
-// 				AbstractDevice::createNewDevice();
-// 				e = loginDevice();
-// 			}
-// 
-// 			return e;
-// 		}
-// 
-// 		int HikvisionDevice::destoryDevice()
-// 		{
-// 			int e{ logoutDevice() };
-// 
-// 			if (eSuccess == e)
-// 			{
-// 				AbstractDevice::destoryDevice();
-// 			}
-// 
-// 			if (0 == AbstractDevice::gDeviceCounter)
-// 			{
-// 				e = NET_DVR_Cleanup() ? eSuccess : eBadCleanupSDK;
-// 			}
-// 
-// 			return e;
-// 		}
-// 
+		int HikvisionDevice::startDevice()
+		{
+			return loginDevice();
+		}
+
+		int HikvisionDevice::stopDevice()
+		{
+			return logoutDevice();
+		}
+
 // 		int HikvisionDevice::getDeviceConfig()
 // 		{
 // 			int e{ -1 < userID ? eSuccess : eBadOperate };
@@ -88,42 +67,60 @@ namespace base
 // 
 // 			return e;
 // 		}
-// 
-// 		int HikvisionDevice::loginDevice()
-// 		{
-// 			int e{ 
-// 				userName.empty() || userPassword.empty() || deviceIP.empty() || 
-// 				gMinPortNumber > devicePort || gMaxPortNumber < devicePort || -1 < userID
-// 				? eBadOperate : eSuccess };
-// 
-// 			if (eSuccess == e)
-// 			{
-// 				NET_DVR_USER_LOGIN_INFO loginInfo{ 0 };
-// 				loginInfo.bUseAsynLogin = 0;
-// 				strcpy(loginInfo.sDeviceAddress, deviceIP.c_str());
-// 				loginInfo.wPort = 8000;
-// 				strcpy(loginInfo.sUserName, userName.c_str());
-// 				strcpy(loginInfo.sPassword, userPassword.c_str());
-// 				NET_DVR_DEVICEINFO_V40 deviceInfo{ 0 };
-// 
-// 				//同步登录
-// 				userID = NET_DVR_Login_V40(&loginInfo, &deviceInfo);
-// 				e = -1 < userID ? eSuccess : eBadLoginDevice;
-// 			}
-// 
-// 			return e;
-// 		}
-// 
-// 		int HikvisionDevice::logoutDevice()
-// 		{
-// 			int e{ -1 < userID ? eSuccess : eBadOperate };
-// 
-// 			if (eSuccess == e)
-// 			{
-// 				e = NET_DVR_Logout(userID) ? eSuccess : eBadLogoutDevice;
-// 			}
-// 
-// 			return e;
-// 		}
+
+		int HikvisionDevice::loginDevice()
+		{
+			const std::string ip{ getDeviceIPv4Address() }, name{ getLoginUserName() }, password{ getLoginUserPassword() };
+			const unsigned short port{ getDevicePortNumber() };
+			int e{ 
+				name.empty() || password.empty() || ip.empty() || 
+				gMinPortNumber > port || gMaxPortNumber < port || -1 < userID
+				? eBadOperate : eSuccess };
+
+			if (eSuccess == e)
+			{
+				if (0 == SurveillanceDevice::loginDevice())
+				{
+					e = NET_DVR_Init() ? eSuccess : eBadInitSDK;
+				}
+
+				if (eSuccess == e)
+				{
+					NET_DVR_USER_LOGIN_INFO loginInfo{ 0 };
+					loginInfo.bUseAsynLogin = 0;
+					strcpy(loginInfo.sDeviceAddress, ip.c_str());
+					loginInfo.wPort = 8000;
+					strcpy(loginInfo.sUserName, name.c_str());
+					strcpy(loginInfo.sPassword, password.c_str());
+					NET_DVR_DEVICEINFO_V40 deviceInfo{ 0 };
+
+					//同步登录
+					userID = NET_DVR_Login_V40(&loginInfo, &deviceInfo);
+					e = -1 < userID ? eSuccess : eBadLoginDevice;
+				}
+			}
+
+			return e;
+		}
+
+		int HikvisionDevice::logoutDevice()
+		{
+			int e{ -1 < userID ? eSuccess : eBadOperate };
+
+			if (eSuccess == e)
+			{
+				e = NET_DVR_Logout(userID) ? eSuccess : eBadLogoutDevice;
+
+				if (eSuccess == e)
+				{
+					if (0 == logoutDevice())
+					{
+						e = NET_DVR_Cleanup() ? eSuccess : eBadCleanupSDK;
+					}
+				}
+			}
+
+			return e;
+		}
 	}//namespace device
 }//namespace base

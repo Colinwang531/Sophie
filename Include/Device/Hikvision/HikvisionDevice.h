@@ -23,9 +23,20 @@ namespace base
 		{
 		public:
 			HikvisionDevice(
-				const std::string id, 
-				const DeviceType type = DeviceType::DEVICE_TYPE_NONE);
+				const std::string did, 
+				const SurveillanceDeviceType type = SurveillanceDeviceType::SURVEILLANCE_DEVICE_TYPE_NONE);
 			virtual ~HikvisionDevice(void);
+
+		protected:
+			//启动/停止设备
+			//@Return : 错误码
+			int startDevice(void) override;
+			int stopDevice(void) override;
+
+			//登录/登出设备
+			//@Return : 错误码
+			int loginDevice(void) override;
+			int logoutDevice(void) override;
 
 		private:
 			int userID;

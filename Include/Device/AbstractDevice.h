@@ -21,46 +21,13 @@ namespace base
 {
 	namespace device
 	{
-		typedef enum class tagDeviceFactory_t : int
-		{
-			DEVICE_FACTORY_NONE = 0,
-			DEVICE_FACTORY_HK = 1,
-			DEVICE_FACTORY_DH = 2,
-			DEVICE_FACTORY_ET = 3
-		}DeviceFactory;
-
-		typedef enum class tagDeviceType_t : int
-		{
-			DEVICE_TYPE_NONE = 0,
-			DEVICE_TYPE_DVR = 1,
-			DEVICE_TYPE_NVR = 2,
-			DEVICE_TYPE_IPC = 3
-		}DeviceType;
-
 		class AbstractDevice : private boost::noncopyable
 		{
 		public:
-			AbstractDevice(
-				const std::string id,
-				const DeviceFactory factory = DeviceFactory::DEVICE_FACTORY_NONE, 
-				const DeviceType type = DeviceType::DEVICE_TYPE_NONE);
+			AbstractDevice(const std::string did);
 			virtual ~AbstractDevice(void);
 
 		public:
-			//获取设备厂商类型
-			//@Return : 设备厂商类型
-			inline const DeviceFactory getDeviceFactory(void) const
-			{
-				return deviceFactory;
-			}
-			
-			//获取设备类型
-			//@Return : 设备类型
-			inline const DeviceType getDeviceType(void) const
-			{
-				return deviceType;
-			}
-
 			//获取设备ID标识
 			//@Return : 设备ID标识
 			inline const std::string getDeviceID(void) const
@@ -68,34 +35,26 @@ namespace base
 				return deviceID;
 			}
 
-			//读/写设备IPv4地址
-			//@ip : 点分十进制IPv4地址
-			//@Return : 点分十进制IPv4地址
-			virtual void setDeviceIPv4Address(const std::string ip) = 0;
-			virtual const std::string getDeviceIPv4Address(void) const = 0;
+			//读/写设备使能标识
+			//@enable : 使能标识
+			//@Return : 使能标识
+			inline void setEnableFlag(const bool enable = false)
+			{
+				enableFlag = enable;
+			}
+			inline const bool getEnableFlag(void) const
+			{
+				return enableFlag;
+			}
 
-			//读/写设备端口号
-			//@port : 端口号
-			//@Return : 端口号
-			virtual void setDevicePortNumber(const unsigned short port = 0) = 0;
-			virtual const unsigned short getDevicePortNumber(void) const = 0;
-
-			//读/写设备登录用户名
-			//@name : 登录用户名
-			//@Return : 登录用户名
-			virtual void setLoginUserName(const std::string name) = 0;
-			virtual const std::string getLoginUserName(void) const = 0;
-
-			//读/写设备登录密码
-			//@port : 登录密码
-			//@Return : 登录密码
-			virtual void setLoginUserPassword(const std::string password) = 0;
-			virtual const std::string getLoginUserPassword(void) const = 0;
+			//启动/停止设备
+			//@Return : 错误码
+			virtual int startDevice(void);
+			virtual int stopDevice(void);
 
 		private:
+			bool enableFlag;
 			const std::string deviceID;
-			const DeviceFactory deviceFactory;
-			const DeviceType deviceType;
 		};//class AbstractDevice
 	}//namespace device
 }//namespace base

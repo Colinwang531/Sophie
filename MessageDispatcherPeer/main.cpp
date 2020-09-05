@@ -1,17 +1,11 @@
 #include <iostream>
-#include "MessageQueue/AsynchronousClient.h"
-using AsynchronousClient = mq::module::AsynchronousClient;
+#include <vector>
 
 int main()
 {
-	AsynchronousClient* c{ new(std::nothrow) AsynchronousClient };
-
-	if (c)
-	{
-		c->startClient("127.0.0.1");
-		getchar();
-		c->stopClient();
-	}
-
+    std::vector<int> x;
+    x.push_back(1);
+    x.push_back(2);
+    x.erase(x.end() - 1);
     return 0;
 }

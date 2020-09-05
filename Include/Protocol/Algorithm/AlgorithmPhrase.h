@@ -13,8 +13,6 @@
 #ifndef BASE_PROTOCOL_ALGORITHM_PHRASE_H
 #define BASE_PROTOCOL_ALGORITHM_PHRASE_H
 
-#include "Protocol/CommandPhrase.h"
-
 namespace base
 {
 	namespace protocol
@@ -28,14 +26,14 @@ namespace base
 			ALGORITHM_COMMAND_QUERY_REP = 3,
 		}AlgorithmCommand;
 
-		class AlgorithmParser : public CommandParser
+		class AlgorithmParser
 		{
 		public:
 			AlgorithmParser(void);
 			~AlgorithmParser(void);
 
 		public:
-			void* parseAlgorithmMessage(void* msg = nullptr) override;
+			void* parseAlgorithmMessage(void* a = nullptr);
 		};//class AlgorithmParser
 
 		class AlgorithmPacker

@@ -14,8 +14,6 @@
 #ifndef BASE_PROTOCOL_STATUS_PHRASE_H
 #define BASE_PROTOCOL_STATUS_PHRASE_H
 
-#include "Protocol/CommandPhrase.h"
-
 namespace base
 {
 	namespace protocol
@@ -37,14 +35,14 @@ namespace base
 			STATUS_TYPE_NAME = 3
 		}StatusType;
 
-		class StatusParser : public CommandParser
+		class StatusParser
 		{
 		public:
 			StatusParser(void);
 			~StatusParser(void);
 
 		public:
-			void* parseStatusMessage(void* msg = nullptr) override;
+			void* parseStatusMessage(void* s = nullptr);
 		};//class StatusParser
 
 		class StatusPacker
@@ -54,17 +52,10 @@ namespace base
 			~StatusPacker(void);
 
 		public:
-			//封装状态消息
-			//@command : 命令类型
-			//@result : 当COMPONENT_COMMAND_*_REP == command时该参数有效,表示应答状态
-			//@data : 消息数据
-			//		  当COMPONENT_COMMAND_SIGNIN_REP == command时表示组件ID标识
-			//		  当COMPONENT_COMMAND_QUERY_REP == command时表示组件信息集合
-			//@Return : 消息内容
-			void* packStatus(
-				const int command = 0,
-				const int result = 0,
-				void* data = nullptr);
+			//将MessagePacket实例转换为Protocol buffers的序列化字符串
+			//@pkt : MessagePacket实例
+			//@Return : 序列化字符串
+			void* packToStatusMessage(void* pkt = nullptr);
 		};//class StatusPacker
 	}//namespace protocol
 }//namespace base

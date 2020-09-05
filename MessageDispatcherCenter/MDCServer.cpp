@@ -1,10 +1,9 @@
-#include "boost/bind.hpp"
-#include "boost/cast.hpp"
-#include "boost/date_time/posix_time/posix_time.hpp"
-#include "boost/thread.hpp"
+#include "boost/algorithm/string.hpp"
+#include "boost/pointer_cast.hpp"
+#include "boost/make_shared.hpp"
 #include "boost/uuid/uuid.hpp"
-#include "boost/uuid/uuid_io.hpp"
 #include "boost/uuid/uuid_generators.hpp"
+#include "boost/uuid/uuid_io.hpp"
 #ifdef _WINDOWS
 #include "glog/log_severity.h"
 #include "glog/logging.h"
@@ -13,709 +12,677 @@
 #include "glog/logging.h"
 #endif//_WINDOWS
 #include "Error.h"
-#include "Thread/ThreadPool.h"
-using ThreadPool = base::thread::ThreadPool;
-#include "Protocol/CommandPhrase.h"
-using CommandParser = base::protocol::CommandParser;
-#include "Protocol/Component/ComponentPhrase.h"
-#include "Protocol/Device/DevicePhrase.h"
-#include "Protocol/Status/StatusPhrase.h"
-#include "Protocol/Algorithm/AlgorithmPhrase.h"
-#include "Protocol/Crew/CrewPhrase.h"
-#include "Packet/Message/MessagePacket.h"
-using AbstractPacket = base::packet::AbstractPacket;
-using MessagePacket = base::packet::MessagePacket;
-#include "Device/AbstractDevice.h"
-using AbstractDevice = base::device::AbstractDevice;
-#include "MessageQueue/AsynchronousSender.h"
-using AsynchronousSender = mq::module::AsynchronousSender;
 #include "Time/XTime.h"
 using base::time::Time;
+#include "Protocol/DataPhrase.h"
+using DataParser = base::protocol::DataParser;
+using DataPacker = base::protocol::DataPacker;
+#include "Protocol/Component/ComponentPhrase.h"
+//#include "Protocol/Device/DevicePhrase.h"
+#include "Xml/XmlCodec.h"
+using XMLParser = base::xml::XMLParser;
+using XMLPacker = base::xml::XMLPacker;
+#include "Packet/Message/MessagePacket.h"
+using MessagePacket = base::packet::MessagePacket;
+using MessagePacketPtr = boost::shared_ptr<MessagePacket>;
+#include "Component/AbstractComponent.h"
+using AbstractComponent = base::component::AbstractComponent;
+// #include "Device/SurveillanceDevice.h"
+// using SurveillanceDevice = base::device::SurveillanceDevice;
 #include "MDCServer.h"
 
-MDCServer::MDCServer() 
-	: AsynchronousUpstreamServer(), sailStatus{ true }, autoStatus{ true }
-{}
+MDCServer::MDCServer(
+	const ServerModuleType server/* = ServerModuleType::SERVER_MODULE_TYPE_NONE*/,
+	const ClientModuleType upstream/* = ClientModuleType::CLIENT_MODULE_TYPE_NONE*/,
+	const std::string address/* = "tcp:\\127.0.0.1:61001"*/,
+	const std::string name/* = "MDCServer"*/)
+	: AbstractUpstreamServer(server, upstream, address)
+{
+	setMDCServerInfoWithName("Component.XMQ.Name", name);
+}
 
 MDCServer::~MDCServer()
 {}
 
-int MDCServer::startPoller()
+void MDCServer::afterServerPolledMessageProcess(
+	const std::string commID, 
+	const std::string flagID, 
+	const std::string fromID, 
+	const std::string toID, 
+	const std::string msg)
 {
-	int e{ AsynchronousUpstreamServer::startPoller() };
+	LOG(INFO) << "Server polled message with CommID = " << commID
+		<< ", FlagID = " << flagID
+		<< ", fromID = " << fromID
+		<< ", toID = " << toID
+		<< ", length = " << msg.length() << ".";
 
-	if (eSuccess == e)
+	//toID为空表示消息就在当前服务端处理,
+	//否则向toID转发消息
+	if (toID.empty())
 	{
-		//创建服务端心跳业务检测线程
-		void* t{
-			ThreadPool::get_mutable_instance().createNewThread(
-				boost::bind(&MDCServer::autoCheckOfflinStatusOfComponentThreadProc, this)) };
-		e = t ? eSuccess : eBadNewThread;
+		processServerPolledMessage(commID, flagID, fromID, toID, msg);
+	} 
+	else
+	{
+		forwardServerPolledMessage(commID, flagID, fromID, toID, msg);
 	}
-
-	return e;
 }
 
-void MDCServer::afterServerPollMessage(
-	void* s /* = nullptr */, 
-	const void* id /* = nullptr */, 
-	const unsigned int idbytes /* = 0 */, 
-	const void* delimiter /* = nullptr */, 
-	const unsigned int delimiterbytes /* = 0 */, 
-	const void* data /* = nullptr */, 
-	const unsigned int databytes /* = 0 */)
+void MDCServer::afterClientPolledMessageProcess(
+	const std::string flagID, 
+	const std::string fromID, 
+	const std::string toID, 
+	const std::string msg)
 {
-	//Just for testing.
-// 	LOG(INFO) << "[ ID:" << idbytes << " ] " << id;
-// 	LOG(INFO) << "[ Delimiter:" << delimiterbytes << " ] " << delimiter;
-// 	LOG(INFO) << "[ Data:" << databytes << " ] " << data;
+}
 
-	AbstractPacket* pkt{ 
-		reinterpret_cast<AbstractPacket*>(
-			CommandParser().parseFromArray(data, databytes)) };
+void MDCServer::afterAutoCheckConnectionTimeoutProcess()
+{
+	std::vector<AbstractComponentPtr> acp;
+	registerComponentGroup.values(acp);
+	//90s超时
+	const long long timeout{ 90000 }, nowTime{ Time().tickcount() };
+
+	for (int i = 0; i != acp.size(); ++i)
+	{
+		if (timeout < nowTime - acp[i]->getComponentTimestamp())
+		{
+			registerComponentGroup.remove(acp[i]->getComponentID());
+		}
+	}
+}
+
+const std::string MDCServer::buildAutoRegisterToBrokerMessage()
+{
+	std::string msgstr;
+	AbstractComponent component(
+		base::component::ComponentType::COMPONENT_TYPE_XMQ);
+	component.setComponentID(getMDCServerInfoByName("Component.XMQ.ID"));
+	component.setComponentName(getMDCServerInfoByName("Component.XMQ.Name"));
+	DataPacketPtr datapkt{ 
+		boost::make_shared<MessagePacket>(
+			base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_COMPONENT) };
+
+	if (datapkt)
+	{
+		MessagePacketPtr msgpkt{ boost::dynamic_pointer_cast<MessagePacket>(datapkt) };
+		msgpkt->setMessagePacketCommand(
+			static_cast<int>(base::protocol::ComponentCommand::COMPONENT_COMMAND_SIGNIN_REQ));
+		datapkt->setPacketData(&component);
+		msgstr = DataPacker().packData(datapkt);
+	}
+
+	return msgstr;
+}
+
+const std::string MDCServer::getMDCServerInfoByName(const std::string name) const
+{
+	std::string value;
+	XMLParser().getValueByName("Config.xml", name, value);
+	return value;
+}
+
+void MDCServer::setMDCServerInfoWithName(
+	const std::string name, const std::string value)
+{
+	XMLPacker().setValueWithName("Config.xml", name, value);
+}
+
+void MDCServer::processServerPolledMessage(
+	const std::string commID,
+	const std::string flagID,
+	const std::string fromID,
+	const std::string toID,
+	const std::string msg)
+{
+	//服务端只处理注册/注销/心跳/查询消息
+	DataPacketPtr pkt{ DataParser().parseData(msg) };
 
 	if (pkt)
 	{
-		switch (pkt->getPacketType())
+		MessagePacketPtr msgpkt{ boost::dynamic_pointer_cast<MessagePacket>(pkt) };
+		const base::packet::MessagePacketType type{ msgpkt->getMessagePacketType() };
+
+// 		if (base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_ALARM == type)
+// 		{
+// 			//				forwardAlgorithmConfigureMessage(s, data, databytes);
+// 		}
+// 		else if (base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_ALGORITHM == type)
+// 		{
+// 			forwardAlgorithmConfigureMessage(commID, mm.release_component(), mm.sequence());
+// 		}
+// 		else if (base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_COMPONENT == type)
+// 		{
+// 			processComponentMessage(commID, pkt);
+// 		}
+// 		else if (base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_CREW == type)
+// 		{
+// 			forwardCrewConfigureMessage(msg, commID, mm.release_device(), mm.sequence());
+// 		}
+// 		else if (base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_DEVICE == type)
+// 		{
+// 			forwardDeviceMessage(commID, pkt, msg);
+// 		}
+// 		else if (base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_STATUS == type)
+// 		{
+// 			forwardStatusConfigureMessage(msg, commID, mm.release_status(), mm.sequence());
+// 		}
+// 		else if (base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_USER == type)
+// 		{
+// 		}
+
+		if (base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_COMPONENT == type)
 		{
-			case base::packet::PacketType::PACKET_TYPE_ALARM:
-			{
-//				forwardAlgorithmConfigureMessage(s, data, databytes);
-				break;
-			}
-			case base::packet::PacketType::PACKET_TYPE_ALGORITHM:
-			{
-				forwardAlgorithmConfigureMessage(s, id, idbytes, pkt, data, databytes);
-				break;
-			}
-			case base::packet::PacketType::PACKET_TYPE_COMPONENT:
-			{
-				dealWithComponentMessage(s, id, idbytes, pkt);
-				break;
-			}
-			case base::packet::PacketType::PACKET_TYPE_CREW:
-			{
-				forwardCrewConfigureMessage(s, id, idbytes, pkt, data, databytes);
-				break;
-			}
-			case base::packet::PacketType::PACKET_TYPE_DEVICE:
-			{
-				forwardDeviceConfigureMessage(s, id, idbytes, pkt, data, databytes);
-				break;
-			}
-			case base::packet::PacketType::PACKET_TYPE_STATUS:
-			{
-				forwardStatusConfigureMessage(s, id, idbytes, pkt, data, databytes);
-				break;
-			}
-			case base::packet::PacketType::PACKET_TYPE_USER:
-			{
-				break;
-			}
-			default:
-			{
-				LOG(INFO) << "Parse a unknown message from data stream.";
-				break;
-			}
+			processComponentMessage(commID, flagID, fromID, pkt);
+		}
+		else
+		{
+			LOG(INFO) << "Parse server polled message with unknown type = " << static_cast<int>(type) << ".";
 		}
 	}
 	else
 	{
-		LOG(ERROR) << "Parse message from data stream failed.";
-	}
-
-	boost::checked_delete(boost::polymorphic_downcast<MessagePacket*>(pkt));
-}
-
-void MDCServer::afterUpstreamPollMessage(
-	const void* msg /* = nullptr */, 
-	const unsigned int bytes /* = 0 */)
-{
-}
-
-void MDCServer::autoCheckOfflinStatusOfComponentThreadProc()
-{
-	long long startTime{ Time().tickcount() };
-
-	while (!stopped)
-	{
-		long long nowTime{ Time().tickcount() };
-
-		//每30秒检测一次
-		if (30000 < nowTime - startTime)
-		{
-			startTime = nowTime;
-
-			std::vector<AbstractComponentPtr> componentPtrs;
-			registerComponentGroup.values(componentPtrs);
-			for (int i = 0; i != componentPtrs.size(); ++i)
-			{
-				//超时90秒移除组件实例
-				if (90000 < nowTime - componentPtrs[i]->getComponentTimestamp())
-				{
-					removeRegisterComponent(
-						componentPtrs[i]->getComponentID(), 
-						static_cast<int>(componentPtrs[i]->getComponentType()));
-				}
-			}
-		}
-
-		boost::this_thread::sleep(boost::posix_time::seconds(1));
+		LOG(ERROR) << "Parse server polled message failed.";
 	}
 }
 
-void MDCServer::dealWithComponentMessage(
-	void* s /* = nullptr */, 
-	const void* commID /* = nullptr */, 
-	const unsigned int idbytes /* = 0 */, 
-	void* pkt /* = nullptr */)
+void MDCServer::forwardServerPolledMessage(
+	const std::string commID,
+	const std::string flagID,
+	const std::string fromID,
+	const std::string toID,
+	const std::string msg)
 {
-	AbstractPacket* ap{ reinterpret_cast<AbstractPacket*>(pkt) };
-	const base::protocol::ComponentCommand command{ 
-		static_cast<base::protocol::ComponentCommand>(ap->getPacketDataCommandType()) };
-
-	if (base::protocol::ComponentCommand::COMPONENT_COMMAND_SIGNIN_REQ == command)
+	if (!flagID.compare("request"))
 	{
-		//组件ID为空表示组件请求注册
-		//组件ID不空表示组件请求心跳
+		//分解toID查看下一个路由地址
+		std::vector<std::string> addressGroup;
+		boost::split(addressGroup, toID, boost::is_any_of(":"));
 
-		AbstractComponent* ac{ 
-			reinterpret_cast<AbstractComponent*>(const_cast<void*>(ap->getPacketData())) };
-		std::string componentID{ ac->getComponentID() };
-
-		if (componentID.empty())
+		if (registerComponentGroup.at(addressGroup[0]))
 		{
-			const std::string communicationID{ static_cast<const char*>(commID) };
-			ac->setCommunicationID(communicationID);
-			//为新注册的组件分配ID标识
-			componentID = boost::uuids::to_string(boost::uuids::random_generator()());
-			ac->setComponentID(componentID);
-			addRegisterComponent(ac);
-			replyAddRegisterComponent(
-				componentID, componentID.empty() ? eBadOperate : eSuccess, ap->getPacketSequence() + 1, s, commID, idbytes);
-		}
-		else
-		{
-			updateRegisterCompnent(ac);
-		}
-	}
-	else if (base::protocol::ComponentCommand::COMPONENT_COMMAND_SIGNOUT_REQ == command)
-	{
-		AbstractComponent* ac{
-			reinterpret_cast<AbstractComponent*>(const_cast<void*>(ap->getPacketData())) };
-		removeRegisterComponent(
-			ac->getComponentID(), 
-			static_cast<int>(ac->getComponentType()));
-	}
-	else if (base::protocol::ComponentCommand::COMPONENT_COMMAND_QUERY_REQ == command)
-	{
-		std::vector<AbstractComponentPtr> componentPtrs;
-		registerComponentGroup.values(componentPtrs);
-		replyQueryRegisterComponent(componentPtrs, eSuccess, ap->getPacketSequence() + 1, s, commID, idbytes);
-	}
-}
-
-void MDCServer::forwardDeviceConfigureMessage(
-	void* s /* = nullptr */, 
-	const void* commID /* = nullptr */, 
-	const unsigned int idbytes /* = 0 */, 
-	void* pkt /* = nullptr */, 
-	const void* data /* = nullptr */, 
-	const unsigned int databytes /* = 0 */)
-{
-	//设备消息通过消息队列在WEB组件和设备组件之间交互
-	//该消息队列只转发消息但不处理
-
-	AbstractPacket* mp{ reinterpret_cast<AbstractPacket*>(pkt) };
-	const base::protocol::DeviceCommand command{
-		static_cast<base::protocol::DeviceCommand>(mp->getPacketDataCommandType()) };
-
-	if (base::protocol::DeviceCommand::DEVICE_COMMAND_NEW_REQ == command ||
-		base::protocol::DeviceCommand::DEVICE_COMMAND_DELETE_REQ == command ||
-		base::protocol::DeviceCommand::DEVICE_COMMAND_MODIFY_REQ == command)
-	{
-		AbstractDevice* ad{ 
-			reinterpret_cast<AbstractDevice*>(const_cast<void*>(mp->getPacketData())) };
-		const base::device::DeviceFactory factory{ ad->getDeviceFactory() };
-		
-		if (base::device::DeviceFactory::DEVICE_FACTORY_HK == factory)
-		{
-			int e{ 
-				forwardConfigureRequestOrResponseMessage(
-					s, static_cast<int>(base::component::ComponentType::COMPONENT_TYPE_HKD), data, databytes) };
+			int e{ AbstractServer::sendMessageData(
+				addressGroup[0], flagID, fromID, toID.substr(toID.find_first_of(":"), toID.length()), msg) };
 
 			if (eSuccess == e)
 			{
-				LOG(INFO) << "Forward request message of device configure to HK component successfully.";
+				LOG(INFO) << "Forward request message to next CommID = " << addressGroup[0]
+					<< ", FlagID = " << flagID
+					<< ", fromID = " << fromID
+					<< ", toID = " << toID
+					<< ", length = " << msg.length() << ".";
 			} 
 			else
 			{
-				LOG(WARNING) << "Forward request message of device configure to HK component failed, result = " << e << ".";
+				LOG(WARNING) << "Forward request message failed to next CommID = " << addressGroup[0]
+					<< ", FlagID = " << flagID
+					<< ", fromID = " << fromID
+					<< ", toID = " << toID
+					<< ", length = " << msg.length() << ".";
 			}
-		}
-		else if (base::device::DeviceFactory::DEVICE_FACTORY_DH == factory)
+		} 
+		else
 		{
-			int e{ 
-				forwardConfigureRequestOrResponseMessage(
-					s, static_cast<int>(base::component::ComponentType::COMPONENT_TYPE_DHD), data, databytes) };
+			LOG(ERROR) << "Can not forward to next address = " << addressGroup[0] << ".";
+		}
+	}
+	else if (!flagID.compare("response"))
+	{
+		int e{ eSuccess };
+		std::string addressID{ "Upstream" };
 
-			if (eSuccess == e)
+		//如果toID存在则在服务端转发
+		//如果toID不存在则在客户端转发
+		if (registerComponentGroup.at(toID))
+		{
+			e = AbstractServer::sendMessageData(toID, flagID, fromID, toID, msg);
+			addressID = toID;
+		} 
+		else
+		{
+			//不要交换fromID和toID
+			//发送端发送时交换,转发就不要交换了
+			e = AbstractClient::sendMessageData(flagID, fromID, toID, msg);
+		}
+
+		if (eSuccess == e)
+		{
+			LOG(INFO) << "Forward response message to next CommID = " << addressID
+				<< ", FlagID = " << flagID
+				<< ", fromID = " << fromID
+				<< ", toID = " << toID
+				<< ", length = " << msg.length() << ".";
+		}
+		else
+		{
+			LOG(WARNING) << "Forward response message failed to next CommID = " << addressID
+				<< ", FlagID = " << flagID
+				<< ", fromID = " << fromID
+				<< ", toID = " << toID
+				<< ", length = " << msg.length() << ".";
+		}
+	}
+}
+
+void MDCServer::processComponentMessage(
+	const std::string commID, 
+	const std::string flagID, 
+	const std::string fromID, 
+	DataPacketPtr pkt)
+{
+	MessagePacketPtr msgpkt{ boost::dynamic_pointer_cast<MessagePacket>(pkt) };
+	const base::protocol::ComponentCommand command{ 
+		static_cast<base::protocol::ComponentCommand>(msgpkt->getMessagePacketCommand()) };
+	AbstractComponent* ac{ reinterpret_cast<AbstractComponent*>(pkt->getPacketData()) };
+
+	if (ac)
+	{
+		if (base::protocol::ComponentCommand::COMPONENT_COMMAND_SIGNIN_REQ == command)
+		{
+			//组件ID为空表示组件请求注册
+			//组件ID不空表示组件请求心跳
+
+			std::string componentID{ ac->getComponentID() };
+			const std::string componentName{ ac->getComponentName() };
+			const base::component::ComponentType componentType{ ac->getComponentType() };
+			int e{ eSuccess };
+
+			if (componentID.empty())
 			{
-				LOG(INFO) << "Forward request message of device configure to DH component successfully.";
+				componentID = boost::uuids::to_string(boost::uuids::random_generator()());
+				//为新注册的组件分配ID标识
+				e = addNewRegisterComponent(componentID, componentName, commID, componentType);
 			}
 			else
 			{
-				LOG(WARNING) << "Forward request message of device configure to DH component failed, result = " << e << ".";
+				e = updateRegisterCompnent(componentID, componentName, commID, componentType);
+			}
+
+			//commID和fromID一样
+			replyMessageWithResultAndExtendID(
+				commID,
+				componentID,
+				fromID,
+				static_cast<int>(base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_COMPONENT),
+				static_cast<int>(base::protocol::ComponentCommand::COMPONENT_COMMAND_SIGNIN_REP),
+				e,
+				pkt->getPacketSequence() + 1);
+		}
+		else if (base::protocol::ComponentCommand::COMPONENT_COMMAND_SIGNOUT_REQ == command)
+		{
+			removeRegisterComponent(
+				ac->getComponentID(),
+				static_cast<base::component::ComponentType>(ac->getComponentType()));
+		}
+		else if (base::protocol::ComponentCommand::COMPONENT_COMMAND_QUERY_REQ == command)
+		{
+			std::vector<AbstractComponentPtr> componentPtrs;
+			registerComponentGroup.values(componentPtrs);
+			DataPacketPtr datapkt{ 
+				boost::make_shared<MessagePacket>(base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_COMPONENT) };
+
+			if (pkt)
+			{
+				MessagePacketPtr msgpkt{ boost::dynamic_pointer_cast<MessagePacket>(datapkt) };
+				msgpkt->setMessagePacketCommand(
+					static_cast<int>(base::protocol::ComponentCommand::COMPONENT_COMMAND_QUERY_REP));
+				datapkt->setPacketSequence(pkt->getPacketSequence() + 1);
+				datapkt->setPacketTimestamp(Time().tickcount());
+				datapkt->setPacketData(&componentPtrs);
+
+				const std::string msgstr{ DataPacker().packData(datapkt) };
+				if (!msgstr.empty())
+				{
+					//commID和fromID一样
+					AbstractServer::sendMessageData(commID, "response", "", fromID, msgstr);
+				}
 			}
 		}
-// 		else if (DeviceFactory::DEVICE_FACTORY_ET == dr->embedded.factory)
+	}
+}
+
+// void MDCServer::forwardDeviceMessage(
+// 	const std::string commID, 
+// 	DataPacketPtr pkt, 
+// 	const std::string msg)
+// {
+// 	//设备消息通过消息队列在WEB组件和设备组件之间交互
+// 	//该消息队列只转发消息但不处理
+// 	//如果对应的设备组件不存在则由服务端进行应答
+// 
+// 	int e{ eNotSupport };
+// 	MessagePacketPtr msgpkt{ boost::dynamic_pointer_cast<MessagePacket>(pkt) };
+// 	const base::protocol::DeviceCommand command{ 
+// 		static_cast<base::protocol::DeviceCommand>(msgpkt->getMessagePacketCommand()) };
+// 
+// 	if (base::protocol::DeviceCommand::DEVICE_COMMAND_NEW_REQ == command ||
+// 		base::protocol::DeviceCommand::DEVICE_COMMAND_DELETE_REQ == command ||
+// 		base::protocol::DeviceCommand::DEVICE_COMMAND_MODIFY_REQ == command)
+// 	{
+// 		SurveillanceDevice* sd{ 
+// 			reinterpret_cast<SurveillanceDevice*>(pkt->getPacketData()) };
+// 		const base::device::SurveillanceDeviceFactory factory{ sd->getDeviceFactory() };
+// 		
+// 		if (base::device::SurveillanceDeviceFactory::SURVEILLANCE_DEVICE_FACTORY_HK == factory)
 // 		{
+// 			e = forwardMessageByComponentType(msg, base::component::ComponentType::COMPONENT_TYPE_HKD);
 // 		}
-		else
-		{
-			LOG(WARNING) << 
-				"Can not forward request message of device configure with unknown factory = " << static_cast<int>(factory) <<
-				", type = " << static_cast<int>(ad->getDeviceType()) <<
-				", IP = " << ad->getDeviceIPv4Address() <<
-				", Port = " << ad->getDevicePortNumber() << ".";
-		}
-	}
-	else if (base::protocol::DeviceCommand::DEVICE_COMMAND_NEW_REP == command ||
-		base::protocol::DeviceCommand::DEVICE_COMMAND_DELETE_REP == command ||
-		base::protocol::DeviceCommand::DEVICE_COMMAND_MODIFY_REP == command)
-	{
-		int e{
-			forwardConfigureRequestOrResponseMessage(
-				s, static_cast<int>(base::component::ComponentType::COMPONENT_TYPE_WEB), data, databytes) };
+// 		else if (base::device::SurveillanceDeviceFactory::SURVEILLANCE_DEVICE_FACTORY_DH == factory)
+// 		{
+// 			e = forwardMessageByComponentType(msg, base::component::ComponentType::COMPONENT_TYPE_DHD);
+// 		}
+// // 		else if (DeviceFactory::DEVICE_FACTORY_ET == dr->embedded.factory)
+// // 		{
+// // 		}
+// 		
+// 		if(eSuccess != e)
+// 		{
+// 			replyMessageWithResultAndExtendID(
+// 				commID,
+// 				"",
+// 				static_cast<int>(base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_DEVICE),
+// 				static_cast<int>(command),
+// 				e,
+// 				pkt->getPacketSequence() + 1);
+// 		}
+// 	}
+// 	else if (base::protocol::DeviceCommand::DEVICE_COMMAND_NEW_REP == command ||
+// 		base::protocol::DeviceCommand::DEVICE_COMMAND_DELETE_REP == command ||
+// 		base::protocol::DeviceCommand::DEVICE_COMMAND_MODIFY_REP == command)
+// 	{
+// 		e = forwardMessageByComponentType(msg, base::component::ComponentType::COMPONENT_TYPE_WEB);
+// 	}
+// }
+// 
+// void MDCServer::forwardStatusConfigureMessage(
+// 	const std::string fwdmsg, 
+// 	const std::string commID, 
+// 	void* status /* = nullptr */,
+// 	const long long sequence /* = -1 */)
+// {
+// 	int e{ eNotSupport };
+// 	msg::Status* ms{ reinterpret_cast<msg::Status*>(status) };
+// 	const msg::Status_Command command{ ms->command() };
+// 
+// 	//由于事先无法得知有哪些设备组件在线,所以每次都必须向全部类型的设备组件转发一次
+// 	//当没有设备组件在线时由服务端进行应答
+// 
+// 	if (msg::Status_Command::Status_Command_SET_REQ == command)
+// 	{
+// 		e = forwardMessageByComponentType(fwdmsg, base::component::ComponentType::COMPONENT_TYPE_AI);
+// 
+// 		if (eSuccess != e)
+// 		{
+// 			replyMessageWithResultAndExtendID(
+// 				commID,
+// 				"",
+// 				static_cast<int>(base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_STATUS),
+// 				static_cast<int>(command),
+// 				e,
+// 				sequence + 1);
+// 		}
+// 	}
+// 	else if (msg::Status_Command::Status_Command_SET_REP == command)
+// 	{
+// 		e = forwardMessageByComponentType(fwdmsg, base::component::ComponentType::COMPONENT_TYPE_WEB);
+// 	}
+// }
+// 
+// void MDCServer::forwardAlgorithmConfigureMessage(
+// 	const std::string fwdmsg, 
+// 	const std::string commID, 
+// 	void* algorithm /* = nullptr */,
+// 	const long long sequence /* = -1 */)
+// {
+// 	int e{ eNotSupport };
+// 	msg::Algorithm* ma{ reinterpret_cast<msg::Algorithm*>(algorithm) };
+// 	const msg::Algorithm_Command command{ ma->command() };
+// 
+// 	//由于事先无法得知有几个算法组件在线,所以每次都必须向全部类型的算法组件转发一次
+// 	//当没有算法组件在线时由服务端进行应答
+// 
+// 	if (msg::Algorithm_Command::Algorithm_Command_CONFIGURE_REQ == command)
+// 	{
+// 		e = forwardMessageByComponentType(fwdmsg, base::component::ComponentType::COMPONENT_TYPE_AI);
+// 
+// 		if (eSuccess != e)
+// 		{
+// 			replyMessageWithResultAndExtendID(
+// 				commID,
+// 				"",
+// 				static_cast<int>(base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_ALGORITHM),
+// 				static_cast<int>(command),
+// 				e,
+// 				sequence + 1);
+// 		}
+// 	}
+// 	else if (msg::Algorithm_Command::Algorithm_Command_CONFIGURE_REP == command)
+// 	{
+// 		e = forwardMessageByComponentType(fwdmsg, base::component::ComponentType::COMPONENT_TYPE_WEB);
+// 	}
+// }
+// 
+// // void MDCServer::forwardAlarmInfoMessage(
+// // 	void* s /* = nullptr */,
+// // 	const void* data /* = nullptr */,
+// // 	const unsigned int databytes /* = 0 */)
+// // {
+// // 	int e{
+// // 		forwardConfigureRequestOrResponseMessage(
+// // 			s, static_cast<int>(base::component::ComponentType::COMPONENT_TYPE_ALM), data, databytes) };
+// // 
+// // 	if (eSuccess == e)
+// // 	{
+// // 		LOG(INFO) << "Forward alarm message of algorithm successfully.";
+// // 	}
+// // 	else
+// // 	{
+// // 		LOG(WARNING) << "Forward alarm message of algorithm failed, result = " << e << ".";
+// // 	}
+// // }
+// 
+// void MDCServer::forwardCrewConfigureMessage(
+// 	const std::string fwdmsg, 
+// 	const std::string commID, 
+// 	void* crew /* = nullptr */,
+// 	const long long sequence /* = -1 */)
+// {
+// 	int e{ eNotSupport };
+// 	msg::Crew* mc{ reinterpret_cast<msg::Crew*>(crew) };
+// 	const msg::Crew_Command command{ mc->command() };
+// 
+// 	//由于事先无法得知有几个算法组件在线,所以每次都必须向全部类型的算法组件转发一次
+// 	//当没有算法组件在线时由服务端进行应答
+// 
+// 	if (msg::Crew_Command::Crew_Command_NEW_REQ == command ||
+// 		msg::Crew_Command::Crew_Command_DELETE_REQ == command ||
+// 		msg::Crew_Command::Crew_Command_MODIFY_REQ == command)
+// 	{
+// 		e = forwardMessageByComponentType(fwdmsg, base::component::ComponentType::COMPONENT_TYPE_AI);
+// 
+// 		if (eSuccess != e)
+// 		{
+// 			replyMessageWithResultAndExtendID(
+// 				commID,
+// 				"",
+// 				static_cast<int>(base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_CREW),
+// 				static_cast<int>(command),
+// 				e,
+// 				sequence + 1);
+// 		}
+// 	}
+// 	else if (msg::Crew_Command::Crew_Command_NEW_REP == command ||
+// 		msg::Crew_Command::Crew_Command_DELETE_REP == command ||
+// 		msg::Crew_Command::Crew_Command_MODIFY_REP == command)
+// 	{
+// 		e = forwardMessageByComponentType(fwdmsg, base::component::ComponentType::COMPONENT_TYPE_WEB);
+// 	}
+// }
 
-		if (eSuccess == e)
-		{
-			LOG(INFO) << "Forward response message of device configure to WEB component successfully.";
-		}
-		else
-		{
-			LOG(WARNING) << "Forward response message of device configure to WEB component failed, result = " << e << ".";
-		}
-	}
-}
-
-void MDCServer::forwardStatusConfigureMessage(
-	void* s /* = nullptr */, 
-	const void* commID /* = nullptr */, 
-	const unsigned int idbytes /* = 0 */, 
-	void* pkt /* = nullptr */, 
-	const void* data /* = nullptr */, 
-	const unsigned int databytes /* = 0 */)
+int MDCServer::addNewRegisterComponent(
+	const std::string componentID, 
+	const std::string serviceName, 
+	const std::string communicationID, 
+	const base::component::ComponentType componentType /* = base::component::ComponentType::COMPONENT_TYPE_NONE */)
 {
-	AbstractPacket* mp{ reinterpret_cast<AbstractPacket*>(pkt) };
-	const base::protocol::StatusCommand command{
-		static_cast<base::protocol::StatusCommand>(mp->getPacketDataCommandType()) };
+	int e{ eBadNewObject };
+	AbstractComponentPtr acp{ 
+		boost::make_shared<AbstractComponent>(componentType) };
 
-	//由于事先无法得知有哪些设备组件在线,所以每次都必须向全部类型的设备组件转发一次
-	//当没有设备组件在线时由服务端进行应答
-
-	if (base::protocol::StatusCommand::STATUS_COMMAND_SET_REQ == command)
+	if (acp)
 	{
-		int e{
-			forwardConfigureRequestOrResponseMessage(
-				s, static_cast<int>(base::component::ComponentType::COMPONENT_TYPE_AI), data, databytes)};
+		acp->setComponentID(componentID);
+		acp->setComponentName(serviceName);
+		acp->setCommunicationID(communicationID);
+		registerComponentGroup.insert(communicationID, acp);
+		e = eSuccess;
 
-		if (eSuccess == e)
-		{
-			LOG(INFO) << "Forward request message of device configure successfully.";
-		}
-		else
-		{
-			LOG(WARNING) << "Forward request message of device configure failed, result = " << e << ".";
-			replyConfigureSetFailedMessage(
-				static_cast<int>(command) + 1, mp->getPacketSequence() + 1, s, commID, idbytes);
-		}
-	}
-	else if (base::protocol::StatusCommand::STATUS_COMMAND_SET_REP == command)
-	{
-		int e{
-			forwardConfigureRequestOrResponseMessage(
-				s, static_cast<int>(base::component::ComponentType::COMPONENT_TYPE_WEB), data, databytes) };
-
-		if (eSuccess == e)
-		{
-			LOG(INFO) << "Forward response message of device configure successfully.";
-		}
-		else
-		{
-			LOG(WARNING) << "Forward response message of device configure failed, result = " << e << ".";
-		}
-	}
-}
-
-void MDCServer::forwardAlgorithmConfigureMessage(
-	void* s /* = nullptr */, 
-	const void* commID /* = nullptr */, 
-	const unsigned int idbytes /* = 0 */, 
-	void* pkt /* = nullptr */, 
-	const void* data /* = nullptr */, 
-	const unsigned int databytes /* = 0 */)
-{
-	AbstractPacket* mp{ reinterpret_cast<AbstractPacket*>(pkt) };
-	const base::protocol::AlgorithmCommand command{ 
-		static_cast<base::protocol::AlgorithmCommand>(mp->getPacketDataCommandType()) };
-
-	//由于事先无法得知有几个算法组件在线,所以每次都必须向全部类型的算法组件转发一次
-	//当没有算法组件在线时由服务端进行应答
-
-	if (base::protocol::AlgorithmCommand::ALGORITHM_COMMAND_SET_REQ == command)
-	{
-		int e{
-			forwardConfigureRequestOrResponseMessage(
-				s, static_cast<int>(base::component::ComponentType::COMPONENT_TYPE_AI), data, databytes) };
-
-		if (eSuccess == e)
-		{
-			LOG(INFO) << "Forward request message of Algorithm configure successfully.";
-		}
-		else
-		{
-			LOG(WARNING) << "Forward request message of Algorithm configure failed, result = " << e << ".";
-			replyConfigureSetFailedMessage(
-				static_cast<int>(command) + 1, mp->getPacketSequence() + 1, s, commID, idbytes);
-		}
-	}
-	else if (base::protocol::AlgorithmCommand::ALGORITHM_COMMAND_SET_REP == command)
-	{
-		int e{
-			forwardConfigureRequestOrResponseMessage(
-				s, static_cast<int>(base::component::ComponentType::COMPONENT_TYPE_WEB), data, databytes) };
-
-		if (eSuccess == e)
-		{
-			LOG(INFO) << "Forward response message of Algorithm configure successfully.";
-		}
-		else
-		{
-			LOG(WARNING) << "Forward response message of Algorithm configure failed, result = " << e << ".";
-		}
-	}
-}
-
-void MDCServer::forwardAlarmInfoMessage(
-	void* s /* = nullptr */,
-	const void* data /* = nullptr */,
-	const unsigned int databytes /* = 0 */)
-{
-	int e{
-		forwardConfigureRequestOrResponseMessage(
-			s, static_cast<int>(base::component::ComponentType::COMPONENT_TYPE_ALM), data, databytes) };
-
-	if (eSuccess == e)
-	{
-		LOG(INFO) << "Forward alarm message of algorithm successfully.";
-	}
+		LOG(INFO) << "Add new register component type = " << static_cast<int>(componentType) <<
+			", ID = " << componentID <<
+			", CommID = " << communicationID <<
+			", Name = " << serviceName <<
+			", Timestamp = " << acp->getComponentTimestamp() << ".";
+	} 
 	else
 	{
-		LOG(WARNING) << "Forward alarm message of algorithm failed, result = " << e << ".";
-	}
-}
-
-void MDCServer::forwardCrewConfigureMessage(
-	void* s /* = nullptr */,
-	const void* commID /* = nullptr */,
-	const unsigned int idbytes /* = 0 */,
-	void* pkt /* = nullptr */,
-	const void* data /* = nullptr */,
-	const unsigned int databytes /* = 0 */)
-{
-	AbstractPacket* mp{ reinterpret_cast<AbstractPacket*>(pkt) };
-	const base::protocol::CrewCommand command{
-		static_cast<base::protocol::CrewCommand>(mp->getPacketDataCommandType()) };
-
-	//由于事先无法得知有几个算法组件在线,所以每次都必须向全部类型的算法组件转发一次
-	//当没有算法组件在线时由服务端进行应答
-
-	if (base::protocol::CrewCommand::CREW_COMMAND_NEW_REQ == command ||
-		base::protocol::CrewCommand::CREW_COMMAND_DELETE_REQ == command ||
-		base::protocol::CrewCommand::CREW_COMMAND_MODIFY_REQ == command)
-	{
-		int e{
-			forwardConfigureRequestOrResponseMessage(
-				s, static_cast<int>(base::component::ComponentType::COMPONENT_TYPE_AI), data, databytes) };
-
-		if (eSuccess == e)
-		{
-			LOG(INFO) << "Forward request message of crew configure successfully.";
-		}
-		else
-		{
-			LOG(WARNING) << "Forward request message of crew configure failed, result = " << e << ".";
-			replyConfigureSetFailedMessage(
-				static_cast<int>(command) + 1, mp->getPacketSequence() + 1, s, commID, idbytes);
-		}
-	}
-	else if (base::protocol::CrewCommand::CREW_COMMAND_NEW_REP == command ||
-		base::protocol::CrewCommand::CREW_COMMAND_DELETE_REP == command ||
-		base::protocol::CrewCommand::CREW_COMMAND_MODIFY_REP == command)
-	{
-		int e{
-			forwardConfigureRequestOrResponseMessage(
-				s, static_cast<int>(base::component::ComponentType::COMPONENT_TYPE_WEB), data, databytes) };
-
-		if (eSuccess == e)
-		{
-			LOG(INFO) << "Forward response message of crew configure successfully.";
-		}
-		else
-		{
-			LOG(WARNING) << "Forward response message of crew configure failed, result = " << e << ".";
-		}
-	}
-}
-
-void MDCServer::addRegisterComponent(void* c /* = nullptr */)
-{
-	//通过shared_ptr使实例能自动析构
-	boost::shared_ptr<AbstractComponent> acp{ reinterpret_cast<AbstractComponent*>(c) };
-	registerComponentGroup.insert(acp->getComponentID(), acp);
-	LOG(INFO) << "Add register component type = " << static_cast<int>(acp->getComponentType()) <<
-		", ID = " << acp->getComponentID() <<
-		", Name = " << acp->getComponentName() <<
-		", Timestamp = " << acp->getComponentTimestamp() << ".";
-}
-
-int MDCServer::replyAddRegisterComponent(
-	const std::string cid, 
-	const int result /* = 0 */, 
-	const long long sequence /* = 0 */, 
-	void* s /* = nullptr */, 
-	const void* commID /* = nullptr */, 
-	const unsigned int idbytes /* = 0 */)
-{
-	int e{ s && 0 < sequence && commID && 0 < idbytes ? eSuccess : eInvalidParameter };
-
-	if (eSuccess == e)
-	{
-		AbstractPacket* pkt{ 
-			new(std::nothrow) MessagePacket(
-				base::packet::PacketType::PACKET_TYPE_COMPONENT, 
-				static_cast<int>(base::protocol::ComponentCommand::COMPONENT_COMMAND_SIGNIN_REP),
-				result) };
-
-		if (pkt)
-		{
-			pkt->setPacketSequence(sequence);
-			pkt->setPacketData(const_cast<char*>(cid.c_str()));
-			const std::string rep{
-				base::protocol::CommandPacker().packPacketToArray(pkt) };
-			e = rep.empty() ? eBadPackProtocol : sendServerResponseMessage(s, commID, idbytes, rep.c_str(), rep.length());
-		}
-		else
-		{
-			e = eBadNewObject;
-		}
+		LOG(WARNING) << "Failed to add new register component type = " << static_cast<int>(componentType) <<
+			", ID = " << componentID <<
+			", CommID = " << communicationID <<
+			", Name = " << serviceName << ".";
 	}
 
 	return e;
 }
 
-int MDCServer::removeRegisterComponent(
-	const std::string cid, 
-	const int type /* = 0 */)
+int MDCServer::updateRegisterCompnent(
+	const std::string componentID, 
+	const std::string serviceName, 
+	const std::string communicationID, 
+	const base::component::ComponentType componentType /* = base::component::ComponentType::COMPONENT_TYPE_NONE */)
 {
-	int e{ !cid.empty() && 0 < type ? eSuccess : eInvalidParameter };
-
-	if (eSuccess == e)
-	{
-		AbstractComponentPtr acp{ registerComponentGroup.at(cid) };
-		registerComponentGroup.remove(cid);
-
-		LOG(WARNING) << "Remove register component type = " << static_cast<int>(acp->getComponentType()) <<
-			", ID = " << acp->getComponentID() <<
-			", Name = " << acp->getComponentName() <<
-			", Timestamp = " << acp->getComponentTimestamp() <<
-			"[ Expire = " << Time().tickcount() - acp->getComponentTimestamp() << " ].";
-	}
-
-	return e;
-}
-
-int MDCServer::updateRegisterCompnent(void* c /* = nullptr */)
-{
-	int e{ c ? eSuccess : eInvalidParameter };
+	int e{ !componentID.empty() && !serviceName.empty() ? eSuccess : eInvalidParameter };
 
 	if (eSuccess == e)
 	{
 		//服务端找到匹配的ID标识则执行更新操作
 		//如果没有匹配的ID标识则执行新增操作
 
-		AbstractComponent* ac{ reinterpret_cast<AbstractComponent*>(c) };
-		AbstractComponentPtr acp{ registerComponentGroup.at(ac->getComponentID()) };
+		AbstractComponentPtr acp{ registerComponentGroup.at(communicationID) };
 
-		if (acp && !acp->getComponentID().compare(ac->getComponentID()) && acp->getComponentType() == ac->getComponentType())
+		if (acp)
 		{
 			acp->setComponentTimestamp(Time().tickcount());
-			LOG(INFO) << "Update information of component, type = " << static_cast<int>(ac->getComponentType()) <<
-				", ID = " << ac->getComponentID() << ".";
+			LOG(INFO) << "Update information of component, type = " << static_cast<int>(componentType) <<
+				", CommID = " << communicationID << ".";
 		}
 		else
 		{
-			addRegisterComponent(c);
+			e = addNewRegisterComponent(componentID, serviceName, communicationID, componentType);
 		}
 	}
 
 	return e;
 }
 
-int MDCServer::replyQueryRegisterComponent(
-	const std::vector<AbstractComponentPtr>& componentPtrs,
-	const int result /* = 0 */,
-	const long long sequence /* = 0 */,
-	void* s /* = nullptr */,
-	const void* commID /* = nullptr */,
-	const unsigned int idbytes /* = 0 */)
-{
-	int e{ s && 0 < sequence && commID && 0 < idbytes ? eSuccess : eInvalidParameter };
-
-	if (eSuccess == e)
-	{
-		AbstractPacket* pkt{
-			new(std::nothrow) MessagePacket(
-				base::packet::PacketType::PACKET_TYPE_COMPONENT,
-				static_cast<int>(base::protocol::ComponentCommand::COMPONENT_COMMAND_QUERY_REP),
-				result) };
-
-		if (pkt)
-		{
-			pkt->setPacketSequence(sequence);
-			pkt->setPacketData((void*)&componentPtrs);
-			const std::string rep{
-				base::protocol::CommandPacker().packPacketToArray(pkt) };
-			e = rep.empty() ? eBadPackProtocol : sendServerResponseMessage(s, commID, idbytes, rep.c_str(), rep.length());
-
-			LOG(INFO) << "Query information of component count = " << componentPtrs.size() << ".";
-		}
-		else
-		{
-			e = eBadNewObject;
-			LOG(WARNING) << "Bad create new object when querying information of component.";
-		}
-	}
-
-	return e;
-}
-
-int MDCServer::replyConfigureSetFailedMessage(
+int MDCServer::replyMessageWithResultAndExtendID(
+	const std::string commID, 
+	const std::string extendID, 
+	const std::string fromID,
+	const int pkttype /* = 0 */, 
 	const int command /* = 0 */, 
-	const long long sequence /* = 0 */, 
-	void* s /* = nullptr */, 
-	const void* commID /* = nullptr */, 
-	const unsigned int idbytes /* = 0 */)
+	const int result /* = 0 */, 
+	const long long sequence /* = 0 */)
 {
-	int e{ s && 0 < sequence && commID && 0 < idbytes ? eSuccess : eInvalidParameter };
+	int e{ eBadNewObject };
+
+	DataPacketPtr datapkt{
+		boost::make_shared<MessagePacket>(static_cast<base::packet::MessagePacketType>(pkttype)) };
+
+	if (datapkt)
+	{
+		datapkt->setPacketSequence(sequence);
+		datapkt->setPacketTimestamp(Time().tickcount());
+		datapkt->setPacketData((void*)extendID.c_str());
+		MessagePacketPtr msgpkt{ boost::dynamic_pointer_cast<MessagePacket>(datapkt) };
+		msgpkt->setMessageStatus(result);
+
+		if (base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_COMPONENT == static_cast<base::packet::MessagePacketType>(pkttype))
+		{
+			e = AbstractServer::sendMessageData(commID, "response", "", fromID, DataPacker().packData(datapkt));
+		}
+// 		else if (base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_DEVICE == static_cast<base::packet::MessagePacketType>(pkttype))
+// 		{
+// 			e = sendMessageData(commID, DevicePacker().packData(datapkt));
+// 		}
+	}
+
+	return e;
+}
+
+int MDCServer::removeRegisterComponent(
+	const std::string componentID,
+	const base::component::ComponentType componentType/* = base::component::ComponentType::COMPONENT_TYPE_NONE*/)
+{
+	int e{ !componentID.empty() && base::component::ComponentType::COMPONENT_TYPE_NONE != componentType ? eSuccess : eInvalidParameter };
 
 	if (eSuccess == e)
 	{
-		int msgType{ 0 };
-		void* data;
+		AbstractComponentPtr acp{ registerComponentGroup.at(componentID) };
 
-		if (static_cast<int>(base::protocol::StatusCommand::STATUS_COMMAND_SET_REP) == command)
+		if (acp && componentType == acp->getComponentType())
 		{
-			data = base::protocol::StatusPacker().packStatus(command, eBadOperate);
-			msgType = static_cast<int>(base::packet::PacketType::PACKET_TYPE_STATUS);
-		} 
-		else if(static_cast<int>(base::protocol::AlgorithmCommand::ALGORITHM_COMMAND_SET_REP) == command)
-		{
-			data = base::protocol::AlgorithmPacker().packAlgorithm(command, eBadOperate);
-			msgType = static_cast<int>(base::packet::PacketType::PACKET_TYPE_ALGORITHM);
-		}
-		else if (static_cast<int>(base::protocol::CrewCommand::CREW_COMMAND_NEW_REP) == command ||
-			static_cast<int>(base::protocol::CrewCommand::CREW_COMMAND_DELETE_REP) == command ||
-			static_cast<int>(base::protocol::CrewCommand::CREW_COMMAND_MODIFY_REP) == command)
-		{
-			data = base::protocol::CrewPacker().packCrew(command, eBadOperate);
-			msgType = static_cast<int>(base::packet::PacketType::PACKET_TYPE_CREW);
-		}
+			registerComponentGroup.remove(componentID);
 
-		if (data && 0 < msgType)
-		{
-			const std::string rep{
-				base::protocol::CommandPacker().packPacketToArray(data) };
-			e = rep.empty() ? eBadPackProtocol : sendServerResponseMessage(s, commID, idbytes, rep.c_str(), rep.length());
-
-			if (eSuccess == e)
-			{
-				LOG(INFO) << "Reply configuration set message successfully.";
-			} 
-			else
-			{
-				LOG(WARNING) << "Reply configuration set message failed, result = " << e << ".";
-			}
+			LOG(WARNING) << "Remove register component type = " << static_cast<int>(componentType) <<
+				", ID = " << componentID <<
+				", Name = " << acp->getComponentName() <<
+				", Timestamp = " << acp->getComponentTimestamp() <<
+				"[ Expire = " << Time().tickcount() - acp->getComponentTimestamp() << " ].";
 		}
 		else
 		{
-			e = eBadNewObject;
-			LOG(WARNING) << "Reply configuration set message failed, result = " << e << ".";
-		}
-	}
-	else
-	{
-		LOG(ERROR) << 
-			"Can not reply failure configuration set message with invalid parameters, s = " << s << 
-			", sequence = " << sequence << 
-			", commID = " << reinterpret_cast<const char*>(commID) << ".";
-	}
-
-	return e;
-}
-
-int MDCServer::sendServerResponseMessage(
-	void* s /* = nullptr */, 
-	const void* commID /* = nullptr */, 
-	const unsigned int idbytes /* = 0 */, 
-	const void* data /* = nullptr */, 
-	const unsigned int databytes /* = 0 */)
-{
-	int e{ s && commID && 0 < idbytes && data && 0 < databytes ? eSuccess : eInvalidParameter };
-
-	if (eSuccess == e)
-	{
-		AsynchronousSender as;
-		const unsigned int sentBytes{ 
-			as.sendData(s, commID, idbytes, true) + as.sendData(s, data, databytes) };
-		e = 0 < sentBytes ? eSuccess : eBadSend;
-	}
-
-	return e;
-}
-
-int MDCServer::forwardConfigureRequestOrResponseMessage(
-	void* s /* = nullptr */, 
-	const int type /* = 0 */, 
-	const void* data /* = nullptr */, 
-	const unsigned int databytes /* = 0 */)
-{
-	//先查找对应的组件再转发消息
-	//每次查找组件必须遍历所有组件,并向满足条件的组件发送消息
-
-	int e{ s && 0 < type && data && 0 < databytes ? eSuccess : eInvalidParameter };
-
-	if (eSuccess == e)
-	{
-		e = eBadOperate;
-		std::vector<AbstractComponentPtr> components;
-		registerComponentGroup.values(components);
-
-		for (int i = 0; i != components.size(); ++i)
-		{
-			if (type == static_cast<int>(components[i]->getComponentType()))
-			{
-				const std::string delimiter{ " " }, commID{ components[i]->getComponentID() };
-				AsynchronousSender as;
-				const unsigned int sentBytes{
-					as.sendData(s, commID.c_str(), commID.length(), true) +
-					as.sendData(s, delimiter.c_str(), delimiter.length(), true) +
-					as.sendData(s, data, databytes) };
-				e = 0 < sentBytes ? eSuccess : eBadSend;
-			}
+			e = eBadOperate;
+			LOG(WARNING) << "Can not find register component type = " << static_cast<int>(componentType) <<
+				", ID = " << componentID << ".";
 		}
 	}
 
 	return e;
 }
+
+// int MDCServer::forwardMessageByComponentType(
+// 	const std::string fwdmsg,
+// 	const base::component::ComponentType componentType /* = base::component::ComponentType::COMPONENT_TYPE_NONE */)
+// {
+// 	//先查找对应的组件再转发消息
+// 	//每次查找组件必须遍历所有组件,并向满足条件的组件发送消息
+// 
+// 	int e{ !fwdmsg.empty() && base::component::ComponentType::COMPONENT_TYPE_NONE != componentType ? eSuccess : eInvalidParameter };
+// 
+// 	if (eSuccess == e)
+// 	{
+// 		e = eNotSupport;
+// 		std::vector<AbstractComponentPtr> components;
+// 		registerComponentGroup.values(components);
+// 
+// 		for (int i = 0; i != components.size(); ++i)
+// 		{
+// 			if (componentType == components[i]->getComponentType())
+// 			{
+// 				e = AbstractServer::sendMessageData(components[i]->getCommunicationID(), fwdmsg);
+// 
+// 				if (eSuccess == e)
+// 				{
+// 					LOG(INFO) << "Forward message to component successfully, type = " << static_cast<int>(componentType) << ".";
+// 				}
+// 				else
+// 				{
+// 					LOG(WARNING) << "Forward message to component failed, result = " << e << ".";
+// 				}
+// 			}
+// 		}
+// 	}
+// 
+// 	return e;
+// }

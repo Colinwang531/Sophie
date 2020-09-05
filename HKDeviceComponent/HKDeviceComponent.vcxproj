@@ -327,24 +327,25 @@
     <ClCompile Include="..\Source\Device\Hikvision\HikvisionDevice.cpp" />
     <ClCompile Include="..\Source\Device\SurveillanceDevice.cpp" />
     <ClCompile Include="..\Source\Hardware\Cpu.cpp" />
-    <ClCompile Include="..\Source\MessageQueue\AsynchronousClient.cpp" />
-    <ClCompile Include="..\Source\MessageQueue\AsynchronousReceiver.cpp" />
-    <ClCompile Include="..\Source\MessageQueue\AsynchronousSender.cpp" />
-    <ClCompile Include="..\Source\Network\DeviceComponentClient.cpp" />
-    <ClCompile Include="..\Source\Network\NetworkAsynchronousClient.cpp" />
+    <ClCompile Include="..\Source\MessageQueue\MessageData.cpp" />
+    <ClCompile Include="..\Source\MessageQueue\MajordomoWorker.cpp" />
+    <ClCompile Include="..\Source\Network\AbstractClient.cpp" />
     <ClCompile Include="..\Source\Number\Number.cpp" />
-    <ClCompile Include="..\Source\Packet\AbstractPacket.cpp" />
+    <ClCompile Include="..\Source\Packet\DataPacket.cpp" />
     <ClCompile Include="..\Source\Packet\Message\MessagePacket.cpp" />
     <ClCompile Include="..\Source\Protocol\Alarm\Alarm.pb.cc" />
+    <ClCompile Include="..\Source\Protocol\Alarm\AlarmPhrase.cpp" />
     <ClCompile Include="..\Source\Protocol\Algorithm\Algorithm.pb.cc" />
-    <ClCompile Include="..\Source\Protocol\CommandPhrase.cpp" />
+    <ClCompile Include="..\Source\Protocol\Algorithm\AlgorithmPhrase.cpp" />
     <ClCompile Include="..\Source\Protocol\Component\Component.pb.cc" />
     <ClCompile Include="..\Source\Protocol\Component\ComponentPhrase.cpp" />
     <ClCompile Include="..\Source\Protocol\Crew\Crew.pb.cc" />
+    <ClCompile Include="..\Source\Protocol\Crew\CrewPhrase.cpp" />
     <ClCompile Include="..\Source\Protocol\Device\Device.pb.cc" />
     <ClCompile Include="..\Source\Protocol\Device\DevicePhrase.cpp" />
     <ClCompile Include="..\Source\Protocol\Message.pb.cc" />
     <ClCompile Include="..\Source\Protocol\Status\Status.pb.cc" />
+    <ClCompile Include="..\Source\Protocol\Status\StatusPhrase.cpp" />
     <ClCompile Include="..\Source\Protocol\User\User.pb.cc" />
     <ClCompile Include="..\Source\Thread\ThreadPool.cpp" />
     <ClCompile Include="..\Source\Time\XTime.cpp" />
@@ -4244,31 +4245,31 @@
     <ClInclude Include="..\Include\DataStruct\UnorderedMap.h" />
     <ClInclude Include="..\Include\Define.h" />
     <ClInclude Include="..\Include\Device\AbstractDevice.h" />
-    <ClInclude Include="..\Include\Device\EnableLoggingDevice.h" />
     <ClInclude Include="..\Include\Device\Hikvision\HikvisionDevice.h" />
     <ClInclude Include="..\Include\Device\SurveillanceDevice.h" />
     <ClInclude Include="..\Include\Error.h" />
     <ClInclude Include="..\Include\Hardware\Cpu.h" />
     <ClInclude Include="..\Include\Locker\Locker.h" />
-    <ClInclude Include="..\Include\MessageQueue\AsynchronousClient.h" />
-    <ClInclude Include="..\Include\MessageQueue\AsynchronousReceiver.h" />
-    <ClInclude Include="..\Include\MessageQueue\AsynchronousSender.h" />
+    <ClInclude Include="..\Include\MessageQueue\MessageData.h" />
+    <ClInclude Include="..\Include\MessageQueue\MajordomoWorker.h" />
     <ClInclude Include="..\Include\Mutex\RWLock.h" />
-    <ClInclude Include="..\Include\Network\DeviceComponentClient.h" />
-    <ClInclude Include="..\Include\Network\NetworkAsynchronousClient.h" />
+    <ClInclude Include="..\Include\Network\AbstractClient.h" />
     <ClInclude Include="..\Include\Number\Number.h" />
-    <ClInclude Include="..\Include\Packet\AbstractPacket.h" />
+    <ClInclude Include="..\Include\Packet\DataPacket.h" />
     <ClInclude Include="..\Include\Packet\Message\MessagePacket.h" />
     <ClInclude Include="..\Include\Protocol\Alarm\Alarm.pb.h" />
+    <ClInclude Include="..\Include\Protocol\Alarm\AlarmPhrase.h" />
     <ClInclude Include="..\Include\Protocol\Algorithm\Algorithm.pb.h" />
-    <ClInclude Include="..\Include\Protocol\CommandPhrase.h" />
+    <ClInclude Include="..\Include\Protocol\Algorithm\AlgorithmPhrase.h" />
     <ClInclude Include="..\Include\Protocol\Component\Component.pb.h" />
     <ClInclude Include="..\Include\Protocol\Component\ComponentPhrase.h" />
     <ClInclude Include="..\Include\Protocol\Crew\Crew.pb.h" />
+    <ClInclude Include="..\Include\Protocol\Crew\CrewPhrase.h" />
     <ClInclude Include="..\Include\Protocol\Device\Device.pb.h" />
     <ClInclude Include="..\Include\Protocol\Device\DevicePhrase.h" />
     <ClInclude Include="..\Include\Protocol\Message.pb.h" />
     <ClInclude Include="..\Include\Protocol\Status\Status.pb.h" />
+    <ClInclude Include="..\Include\Protocol\Status\StatusPhrase.h" />
     <ClInclude Include="..\Include\Protocol\User\User.pb.h" />
     <ClInclude Include="..\Include\Thread\ThreadPool.h" />
     <ClInclude Include="..\Include\Time\XTime.h" />
@@ -4314,7 +4315,8 @@
 ;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <LibraryDependencies>pthread</LibraryDependencies>
+      <LibraryDependencies>pthread;hcnetsdk;HCCore;SuperRender;AudioRender</LibraryDependencies>
+      <AdditionalLibraryDirectories>/root/projects/$(ProjectName)/SDK/CH-HCNetSDKV6.1.4.17_build20200331_Linux64;/root/projects/$(ProjectName)/SDK/CH-HCNetSDKV6.1.4.17_build20200331_Linux64\HCNetSDKCom;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
