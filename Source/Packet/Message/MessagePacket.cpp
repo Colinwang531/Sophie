@@ -31,8 +31,9 @@ namespace base
 			{
 				for (int i = 0; i != packetData.size(); ++i)
 				{
-					boost::checked_delete<AbstractComponent>(reinterpret_cast<AbstractComponent*>(packetData[i]));
+//					boost::checked_delete<AbstractComponent>(reinterpret_cast<AbstractComponent*>(packetData[i]));
 				}
+//				packetData.clear();
 			}
 			else if (MessagePacketType::MESSAGE_PACKET_TYPE_CREW == messagePacketType)
 			{

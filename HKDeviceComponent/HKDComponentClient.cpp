@@ -1,3 +1,4 @@
+#include "boost/pointer_cast.hpp"
 #include "boost/make_shared.hpp"
 #ifdef _WINDOWS
 #include "glog/log_severity.h"
@@ -11,8 +12,8 @@
 #include "Protocol/DataPhrase.h"
 using DataParser = base::protocol::DataParser;
 using DataPacker = base::protocol::DataPacker;
-#include "Protocol/Component/ComponentPhrase.h"
-#include "Protocol/Device/DevicePhrase.h"
+#include "Protocol/ComponentPhrase.h"
+#include "Protocol/DevicePhrase.h"
 #include "Xml/XmlCodec.h"
 using XMLParser = base::xml::XMLParser;
 using XMLPacker = base::xml::XMLPacker;
@@ -22,7 +23,7 @@ using AbstractComponent = base::component::AbstractComponent;
 using DataPacket = base::packet::DataPacket;
 using DataPacketPtr = boost::shared_ptr<DataPacket>;
 using MessagePacket = base::packet::MessagePacket;
-using MessagePacketPtr = boost::shared_ptr<MessagePacket>
+using MessagePacketPtr = boost::shared_ptr<MessagePacket>;
 #include "HKDComponentClient.h"
 
 HKDComponentClient::HKDComponentClient()
@@ -66,18 +67,19 @@ const std::string HKDComponentClient::buildAutoRegisterToBrokerMessage()
 {
 	std::string msgstr;
 	AbstractComponent component(
-		base::component::ComponentType::COMPONENT_TYPE_XMQ);
+		base::component::ComponentType::COMPONENT_TYPE_HKD);
 	component.setComponentID(getHKDClientInfoByName("Component.HKD.ID"));
 	component.setComponentName(getHKDClientInfoByName("Component.HKD.Name"));
-	boost::shared_ptr<DataPacket> datapkt{
-		boost::make_shared<MessagePacket>(
-			base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_COMPONENT,
-			static_cast<int>(base::protocol::ComponentCommand::COMPONENT_COMMAND_SIGNIN_REQ)) };
+	boost::shared_ptr<DataPacket> pkt{
+		boost::make_shared<MessagePacket>(base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_COMPONENT) };
 
-	if (datapkt)
+	if (pkt)
 	{
-		datapkt->setPacketData(&component);
-		msgstr = DataPacker().packData(datapkt);
+		MessagePacketPtr msgpkt{ boost::dynamic_pointer_cast<MessagePacket>(pkt) };
+		msgpkt->setMessagePacketCommand(
+			static_cast<int>(base::protocol::ComponentCommand::COMPONENT_COMMAND_SIGNIN_REQ));
+		pkt->setPacketData(&component);
+		msgstr = DataPacker().packData(pkt);
 	}
 
 	return msgstr;
@@ -101,13 +103,14 @@ void HKDComponentClient::processComponentMessage(DataPacketPtr pkt)
 	MessagePacketPtr msgpkt{ boost::dynamic_pointer_cast<MessagePacket>(pkt) };
 	const base::protocol::ComponentCommand command{
 		static_cast<base::protocol::ComponentCommand>(msgpkt->getMessagePacketCommand()) };
-	AbstractComponent* ac{ reinterpret_cast<AbstractComponent*>(pkt->getPacketData()) };
+//	AbstractComponent* ac{ reinterpret_cast<AbstractComponent*>(pkt->getPacketData()) };
 
 	if (base::protocol::ComponentCommand::COMPONENT_COMMAND_SIGNIN_REP == command)
 	{
+		const char* componentID{
+			reinterpret_cast<const char*>(pkt->getPacketData()) };
 		//无论注册还是心跳都保存组件ID标识
-		setHKDClientInfoWithName("Component.HKD.ID", ac->getComponentID());
-//		setHKDClientInfoWithName("Component.HKD.Name", ac->getComponentName());
+		setHKDClientInfoWithName("Component.HKD.ID", componentID);
 	}
 }
 
@@ -118,12 +121,13 @@ void HKDComponentClient::processDeviceMessage(const std::string fromID, DataPack
 		static_cast<base::protocol::DeviceCommand>(msgpkt->getMessagePacketCommand()) };
 	SurveillanceDevice* sd{ reinterpret_cast<SurveillanceDevice*>(pkt->getPacketData()) };
 	int e{ eBadOperate };
+	std::vector<AbstractCamera> cameras;
 
 	if (sd)
 	{
 		if (base::protocol::DeviceCommand::DEVICE_COMMAND_NEW_REQ == command)
 		{
-			e = addNewDevice(sd);
+			e = addNewDevice(sd, cameras);
 		}
 		else if (base::protocol::DeviceCommand::DEVICE_COMMAND_DELETE_REQ == command)
 		{
@@ -133,7 +137,7 @@ void HKDComponentClient::processDeviceMessage(const std::string fromID, DataPack
 		{
 			if (eSuccess == deleteDeviceByID(sd->getDeviceID()))
 			{
-				e = addNewDevice(sd);
+				e = addNewDevice(sd, cameras);
 			}
 		}
 	}
@@ -142,22 +146,26 @@ void HKDComponentClient::processDeviceMessage(const std::string fromID, DataPack
 		fromID,
 		static_cast<int>(command) + 1,
 		e,
-		pkt->getPacketSequence() + 1);
+		pkt->getPacketSequence() + 1,
+		cameras,
+		sd->getDeviceID());
 }
 
-int HKDComponentClient::addNewDevice(SurveillanceDevice* sd /* = nullptr */)
+int HKDComponentClient::addNewDevice(
+	SurveillanceDevice* sd, 
+	std::vector<AbstractCamera>& cameras)
 {
 	int e{ eBadNewObject };
 	const std::string did{ sd->getDeviceID() };
 	const base::device::SurveillanceDeviceType dt{ sd->getDeviceType() };
 	const std::string address{ sd->getDeviceIPv4Address() }, name{ sd->getLoginUserName() }, password{ sd->getLoginUserPassword() };
-	const unsigned port{ sd->getDevicePortNumber() };
+	const unsigned short port{ sd->getDevicePortNumber() };
 
 	AbstractDevicePtr adp{
 		boost::make_shared<HikvisionDevice>(did, dt) };
 	if (adp)
 	{
-		boost::shared_ptr<SurveillanceDevice> sdp{ 
+		SurveillanceDevicePtr sdp{ 
 			boost::dynamic_pointer_cast<SurveillanceDevice>(adp) };
 		sdp->setDeviceIPv4Address(address);
 		sdp->setDevicePortNumber(port);
@@ -167,6 +175,7 @@ int HKDComponentClient::addNewDevice(SurveillanceDevice* sd /* = nullptr */)
 
 		if (eSuccess == e)
 		{
+			sdp->getDeviceCamera(cameras);
 			deviceGroup.insert(did, adp);
 			LOG(INFO) << "Start new device successfully with address = " << address <<
 				", port = " << port <<
@@ -210,19 +219,22 @@ int HKDComponentClient::deleteDeviceByID(const std::string did)
 	{
 		LOG(WARNING) << "Can not find device ID = " << did << ".";
 	}
+
+	return e;
 }
 
 int HKDComponentClient::replyMessageWithResult(
 	const std::string fromID, 
-	const int command /* = 0 */, 
-	const int result /* = 0 */, 
-	const long long sequence /* = 0 */)
+	const int command, 
+	const int result, 
+	const long long sequence, 
+	const std::vector<AbstractCamera>& cameras,
+	const std::string did)
 {
 	int e{ eBadNewObject };
 
 	boost::shared_ptr<DataPacket> pkt{
-		boost::make_shared<MessagePacket>(
-			static_cast<int>(base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_DEVICE)) };
+		boost::make_shared<MessagePacket>(base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_DEVICE) };
 
 	if (pkt)
 	{
@@ -230,6 +242,11 @@ int HKDComponentClient::replyMessageWithResult(
 		msgpkt->setMessagePacketCommand(command);
 		msgpkt->setMessageStatus(result);
 		msgpkt->setPacketSequence(sequence);
+		if (0 < cameras.size())
+		{
+			pkt->setPacketData((void*)&cameras);
+		}
+		pkt->setPacketData((void*)did.c_str());
 		const std::string rep{ DataPacker().packData(pkt) };
 
 		//客户端应答时必须交换fromID和toID

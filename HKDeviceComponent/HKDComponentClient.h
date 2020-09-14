@@ -15,10 +15,12 @@
 using DataPacket = base::packet::DataPacket;
 using DataPacketPtr = boost::shared_ptr<DataPacket>;
 #include "Device/Hikvision/HikvisionDevice.h"
+using AbstractCamera = base::device::AbstractCamera;
 using AbstractDevice = base::device::AbstractDevice;
 using SurveillanceDevice = base::device::SurveillanceDevice;
 using HikvisionDevice = base::device::HikvisionDevice;
-using AbstractDevicePtr = boost::shared_ptr<base::device::AbstractDevice>;
+using AbstractDevicePtr = boost::shared_ptr<AbstractDevice>;
+using SurveillanceDevicePtr = boost::shared_ptr<SurveillanceDevice>;
 #include "DataStruct/UnorderedMap.h"
 using AbstractDeviceGroup = UnorderedMap<const std::string, AbstractDevicePtr>;
 #include "Network/AbstractClient.h"
@@ -48,13 +50,17 @@ private:
 		const std::string fromID, 
 		DataPacketPtr pkt);
 
-	int addNewDevice(SurveillanceDevice* sd = nullptr);
+	int addNewDevice(
+		SurveillanceDevice* sd, 
+		std::vector<AbstractCamera>& cameras);
 	int deleteDeviceByID(const std::string did);
 	int replyMessageWithResult(
 		const std::string fromID,
-		const int command = 0,
-		const int result = 0,
-		const long long sequence = 0);
+		const int command,
+		const int result,
+		const long long sequence,
+		const std::vector<AbstractCamera>& cameras,
+		const std::string did);
 
 private:
 	AbstractDeviceGroup deviceGroup;

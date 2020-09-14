@@ -207,10 +207,6 @@
     <ClCompile Include="..\3rdPart\libzmq-master\src\zmq_utils.cpp" />
     <ClCompile Include="..\3rdPart\libzmq-master\src\zmtp_engine.cpp" />
     <ClCompile Include="..\Source\Hardware\Cpu.cpp" />
-    <ClCompile Include="..\Source\MessageQueue\AbstractMQClient.cpp" />
-    <ClCompile Include="..\Source\Network\AlgorithmComponentClient.cpp" />
-    <ClCompile Include="..\Source\Network\AbstractComponentClient.cpp" />
-    <ClCompile Include="AIServiceComponentClient.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -3412,10 +3408,6 @@
     <ClInclude Include="..\Include\Define.h" />
     <ClInclude Include="..\Include\Error.h" />
     <ClInclude Include="..\Include\Hardware\Cpu.h" />
-    <ClInclude Include="..\Include\MessageQueue\AbstractMQClient.h" />
-    <ClInclude Include="..\Include\Network\AlgorithmComponentClient.h" />
-    <ClInclude Include="..\Include\Network\AbstractComponentClient.h" />
-    <ClInclude Include="AIServiceComponentClient.h" />
   </ItemGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>

@@ -4,13 +4,17 @@
 using AbstractComponent = base::component::AbstractComponent;
 #include "Packet/Message/MessagePacket.h"
 using MessagePacketPtr = boost::shared_ptr<base::packet::MessagePacket>;
-#include "Protocol/Message.pb.h"
-#include "Protocol/Component/ComponentPhrase.h"
-#include "Protocol/Algorithm/AlgorithmPhrase.h"
-#include "Protocol/Device/DevicePhrase.h"
-#include "Protocol/Status/StatusPhrase.h"
-#include "Protocol/Crew/CrewPhrase.h"
-#include "Protocol/Alarm/AlarmPhrase.h"
+#ifdef WINDOWS
+#include "Protocol/win/Message.pb.h"
+#else
+#include "Protocol/linux/Message.pb.h"
+#endif//WINDOWS
+#include "Protocol/ComponentPhrase.h"
+#include "Protocol/AlgorithmPhrase.h"
+#include "Protocol/DevicePhrase.h"
+#include "Protocol/StatusPhrase.h"
+#include "Protocol/CrewPhrase.h"
+#include "Protocol/AlarmPhrase.h"
 #include "Protocol/DataPhrase.h"
 
 namespace base
@@ -25,7 +29,7 @@ namespace base
 			DataPacketPtr pkt;
 			msg::MSG msg_;
 
-			if (msg_.ParseFromArray(data.c_str(), data.length()))
+			if (msg_.ParseFromArray(data.c_str(), (int)data.length()))
 			{
 				if (msg_.has_alarm())
 				{
@@ -33,7 +37,7 @@ namespace base
 				}
 				else if (msg_.has_algorithm())
 				{
-//					pkt = AlgorithmParser().parseAlgorithmMessage(msg_.release_algorithm());
+					pkt = AlgorithmParser().parseMessage(msg_.release_algorithm());
 				}
 				else if (msg_.has_component())
 				{
@@ -49,7 +53,7 @@ namespace base
 				}
 				else if (msg_.has_status())
 				{
-//					pkt = StatusParser().parseStatusMessage(msg_.release_status());
+					pkt = StatusParser().parseMessage(msg_.release_status());
 				}
 				else if (msg_.has_user())
 				{
@@ -102,13 +106,7 @@ namespace base
 					}
 					case msg::MSG_Type::MSG_Type_DEVICE:
 					{
-// 						msg::Device* md{
-// 							reinterpret_cast<msg::Device*>(
-// 								DevicePacker().packToDeviceMessage(pkt)) };
-// 						mm.set_allocated_device(md);
-// 						mm.SerializeToString(&rep);
-// 						mm.release_device();
-
+						msgstr = DevicePacker().packMessage(pkt);
 						break;
 					}
 					case msg::MSG_Type::MSG_Type_STATUS:

@@ -65,7 +65,7 @@ static int createNewAsynchronousServer(void)
 		boost::make_shared<MDCServer>(
 			ServerModuleType::SERVER_MODULE_TYPE_MAJORDOMO_BROKER,
 			ClientModuleType::CLIENT_MODULE_TYPE_MAJORDOMO_WORKER,
-			(boost::format("tcp://%s:%d") % gUpstreamIP % gUpstreamPort).str(),
+			gUpstreamIP.empty() ? "" : (boost::format("tcp://%s:%d") % gUpstreamIP % gUpstreamPort).str(),
 			gServiceName) };
 	if (server)
 	{

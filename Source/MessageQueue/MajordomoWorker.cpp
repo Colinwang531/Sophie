@@ -1,7 +1,6 @@
 #include "boost/bind.hpp"
 #include "boost/date_time/posix_time/posix_time.hpp"
 #include "boost/thread.hpp"
-#include "boost/uuid/uuid.hpp"
 #include "boost/uuid/uuid_generators.hpp"
 #include "boost/uuid/uuid_io.hpp"
 #include "Error.h"
@@ -39,42 +38,35 @@ namespace mq
 
 			if (eSuccess == e && ctx.valid())
 			{
-				if (!dealer)
+				const int cores{ CPU().getCPUCoreNumber() };
+				ctx.set(ZMQ_IO_THREADS, &cores, sizeof(const int));
+				dealer = ctx.create_socket(ZMQ_DEALER);
+
+				if (dealer)
 				{
-					const int cores{ CPU().getCPUCoreNumber() };
-					ctx.set(ZMQ_IO_THREADS, &cores, sizeof(const int));
-					dealer = ctx.create_socket(ZMQ_DEALER);
+					int linger{ 0 };
+					dealer->setsockopt(ZMQ_LINGER, &linger, sizeof(int));
+					dealer->setsockopt(ZMQ_IDENTITY, workerID.c_str(), workerID.length());
+					e = dealer->connect(address.c_str()) ? eBadConnect : eSuccess;
 
-					if (dealer)
+					if (eSuccess == e)
 					{
-						int linger{ 0 };
-						dealer->setsockopt(ZMQ_LINGER, &linger, sizeof(int));
-						dealer->setsockopt(ZMQ_IDENTITY, workerID.c_str(), workerID.length());
-						e = 0 < dealer->connect(address.c_str()) ? eSuccess : eBadConnect;
-
-						if (eSuccess == e)
-						{
-							void* t1{
-								ThreadPool::get_mutable_instance().createNewThread(
-									boost::bind(&MajordomoWorker::pollerThreadProc, this)) };
-							void* t2{
-								ThreadPool::get_mutable_instance().createNewThread(
-									boost::bind(&MajordomoWorker::autoRegisterToMajordomoBrokerThreadProc, this)) };
-							e = t1 && t2 ? eSuccess : eBadNewThread;
-						}
-						else
-						{
-							stopWorker();
-						}
+						void* t1{
+							ThreadPool::get_mutable_instance().createNewThread(
+								boost::bind(&MajordomoWorker::pollerThreadProc, this)) };
+						void* t2{
+							ThreadPool::get_mutable_instance().createNewThread(
+								boost::bind(&MajordomoWorker::autoRegisterToMajordomoBrokerThreadProc, this)) };
+						e = t1 && t2 ? eSuccess : eBadNewThread;
 					}
 					else
 					{
-						e = eBadNewSocket;
+						stopWorker();
 					}
 				}
 				else
 				{
-					e = eObjectExisted;
+					e = eBadNewSocket;
 				}
 			}
 			else
@@ -128,6 +120,8 @@ namespace mq
 					MessageData msgdata;
 					if (eSuccess == msgdata.recvData(dealer))
 					{
+						//Delimiter
+						msgdata.popFront();
 						//Request/Response
 						const std::string flagID{ msgdata.popFront() };
 						//FromID
@@ -148,7 +142,7 @@ namespace mq
 		{
 			AbstractClient* ac{ reinterpret_cast<AbstractClient*>(abstractClient) };
 			//起始时间设为0保证第一次时间判断就执行注册
-			long long startTime{ Time().tickcount() };
+			long long startTime{ 0 };
 
 			while (ac && !ac->isStopped())
 			{
@@ -161,8 +155,11 @@ namespace mq
 					if (!msgstr.empty())
 					{
 						MessageData msgdata;
-						msgdata.pushFront("");
 						msgdata.pushFront(msgstr);
+						msgdata.pushFront("");
+						msgdata.pushFront(workerID);
+						msgdata.pushFront("request");
+						msgdata.pushFront("");
 						msgdata.sendData(dealer);
 					}
 				}

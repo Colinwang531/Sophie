@@ -23,9 +23,11 @@ namespace mq
 			while (s)
 			{
 				zmq::msg_t msg;
+				msg.init();
 				try
 				{
-					if (0 < s->recv(&msg, ZMQ_DONTWAIT))
+					int r{ s->recv(&msg, ZMQ_DONTWAIT) };
+					if (!r)
 					{
 						const std::string msgstr{ static_cast<const char*>(msg.data()), msg.size() };
 						dataGroup.push_back(msgstr);
@@ -60,7 +62,7 @@ namespace mq
 
 			if (eSuccess == e)
 			{
-				const int totalCount{ dataGroup.size() };
+				const int totalCount{ (const int)dataGroup.size() };
 
 				for (int i = 0; i != totalCount; ++i)
 				{
@@ -69,8 +71,9 @@ namespace mq
 					try
 					{
 						zmq::msg_t msg;
+						msg.init_size(msgstr.size());
 						memcpy(msg.data(), msgstr.c_str(), msgstr.size());
-						s->send(&msg, i < totalCount - 1 ? ZMQ_SNDMORE : 0);
+						s->send(&msg, i < totalCount - 1 ? ZMQ_DONTWAIT | ZMQ_SNDMORE : ZMQ_DONTWAIT);
 					}
 					catch (std::exception&)
 					{
@@ -87,14 +90,8 @@ namespace mq
 
 		int MessageData::pushFront(const std::string data)
 		{
-			int e{ !data.empty() ? eSuccess : eInvalidParameter };
-
-			if (eSuccess == e)
-			{
-				dataGroup.insert(dataGroup.begin(), data);
-			}
-
-			return e;
+			dataGroup.insert(dataGroup.begin(), data);
+			return eSuccess;
 		}
 
 		int MessageData::pushEnd(const std::string data)

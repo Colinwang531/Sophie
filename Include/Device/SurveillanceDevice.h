@@ -13,6 +13,8 @@
 #ifndef BASE_DEVICE_SURVEILLANCE_DEVICE_H
 #define BASE_DEVICE_SURVEILLANCE_DEVICE_H
 
+#include <vector>
+#include "Camera/AbstractCamera.h"
 #include "Device/AbstractDevice.h"
 
 namespace base
@@ -106,6 +108,11 @@ namespace base
 			{
 				return loginUserPassword;
 			}
+
+			//获取设备摄像机信息
+			//@cameras : 摄像机信息集合
+			//@Return : 错误码
+			virtual int getDeviceCamera(std::vector<AbstractCamera>& cameras);
 
 		protected:
 			//登录/注销设备

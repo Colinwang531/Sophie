@@ -11,6 +11,7 @@ message ComponentInfo
 		HKD = 3;
 		DHD = 4;
 		ALM = 5;
+		AI = 6;
 	}
 	
 	required Type type = 1;

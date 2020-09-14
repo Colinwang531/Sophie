@@ -35,9 +35,7 @@ namespace base
 		{
 		public:
 			AbstractAlgorithm(
-				const std::string cid,
-				const AlgorithmType type = AlgorithmType::ALGORITHM_TYPE_NONE,
-				const int gpu = 0);
+				const AlgorithmType type = AlgorithmType::ALGORITHM_TYPE_NONE);
 			virtual ~AbstractAlgorithm(void);
 
 		public:
@@ -48,8 +46,12 @@ namespace base
 				return algorithmType;
 			}
 
-			//获取GPUID标识
-			//@Return : GPUID标识
+			//读/写GPU标识
+			//@Return : GPU标识
+			inline void setGpuID(const int id)
+			{
+				gpuID = id;
+			}
 			inline const int getGPUID(void) const
 			{
 				return gpuID;
@@ -58,13 +60,18 @@ namespace base
 			//读/写算法检测阈值
 			//@threshold : 检测阈值
 			//@Return : 检测阈值
-			inline void setDetectThreshold(const float threshold = 0.0f)
+			inline void setDetectThreshold(const float first = 0.0f, const float second = 0.0f)
 			{
-				detectThreshold = threshold;
+				firstDetectThreshold = first;
+				secondDetectThreshold = second;
 			}
-			inline const float getDetectThreshold(void) const
+			inline const float getFirstDetectThreshold(void) const
 			{
-				return detectThreshold;
+				return firstDetectThreshold;
+			}
+			inline const float getSecondDetectThreshold(void) const
+			{
+				return secondDetectThreshold;
 			}
 
 			//读/写算法跟踪阈值
@@ -79,26 +86,12 @@ namespace base
 				return trackThreshold;
 			}
 
-			//读/写人脸检测相似度阈值
-			//@similar : 相似度阈值
-			//@Return : 错误码
-			//@Comment : 该方法仅人脸算法实现
-			virtual int setFaceCompareSimilar(const float similar = 0.52f);
-			virtual int getFaceCompareSimilar(float& similar) const;
-
-			//读/写算法扩展检测阈值
-			//@threshold : 扩展检测阈值
-			//@Return : 错误码
-			//@Comment : 该方法仅打电话算法实现
-			virtual int setExtendDetectThreshold(const float threshold = 0.0f);
-			virtual int getExtendDetectThreshold(float& threshold) const;
-
 		private:
 			const AlgorithmType algorithmType;
-			const int gpuID;
-			float detectThreshold;
+			int gpuID;
+			float firstDetectThreshold;
+			float secondDetectThreshold;
 			float trackThreshold;
-			const std::string cameraID;
 		};//class AbstractAlgorithm
 	}//namespace ai
 }//namespace base

@@ -27,7 +27,7 @@ namespace base
 
 		int AbstractServer::startServer(const unsigned short listenPort /* = 61001 */)
 		{
-			return gMinPortNumber < listenPort&& gMaxPortNumber > listenPort ? 
+			return gMinPortNumber < listenPort && gMaxPortNumber > listenPort ? 
 				createNewServerModule((boost::format("tcp://*:%d") % listenPort).str()) : eInvalidParameter;
 		}
 

@@ -1,3 +1,4 @@
+#include "Error.h"
 #include "Device/SurveillanceDevice.h"
 
 namespace base
@@ -13,6 +14,11 @@ namespace base
 			: AbstractDevice(did), deviceFactory{ factory }, deviceType{ type }
 		{}
 		SurveillanceDevice::~SurveillanceDevice(){}
+
+		int SurveillanceDevice::getDeviceCamera(std::vector<AbstractCamera>& cameras)
+		{
+			return eNotSupport;
+		}
 
 		int SurveillanceDevice::loginDevice()
 		{

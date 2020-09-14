@@ -1,0 +1,778 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{da93e06a-0e25-42fe-8d64-b76949058a12}</ProjectGuid>
+    <RootNamespace>HelmetDetectComponent</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;WINDOWS;_WIN32;_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;ZMQ_STATIC;ZMQ_HAVE_WS;ZMQ_HAVE_WINDOWS;ZMQ_IOTHREAD_POLLER_USE_SELECT;ZMQ_POLL_BASED_ON_SELECT;HAVE_SNPRINTF;GLOG_NO_ABBREVIATED_SEVERITIES;GOOGLE_GLOG_DLL_DECL=;BOOST_ALL_NO_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdPart\boost_1_72_0;$(SolutionDir)3rdPart\glog-master-win;$(SolutionDir)3rdPart\protobuf-master-win\src;$(SolutionDir)3rdPart\libzmq-master-win\include;$(SolutionDir)3rdPart\libzmq-master-win\src;$(SolutionDir)Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>ws2_32.lib;Iphlpapi.lib;Bcrypt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\date_time\src\gregorian\date_generators.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\date_time\src\gregorian\gregorian_types.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\date_time\src\gregorian\greg_month.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\date_time\src\gregorian\greg_weekday.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\date_time\src\posix_time\posix_time_types.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\cmdline.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\config_file.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\convert.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\options_description.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\parsers.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\positional_options.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\split.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\utf8_codecvt_facet.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\value_semantic.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\variables_map.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\thread\src\win32\boost_thread.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\thread\src\win32\thread_primitives.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\thread\src\win32\tss_dll.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\thread\src\win32\tss_pe.cpp" />
+    <ClCompile Include="..\3rdPart\glog-master-win\demangle.cc" />
+    <ClCompile Include="..\3rdPart\glog-master-win\logging.cc" />
+    <ClCompile Include="..\3rdPart\glog-master-win\port.cc" />
+    <ClCompile Include="..\3rdPart\glog-master-win\raw_logging.cc" />
+    <ClCompile Include="..\3rdPart\glog-master-win\signalhandler.cc" />
+    <ClCompile Include="..\3rdPart\glog-master-win\symbolize.cc" />
+    <ClCompile Include="..\3rdPart\glog-master-win\utilities.cc" />
+    <ClCompile Include="..\3rdPart\glog-master-win\vlog_is_on.cc" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\external\sha1\sha1.c" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\address.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\client.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\clock.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\ctx.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\curve_client.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\curve_mechanism_base.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\curve_server.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\dealer.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\decoder_allocators.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\devpoll.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\dgram.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\dish.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\dist.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\endpoint.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\epoll.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\err.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\fq.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\gather.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\gssapi_client.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\gssapi_mechanism_base.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\gssapi_server.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\io_object.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\io_thread.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\ip.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\ipc_address.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\ipc_connecter.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\ipc_listener.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\ip_resolver.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\kqueue.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\lb.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\mailbox.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\mailbox_safe.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\mechanism.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\mechanism_base.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\metadata.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\msg.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\mtrie.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\norm_engine.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\null_mechanism.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\object.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\options.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\own.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\pair.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\peer.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\pgm_receiver.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\pgm_sender.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\pgm_socket.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\pipe.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\plain_client.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\plain_server.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\poll.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\poller_base.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\polling_util.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\pollset.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\precompiled.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\proxy.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\pub.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\pull.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\push.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\radio.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\radix_tree.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\random.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\raw_decoder.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\raw_encoder.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\raw_engine.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\reaper.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\rep.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\req.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\router.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\scatter.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\select.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\server.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\session_base.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\signaler.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\socket_base.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\socket_poller.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\socks.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\socks_connecter.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\stream.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\stream_connecter_base.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\stream_engine_base.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\stream_listener_base.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\sub.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\tcp.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\tcp_address.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\tcp_connecter.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\tcp_listener.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\thread.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\timers.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\tipc_address.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\tipc_connecter.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\tipc_listener.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\trie.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\tweetnacl.c" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\udp_address.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\udp_engine.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\v1_decoder.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\v1_encoder.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\v2_decoder.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\v2_encoder.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\v3_1_encoder.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\vmci.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\vmci_address.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\vmci_connecter.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\vmci_listener.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\ws_address.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\ws_connecter.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\ws_decoder.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\ws_encoder.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\ws_engine.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\ws_listener.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\xpub.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\xsub.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\zap_client.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\zmq.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\zmq_utils.cpp" />
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\zmtp_engine.cpp" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\any.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\any.pb.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\any_lite.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\api.pb.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\arena.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\code_generator.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\command_line_interface.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_enum.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_enum_field.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_extension.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_field.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_file.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_generator.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_helpers.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_map_field.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_message.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_message_field.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_padding_optimizer.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_primitive_field.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_service.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_string_field.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\importer.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\parser.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\plugin.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\plugin.pb.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\subprocess.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\zip_writer.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\descriptor.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\descriptor.pb.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\descriptor_database.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\duration.pb.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\dynamic_message.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\empty.pb.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\extension_set.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\extension_set_heavy.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\field_mask.pb.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\generated_enum_util.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\generated_message_reflection.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\generated_message_table_driven.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\generated_message_table_driven_lite.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\generated_message_util.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\implicit_weak_message.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\io\coded_stream.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\io\gzip_stream.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\io\io_win32.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\io\printer.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\io\strtod.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\io\tokenizer.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\io\zero_copy_stream.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\io\zero_copy_stream_impl.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\io\zero_copy_stream_impl_lite.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\map.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\map_field.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\message.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\message_lite.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\parse_context.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\reflection_ops.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\repeated_field.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\service.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\source_context.pb.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\struct.pb.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\bytestream.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\common.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\int128.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\status.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\statusor.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\stringpiece.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\stringprintf.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\structurally_valid.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\strutil.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\substitute.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\time.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\testing\file.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\text_format.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\timestamp.pb.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\type.pb.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\unknown_field_set.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\delimited_message_util.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\field_comparator.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\field_mask_util.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\datapiece.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\default_value_objectwriter.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\error_listener.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\field_mask_utility.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\json_escaping.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\json_objectwriter.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\json_stream_parser.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\object_writer.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\protostream_objectsource.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\protostream_objectwriter.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\proto_writer.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\type_info.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\type_info_test_helper.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\utility.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\json_util.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\message_differencer.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\time_util.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\type_resolver_util.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\wire_format.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\wire_format_lite.cc" />
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\wrappers.pb.cc" />
+    <ClCompile Include="..\Source\AI\AbstractAlgorithm.cpp" />
+    <ClCompile Include="..\Source\Camera\AbstractCamera.cpp" />
+    <ClCompile Include="..\Source\CommandLine\CommandLine.cpp" />
+    <ClCompile Include="..\Source\Component\AbstractComponent.cpp" />
+    <ClCompile Include="..\Source\Device\AbstractDevice.cpp" />
+    <ClCompile Include="..\Source\Device\SurveillanceDevice.cpp" />
+    <ClCompile Include="..\Source\Hardware\Cpu.cpp" />
+    <ClCompile Include="..\Source\MessageQueue\MajordomoWorker.cpp" />
+    <ClCompile Include="..\Source\MessageQueue\MessageData.cpp" />
+    <ClCompile Include="..\Source\Network\AbstractClient.cpp" />
+    <ClCompile Include="..\Source\Packet\DataPacket.cpp" />
+    <ClCompile Include="..\Source\Packet\Message\MessagePacket.cpp" />
+    <ClCompile Include="..\Source\Protocol\AlarmPhrase.cpp" />
+    <ClCompile Include="..\Source\Protocol\AlgorithmPhrase.cpp" />
+    <ClCompile Include="..\Source\Protocol\ComponentPhrase.cpp" />
+    <ClCompile Include="..\Source\Protocol\CrewPhrase.cpp" />
+    <ClCompile Include="..\Source\Protocol\DataPhrase.cpp" />
+    <ClCompile Include="..\Source\Protocol\DevicePhrase.cpp" />
+    <ClCompile Include="..\Source\Protocol\StatusPhrase.cpp" />
+    <ClCompile Include="..\Source\Protocol\win\Alarm.pb.cc" />
+    <ClCompile Include="..\Source\Protocol\win\Algorithm.pb.cc" />
+    <ClCompile Include="..\Source\Protocol\win\Component.pb.cc" />
+    <ClCompile Include="..\Source\Protocol\win\Crew.pb.cc" />
+    <ClCompile Include="..\Source\Protocol\win\Device.pb.cc" />
+    <ClCompile Include="..\Source\Protocol\win\Message.pb.cc" />
+    <ClCompile Include="..\Source\Protocol\win\Status.pb.cc" />
+    <ClCompile Include="..\Source\Protocol\win\User.pb.cc" />
+    <ClCompile Include="..\Source\Thread\ThreadPool.cpp" />
+    <ClCompile Include="..\Source\Time\XTime.cpp" />
+    <ClCompile Include="..\Source\Xml\XmlCodec.cpp" />
+    <ClCompile Include="HelmetDetectComponentClient.cpp" />
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\3rdPart\glog-master-win\base\commandlineflags.h" />
+    <ClInclude Include="..\3rdPart\glog-master-win\base\googleinit.h" />
+    <ClInclude Include="..\3rdPart\glog-master-win\base\mutex.h" />
+    <ClInclude Include="..\3rdPart\glog-master-win\config.h" />
+    <ClInclude Include="..\3rdPart\glog-master-win\demangle.h" />
+    <ClInclude Include="..\3rdPart\glog-master-win\glog\logging.h" />
+    <ClInclude Include="..\3rdPart\glog-master-win\glog\log_severity.h" />
+    <ClInclude Include="..\3rdPart\glog-master-win\glog\raw_logging.h" />
+    <ClInclude Include="..\3rdPart\glog-master-win\glog\stl_logging.h" />
+    <ClInclude Include="..\3rdPart\glog-master-win\glog\vlog_is_on.h" />
+    <ClInclude Include="..\3rdPart\glog-master-win\mock-log.h" />
+    <ClInclude Include="..\3rdPart\glog-master-win\port.h" />
+    <ClInclude Include="..\3rdPart\glog-master-win\stacktrace.h" />
+    <ClInclude Include="..\3rdPart\glog-master-win\stacktrace_generic-inl.h" />
+    <ClInclude Include="..\3rdPart\glog-master-win\stacktrace_libunwind-inl.h" />
+    <ClInclude Include="..\3rdPart\glog-master-win\stacktrace_powerpc-inl.h" />
+    <ClInclude Include="..\3rdPart\glog-master-win\stacktrace_windows-inl.h" />
+    <ClInclude Include="..\3rdPart\glog-master-win\stacktrace_x86-inl.h" />
+    <ClInclude Include="..\3rdPart\glog-master-win\stacktrace_x86_64-inl.h" />
+    <ClInclude Include="..\3rdPart\glog-master-win\symbolize.h" />
+    <ClInclude Include="..\3rdPart\glog-master-win\utilities.h" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\external\sha1\sha1.h" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\include\zmq.h" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\include\zmq_utils.h" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\address.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\array.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\atomic_counter.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\atomic_ptr.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\blob.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\client.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\clock.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\command.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\condition_variable.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\config.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\ctx.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\curve_client.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\curve_client_tools.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\curve_mechanism_base.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\curve_server.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\dbuffer.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\dealer.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\decoder.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\decoder_allocators.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\devpoll.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\dgram.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\dish.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\dist.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\encoder.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\endpoint.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\epoll.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\err.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\fd.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\fq.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\gather.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\generic_mtrie.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\generic_mtrie_impl.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\gssapi_client.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\gssapi_mechanism_base.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\gssapi_server.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\io_object.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\io_thread.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\ip.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\ipc_address.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\ipc_connecter.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\ipc_listener.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\ip_resolver.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\i_decoder.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\i_encoder.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\i_engine.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\i_mailbox.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\i_poll_events.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\kqueue.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\lb.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\likely.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\macros.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\mailbox.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\mailbox_safe.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\mechanism.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\mechanism_base.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\metadata.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\msg.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\mtrie.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\mutex.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\norm_engine.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\null_mechanism.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\object.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\options.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\own.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\pair.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\peer.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\pgm_receiver.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\pgm_sender.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\pgm_socket.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\pipe.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\plain_client.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\plain_common.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\plain_server.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\platform.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\poll.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\poller.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\poller_base.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\polling_util.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\pollset.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\precompiled.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\proxy.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\pub.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\pull.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\push.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\radio.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\radix_tree.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\random.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\raw_decoder.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\raw_encoder.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\raw_engine.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\reaper.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\rep.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\req.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\router.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\scatter.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\secure_allocator.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\select.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\server.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\session_base.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\signaler.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\socket_base.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\socket_poller.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\socks.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\socks_connecter.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\stdint.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\stream.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\stream_connecter_base.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\stream_engine_base.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\stream_listener_base.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\sub.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\tcp.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\tcp_address.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\tcp_connecter.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\tcp_listener.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\thread.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\timers.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\tipc_address.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\tipc_connecter.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\tipc_listener.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\trie.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\tweetnacl.h" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\udp_address.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\udp_engine.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\v1_decoder.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\v1_encoder.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\v2_decoder.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\v2_encoder.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\v2_protocol.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\v3_1_encoder.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\vmci.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\vmci_address.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\vmci_connecter.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\vmci_listener.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\windows.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\wire.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\ws_address.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\ws_connecter.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\ws_decoder.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\ws_encoder.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\ws_engine.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\ws_listener.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\ws_protocol.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\xpub.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\xsub.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\ypipe.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\ypipe_base.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\ypipe_conflate.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\yqueue.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\zap_client.hpp" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\zmq_draft.h" />
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\zmtp_engine.hpp" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\any.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\any.pb.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\api.pb.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\arena.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\arenastring.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\arena_impl.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\code_generator.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\command_line_interface.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_enum.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_enum_field.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_extension.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_field.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_file.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_generator.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_helpers.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_map_field.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_message.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_message_field.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_message_layout_helper.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_options.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_padding_optimizer.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_primitive_field.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_service.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_string_field.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\importer.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\package_info.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\parser.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\plugin.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\plugin.pb.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\scc.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\subprocess.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\zip_writer.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\descriptor.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\descriptor.pb.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\descriptor_database.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\duration.pb.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\dynamic_message.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\empty.pb.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\extension_set.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\extension_set_inl.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\field_mask.pb.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\generated_enum_reflection.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\generated_enum_util.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\generated_message_reflection.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\generated_message_table_driven.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\generated_message_table_driven_lite.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\generated_message_util.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\has_bits.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\implicit_weak_message.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\inlined_string_field.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\io\coded_stream.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\io\gzip_stream.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\io\io_win32.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\io\package_info.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\io\printer.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\io\strtod.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\io\tokenizer.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\io\zero_copy_stream.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\io\zero_copy_stream_impl.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\io\zero_copy_stream_impl_lite.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\map.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\map_entry.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\map_entry_lite.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\map_field.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\map_field_inl.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\map_field_lite.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\message.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\message_lite.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\metadata.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\metadata_lite.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\package_info.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\parse_context.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\port.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\reflection.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\reflection_internal.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\reflection_ops.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\repeated_field.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\service.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\source_context.pb.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\struct.pb.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\bytestream.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\callback.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\casts.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\common.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\fastmem.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\hash.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\int128.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\logging.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\macros.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\map_util.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\mathutil.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\mutex.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\once.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\platform_macros.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\port.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\status.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\statusor.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\status_macros.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\stl_util.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\stringpiece.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\stringprintf.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\strutil.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\substitute.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\template_util.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\time.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\testing\file.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\text_format.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\timestamp.pb.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\type.pb.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\unknown_field_set.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\delimited_message_util.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\field_comparator.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\field_mask_util.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\constants.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\datapiece.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\default_value_objectwriter.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\error_listener.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\expecting_objectwriter.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\field_mask_utility.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\json_escaping.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\json_objectwriter.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\json_stream_parser.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\location_tracker.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\mock_error_listener.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\object_location_tracker.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\object_source.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\object_writer.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\protostream_objectsource.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\protostream_objectwriter.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\proto_writer.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\structured_objectwriter.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\type_info.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\type_info_test_helper.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\utility.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\json_util.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\message_differencer.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\package_info.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\time_util.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\type_resolver.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\type_resolver_util.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\wire_format.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\wire_format_lite.h" />
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\wrappers.pb.h" />
+    <ClInclude Include="..\Include\AI\AbstractAlgorithm.h" />
+    <ClInclude Include="..\Include\Camera\AbstractCamera.h" />
+    <ClInclude Include="..\Include\CommandLine\CommandLine.h" />
+    <ClInclude Include="..\Include\Component\AbstractComponent.h" />
+    <ClInclude Include="..\Include\Device\AbstractDevice.h" />
+    <ClInclude Include="..\Include\Device\SurveillanceDevice.h" />
+    <ClInclude Include="..\Include\Hardware\Cpu.h" />
+    <ClInclude Include="..\Include\MessageQueue\MajordomoWorker.h" />
+    <ClInclude Include="..\Include\MessageQueue\MessageData.h" />
+    <ClInclude Include="..\Include\Network\AbstractClient.h" />
+    <ClInclude Include="..\Include\Packet\DataPacket.h" />
+    <ClInclude Include="..\Include\Packet\Message\MessagePacket.h" />
+    <ClInclude Include="..\Include\Protocol\AlarmPhrase.h" />
+    <ClInclude Include="..\Include\Protocol\AlgorithmPhrase.h" />
+    <ClInclude Include="..\Include\Protocol\ComponentPhrase.h" />
+    <ClInclude Include="..\Include\Protocol\CrewPhrase.h" />
+    <ClInclude Include="..\Include\Protocol\DataPhrase.h" />
+    <ClInclude Include="..\Include\Protocol\DevicePhrase.h" />
+    <ClInclude Include="..\Include\Protocol\StatusPhrase.h" />
+    <ClInclude Include="..\Include\Protocol\win\Alarm.pb.h" />
+    <ClInclude Include="..\Include\Protocol\win\Algorithm.pb.h" />
+    <ClInclude Include="..\Include\Protocol\win\Component.pb.h" />
+    <ClInclude Include="..\Include\Protocol\win\Crew.pb.h" />
+    <ClInclude Include="..\Include\Protocol\win\Device.pb.h" />
+    <ClInclude Include="..\Include\Protocol\win\Message.pb.h" />
+    <ClInclude Include="..\Include\Protocol\win\Status.pb.h" />
+    <ClInclude Include="..\Include\Protocol\win\User.pb.h" />
+    <ClInclude Include="..\Include\Thread\ThreadPool.h" />
+    <ClInclude Include="..\Include\Time\XTime.h" />
+    <ClInclude Include="..\Include\Xml\XmlCodec.h" />
+    <ClInclude Include="HelmetDetectComponentClient.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

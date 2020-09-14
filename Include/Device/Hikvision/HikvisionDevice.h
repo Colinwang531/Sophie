@@ -38,6 +38,11 @@ namespace base
 			int loginDevice(void) override;
 			int logoutDevice(void) override;
 
+			//获取设备摄像机信息
+			//@cameras : 摄像机信息集合
+			//@Return : 错误码
+			int getDeviceCamera(std::vector<AbstractCamera>& cameras) override;
+
 		private:
 			int userID;
 		};//class HikvisionDevice

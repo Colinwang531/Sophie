@@ -6,7 +6,7 @@ namespace base
 	{
 		DataPacket::DataPacket(
 			const DataPacketType type /* = DataPacketType::DATA_PACKET_TYPE_NONE */)
-			: packetType{ type }, packetSequence{ -1 }, packetTimestamp{ 0 }, packetData{ nullptr }
+			: packetType{ type }, packetSequence{ -1 }, packetTimestamp{ 0 }
 		{}
 
 		DataPacket::~DataPacket() {}

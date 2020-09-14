@@ -34,40 +34,33 @@ namespace mq
             
             if (eSuccess == e && ctx.valid())
             {
-                if (!router)
-                {
-					const int cores{ CPU().getCPUCoreNumber() };
-					ctx.set(ZMQ_IO_THREADS, &cores, sizeof(const int));
-                    router = ctx.create_socket(ZMQ_ROUTER);
+				const int cores{ CPU().getCPUCoreNumber() };
+				ctx.set(ZMQ_IO_THREADS, &cores, sizeof(const int));
+				router = ctx.create_socket(ZMQ_ROUTER);
 
-                    if (router)
-                    {
-                        e = 0 < router->bind(address.c_str()) ? eSuccess : eBadBind;
+				if (router)
+				{
+					e = router->bind(address.c_str()) ? eBadBind : eSuccess;
 
-                        if (eSuccess == e)
-                        {
-							void* t1{
-                                ThreadPool::get_mutable_instance().createNewThread(
-                                    boost::bind(&MajordomoBroker::pollerThreadProc, this)) };
-							void* t2{
-								ThreadPool::get_mutable_instance().createNewThread(
-									boost::bind(&MajordomoBroker::autoCheckWorkerTimeoutThreadProc, this)) };
-							return t1 && t2 ? eSuccess : eBadNewThread;
-                        }
-                        else
-                        {
-                            stopBroker();
-                        }
-                    } 
-                    else
-                    {
-                        e = eBadNewSocket;
-                    }
-                }
-                else
-                {
-                    e = eObjectExisted;
-                }
+					if (eSuccess == e)
+					{
+						void* t1{
+							ThreadPool::get_mutable_instance().createNewThread(
+								boost::bind(&MajordomoBroker::pollerThreadProc, this)) };
+						void* t2{
+							ThreadPool::get_mutable_instance().createNewThread(
+								boost::bind(&MajordomoBroker::autoCheckWorkerTimeoutThreadProc, this)) };
+						return t1 && t2 ? eSuccess : eBadNewThread;
+					}
+					else
+					{
+						stopBroker();
+					}
+				}
+				else
+				{
+					e = eBadNewSocket;
+				}
             }
             else
             {

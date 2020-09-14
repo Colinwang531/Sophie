@@ -25,6 +25,7 @@ namespace base
 				{
 					boost::property_tree::read_xml(fileName, pt);
 					valueStr = pt.get<std::string>(fieldName);
+					boost::property_tree::write_xml(fileName, pt);
 				}
 				catch (const std::exception&)
 				{
@@ -52,6 +53,7 @@ namespace base
 			{
 				try
 				{
+					boost::property_tree::read_xml(fileName, pt);
 					pt.put(fieldName, valueStr);
 					boost::property_tree::write_xml(fileName, pt);
 				}

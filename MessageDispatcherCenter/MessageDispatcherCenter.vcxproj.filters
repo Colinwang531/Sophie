@@ -714,30 +714,6 @@
     <ClCompile Include="..\3rdPart\protobuf-master\src\google\protobuf\io\io_win32.cc">
       <Filter>3rd\protobuf\io</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Protocol\Alarm\Alarm.pb.cc">
-      <Filter>Protocol\Alarm</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Protocol\Algorithm\Algorithm.pb.cc">
-      <Filter>Protocol\Algorithm</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Protocol\Crew\Crew.pb.cc">
-      <Filter>Protocol\Crew</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Protocol\Device\Device.pb.cc">
-      <Filter>Protocol\Device</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Protocol\Component\Component.pb.cc">
-      <Filter>Protocol\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Protocol\User\User.pb.cc">
-      <Filter>Protocol\User</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Protocol\Status\Status.pb.cc">
-      <Filter>Protocol\Status</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Protocol\Message.pb.cc">
-      <Filter>Protocol</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Time\XTime.cpp">
       <Filter>Time</Filter>
     </ClCompile>
@@ -765,26 +741,8 @@
     <ClCompile Include="..\Source\Component\AbstractComponent.cpp">
       <Filter>Component</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Protocol\Component\ComponentPhrase.cpp">
-      <Filter>Protocol\Component</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Packet\Message\MessagePacket.cpp">
       <Filter>Packet\Message</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Protocol\Device\DevicePhrase.cpp">
-      <Filter>Protocol\Device</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Protocol\Status\StatusPhrase.cpp">
-      <Filter>Protocol\Status</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Protocol\Algorithm\AlgorithmPhrase.cpp">
-      <Filter>Protocol\Algorithm</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Protocol\Crew\CrewPhrase.cpp">
-      <Filter>Protocol\Crew</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Protocol\Alarm\AlarmPhrase.cpp">
-      <Filter>Protocol\Alarm</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\MessageQueue\MajordomoBroker.cpp">
       <Filter>MessageQueue</Filter>
@@ -804,9 +762,6 @@
     <ClCompile Include="..\Source\Packet\DataPacket.cpp">
       <Filter>Packet</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Protocol\DataPhrase.cpp">
-      <Filter>Protocol</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Network\AbstractClient.cpp">
       <Filter>Network</Filter>
     </ClCompile>
@@ -818,6 +773,57 @@
     </ClCompile>
     <ClCompile Include="..\Source\Device\SurveillanceDevice.cpp">
       <Filter>Device</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\AlarmPhrase.cpp">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\AlgorithmPhrase.cpp">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\ComponentPhrase.cpp">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\CrewPhrase.cpp">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\DataPhrase.cpp">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\DevicePhrase.cpp">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\StatusPhrase.cpp">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\linux\Alarm.pb.cc">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\linux\Algorithm.pb.cc">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\linux\Component.pb.cc">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\linux\Crew.pb.cc">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\linux\Device.pb.cc">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\linux\Message.pb.cc">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\linux\Status.pb.cc">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\linux\User.pb.cc">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\AI\AbstractAlgorithm.cpp">
+      <Filter>Algorithm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Camera\AbstractCamera.cpp">
+      <Filter>Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1538,27 +1544,6 @@
     <Filter Include="3rd\protobuf\testing">
       <UniqueIdentifier>{d9bb995f-2d71-4e53-ab58-04e5ed27db49}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Protocol\Alarm">
-      <UniqueIdentifier>{7a88c629-04b4-4896-b7f7-a07418adc826}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Protocol\Algorithm">
-      <UniqueIdentifier>{87184e03-d447-480d-a9e5-bca5df861b76}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Protocol\Crew">
-      <UniqueIdentifier>{9c3a9edc-0ed5-4b4c-aaf6-a15fa5cf2fae}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Protocol\Device">
-      <UniqueIdentifier>{f2d27cbb-5d14-41ab-93d5-315cf0187af0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Protocol\Status">
-      <UniqueIdentifier>{20382651-7f08-4220-916e-6ea1ad0136b8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Protocol\User">
-      <UniqueIdentifier>{d0e2544c-797e-42c8-b46c-5411a8a036be}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Protocol\Component">
-      <UniqueIdentifier>{b358c97d-effa-46ac-a384-1588097e1691}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Time">
       <UniqueIdentifier>{6a496b38-ddd6-45fd-97d9-b70bcc6a697b}</UniqueIdentifier>
     </Filter>
@@ -1687,6 +1672,12 @@
     </Filter>
     <Filter Include="3rd\boost\multi_index\detail">
       <UniqueIdentifier>{9c30fe70-ca6a-4a56-8451-968b060b5517}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Algorithm">
+      <UniqueIdentifier>{93f269d5-e1c4-411a-a9e7-463eadd1e813}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Camera">
+      <UniqueIdentifier>{45fb4f4a-6a8a-4334-9ee8-c9964a171bf9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -11767,30 +11758,6 @@
     <ClInclude Include="..\3rdPart\protobuf-master\src\google\protobuf\io\io_win32.h">
       <Filter>3rd\protobuf\io</Filter>
     </ClInclude>
-    <ClInclude Include="..\Include\Protocol\Message.pb.h">
-      <Filter>Protocol</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Include\Protocol\Alarm\Alarm.pb.h">
-      <Filter>Protocol\Alarm</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Include\Protocol\Algorithm\Algorithm.pb.h">
-      <Filter>Protocol\Algorithm</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Include\Protocol\Crew\Crew.pb.h">
-      <Filter>Protocol\Crew</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Include\Protocol\Device\Device.pb.h">
-      <Filter>Protocol\Device</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Include\Protocol\Status\Status.pb.h">
-      <Filter>Protocol\Status</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Include\Protocol\User\User.pb.h">
-      <Filter>Protocol\User</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Include\Protocol\Component\Component.pb.h">
-      <Filter>Protocol\Component</Filter>
-    </ClInclude>
     <ClInclude Include="..\Include\Time\XTime.h">
       <Filter>Time</Filter>
     </ClInclude>
@@ -13069,26 +13036,8 @@
     <ClInclude Include="..\Include\Component\AbstractComponent.h">
       <Filter>Component</Filter>
     </ClInclude>
-    <ClInclude Include="..\Include\Protocol\Component\ComponentPhrase.h">
-      <Filter>Protocol\Component</Filter>
-    </ClInclude>
     <ClInclude Include="..\Include\Packet\Message\MessagePacket.h">
       <Filter>Packet\Message</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Include\Protocol\Device\DevicePhrase.h">
-      <Filter>Protocol\Device</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Include\Protocol\Status\StatusPhrase.h">
-      <Filter>Protocol\Status</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Include\Protocol\Algorithm\AlgorithmPhrase.h">
-      <Filter>Protocol\Algorithm</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Include\Protocol\Crew\CrewPhrase.h">
-      <Filter>Protocol\Crew</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Include\Protocol\Alarm\AlarmPhrase.h">
-      <Filter>Protocol\Alarm</Filter>
     </ClInclude>
     <ClInclude Include="..\Include\MessageQueue\MajordomoBroker.h">
       <Filter>MessageQueue</Filter>
@@ -13107,9 +13056,6 @@
     </ClInclude>
     <ClInclude Include="..\Include\Packet\DataPacket.h">
       <Filter>Packet</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Include\Protocol\DataPhrase.h">
-      <Filter>Protocol</Filter>
     </ClInclude>
     <ClInclude Include="..\Include\Network\AbstractClient.h">
       <Filter>Network</Filter>
@@ -13452,6 +13398,57 @@
     </ClInclude>
     <ClInclude Include="..\3rdPart\boost_1_72_0\boost\multi_index\detail\vartempl_support.hpp">
       <Filter>3rd\boost\multi_index\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\AlarmPhrase.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\AlgorithmPhrase.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\ComponentPhrase.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\CrewPhrase.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\DataPhrase.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\DevicePhrase.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\StatusPhrase.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\linux\Alarm.pb.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\linux\Algorithm.pb.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\linux\Component.pb.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\linux\Crew.pb.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\linux\Device.pb.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\linux\Message.pb.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\linux\Status.pb.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\linux\User.pb.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\AI\AbstractAlgorithm.h">
+      <Filter>Algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Camera\AbstractCamera.h">
+      <Filter>Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

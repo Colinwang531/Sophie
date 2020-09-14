@@ -28,7 +28,7 @@ namespace base
 			AbstractUpstreamServer(
 				const ServerModuleType server = ServerModuleType::SERVER_MODULE_TYPE_NONE,
 				const ClientModuleType upstream = ClientModuleType::CLIENT_MODULE_TYPE_NONE,
-				const std::string address = "tcp:\\127.0.0.1:61001");
+				const std::string address = "");
 			virtual ~AbstractUpstreamServer(void);
 
 		protected:

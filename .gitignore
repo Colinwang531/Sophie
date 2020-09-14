@@ -4,7 +4,11 @@
 /3rdPart/
 /SDK/
 /bin/
+/AIServiceComponent/obj/
 /AlarmPusherComponent/obj/
 /HKDeviceComponent/obj/
+/HelmetDComponent/x64/
 /MessageDispatcherCenter/obj/
+/MessageDispatcherDispather/obj/
+/MediaStreamCompnent/obj/
 /SmartWebComponent/

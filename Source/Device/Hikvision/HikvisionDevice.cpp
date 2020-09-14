@@ -9,9 +9,9 @@ namespace base
 	namespace device
 	{
 		HikvisionDevice::HikvisionDevice(
-			const std::string did, 
+			const std::string did,
 			const SurveillanceDeviceType type /* = SurveillanceDeviceType::SURVEILLANCE_DEVICE_TYPE_NONE */)
-			: SurveillanceDevice(did, SurveillanceDeviceFactory::SURVEILLANCE_DEVICE_FACTORY_HK, type)
+			: SurveillanceDevice(did, SurveillanceDeviceFactory::SURVEILLANCE_DEVICE_FACTORY_HK, type), userID{ -1 }
 		{}
 
 		HikvisionDevice::~HikvisionDevice()
@@ -27,47 +27,6 @@ namespace base
 			return logoutDevice();
 		}
 
-// 		int HikvisionDevice::getDeviceConfig()
-// 		{
-// 			int e{ -1 < userID ? eSuccess : eBadOperate };
-// 
-// 			if (eSuccess == e)
-// 			{
-// 				DWORD dwRet{ 0 };
-// 				NET_DVR_IPPARACFG_V40 IPAccessCfgV40{ 0 };
-// 				NET_DVR_DEVICEINFO_V40 deviceInfo{ 0 };
-// 
-// 				if (NET_DVR_GetDVRConfig(userID, NET_DVR_GET_IPPARACFG_V40, 0, &IPAccessCfgV40, sizeof(NET_DVR_IPPARACFG_V40), &dwRet))
-// 				{
-// 					for (DWORD i = 0; i < IPAccessCfgV40.dwDChanNum; i++)
-// 					{
-// 						switch (IPAccessCfgV40.struStreamMode[i].byGetStreamType)
-// 						{
-// 							case 0:
-// 							{
-// 								if (IPAccessCfgV40.struStreamMode[i].uGetStream.struChanInfo.byEnable)
-// 								{
-// // 									BYTE byIPID{ IPAccessCfgV40.struStreamMode[i].uGetStream.struChanInfo.byIPID };
-// // 									BYTE byIPIDHigh{ IPAccessCfgV40.struStreamMode[i].uGetStream.struChanInfo.byIPIDHigh };
-// // 									int iDevInfoIndex{ byIPIDHigh * 256 + byIPID - 1 - groupNo * 64 };
-// 								}
-// 
-// 								break;
-// 							}
-// 							default:
-// 								break;
-// 						}
-// 					}
-// 				}
-// 				else
-// 				{
-// 					e = eNotSupport;
-// 				}
-// 			}
-// 
-// 			return e;
-// 		}
-
 		int HikvisionDevice::loginDevice()
 		{
 			const std::string ip{ getDeviceIPv4Address() }, name{ getLoginUserName() }, password{ getLoginUserPassword() };
@@ -79,7 +38,7 @@ namespace base
 
 			if (eSuccess == e)
 			{
-				if (0 == SurveillanceDevice::loginDevice())
+				if (1 == SurveillanceDevice::loginDevice())
 				{
 					e = NET_DVR_Init() ? eSuccess : eBadInitSDK;
 				}
@@ -113,10 +72,55 @@ namespace base
 
 				if (eSuccess == e)
 				{
-					if (0 == logoutDevice())
+					if (0 == SurveillanceDevice::logoutDevice())
 					{
 						e = NET_DVR_Cleanup() ? eSuccess : eBadCleanupSDK;
 					}
+				}
+			}
+
+			return e;
+		}
+
+		int HikvisionDevice::getDeviceCamera(std::vector<AbstractCamera>& cameras)
+		{
+			int e{ -1 < userID ? eSuccess : eBadOperate };
+
+			if (eSuccess == e)
+			{
+				LONG groupNo = 0;
+				DWORD dwRet{ 0 };
+				NET_DVR_IPPARACFG_V40 IPAccessCfgV40{ 0 };
+
+				if (NET_DVR_GetDVRConfig(userID, NET_DVR_GET_IPPARACFG_V40, 0, &IPAccessCfgV40, sizeof(NET_DVR_IPPARACFG_V40), &dwRet))
+				{
+					for (DWORD i = 0; i < IPAccessCfgV40.dwDChanNum; i++)
+					{
+						switch (IPAccessCfgV40.struStreamMode[i].byGetStreamType)
+						{
+						case 0:
+						{
+							if (IPAccessCfgV40.struStreamMode[i].uGetStream.struChanInfo.byEnable)
+							{
+								BYTE byIPID{ IPAccessCfgV40.struStreamMode[i].uGetStream.struChanInfo.byIPID };
+								BYTE byIPIDHigh{ IPAccessCfgV40.struStreamMode[i].uGetStream.struChanInfo.byIPIDHigh };
+								int iDevInfoIndex{ byIPIDHigh * 256 + byIPID - 1 - groupNo * 64 };
+
+								AbstractCamera ac(IPAccessCfgV40.dwStartDChan + i);
+								ac.setIPAddress(IPAccessCfgV40.struIPDevInfo[iDevInfoIndex].struIP.sIpV4);
+								cameras.push_back(ac);
+							}
+
+							break;
+						}
+						default:
+							break;
+						}
+					}
+				}
+				else
+				{
+					e = eNotSupport;
 				}
 			}
 

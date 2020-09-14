@@ -17,7 +17,7 @@ namespace base
 		AbstractUpstreamServer::AbstractUpstreamServer(
 			const ServerModuleType server/* = ServerModuleType::SERVER_MODULE_TYPE_NONE*/,
 			const ClientModuleType upstream/* = ClientModuleType::CLIENT_MODULE_TYPE_NONE*/,
-			const std::string address/* = "tcp:\\127.0.0.1:61001"*/)
+			const std::string address/* = ""*/)
 			: AbstractServer(server), AbstractClient(upstream), upstreamAddress{ address }
 		{}
 
@@ -32,7 +32,7 @@ namespace base
 			{
 				std::string serviceName;
 				XMLParser().getValueByName("Config.xml", "Component.XMQ.Name", serviceName);
-				e = startClient(upstreamAddress, serviceName);
+				startClient(upstreamAddress, serviceName);
 			}
 
 			return e;
