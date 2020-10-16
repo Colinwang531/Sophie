@@ -90,57 +90,6 @@ private:
 		const std::string fromID,
 		DataPacketPtr pkt);
 
-	//转发状态配置消息
-	//@fwdmsg : 消息数据
-	//@commID : 通信ID标识
-	//@status : 请求消息
-	//@sequence : 请求消息序列号
-// 	void forwardStatusConfigureMessage(
-// 		const std::string fwdmsg,
-// 		const std::string commID,
-// 		void* status = nullptr,
-// 		const long long sequence = -1);
-
-	//转发设备消息
-	//@commID : 通信ID标识
-	//@pkt : 请求消息
-	//@msg : 消息数据
-// 	void forwardDeviceMessage(
-// 		const std::string commID,
-// 		DataPacketPtr pkt,
-// 		const std::string msg);
-
-	//转发算法消息
-	//@fwdmsg : 消息数据
-	//@commID : 通信ID标识
-	//@algorithm : 请求消息
-	//@sequence : 请求消息序列号
-// 	void forwardAlgorithmConfigureMessage(
-// 		const std::string fwdmsg,
-// 		const std::string commID,
-// 		void* algorithm = nullptr,
-// 		const long long sequence = -1);
-
-	//转发报警数据消息
-	//@s : SOCKET标识
-	//@data : 数据内容字符串
-	//@databytes : 数据内容字节数
-// 	void forwardAlarmInfoMessage(
-// 		void* s = nullptr,
-// 		const void* data = nullptr,
-// 		const unsigned int databytes = 0);
-
-	//转发成员消息
-	//@fwdmsg : 消息数据
-	//@commID : 通信ID标识
-	//@crew : 请求消息
-	//@sequence : 请求消息序列号
-// 	void forwardCrewConfigureMessage(
-// 		const std::string fwdmsg,
-// 		const std::string commID,
-// 		void* crew = nullptr,
-// 		const long long sequence = -1);
-
 	//添加新注册的组件
 	//@componentID : 组件ID标识
 	//@serviceName : 组件服务名称
@@ -167,14 +116,10 @@ private:
 		const std::string communicationID,
 		const base::component::ComponentType componentType = base::component::ComponentType::COMPONENT_TYPE_NONE);
 
-	//删除注册组件
+	//删除组件
 	//@componentID : 组件ID标识
-	//@componentType : 组件类型
 	//@Return : 错误码
-	//@Comment : 无应答
-	int removeRegisterComponent(
-		const std::string componentID,
-		const base::component::ComponentType componentType = base::component::ComponentType::COMPONENT_TYPE_NONE);
+	int removeComponentByID(const std::string componentID);
 
 	//服务端应答添加组件信息
 	//@cid : 组件ID标识
@@ -193,17 +138,9 @@ private:
 		const int result = 0,
 		const long long sequence = 0);
 
-	//向指定的组件转发消息
-	//@fwdmsg : 消息内容
-	//@componentType : 组件类型
-	//@Return : 错误码
-// 	int forwardMessageByComponentType(
-// 		const std::string fwdmsg,
-// 		const base::component::ComponentType componentType = base::component::ComponentType::COMPONENT_TYPE_NONE);
-
 private:
 	//注册组件集合
-	//key是通信ID标识
+	//KEY是组件ID标识
 	using RegisterComponentGroup = UnorderedMap<const std::string, AbstractComponentPtr>;
 	RegisterComponentGroup registerComponentGroup;
 };//class MDCServer

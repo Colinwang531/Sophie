@@ -1,4 +1,3 @@
-#include <iostream>
 #include "boost/format.hpp"
 #include "boost/make_shared.hpp"
 #ifdef _WINDOWS
@@ -27,7 +26,7 @@ static void parseCommandLine(int argc, char** argv)
 	cl.setCommandOptions("listen,l", "61001");
 	cl.setCommandOptions("upstream,u", "127.0.0.1");
 	cl.setCommandOptions("port,p", "61101");
-	cl.setCommandOptions("name,n", "WEB");
+	cl.setCommandOptions("name,n", "MDC");
 
 	if (eSuccess == cl.parseCommandLine(argc, argv))
 	{

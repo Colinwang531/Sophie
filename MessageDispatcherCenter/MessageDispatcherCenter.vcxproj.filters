@@ -386,9 +386,6 @@
     <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\split.cpp">
       <Filter>3rd\boost</Filter>
     </ClCompile>
-    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\utf8_codecvt_facet.cpp">
-      <Filter>3rd\boost</Filter>
-    </ClCompile>
     <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\value_semantic.cpp">
       <Filter>3rd\boost</Filter>
     </ClCompile>
@@ -824,6 +821,27 @@
     </ClCompile>
     <ClCompile Include="..\Source\Camera\AbstractCamera.cpp">
       <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\utf8_codecvt_facet_.cpp">
+      <Filter>3rd\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Packet\Stream\StreamPacket.cpp">
+      <Filter>Packet\Stream</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\linux\Event.pb.cc">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\EventPhrase.cpp">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Person\AbstractPerson.cpp">
+      <Filter>Person</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Person\Crew\Crew.cpp">
+      <Filter>Person</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Alarm\AbstractAlarm.cpp">
+      <Filter>Alarm</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1678,6 +1696,15 @@
     </Filter>
     <Filter Include="Camera">
       <UniqueIdentifier>{45fb4f4a-6a8a-4334-9ee8-c9964a171bf9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Packet\Stream">
+      <UniqueIdentifier>{0def9bc0-5bce-413a-9d01-80486e9f4631}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Person">
+      <UniqueIdentifier>{a48fb5ee-7522-4dbb-9417-5ad725717993}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Alarm">
+      <UniqueIdentifier>{0c5f18c8-16d6-470d-a361-066333f22994}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -13449,6 +13476,24 @@
     </ClInclude>
     <ClInclude Include="..\Include\Camera\AbstractCamera.h">
       <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Packet\Stream\StreamPacket.h">
+      <Filter>Packet\Stream</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\linux\Event.pb.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\EventPhrase.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Person\AbstractPerson.h">
+      <Filter>Person</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Person\Crew\Crew.h">
+      <Filter>Person</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Alarm\AbstractAlarm.h">
+      <Filter>Alarm</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
