@@ -1,10 +1,13 @@
-// Copyright (c) 2019, *** Inc.
-// All rights reserved.
 //
-// Author : 王科威
-// E-mail : wangkw531@icloud.com
+//		Copyright :						@2020, ***, All Rights Reserved
 //
-// Array template.
+//		Author :						王科威
+//		E-mail :						wangkw531@icloud.com
+//		Date :							2020-06-11
+//		Description :					可变数组模板
+//
+//		History:						Author									Date										Description
+//										王科威									2020-06-11									创建
 //
 
 #ifndef VECTOR_H
@@ -24,13 +27,13 @@ public:
 	}
 
 public:
-	void insert(const T e)
+	void pushBack(const T e)
 	{
 		WriteLock wl{ mtx };
 		queue.push_back(e);
 	}
 
-	void remove(void)
+	void removeFront(void)
 	{
 		WriteLock wl{ mtx };
 		if (0 < queue.size())

@@ -13,6 +13,10 @@
 #ifndef BASE_PROTOCOL_CREW_PHRASE_H
 #define BASE_PROTOCOL_CREW_PHRASE_H
 
+#include "boost/shared_ptr.hpp"
+#include "Packet/DataPacket.h"
+using DataPacketPtr = boost::shared_ptr<base::packet::DataPacket>;
+
 namespace base
 {
 	namespace protocol
@@ -37,7 +41,10 @@ namespace base
 			~CrewParser(void);
 
 		public:
-			void* parseCrewMessage(void* c = nullptr);
+			//将Protocol Buffers的组件实例转化为MessagePacket实例
+			//@c : Protocol Buffers封装的Crew实例
+			//@Return : MessagePacket实例
+			DataPacketPtr parseMessage(void* c = nullptr);
 		};//class CrewParser
 
 		class CrewPacker
@@ -47,15 +54,10 @@ namespace base
 			~CrewPacker(void);
 
 		public:
-			//封装成员消息
-			//@command : 命令类型
-			//@result : 错误码
-			//@data : 消息数据
-			//@Return : 消息内容
-			void* packCrew(
-				const int command = 0,
-				const int result = 0,
-				void* data = nullptr);
+			//将DataPacket实例转换为Protocol buffers的序列化字符串
+			//@pkt : DataPacket实例
+			//@Return : 序列化字符串
+			const std::string packMessage(DataPacketPtr pkt);
 		};//class CrewPacker
 	}//namespace protocol
 }//namespace base

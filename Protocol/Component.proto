@@ -12,11 +12,13 @@ message ComponentInfo
 		DHD = 4;
 		ALM = 5;
 		AI = 6;
+		MED = 7;
 	}
 	
 	required Type type = 1;
-	optional string cid = 2;
-	optional string cname = 3;
+	optional string componentid = 2;
+	optional string commid = 3;
+	optional string cname = 4;
 }
 
 message ComponentRequest

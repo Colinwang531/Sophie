@@ -76,12 +76,16 @@ static int createNewAsynchronousClient(void)
 
 	if (eSuccess == e)
 	{
-		if (!gMessageDispatcherCenterIP.empty() && gMinPortNumber < gMessageDispatcherCenterPort && gMaxPortNumber > gMessageDispatcherCenterPort)
+		if (!gMessageDispatcherCenterIP.empty() && 
+			gMinPortNumber < gMessageDispatcherCenterPort && 
+			gMaxPortNumber > gMessageDispatcherCenterPort)
 		{
-			HelmetDetectComponentClientPtr acp{ boost::make_shared<HelmetDetectComponentClient>() };
+			HelmetDetectComponentClientPtr acp{ 
+				boost::make_shared<HelmetDetectComponentClient>(gMessageDispatcherCenterIP) };
 			if (acp)
 			{
-				e = acp->startClient((boost::format("tcp://%s:%d") % gMessageDispatcherCenterIP % gMessageDispatcherCenterPort).str(), "HELMET");
+				e = acp->startClient(
+					(boost::format("tcp://%s:%d") % gMessageDispatcherCenterIP % gMessageDispatcherCenterPort).str(), "Helmet");
 
 				if (eSuccess == e)
 				{
@@ -127,23 +131,6 @@ static int destroyAsynchronousClient(void)
 	return e;
 }
 
-// static int testLoginDevice(void)
-// {
-// 	base::device::AbstractDevice* abp{ 
-// 		new base::device::HikvisionDevice("admin", "eaton12345", "192.168.0.200", 8000) };
-// 	if (abp)
-// 	{
-// 		if (eSuccess == abp->createNewDevice())
-// 		{
-// //			base::device::HikvisionDevice* hkdp{ std::dynamic_pointer_cast<base::device::HikvisionDevice*>(abp) };
-// 			((base::device::HikvisionDevice*)abp)->getDeviceConfig();
-// 		}
-// 		else
-// 		{
-// 		}
-// 	}
-// }
-
 int main(int argc, char** argv)
 {
 	WORD wVersionRequested;
@@ -168,7 +155,6 @@ int main(int argc, char** argv)
 	if (eSuccess == e)
 	{
 		LOG(INFO) << "Create new asynchronous client result = " << e << ".";
-		//		testLoginDevice();
 	}
 	else
 	{

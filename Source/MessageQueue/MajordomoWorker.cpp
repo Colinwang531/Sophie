@@ -57,6 +57,9 @@ namespace mq
 						void* t2{
 							ThreadPool::get_mutable_instance().createNewThread(
 								boost::bind(&MajordomoWorker::autoRegisterToMajordomoBrokerThreadProc, this)) };
+						void* t3{
+							ThreadPool::get_mutable_instance().createNewThread(
+								boost::bind(&MajordomoWorker::autoQuerySubrountineThreadProc, this)) };
 						e = t1 && t2 ? eSuccess : eBadNewThread;
 					}
 					else
@@ -152,6 +155,36 @@ namespace mq
 					startTime = currentTime;
 					//发送Worker实例注册消息
 					const std::string msgstr{ ac->buildAutoRegisterToBrokerMessage() };
+					if (!msgstr.empty())
+					{
+						MessageData msgdata;
+						msgdata.pushFront(msgstr);
+						msgdata.pushFront("");
+						msgdata.pushFront(workerID);
+						msgdata.pushFront("request");
+						msgdata.pushFront("");
+						msgdata.sendData(dealer);
+					}
+				}
+
+				boost::this_thread::sleep(boost::posix_time::seconds(1));
+			}
+		}
+
+		void MajordomoWorker::autoQuerySubrountineThreadProc()
+		{
+			AbstractClient* ac{ reinterpret_cast<AbstractClient*>(abstractClient) };
+			//起始时间设为0保证第一次时间判断就执行注册
+			long long startTime{ 0 };
+
+			while (ac && !ac->isStopped())
+			{
+				long long currentTime{ Time().tickcount() };
+				if (30000 < currentTime - startTime)
+				{
+					startTime = currentTime;
+					//发送子服务注册信息查询消息
+					const std::string msgstr{ ac->buildAutoQueryRegisterSubroutineMessage() };
 					if (!msgstr.empty())
 					{
 						MessageData msgdata;

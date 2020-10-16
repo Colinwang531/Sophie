@@ -562,7 +562,7 @@ class AlarmInfo PROTOBUF_FINAL :
   std::string* _internal_mutable_time();
   public:
 
-  // required string picture = 4;
+  // required bytes picture = 4;
   bool has_picture() const;
   private:
   bool _internal_has_picture() const;
@@ -572,7 +572,7 @@ class AlarmInfo PROTOBUF_FINAL :
   void set_picture(const std::string& value);
   void set_picture(std::string&& value);
   void set_picture(const char* value);
-  void set_picture(const char* value, size_t size);
+  void set_picture(const void* value, size_t size);
   std::string* mutable_picture();
   std::string* release_picture();
   void set_allocated_picture(std::string* picture);
@@ -1195,7 +1195,7 @@ inline void AlarmInfo::unsafe_arena_set_allocated_time(
   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:msg.AlarmInfo.time)
 }
 
-// required string picture = 4;
+// required bytes picture = 4;
 inline bool AlarmInfo::_internal_has_picture() const {
   bool value = (_has_bits_[0] & 0x00000004u) != 0;
   return value;
@@ -1239,7 +1239,7 @@ inline void AlarmInfo::set_picture(const char* value) {
               GetArena());
   // @@protoc_insertion_point(field_set_char:msg.AlarmInfo.picture)
 }
-inline void AlarmInfo::set_picture(const char* value,
+inline void AlarmInfo::set_picture(const void* value,
     size_t size) {
   _has_bits_[0] |= 0x00000004u;
   picture_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(

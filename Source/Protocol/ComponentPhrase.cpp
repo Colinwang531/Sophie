@@ -48,9 +48,13 @@ namespace base
 
 					if (ac)
 					{
-						if (info.has_cid())
+						if (info.has_componentid())
 						{
-							ac->setComponentID(info.cid());
+							ac->setComponentID(info.componentid());
+						}
+						if (info.has_commid())
+						{
+							ac->setCommunicationID(info.commid());
 						}
 						if (info.has_cname())
 						{
@@ -89,7 +93,8 @@ namespace base
 							if (ac)
 							{
 								ac->setComponentName(info.cname());
-								ac->setComponentID(info.cid());
+								ac->setComponentID(info.componentid());
+								ac->setCommunicationID(info.commid());
 								pkt->setPacketData(ac);
 							}
 						}
@@ -128,7 +133,8 @@ namespace base
 						reinterpret_cast<AbstractComponent*>(pkt->getPacketData()) };
 
 					ci->set_type(static_cast<msg::ComponentInfo_Type>(ac->getComponentType()));
-					ci->set_cid(ac->getComponentID());
+					ci->set_componentid(ac->getComponentID());
+					ci->set_commid(ac->getCommunicationID());
 					ci->set_cname(ac->getComponentName());
 				}
 				else if (msg::Component_Command::Component_Command_SIGNIN_REP == command ||
@@ -152,7 +158,8 @@ namespace base
 						{
 							msg::ComponentInfo* info{ rep->add_componentinfos() };
 							info->set_type(static_cast<msg::ComponentInfo_Type>(ac->getComponentType()));
-							info->set_cid(ac->getCommunicationID());
+							info->set_componentid(ac->getComponentID());
+							info->set_commid(ac->getCommunicationID());
 							info->set_cname(ac->getComponentName());
 						}
 						else

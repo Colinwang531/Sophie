@@ -24,8 +24,8 @@ namespace base
 		typedef enum class tagAlgorithmCommand_t : int
 		{
 			ALGORITHM_COMMAND_NONE = 0,
-			ALGORITHM_COMMAND_SET_REQ = 1,
-			ALGORITHM_COMMAND_SET_REP = 2,
+			ALGORITHM_COMMAND_CONFIG_REQ = 1,
+			ALGORITHM_COMMAND_CONFIG_REP = 2,
 			ALGORITHM_COMMAND_QUERY_REQ = 3,
 			ALGORITHM_COMMAND_QUERY_REP = 3,
 		}AlgorithmCommand;

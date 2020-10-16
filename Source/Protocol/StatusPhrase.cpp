@@ -50,25 +50,32 @@ namespace base
 		StatusPacker::StatusPacker(){}
 		StatusPacker::~StatusPacker(){}
 
-		void* StatusPacker::packToStatusMessage(void* pkt /* = nullptr */)
+		const std::string StatusPacker::packMessage(DataPacketPtr pkt)
 		{
-			MessagePacket* mp{ reinterpret_cast<MessagePacket*>(pkt) };
-			msg::Status* s{ msg::Status().New() };
+			std::string msgstr;
+			msg::MSG mm;
+			mm.set_type(msg::MSG_Type::MSG_Type_STATUS);
+			mm.set_sequence(pkt->getPacketSequence());
+			mm.set_timestamp(pkt->getPacketTimestamp());
+			msg::Status* s{ mm.mutable_status() };
 
-// 			if (s)
-// 			{
-// 				const msg::Status_Command command{ 
-// 					static_cast<msg::Status_Command>(mp->getPayloadCommand()) };
-// 				s->set_command(command);
-// 
-// 				if (msg::Status_Command::Status_Command_SET_REP == command)
-// 				{
-// 					msg::StatusResponse* rep{ s->mutable_statusresponse() };
-// 					rep->set_result(mp->getReplyResult());
-// 				}
-// 			}
+			if (s)
+			{
+				MessagePacketPtr msgpkt{ boost::dynamic_pointer_cast<MessagePacket>(pkt) };
+				const msg::Status_Command command{ 
+					static_cast<msg::Status_Command>(msgpkt->getMessagePacketCommand()) };
+				s->set_command(command);
 
-			return s;
+				if (msg::Status_Command::Status_Command_SET_REP == command)
+				{
+					msg::StatusResponse* rep{ s->mutable_statusresponse() };
+					rep->set_result(msgpkt->getMessageStatus());
+				}
+			}
+
+			mm.SerializeToString(&msgstr);
+			mm.release_component();
+			return msgstr;
 		}
 	}//namespace protocol
 }//namespace base

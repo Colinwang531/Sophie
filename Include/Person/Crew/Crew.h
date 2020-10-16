@@ -33,6 +33,11 @@ namespace base
 			//@Return : 包命令类型
 			int addPersonPicture(const std::string picture) override;
 
+			//获取人员图片数据
+			//@idx : 图片索引号
+			//@Return : 人员图片
+			const std::string getPersonPicture(const int idx = 0) override;
+
 		private:
 			enum
 			{

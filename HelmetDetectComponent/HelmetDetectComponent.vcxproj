@@ -115,14 +115,15 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;WINDOWS;_WIN32;_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;ZMQ_STATIC;ZMQ_HAVE_WS;ZMQ_HAVE_WINDOWS;ZMQ_IOTHREAD_POLLER_USE_SELECT;ZMQ_POLL_BASED_ON_SELECT;HAVE_SNPRINTF;GLOG_NO_ABBREVIATED_SEVERITIES;GOOGLE_GLOG_DLL_DECL=;BOOST_ALL_NO_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;WINDOWS;WIN32_LEAN_AND_MEAN;_WIN32;_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;ZMQ_STATIC;ZMQ_HAVE_WS;ZMQ_HAVE_WINDOWS;ZMQ_IOTHREAD_POLLER_USE_SELECT;ZMQ_POLL_BASED_ON_SELECT;HAVE_SNPRINTF;GLOG_NO_ABBREVIATED_SEVERITIES;GOOGLE_GLOG_DLL_DECL=;BOOST_ALL_NO_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdPart\boost_1_72_0;$(SolutionDir)3rdPart\glog-master-win;$(SolutionDir)3rdPart\protobuf-master-win\src;$(SolutionDir)3rdPart\libzmq-master-win\include;$(SolutionDir)3rdPart\libzmq-master-win\src;$(SolutionDir)Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdPart\boost_1_72_0;$(SolutionDir)3rdPart\glog-master-win;$(SolutionDir)3rdPart\protobuf-master-win\src;$(SolutionDir)3rdPart\libzmq-master-win\include;$(SolutionDir)3rdPart\libzmq-master-win\src;$(SolutionDir)3rdPart\ffmpeg\win;$(SolutionDir)Include;$(SolutionDir)SDK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>ws2_32.lib;Iphlpapi.lib;Bcrypt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ws2_32.lib;Iphlpapi.lib;Bcrypt.lib;PlayCtrl.lib;swscale.lib;avcodec.lib;avdevice.lib;avfilter.lib;avformat.lib;avutil.lib;HelmetClassd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)SDK\PlayCtrl_V7.3.7.30_Build20190117_win64;$(SolutionDir)SDK\AI;$(SolutionDir)3rdPart\ffmpeg\win;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -147,6 +148,16 @@
     <ClCompile Include="..\3rdPart\boost_1_72_0\libs\date_time\src\gregorian\greg_month.cpp" />
     <ClCompile Include="..\3rdPart\boost_1_72_0\libs\date_time\src\gregorian\greg_weekday.cpp" />
     <ClCompile Include="..\3rdPart\boost_1_72_0\libs\date_time\src\posix_time\posix_time_types.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\codecvt_error_category.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\directory.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\exception.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\operations.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\path.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\path_traits.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\portability.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\unique_path.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\utf8_codecvt_facet.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\windows_file_codecvt.cpp" />
     <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\cmdline.cpp" />
     <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\config_file.cpp" />
     <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\convert.cpp" />
@@ -154,7 +165,7 @@
     <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\parsers.cpp" />
     <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\positional_options.cpp" />
     <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\split.cpp" />
-    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\utf8_codecvt_facet.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\utf8_codecvt_facet_.cpp" />
     <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\value_semantic.cpp" />
     <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\variables_map.cpp" />
     <ClCompile Include="..\3rdPart\boost_1_72_0\libs\thread\src\win32\boost_thread.cpp" />
@@ -389,39 +400,77 @@
     <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\wire_format_lite.cc" />
     <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\wrappers.pb.cc" />
     <ClCompile Include="..\Source\AI\AbstractAlgorithm.cpp" />
+    <ClCompile Include="..\Source\AI\CVHelmetDetect.cpp" />
+    <ClCompile Include="..\Source\Alarm\AbstractAlarm.cpp" />
+    <ClCompile Include="..\Source\ASIO\ASIOService.cpp" />
+    <ClCompile Include="..\Source\ASIO\TCPConnector.cpp" />
+    <ClCompile Include="..\Source\ASIO\TCPReceiver.cpp" />
+    <ClCompile Include="..\Source\ASIO\TCPSender.cpp" />
+    <ClCompile Include="..\Source\ASIO\TCPSession.cpp" />
     <ClCompile Include="..\Source\Camera\AbstractCamera.cpp" />
     <ClCompile Include="..\Source\CommandLine\CommandLine.cpp" />
     <ClCompile Include="..\Source\Component\AbstractComponent.cpp" />
+    <ClCompile Include="..\Source\Converter\AbstractImageConverter.cpp" />
+    <ClCompile Include="..\Source\Converter\ImageX2YConverter.cpp" />
+    <ClCompile Include="..\Source\Converter\YV12ToYUV420PConverter.cpp" />
+    <ClCompile Include="..\Source\Decoder\AbstractDecoder.cpp" />
+    <ClCompile Include="..\Source\Decoder\SDK\HikvisionSDKDecoder.cpp" />
     <ClCompile Include="..\Source\Device\AbstractDevice.cpp" />
     <ClCompile Include="..\Source\Device\SurveillanceDevice.cpp" />
+    <ClCompile Include="..\Source\Encoder\AbstractEncoder.cpp" />
+    <ClCompile Include="..\Source\Encoder\JPEG\JPEGImageEncoder.cpp" />
+    <ClCompile Include="..\Source\Filter\AbstractFilter.cpp" />
+    <ClCompile Include="..\Source\Filter\AI\AIFilter.cpp" />
+    <ClCompile Include="..\Source\Filter\AI\CVHelmetDetectFilter.cpp" />
+    <ClCompile Include="..\Source\Filter\Cache\StreamCacheFilter.cpp" />
+    <ClCompile Include="..\Source\Filter\Converter\ImageConverterFilter.cpp" />
+    <ClCompile Include="..\Source\Filter\Decoder\StreamDecoderFilter.cpp" />
+    <ClCompile Include="..\Source\Filter\Encoder\JPEGEncoderFilter.cpp" />
+    <ClCompile Include="..\Source\Graph\AbstractGraph.cpp" />
+    <ClCompile Include="..\Source\Graph\AI\LivestreamAIGraph.cpp" />
+    <ClCompile Include="..\Source\Graph\LivestreamGraph.cpp" />
     <ClCompile Include="..\Source\Hardware\Cpu.cpp" />
     <ClCompile Include="..\Source\MessageQueue\MajordomoWorker.cpp" />
     <ClCompile Include="..\Source\MessageQueue\MessageData.cpp" />
     <ClCompile Include="..\Source\Network\AbstractClient.cpp" />
+    <ClCompile Include="..\Source\Network\AbstractMediaStreamClient.cpp" />
     <ClCompile Include="..\Source\Packet\DataPacket.cpp" />
     <ClCompile Include="..\Source\Packet\Message\MessagePacket.cpp" />
+    <ClCompile Include="..\Source\Packet\Stream\StreamPacket.cpp" />
+    <ClCompile Include="..\Source\Person\AbstractPerson.cpp" />
+    <ClCompile Include="..\Source\Person\Crew\Crew.cpp" />
+    <ClCompile Include="..\Source\Pin\AbstractPin.cpp" />
     <ClCompile Include="..\Source\Protocol\AlarmPhrase.cpp" />
     <ClCompile Include="..\Source\Protocol\AlgorithmPhrase.cpp" />
     <ClCompile Include="..\Source\Protocol\ComponentPhrase.cpp" />
     <ClCompile Include="..\Source\Protocol\CrewPhrase.cpp" />
     <ClCompile Include="..\Source\Protocol\DataPhrase.cpp" />
     <ClCompile Include="..\Source\Protocol\DevicePhrase.cpp" />
+    <ClCompile Include="..\Source\Protocol\EventPhrase.cpp" />
     <ClCompile Include="..\Source\Protocol\StatusPhrase.cpp" />
     <ClCompile Include="..\Source\Protocol\win\Alarm.pb.cc" />
     <ClCompile Include="..\Source\Protocol\win\Algorithm.pb.cc" />
     <ClCompile Include="..\Source\Protocol\win\Component.pb.cc" />
     <ClCompile Include="..\Source\Protocol\win\Crew.pb.cc" />
     <ClCompile Include="..\Source\Protocol\win\Device.pb.cc" />
+    <ClCompile Include="..\Source\Protocol\win\Event.pb.cc" />
     <ClCompile Include="..\Source\Protocol\win\Message.pb.cc" />
     <ClCompile Include="..\Source\Protocol\win\Status.pb.cc" />
     <ClCompile Include="..\Source\Protocol\win\User.pb.cc" />
+    <ClCompile Include="..\Source\Session\TCPStreamTargetSession.cpp" />
     <ClCompile Include="..\Source\Thread\ThreadPool.cpp" />
+    <ClCompile Include="..\Source\Timer\Timer.cpp" />
     <ClCompile Include="..\Source\Time\XTime.cpp" />
     <ClCompile Include="..\Source\Xml\XmlCodec.cpp" />
     <ClCompile Include="HelmetDetectComponentClient.cpp" />
+    <ClCompile Include="HelmetDetectLivestreamGraph.cpp" />
+    <ClCompile Include="HelmetMediaStreamSession.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\error_handling.hpp" />
+    <ClInclude Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\windows_file_codecvt.hpp" />
+    <ClInclude Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\windows_tools.hpp" />
     <ClInclude Include="..\3rdPart\glog-master-win\base\commandlineflags.h" />
     <ClInclude Include="..\3rdPart\glog-master-win\base\googleinit.h" />
     <ClInclude Include="..\3rdPart\glog-master-win\base\mutex.h" />
@@ -741,36 +790,73 @@
     <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\wire_format_lite.h" />
     <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\wrappers.pb.h" />
     <ClInclude Include="..\Include\AI\AbstractAlgorithm.h" />
+    <ClInclude Include="..\Include\AI\CVHelmetDetect.h" />
+    <ClInclude Include="..\Include\Alarm\AbstractAlarm.h" />
+    <ClInclude Include="..\Include\ASIO\ASIOService.h" />
+    <ClInclude Include="..\Include\ASIO\TCPConnector.h" />
+    <ClInclude Include="..\Include\ASIO\TCPReceiver.h" />
+    <ClInclude Include="..\Include\ASIO\TCPSender.h" />
+    <ClInclude Include="..\Include\ASIO\TCPSession.h" />
     <ClInclude Include="..\Include\Camera\AbstractCamera.h" />
     <ClInclude Include="..\Include\CommandLine\CommandLine.h" />
     <ClInclude Include="..\Include\Component\AbstractComponent.h" />
+    <ClInclude Include="..\Include\Converter\AbstractImageConverter.h" />
+    <ClInclude Include="..\Include\Converter\ImageX2YConverter.h" />
+    <ClInclude Include="..\Include\Converter\YV12ToYUV420PConverter.h" />
+    <ClInclude Include="..\Include\DataStruct\FIFOQueue.h" />
+    <ClInclude Include="..\Include\DataStruct\Vector.h" />
+    <ClInclude Include="..\Include\Decoder\AbstractDecoder.h" />
+    <ClInclude Include="..\Include\Decoder\SDK\HikvisionSDKDecoder.h" />
     <ClInclude Include="..\Include\Device\AbstractDevice.h" />
     <ClInclude Include="..\Include\Device\SurveillanceDevice.h" />
+    <ClInclude Include="..\Include\Encoder\AbstractEncoder.h" />
+    <ClInclude Include="..\Include\Encoder\JPEG\JPEGImageEncoder.h" />
+    <ClInclude Include="..\Include\Filter\AbstractFilter.h" />
+    <ClInclude Include="..\Include\Filter\AI\AIFilter.h" />
+    <ClInclude Include="..\Include\Filter\AI\CVHelmetDetectFilter.h" />
+    <ClInclude Include="..\Include\Filter\Cache\StreamCacheFilter.h" />
+    <ClInclude Include="..\Include\Filter\Converter\ImageConverterFilter.h" />
+    <ClInclude Include="..\Include\Filter\Decoder\StreamDecoderFilter.h" />
+    <ClInclude Include="..\Include\Filter\Encoder\JPEGEncoderFilter.h" />
+    <ClInclude Include="..\Include\Graph\AbstractGraph.h" />
+    <ClInclude Include="..\Include\Graph\AI\LivestreamAIGraph.h" />
+    <ClInclude Include="..\Include\Graph\LivestreamGraph.h" />
     <ClInclude Include="..\Include\Hardware\Cpu.h" />
     <ClInclude Include="..\Include\MessageQueue\MajordomoWorker.h" />
     <ClInclude Include="..\Include\MessageQueue\MessageData.h" />
     <ClInclude Include="..\Include\Network\AbstractClient.h" />
+    <ClInclude Include="..\Include\Network\AbstractMediaStreamClient.h" />
     <ClInclude Include="..\Include\Packet\DataPacket.h" />
     <ClInclude Include="..\Include\Packet\Message\MessagePacket.h" />
+    <ClInclude Include="..\Include\Packet\Stream\StreamPacket.h" />
+    <ClInclude Include="..\Include\Person\AbstractPerson.h" />
+    <ClInclude Include="..\Include\Person\Crew\Crew.h" />
+    <ClInclude Include="..\Include\Pin\AbstractPin.h" />
     <ClInclude Include="..\Include\Protocol\AlarmPhrase.h" />
     <ClInclude Include="..\Include\Protocol\AlgorithmPhrase.h" />
     <ClInclude Include="..\Include\Protocol\ComponentPhrase.h" />
     <ClInclude Include="..\Include\Protocol\CrewPhrase.h" />
     <ClInclude Include="..\Include\Protocol\DataPhrase.h" />
     <ClInclude Include="..\Include\Protocol\DevicePhrase.h" />
+    <ClInclude Include="..\Include\Protocol\EventPhrase.h" />
     <ClInclude Include="..\Include\Protocol\StatusPhrase.h" />
     <ClInclude Include="..\Include\Protocol\win\Alarm.pb.h" />
     <ClInclude Include="..\Include\Protocol\win\Algorithm.pb.h" />
     <ClInclude Include="..\Include\Protocol\win\Component.pb.h" />
     <ClInclude Include="..\Include\Protocol\win\Crew.pb.h" />
     <ClInclude Include="..\Include\Protocol\win\Device.pb.h" />
+    <ClInclude Include="..\Include\Protocol\win\Event.pb.h" />
     <ClInclude Include="..\Include\Protocol\win\Message.pb.h" />
     <ClInclude Include="..\Include\Protocol\win\Status.pb.h" />
     <ClInclude Include="..\Include\Protocol\win\User.pb.h" />
+    <ClInclude Include="..\Include\Session\TCPStreamTargetSession.h" />
     <ClInclude Include="..\Include\Thread\ThreadPool.h" />
+    <ClInclude Include="..\Include\Timer\Timer.h" />
     <ClInclude Include="..\Include\Time\XTime.h" />
     <ClInclude Include="..\Include\Xml\XmlCodec.h" />
     <ClInclude Include="HelmetDetectComponentClient.h" />
+    <ClInclude Include="HelmetDetectLivestreamGraph.h" />
+    <ClInclude Include="HelmetMediaStreamSession.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

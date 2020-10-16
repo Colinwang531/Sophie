@@ -1,0 +1,32 @@
+==============================================================
+Log file created at: 2020/09/27 16:12:51
+Running on machine: WANGKEWEI
+I0927 16:12:51.963958 11792 main.cpp:66] Remote server address is 192.168.0.20, server port is 61001, name is .
+I0927 16:12:52.017956 11792 main.cpp:170] Create new asynchronous client result = 0.
+I0927 16:13:40.607888  7272 HelmetDetectComponentClient.cpp:182] Deploy algorithm on stream ID = 747edc1a-ebec-4253-b19e-fed05a428956:17ca332d-d710-4f65-b82c-a53e9cc284af:34 GPU = 1 first threashold = 0.5 second threashold = 0 track threashold = 0.5.
+I0927 16:14:38.680868  7272 HelmetDetectComponentClient.cpp:182] Deploy algorithm on stream ID = 747edc1a-ebec-4253-b19e-fed05a428956:17ca332d-d710-4f65-b82c-a53e9cc284af:34 GPU = 1 first threashold = 0.5 second threashold = 0 track threashold = 0.5.
+I0927 16:14:54.919889  7272 HelmetDetectComponentClient.cpp:182] Deploy algorithm on stream ID = 747edc1a-ebec-4253-b19e-fed05a428956:17ca332d-d710-4f65-b82c-a53e9cc284af:34 GPU = 1 first threashold = 0.5 second threashold = 0 track threashold = 0.5.
+I0927 16:17:12.775631  7272 HelmetDetectComponentClient.cpp:182] Deploy algorithm on stream ID = 747edc1a-ebec-4253-b19e-fed05a428956:17ca332d-d710-4f65-b82c-a53e9cc284af:34 GPU = 1 first threashold = 0.5 second threashold = 0 track threashold = 0.5.
+I0927 16:18:49.054198  7272 HelmetDetectComponentClient.cpp:182] Deploy algorithm on stream ID = 747edc1a-ebec-4253-b19e-fed05a428956:17ca332d-d710-4f65-b82c-a53e9cc284af:34 GPU = 1 first threashold = 0.5 second threashold = 0 track threashold = 0.5.
+==============================================================
+Log file created at: 2020/09/27 16:22:12
+Running on machine: WANGKEWEI
+I0927 16:22:12.035642 13732 main.cpp:66] Remote server address is 192.168.0.20, server port is 61001, name is .
+I0927 16:22:12.083642 13732 main.cpp:170] Create new asynchronous client result = 0.
+==============================================================
+Log file created at: 2020/09/27 16:23:23
+Running on machine: WANGKEWEI
+I0927 16:23:23.128274  7820 main.cpp:66] Remote server address is 192.168.0.20, server port is 61001, name is .
+I0927 16:23:23.185274  7820 main.cpp:170] Create new asynchronous client result = 0.
+I0927 16:24:51.338151 20340 HelmetDetectComponentClient.cpp:182] Deploy algorithm on stream ID = 747edc1a-ebec-4253-b19e-fed05a428956:b051affd-f4ca-4313-9cf0-d48f82b8ecea:36 GPU = 1 first threashold = 0.5 second threashold = 0 track threashold = 0.5.
+==============================================================
+Log file created at: 2020/09/27 16:27:07
+Running on machine: WANGKEWEI
+I0927 16:27:07.109021 14464 main.cpp:66] Remote server address is 192.168.0.20, server port is 61001, name is .
+I0927 16:27:07.158102 14464 main.cpp:170] Create new asynchronous client result = 0.
+==============================================================
+Log file created at: 2020/09/27 16:28:57
+Running on machine: WANGKEWEI
+I0927 16:28:57.781448  3200 main.cpp:66] Remote server address is 192.168.0.20, server port is 61001, name is .
+I0927 16:28:57.850450  3200 main.cpp:170] Create new asynchronous client result = 0.
+I0927 16:32:29.086102 20824 HelmetDetectComponentClient.cpp:182] Deploy algorithm on stream ID = 747edc1a-ebec-4253-b19e-fed05a428956:66d3f53e-caaa-4a9e-b350-485d69dae079:33 GPU = 1 first threashold = 0.5 second threashold = 0 track threashold = 0.5.

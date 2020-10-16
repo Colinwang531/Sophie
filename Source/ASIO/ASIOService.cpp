@@ -1,63 +1,48 @@
 #include "Hardware/Cpu.h"
-using CPU = NS(hardware, 1)::Cpu;
+using Cpu = base::hardware::Cpu;
 #include "ASIO/ASIOService.h"
+#include "Error.h"
+using WriteLocker = base::locker::WriteLocker;
 
-NS_BEGIN(asio, 2)
-
-ASIOService::ASIOService() : idleNum{ 0 }
-{}
-
-ASIOService::~ASIOService()
-{}
-
-Int32 ASIOService::startService(const UInt8 workers /* = 1 */)
+namespace base
 {
-	Int32 status{ ERR_INVALID_PARAM };
-
-	if (0 < workers)
+	namespace network
 	{
-		status = startingService(workers);
-	}
+		ASIOService::ASIOService() : idleNumber{ 0 }
+		{}
 
-	return status;
-}
+		ASIOService::~ASIOService()
+		{}
 
-void ASIOService::stopService()
-{
-	if (0 < ioContexts.size() && 0 < ioWorks.size())
-	{
-		stoppingService();
-	}
-}
+		int ASIOService::startService()
+		{
+			const int cpuNumber{ Cpu().getCPUCoreNumber() };
+			IOCtxGroup ctxs(cpuNumber);
 
-Int32 ASIOService::startingService(const UInt8 workers /* = 1 */)
-{
-	IOContexts tempIOContexts(workers);
+			for (int i = 0; i != cpuNumber; ++i)
+			{
+				boost::thread* tempWorkerThread{
+					threadGroup.create_thread(boost::bind(&boost::asio::io_service::run, boost::ref(ctxs[i]))) };
+				Cpu().setThreadAffinityMask(tempWorkerThread->native_handle(), i);
+				ioWorkGroup.push_back(boost::asio::io_service::work(ctxs[i]));
+			}
 
-	for (UInt8 i = 0; i != workers; ++i)
-	{
-		boost::thread* tempWorkerThread{
-			threadGroup.create_thread(boost::bind(&boost::asio::io_service::run, boost::ref(tempIOContexts[i]))) };
-		CPU().setThreadAffinityMask(tempWorkerThread->native_handle(), i);
-		ioWorks.push_back(boost::asio::io_service::work(tempIOContexts[i]));
-	}
+			ioctxGroup.swap(ctxs);
+			return 0 < ioWorkGroup.size() ? eSuccess : eBadOperate;
+		}
 
-	ioContexts.swap(tempIOContexts);
-	return 0 < ioContexts.size() ? ERR_OK : ERR_BAD_ALLOC;
-}
+		void ASIOService::stopService()
+		{
+			std::for_each(ioctxGroup.begin(), ioctxGroup.end(), boost::bind(&boost::asio::io_service::stop, _1));
+			threadGroup.join_all();
+			ioWorkGroup.clear();
+			ioctxGroup.clear();
+		}
 
-void ASIOService::stoppingService()
-{
-	std::for_each(ioContexts.begin(), ioContexts.end(), boost::bind(&boost::asio::io_service::stop, _1));
-	threadGroup.join_all();
-	ioWorks.clear();
-	ioContexts.clear();
-}
-
-boost::asio::io_service& ASIOService::getIdle()
-{
-	WriteLock tempWriteLock(idleMtx);
-	return ioContexts.at(idleNum++ % ioContexts.size());
-}
-
-NS_END
+		boost::asio::io_service& ASIOService::getIdle()
+		{
+			WriteLocker locker(mtx);
+			return ioctxGroup.at(idleNumber++ % ioctxGroup.size());
+		}
+	}//namespace network
+}//namespace base

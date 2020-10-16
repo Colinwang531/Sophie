@@ -290,11 +290,12 @@ class AlgorithmInfo PROTOBUF_FINAL :
 
   enum : int {
     kCidFieldNumber = 3,
+    kAidFieldNumber = 4,
     kGpuFieldNumber = 2,
-    kDectectfirstFieldNumber = 4,
-    kTrackFieldNumber = 5,
-    kDectectsecondFieldNumber = 6,
-    kSimilarFieldNumber = 7,
+    kDectectfirstFieldNumber = 5,
+    kTrackFieldNumber = 6,
+    kDectectsecondFieldNumber = 7,
+    kSimilarFieldNumber = 8,
     kTypeFieldNumber = 1,
   };
   // required string cid = 3;
@@ -326,6 +327,35 @@ class AlgorithmInfo PROTOBUF_FINAL :
   std::string* _internal_mutable_cid();
   public:
 
+  // required string aid = 4;
+  bool has_aid() const;
+  private:
+  bool _internal_has_aid() const;
+  public:
+  void clear_aid();
+  const std::string& aid() const;
+  void set_aid(const std::string& value);
+  void set_aid(std::string&& value);
+  void set_aid(const char* value);
+  void set_aid(const char* value, size_t size);
+  std::string* mutable_aid();
+  std::string* release_aid();
+  void set_allocated_aid(std::string* aid);
+  GOOGLE_PROTOBUF_RUNTIME_DEPRECATED("The unsafe_arena_ accessors for"
+  "    string fields are deprecated and will be removed in a"
+  "    future release.")
+  std::string* unsafe_arena_release_aid();
+  GOOGLE_PROTOBUF_RUNTIME_DEPRECATED("The unsafe_arena_ accessors for"
+  "    string fields are deprecated and will be removed in a"
+  "    future release.")
+  void unsafe_arena_set_allocated_aid(
+      std::string* aid);
+  private:
+  const std::string& _internal_aid() const;
+  void _internal_set_aid(const std::string& value);
+  std::string* _internal_mutable_aid();
+  public:
+
   // required int32 gpu = 2;
   bool has_gpu() const;
   private:
@@ -339,7 +369,7 @@ class AlgorithmInfo PROTOBUF_FINAL :
   void _internal_set_gpu(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // required float dectectfirst = 4;
+  // required float dectectfirst = 5;
   bool has_dectectfirst() const;
   private:
   bool _internal_has_dectectfirst() const;
@@ -352,7 +382,7 @@ class AlgorithmInfo PROTOBUF_FINAL :
   void _internal_set_dectectfirst(float value);
   public:
 
-  // required float track = 5;
+  // required float track = 6;
   bool has_track() const;
   private:
   bool _internal_has_track() const;
@@ -365,7 +395,7 @@ class AlgorithmInfo PROTOBUF_FINAL :
   void _internal_set_track(float value);
   public:
 
-  // optional float dectectsecond = 6;
+  // optional float dectectsecond = 7;
   bool has_dectectsecond() const;
   private:
   bool _internal_has_dectectsecond() const;
@@ -378,7 +408,7 @@ class AlgorithmInfo PROTOBUF_FINAL :
   void _internal_set_dectectsecond(float value);
   public:
 
-  // optional float similar = 7;
+  // optional float similar = 8;
   bool has_similar() const;
   private:
   bool _internal_has_similar() const;
@@ -417,6 +447,7 @@ class AlgorithmInfo PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr cid_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr aid_;
   ::PROTOBUF_NAMESPACE_ID::int32 gpu_;
   float dectectfirst_;
   float track_;
@@ -984,7 +1015,7 @@ class Algorithm PROTOBUF_FINAL :
 
 // required .msg.AlgorithmInfo.Type type = 1;
 inline bool AlgorithmInfo::_internal_has_type() const {
-  bool value = (_has_bits_[0] & 0x00000040u) != 0;
+  bool value = (_has_bits_[0] & 0x00000080u) != 0;
   return value;
 }
 inline bool AlgorithmInfo::has_type() const {
@@ -992,7 +1023,7 @@ inline bool AlgorithmInfo::has_type() const {
 }
 inline void AlgorithmInfo::clear_type() {
   type_ = 1;
-  _has_bits_[0] &= ~0x00000040u;
+  _has_bits_[0] &= ~0x00000080u;
 }
 inline ::msg::AlgorithmInfo_Type AlgorithmInfo::_internal_type() const {
   return static_cast< ::msg::AlgorithmInfo_Type >(type_);
@@ -1003,7 +1034,7 @@ inline ::msg::AlgorithmInfo_Type AlgorithmInfo::type() const {
 }
 inline void AlgorithmInfo::_internal_set_type(::msg::AlgorithmInfo_Type value) {
   assert(::msg::AlgorithmInfo_Type_IsValid(value));
-  _has_bits_[0] |= 0x00000040u;
+  _has_bits_[0] |= 0x00000080u;
   type_ = value;
 }
 inline void AlgorithmInfo::set_type(::msg::AlgorithmInfo_Type value) {
@@ -1013,7 +1044,7 @@ inline void AlgorithmInfo::set_type(::msg::AlgorithmInfo_Type value) {
 
 // required int32 gpu = 2;
 inline bool AlgorithmInfo::_internal_has_gpu() const {
-  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
   return value;
 }
 inline bool AlgorithmInfo::has_gpu() const {
@@ -1021,7 +1052,7 @@ inline bool AlgorithmInfo::has_gpu() const {
 }
 inline void AlgorithmInfo::clear_gpu() {
   gpu_ = 0;
-  _has_bits_[0] &= ~0x00000002u;
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int32 AlgorithmInfo::_internal_gpu() const {
   return gpu_;
@@ -1031,7 +1062,7 @@ inline ::PROTOBUF_NAMESPACE_ID::int32 AlgorithmInfo::gpu() const {
   return _internal_gpu();
 }
 inline void AlgorithmInfo::_internal_set_gpu(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _has_bits_[0] |= 0x00000002u;
+  _has_bits_[0] |= 0x00000004u;
   gpu_ = value;
 }
 inline void AlgorithmInfo::set_gpu(::PROTOBUF_NAMESPACE_ID::int32 value) {
@@ -1132,9 +1163,102 @@ inline void AlgorithmInfo::unsafe_arena_set_allocated_cid(
   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:msg.AlgorithmInfo.cid)
 }
 
-// required float dectectfirst = 4;
+// required string aid = 4;
+inline bool AlgorithmInfo::_internal_has_aid() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool AlgorithmInfo::has_aid() const {
+  return _internal_has_aid();
+}
+inline void AlgorithmInfo::clear_aid() {
+  aid_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline const std::string& AlgorithmInfo::aid() const {
+  // @@protoc_insertion_point(field_get:msg.AlgorithmInfo.aid)
+  return _internal_aid();
+}
+inline void AlgorithmInfo::set_aid(const std::string& value) {
+  _internal_set_aid(value);
+  // @@protoc_insertion_point(field_set:msg.AlgorithmInfo.aid)
+}
+inline std::string* AlgorithmInfo::mutable_aid() {
+  // @@protoc_insertion_point(field_mutable:msg.AlgorithmInfo.aid)
+  return _internal_mutable_aid();
+}
+inline const std::string& AlgorithmInfo::_internal_aid() const {
+  return aid_.Get();
+}
+inline void AlgorithmInfo::_internal_set_aid(const std::string& value) {
+  _has_bits_[0] |= 0x00000002u;
+  aid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value, GetArena());
+}
+inline void AlgorithmInfo::set_aid(std::string&& value) {
+  _has_bits_[0] |= 0x00000002u;
+  aid_.Set(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
+  // @@protoc_insertion_point(field_set_rvalue:msg.AlgorithmInfo.aid)
+}
+inline void AlgorithmInfo::set_aid(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000002u;
+  aid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
+              GetArena());
+  // @@protoc_insertion_point(field_set_char:msg.AlgorithmInfo.aid)
+}
+inline void AlgorithmInfo::set_aid(const char* value,
+    size_t size) {
+  _has_bits_[0] |= 0x00000002u;
+  aid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArena());
+  // @@protoc_insertion_point(field_set_pointer:msg.AlgorithmInfo.aid)
+}
+inline std::string* AlgorithmInfo::_internal_mutable_aid() {
+  _has_bits_[0] |= 0x00000002u;
+  return aid_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline std::string* AlgorithmInfo::release_aid() {
+  // @@protoc_insertion_point(field_release:msg.AlgorithmInfo.aid)
+  if (!_internal_has_aid()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000002u;
+  return aid_.ReleaseNonDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline void AlgorithmInfo::set_allocated_aid(std::string* aid) {
+  if (aid != nullptr) {
+    _has_bits_[0] |= 0x00000002u;
+  } else {
+    _has_bits_[0] &= ~0x00000002u;
+  }
+  aid_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), aid,
+      GetArena());
+  // @@protoc_insertion_point(field_set_allocated:msg.AlgorithmInfo.aid)
+}
+inline std::string* AlgorithmInfo::unsafe_arena_release_aid() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:msg.AlgorithmInfo.aid)
+  GOOGLE_DCHECK(GetArena() != nullptr);
+  _has_bits_[0] &= ~0x00000002u;
+  return aid_.UnsafeArenaRelease(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      GetArena());
+}
+inline void AlgorithmInfo::unsafe_arena_set_allocated_aid(
+    std::string* aid) {
+  GOOGLE_DCHECK(GetArena() != nullptr);
+  if (aid != nullptr) {
+    _has_bits_[0] |= 0x00000002u;
+  } else {
+    _has_bits_[0] &= ~0x00000002u;
+  }
+  aid_.UnsafeArenaSetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      aid, GetArena());
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:msg.AlgorithmInfo.aid)
+}
+
+// required float dectectfirst = 5;
 inline bool AlgorithmInfo::_internal_has_dectectfirst() const {
-  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  bool value = (_has_bits_[0] & 0x00000008u) != 0;
   return value;
 }
 inline bool AlgorithmInfo::has_dectectfirst() const {
@@ -1142,7 +1266,7 @@ inline bool AlgorithmInfo::has_dectectfirst() const {
 }
 inline void AlgorithmInfo::clear_dectectfirst() {
   dectectfirst_ = 0;
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline float AlgorithmInfo::_internal_dectectfirst() const {
   return dectectfirst_;
@@ -1152,7 +1276,7 @@ inline float AlgorithmInfo::dectectfirst() const {
   return _internal_dectectfirst();
 }
 inline void AlgorithmInfo::_internal_set_dectectfirst(float value) {
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000008u;
   dectectfirst_ = value;
 }
 inline void AlgorithmInfo::set_dectectfirst(float value) {
@@ -1160,9 +1284,9 @@ inline void AlgorithmInfo::set_dectectfirst(float value) {
   // @@protoc_insertion_point(field_set:msg.AlgorithmInfo.dectectfirst)
 }
 
-// required float track = 5;
+// required float track = 6;
 inline bool AlgorithmInfo::_internal_has_track() const {
-  bool value = (_has_bits_[0] & 0x00000008u) != 0;
+  bool value = (_has_bits_[0] & 0x00000010u) != 0;
   return value;
 }
 inline bool AlgorithmInfo::has_track() const {
@@ -1170,7 +1294,7 @@ inline bool AlgorithmInfo::has_track() const {
 }
 inline void AlgorithmInfo::clear_track() {
   track_ = 0;
-  _has_bits_[0] &= ~0x00000008u;
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline float AlgorithmInfo::_internal_track() const {
   return track_;
@@ -1180,7 +1304,7 @@ inline float AlgorithmInfo::track() const {
   return _internal_track();
 }
 inline void AlgorithmInfo::_internal_set_track(float value) {
-  _has_bits_[0] |= 0x00000008u;
+  _has_bits_[0] |= 0x00000010u;
   track_ = value;
 }
 inline void AlgorithmInfo::set_track(float value) {
@@ -1188,9 +1312,9 @@ inline void AlgorithmInfo::set_track(float value) {
   // @@protoc_insertion_point(field_set:msg.AlgorithmInfo.track)
 }
 
-// optional float dectectsecond = 6;
+// optional float dectectsecond = 7;
 inline bool AlgorithmInfo::_internal_has_dectectsecond() const {
-  bool value = (_has_bits_[0] & 0x00000010u) != 0;
+  bool value = (_has_bits_[0] & 0x00000020u) != 0;
   return value;
 }
 inline bool AlgorithmInfo::has_dectectsecond() const {
@@ -1198,7 +1322,7 @@ inline bool AlgorithmInfo::has_dectectsecond() const {
 }
 inline void AlgorithmInfo::clear_dectectsecond() {
   dectectsecond_ = 0;
-  _has_bits_[0] &= ~0x00000010u;
+  _has_bits_[0] &= ~0x00000020u;
 }
 inline float AlgorithmInfo::_internal_dectectsecond() const {
   return dectectsecond_;
@@ -1208,7 +1332,7 @@ inline float AlgorithmInfo::dectectsecond() const {
   return _internal_dectectsecond();
 }
 inline void AlgorithmInfo::_internal_set_dectectsecond(float value) {
-  _has_bits_[0] |= 0x00000010u;
+  _has_bits_[0] |= 0x00000020u;
   dectectsecond_ = value;
 }
 inline void AlgorithmInfo::set_dectectsecond(float value) {
@@ -1216,9 +1340,9 @@ inline void AlgorithmInfo::set_dectectsecond(float value) {
   // @@protoc_insertion_point(field_set:msg.AlgorithmInfo.dectectsecond)
 }
 
-// optional float similar = 7;
+// optional float similar = 8;
 inline bool AlgorithmInfo::_internal_has_similar() const {
-  bool value = (_has_bits_[0] & 0x00000020u) != 0;
+  bool value = (_has_bits_[0] & 0x00000040u) != 0;
   return value;
 }
 inline bool AlgorithmInfo::has_similar() const {
@@ -1226,7 +1350,7 @@ inline bool AlgorithmInfo::has_similar() const {
 }
 inline void AlgorithmInfo::clear_similar() {
   similar_ = 0;
-  _has_bits_[0] &= ~0x00000020u;
+  _has_bits_[0] &= ~0x00000040u;
 }
 inline float AlgorithmInfo::_internal_similar() const {
   return similar_;
@@ -1236,7 +1360,7 @@ inline float AlgorithmInfo::similar() const {
   return _internal_similar();
 }
 inline void AlgorithmInfo::_internal_set_similar(float value) {
-  _has_bits_[0] |= 0x00000020u;
+  _has_bits_[0] |= 0x00000040u;
   similar_ = value;
 }
 inline void AlgorithmInfo::set_similar(float value) {

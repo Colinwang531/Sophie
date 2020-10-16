@@ -27,6 +27,14 @@ namespace base
 				const SurveillanceDeviceType type = SurveillanceDeviceType::SURVEILLANCE_DEVICE_TYPE_NONE);
 			virtual ~HikvisionDevice(void);
 
+		public:
+			//获取登录用户ID标识
+			//@Return : 登录用户ID标识
+			inline const int getUserID(void) const
+			{
+				return userID;
+			}
+
 		protected:
 			//启动/停止设备
 			//@Return : 错误码
@@ -42,6 +50,16 @@ namespace base
 			//@cameras : 摄像机信息集合
 			//@Return : 错误码
 			int getDeviceCamera(std::vector<AbstractCamera>& cameras) override;
+
+			//设备实时预览抓图
+			//@cameraIdx : 摄像机索引号
+			//@data : 图片缓存
+			//@bytes : 图片缓存大小
+			//@Return : 实际图片大小
+			int captureRealplayJPEGImage(
+				const int cameraIdx = -1,
+				char* data = nullptr,
+				const int bytes = 0);
 
 		private:
 			int userID;

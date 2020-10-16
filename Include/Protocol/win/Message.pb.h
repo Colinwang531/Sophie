@@ -40,6 +40,7 @@
 #include "Device.pb.h"
 #include "Status.pb.h"
 #include "User.pb.h"
+#include "Event.pb.h"
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
 #define PROTOBUF_INTERNAL_EXPORT_Message_2eproto
@@ -80,11 +81,12 @@ enum MSG_Type : int {
   MSG_Type_CREW = 4,
   MSG_Type_DEVICE = 5,
   MSG_Type_STATUS = 6,
-  MSG_Type_USER = 7
+  MSG_Type_USER = 7,
+  MSG_Type_EVENT = 8
 };
 bool MSG_Type_IsValid(int value);
 constexpr MSG_Type MSG_Type_Type_MIN = MSG_Type_NONE;
-constexpr MSG_Type MSG_Type_Type_MAX = MSG_Type_USER;
+constexpr MSG_Type MSG_Type_Type_MAX = MSG_Type_EVENT;
 constexpr int MSG_Type_Type_ARRAYSIZE = MSG_Type_Type_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* MSG_Type_descriptor();
@@ -236,6 +238,8 @@ class MSG PROTOBUF_FINAL :
     MSG_Type_STATUS;
   static constexpr Type USER =
     MSG_Type_USER;
+  static constexpr Type EVENT =
+    MSG_Type_EVENT;
   static inline bool Type_IsValid(int value) {
     return MSG_Type_IsValid(value);
   }
@@ -271,6 +275,7 @@ class MSG PROTOBUF_FINAL :
     kDeviceFieldNumber = 8,
     kStatusFieldNumber = 9,
     kUserFieldNumber = 10,
+    kEvtFieldNumber = 11,
     kSequenceFieldNumber = 2,
     kTimestampFieldNumber = 3,
     kTypeFieldNumber = 1,
@@ -401,6 +406,24 @@ class MSG PROTOBUF_FINAL :
       ::msg::User* user);
   ::msg::User* unsafe_arena_release_user();
 
+  // optional .msg.Event evt = 11;
+  bool has_evt() const;
+  private:
+  bool _internal_has_evt() const;
+  public:
+  void clear_evt();
+  const ::msg::Event& evt() const;
+  ::msg::Event* release_evt();
+  ::msg::Event* mutable_evt();
+  void set_allocated_evt(::msg::Event* evt);
+  private:
+  const ::msg::Event& _internal_evt() const;
+  ::msg::Event* _internal_mutable_evt();
+  public:
+  void unsafe_arena_set_allocated_evt(
+      ::msg::Event* evt);
+  ::msg::Event* unsafe_arena_release_evt();
+
   // required int64 sequence = 2;
   bool has_sequence() const;
   private:
@@ -459,6 +482,7 @@ class MSG PROTOBUF_FINAL :
   ::msg::Device* device_;
   ::msg::Status* status_;
   ::msg::User* user_;
+  ::msg::Event* evt_;
   ::PROTOBUF_NAMESPACE_ID::int64 sequence_;
   ::PROTOBUF_NAMESPACE_ID::int64 timestamp_;
   int type_;
@@ -477,7 +501,7 @@ class MSG PROTOBUF_FINAL :
 
 // required .msg.MSG.Type type = 1 [default = NONE];
 inline bool MSG::_internal_has_type() const {
-  bool value = (_has_bits_[0] & 0x00000200u) != 0;
+  bool value = (_has_bits_[0] & 0x00000400u) != 0;
   return value;
 }
 inline bool MSG::has_type() const {
@@ -485,7 +509,7 @@ inline bool MSG::has_type() const {
 }
 inline void MSG::clear_type() {
   type_ = 0;
-  _has_bits_[0] &= ~0x00000200u;
+  _has_bits_[0] &= ~0x00000400u;
 }
 inline ::msg::MSG_Type MSG::_internal_type() const {
   return static_cast< ::msg::MSG_Type >(type_);
@@ -496,7 +520,7 @@ inline ::msg::MSG_Type MSG::type() const {
 }
 inline void MSG::_internal_set_type(::msg::MSG_Type value) {
   assert(::msg::MSG_Type_IsValid(value));
-  _has_bits_[0] |= 0x00000200u;
+  _has_bits_[0] |= 0x00000400u;
   type_ = value;
 }
 inline void MSG::set_type(::msg::MSG_Type value) {
@@ -506,7 +530,7 @@ inline void MSG::set_type(::msg::MSG_Type value) {
 
 // required int64 sequence = 2;
 inline bool MSG::_internal_has_sequence() const {
-  bool value = (_has_bits_[0] & 0x00000080u) != 0;
+  bool value = (_has_bits_[0] & 0x00000100u) != 0;
   return value;
 }
 inline bool MSG::has_sequence() const {
@@ -514,7 +538,7 @@ inline bool MSG::has_sequence() const {
 }
 inline void MSG::clear_sequence() {
   sequence_ = PROTOBUF_LONGLONG(0);
-  _has_bits_[0] &= ~0x00000080u;
+  _has_bits_[0] &= ~0x00000100u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int64 MSG::_internal_sequence() const {
   return sequence_;
@@ -524,7 +548,7 @@ inline ::PROTOBUF_NAMESPACE_ID::int64 MSG::sequence() const {
   return _internal_sequence();
 }
 inline void MSG::_internal_set_sequence(::PROTOBUF_NAMESPACE_ID::int64 value) {
-  _has_bits_[0] |= 0x00000080u;
+  _has_bits_[0] |= 0x00000100u;
   sequence_ = value;
 }
 inline void MSG::set_sequence(::PROTOBUF_NAMESPACE_ID::int64 value) {
@@ -534,7 +558,7 @@ inline void MSG::set_sequence(::PROTOBUF_NAMESPACE_ID::int64 value) {
 
 // required int64 timestamp = 3;
 inline bool MSG::_internal_has_timestamp() const {
-  bool value = (_has_bits_[0] & 0x00000100u) != 0;
+  bool value = (_has_bits_[0] & 0x00000200u) != 0;
   return value;
 }
 inline bool MSG::has_timestamp() const {
@@ -542,7 +566,7 @@ inline bool MSG::has_timestamp() const {
 }
 inline void MSG::clear_timestamp() {
   timestamp_ = PROTOBUF_LONGLONG(0);
-  _has_bits_[0] &= ~0x00000100u;
+  _has_bits_[0] &= ~0x00000200u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int64 MSG::_internal_timestamp() const {
   return timestamp_;
@@ -552,7 +576,7 @@ inline ::PROTOBUF_NAMESPACE_ID::int64 MSG::timestamp() const {
   return _internal_timestamp();
 }
 inline void MSG::_internal_set_timestamp(::PROTOBUF_NAMESPACE_ID::int64 value) {
-  _has_bits_[0] |= 0x00000100u;
+  _has_bits_[0] |= 0x00000200u;
   timestamp_ = value;
 }
 inline void MSG::set_timestamp(::PROTOBUF_NAMESPACE_ID::int64 value) {
@@ -1111,6 +1135,85 @@ inline void MSG::set_allocated_user(::msg::User* user) {
   }
   user_ = user;
   // @@protoc_insertion_point(field_set_allocated:msg.MSG.user)
+}
+
+// optional .msg.Event evt = 11;
+inline bool MSG::_internal_has_evt() const {
+  bool value = (_has_bits_[0] & 0x00000080u) != 0;
+  PROTOBUF_ASSUME(!value || evt_ != nullptr);
+  return value;
+}
+inline bool MSG::has_evt() const {
+  return _internal_has_evt();
+}
+inline const ::msg::Event& MSG::_internal_evt() const {
+  const ::msg::Event* p = evt_;
+  return p != nullptr ? *p : reinterpret_cast<const ::msg::Event&>(
+      ::msg::_Event_default_instance_);
+}
+inline const ::msg::Event& MSG::evt() const {
+  // @@protoc_insertion_point(field_get:msg.MSG.evt)
+  return _internal_evt();
+}
+inline void MSG::unsafe_arena_set_allocated_evt(
+    ::msg::Event* evt) {
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(evt_);
+  }
+  evt_ = evt;
+  if (evt) {
+    _has_bits_[0] |= 0x00000080u;
+  } else {
+    _has_bits_[0] &= ~0x00000080u;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:msg.MSG.evt)
+}
+inline ::msg::Event* MSG::release_evt() {
+  _has_bits_[0] &= ~0x00000080u;
+  ::msg::Event* temp = evt_;
+  evt_ = nullptr;
+  if (GetArena() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
+}
+inline ::msg::Event* MSG::unsafe_arena_release_evt() {
+  // @@protoc_insertion_point(field_release:msg.MSG.evt)
+  _has_bits_[0] &= ~0x00000080u;
+  ::msg::Event* temp = evt_;
+  evt_ = nullptr;
+  return temp;
+}
+inline ::msg::Event* MSG::_internal_mutable_evt() {
+  _has_bits_[0] |= 0x00000080u;
+  if (evt_ == nullptr) {
+    auto* p = CreateMaybeMessage<::msg::Event>(GetArena());
+    evt_ = p;
+  }
+  return evt_;
+}
+inline ::msg::Event* MSG::mutable_evt() {
+  // @@protoc_insertion_point(field_mutable:msg.MSG.evt)
+  return _internal_mutable_evt();
+}
+inline void MSG::set_allocated_evt(::msg::Event* evt) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(evt_);
+  }
+  if (evt) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+      reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(evt)->GetArena();
+    if (message_arena != submessage_arena) {
+      evt = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, evt, submessage_arena);
+    }
+    _has_bits_[0] |= 0x00000080u;
+  } else {
+    _has_bits_[0] &= ~0x00000080u;
+  }
+  evt_ = evt;
+  // @@protoc_insertion_point(field_set_allocated:msg.MSG.evt)
 }
 
 #ifdef __GNUC__

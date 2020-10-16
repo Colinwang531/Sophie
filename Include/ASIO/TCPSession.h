@@ -1,72 +1,94 @@
 //
-//		Copyright :				@2017, HHJT, All Rights Reserved
+//		Copyright :						@2020, ***, All Rights Reserved
 //
-//		Author :					王科威
-//		E-mail :					wangkw531@icloud.com
-//		Date :						2017-07-14
-//		Description:			TCP会话
+//		Author :						王科威
+//		E-mail :						wangkw531@icloud.com
+//		Date :							2020-05-06
+//		Description :					TCP会话类
 //
-//		History:					Author									Date												Description
-//										王科威										2017-07-14								创建
+//		History:						Author									Date										Description
+//										王科威									2020-05-06									创建
 //
 
-#ifndef TCP_SESSION_H
-#define TCP_SESSION_H
+#ifndef BASE_NETWORK_TCP_SESSION_H
+#define BASE_NETWORK_TCP_SESSION_H
 
-#include <deque>
-#include "boost/thread/mutex.hpp"
-#include "MediaData/MediaData.h"
-using MediaData = NS(media, 2)::MediaData;
+#include "boost/shared_ptr.hpp"
+#include "Packet/Stream/StreamPacket.h"
+using StreamPacket = base::packet::StreamPacket;
+#include "DataStruct/FIFOQueue.h"
 #include "ASIO/TCPSender.h"
-using TCPSender = NS(asio, 2)::TCPSender;
+using TCPSender = base::network::TCPSender;
+using TCPSenderPtr = boost::shared_ptr<TCPSender>;
 #include "ASIO/TCPReceiver.h"
-using TCPReceiver = NS(asio, 2)::TCPReceiver;
+using TCPReceiver = base::network::TCPReceiver;
+using TCPReceiverPtr = boost::shared_ptr<TCPReceiver>;
 
-NS_BEGIN(asio, 2)
-
-class TCPSession
+namespace base
 {
-public:
-	TCPSession(void);
-	virtual ~TCPSession(void);
+	namespace network
+	{
+		class TCPSession
+		{
+		public:
+			TCPSession(boost::asio::ip::tcp::socket* s = nullptr);
+			virtual ~TCPSession(void);
 
-	Int32 openSession(boost::asio::ip::tcp::socket* so = nullptr);
-	void closeSession(void);
-	Int32 sendData(const MediaData& data);
-	//	功能 : 数据读取
-	//
-	//	参数 : 
-	//			  @timeo [IN] 数据接收超时时间,单位秒
-	//
-	//	返回值 :
-	//
-	//	备注 :
-	//
-	void receiveData(const UInt32 timeo = 0);
+		public:
+			//启动会话
+			//@Return : 错误码
+			//@Comment : 会话启动会自动开始数据接收
+			virtual int startSession(void);
 
-private:
-	void afterAsyncReadDataNotificationCallback(boost::system::error_code error, std::size_t transferredBytes);
-	void afterAsyncSendDataNotificationCallback(boost::system::error_code error, std::size_t transferredBytes);
+			//停止会话
+			//@Return : 错误码
+			virtual int stopSession(void);
 
-protected:
-	virtual Int32 openingSession(boost::asio::ip::tcp::socket* so = nullptr);
-	virtual void closingSession(void);
-	virtual void asyncSend(const MediaData& data);
-	virtual void asyncRecv(
-		boost::system::error_code error, std::size_t transferBytes, const char* transferData = nullptr);
-	virtual void asyncWait(const UInt32 timeo = 0) = 0;
+			//发送数据
+			//@pkt : 数据包
+			//@Return : 错误码
+			int sendData(StreamPacket* pkt = nullptr);
 
-protected:
-	boost::asio::ip::tcp::socket* tcpSocket;
-	TCPSender tcpSender;
-	TCPReceiver tcpReceiver;
+			//获取会话状态
+			//@Return : 会话状态
+			inline const bool valid(void) const
+			{
+				return !stopped;
+			}
 
-	boost::mutex sendingDataMutex;
-	std::deque<MediaData> sendingDataQueue;
-	//该标识避免socket实例被重复关闭
-	bool stopped;
-};//class TCPSession
+			//数据发送通知
+			//@e : 错误码
+			//@bytes : 数据大小
+			virtual void sentdDataNotification(
+				const boost::system::error_code e, 
+				const int bytes = 0);
 
-NS_END
+			//数据读取通知
+			//@data : 数据内容
+			//@bytes : 数据大小
+			virtual void receivedDataNotification(
+				const unsigned char* data = nullptr, 
+				const int bytes = 0);
 
-#endif//TCP_SESSION_H
+			//数据读取异常通知
+			//@e : 错误码
+			virtual void receivedExceptionNotification(
+				const boost::system::error_code e);
+
+			//数据读取超时通知
+			virtual void receivedExpiredNotification(void);
+
+		private:
+			boost::asio::ip::tcp::socket* so;
+			//避免不断创建发送和接收器
+			TCPSenderPtr senderPtr;
+			TCPReceiverPtr receiverPtr;
+			//为避免底层发送数据缓存被写满导致溢出
+			//会话端使用发送队列保证数据一个接一个发送
+			FIFOQueue<StreamPacket*> streamPacketGroup;
+			bool stopped;
+		};//class TCPSession
+	}//namespace network
+}//namespace base
+
+#endif//BASE_NETWORK_TCP_SESSION_H

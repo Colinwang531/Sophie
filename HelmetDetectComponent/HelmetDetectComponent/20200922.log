@@ -1,0 +1,48 @@
+==============================================================
+Log file created at: 2020/09/22 15:44:50
+Running on machine: WANGKEWEI
+I0922 15:44:50.445925  3420 main.cpp:66] Remote server address is 192.168.0.20, server port is 61001, name is .
+I0922 15:44:50.602988  3420 main.cpp:170] Create new asynchronous client result = 0.
+==============================================================
+Log file created at: 2020/09/22 15:54:20
+Running on machine: WANGKEWEI
+I0922 15:54:20.607924  5524 main.cpp:66] Remote server address is 192.168.0.20, server port is 61001, name is .
+I0922 15:54:20.667924  5524 main.cpp:170] Create new asynchronous client result = 0.
+==============================================================
+Log file created at: 2020/09/22 15:57:20
+Running on machine: WANGKEWEI
+I0922 15:57:20.381217 18028 main.cpp:66] Remote server address is 192.168.0.20, server port is 61001, name is .
+I0922 15:57:20.457216 18028 main.cpp:170] Create new asynchronous client result = 0.
+I0922 15:58:10.184831 11792 HelmetDetectComponentClient.cpp:198] Set algorithm enable status = 1.
+==============================================================
+Log file created at: 2020/09/22 16:05:37
+Running on machine: WANGKEWEI
+I0922 16:05:37.380555 23836 main.cpp:66] Remote server address is 192.168.0.20, server port is 61001, name is .
+I0922 16:05:37.437551 23836 main.cpp:170] Create new asynchronous client result = 0.
+I0922 16:06:13.500602 22932 HelmetDetectComponentClient.cpp:199] Set algorithm enable status = 1.
+==============================================================
+Log file created at: 2020/09/22 17:14:12
+Running on machine: WANGKEWEI
+I0922 17:14:12.121223  8344 main.cpp:66] Remote server address is 192.168.0.20, server port is 61001, name is .
+I0922 17:14:12.194653  8344 main.cpp:170] Create new asynchronous client result = 0.
+I0922 17:16:07.997846 19388 HelmetDetectComponentClient.cpp:205] Set algorithm enable status = 1.
+E0922 17:16:27.959812 19388 HelmetDetectComponentClient.cpp:70] Parse helmet client polled message failed.
+I0922 17:17:23.424659 19388 HelmetDetectComponentClient.cpp:205] Set algorithm enable status = 1.
+==============================================================
+Log file created at: 2020/09/22 17:20:57
+Running on machine: WANGKEWEI
+I0922 17:20:57.476858 17180 main.cpp:66] Remote server address is 192.168.0.20, server port is 61001, name is .
+I0922 17:20:57.528853 17180 main.cpp:170] Create new asynchronous client result = 0.
+==============================================================
+Log file created at: 2020/09/22 17:21:15
+Running on machine: WANGKEWEI
+I0922 17:21:15.001919  4536 main.cpp:66] Remote server address is 192.168.0.20, server port is 61001, name is .
+I0922 17:21:15.052426  4536 main.cpp:170] Create new asynchronous client result = 0.
+E0922 17:23:18.015374 15016 HelmetDetectComponentClient.cpp:70] Parse helmet client polled message failed.
+I0922 17:25:34.249743 15016 HelmetDetectComponentClient.cpp:178] Deploy stream ID = 747edc1a-ebec-4253-b19e-fed05a428956:05d8e1fc-0655-4781-98f8-459192e2d613:34 GPU = 1 first threashold = 0.5 second threashold = 0 track threashold = 0.5.
+==============================================================
+Log file created at: 2020/09/22 17:26:26
+Running on machine: WANGKEWEI
+I0922 17:26:26.882001  5260 main.cpp:66] Remote server address is 192.168.0.20, server port is 61001, name is .
+I0922 17:26:26.951000  5260 main.cpp:170] Create new asynchronous client result = 0.
+I0922 17:26:54.808893 19628 HelmetDetectComponentClient.cpp:178] Deploy stream ID = 747edc1a-ebec-4253-b19e-fed05a428956:05d8e1fc-0655-4781-98f8-459192e2d613:34 GPU = 1 first threashold = 0.5 second threashold = 0 track threashold = 0.5.

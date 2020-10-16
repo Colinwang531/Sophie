@@ -1,112 +1,83 @@
 //
-//		Copyright :					@2018, ***, All Rights Reserved
+//		Copyright :						@2020, ***, All Rights Reserved
 //
 //		Author :						王科威
 //		E-mail :						wangkw531@icloud.com
-//		Date :							2019-07-19
-//		Description :				FIFO队列类
+//		Date :							2020-07-07
+//		Description :					FIFO队列类
 //
-//		History:						Author										Date													Description
-//											王科威										2019-08-26									创建
+//		History:						Author									Date										Description
+//										王科威									2020-07-07									创建
 //
 
 #ifndef FIFO_QUEUE_H
 #define FIFO_QUEUE_H
 
-#include "boost/thread/mutex.hpp"
-#include "predef.h"
-
-NS_BEGIN(datastruct, 1)
+#include <deque>
+#include "Mutex/RWLock.h"
 
 template <class T>
 class FIFOQueue
 {
 public:
-	FIFOQueue(void) : capacity{ 0xFFFF }
+	FIFOQueue(
+		const unsigned long long cap = 0xFFFF) 
+		: capacity{ cap }
 	{}
 	~FIFOQueue(void)
 	{}
 
 public:
-	void setCapacity(const unsigned long long number = 0xFFFF) 
+	void pushBack(const T e)
 	{
-		capacity = number;
-	}
-
-	bool insert(const T e)
-	{
-		bool status{ false };
-
-		mtx.lock();
-		if (capacity > queue.size())
+		const unsigned long long itemNumber{ queue.size() };
+		if (capacity > itemNumber)
 		{
+			WriteLock wl{ mtx };
 			queue.push_back(e);
-			status = true;
 		}
-		mtx.unlock();
-
-		return status;
 	}
 
-	T remove(void)
+	void popFront(void)
 	{
-		T e{};
-
-		mtx.lock();
-		if (0 < queue.size())
+		WriteLock wl{ mtx };
+		typename std::deque<T>::iterator it{ queue.begin() };
+		if (queue.end() != it)
 		{
-			e = queue[0];
-			queue.erase(queue.begin());
+			queue.erase(it);
 		}
-		mtx.unlock();
-
-		return e;
 	}
 	
 	T front(void)
 	{
-		T e;
+		T e{};
 
-		mtx.lock();
+		const unsigned long long itemNumber{ queue.size() };
 		if (0 < queue.size())
 		{
+			ReadLock rl{ mtx };
 			e = queue[0];
 		}
-		mtx.unlock();
 
 		return e;
 	}
 
-	unsigned long long size(void)
+	const unsigned long long size(void)
 	{
-		unsigned long long elementNumber{ 0 };
-
-		mtx.lock();
-		elementNumber = queue.size();
-		mtx.unlock();
-
-		return elementNumber;
+		ReadLock rl{ mtx };
+		return queue.size();
 	}
 
-	inline unsigned long long total(void) const
+	void clear()
 	{
-		return capacity;
-	}
-
-	void swap(std::vector<T>& out)
-	{
-		mtx.lock();
-		out.swap(queue);
-		mtx.unlock();
+		WriteLock wl{ mtx };
+		queue.clear();
 	}
 
 private:
 	unsigned long long capacity;
-	std::vector<T> queue;
-	boost::mutex mtx;
+	std::deque<T> queue;
+	SharedMutex mtx;
 };//class FIFOQueue
 
-NS_END
-
 #endif//FIFO_QUEUE_H
-

@@ -114,6 +114,16 @@ namespace base
 			//@Return : 错误码
 			virtual int getDeviceCamera(std::vector<AbstractCamera>& cameras);
 
+			//设备实时预览抓图
+			//@cameraIdx : 摄像机索引号
+			//@data : 图片缓存
+			//@bytes : 图片缓存大小
+			//@Return : 实际图片大小
+			virtual int captureRealplayJPEGImage(
+				const int cameraIdx = -1,
+				char* data = nullptr,
+				const int bytes = 0);
+
 		protected:
 			//登录/注销设备
 			//@Return : 当前设备实例总数

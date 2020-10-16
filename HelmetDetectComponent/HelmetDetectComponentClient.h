@@ -21,13 +21,19 @@ using HikvisionDevice = base::device::HikvisionDevice;
 using AbstractDevicePtr = boost::shared_ptr<base::device::AbstractDevice>;
 #include "DataStruct/UnorderedMap.h"
 using AbstractDeviceGroup = UnorderedMap<const std::string, AbstractDevicePtr>;
-#include "Network/AbstractClient.h"
-using AbstractClient = base::network::AbstractClient;
+#include "HelmetMediaStreamSession.h"
+using TCPSessionPtr = boost::shared_ptr<TCPSession>;
+using HelmetStreamSessionPtr = boost::shared_ptr<HelmetMediaStreamSession>;
+using HelmetStreamSessionGroup = UnorderedMap<const std::string, TCPSessionPtr>;
+#include "Network/AbstractMediaStreamClient.h"
+using AbstractMediaStreamClient = base::network::AbstractMediaStreamClient;
 
-class HelmetDetectComponentClient : public AbstractClient
+class HelmetDetectComponentClient : public AbstractMediaStreamClient
 {
 public:
-	HelmetDetectComponentClient(void);
+	HelmetDetectComponentClient(
+		const std::string address,
+		const unsigned short port = 60531);
 	virtual ~HelmetDetectComponentClient(void);
 
 protected:
@@ -37,13 +43,19 @@ protected:
 		const std::string toID,
 		const std::string msg) override;
 	const std::string buildAutoRegisterToBrokerMessage(void) override;
+	const std::string buildAutoQueryRegisterSubroutineMessage(void) override;
+	int createNewMediaStreamSession(
+		const std::string url,
+		boost::asio::ip::tcp::socket* s) override;
 
 private:
 	const std::string getAlgorithmClientInfoByName(const std::string name) const;
 	void setAlgorithmClientInfoWithName(
 		const std::string name, 
 		const std::string value);
-	void processComponentMessage(DataPacketPtr pkt);
+	void processComponentMessage(
+		const std::string fromID,
+		DataPacketPtr pkt);
 	void processAlgorithmMessage(
 		const std::string fromID,
 		DataPacketPtr pkt);
@@ -52,11 +64,14 @@ private:
 		DataPacketPtr pkt);
 	int replyMessageWithResult(
 		const std::string fromID,
+		const int type = 0,
 		const int command = 0,
 		const int result = 0,
 		const long long sequence = 0);
 
 private:
 	int sailStatus;
+	HelmetStreamSessionGroup streamSessionGroup;
+	Vector<AbstractAlgorithm> algorithmParamGroup;
 };//class HelmetDetectComponentClient
 

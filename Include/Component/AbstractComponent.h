@@ -4,7 +4,8 @@
 //		Author :						王科威
 //		E-mail :						wangkw531@icloud.com
 //		Date :							2020-07-01
-//		Description :					组件抽象基类
+//		Description :					组件抽象类
+//										组件实例在应用中保持组件ID和通信ID标识的唯一性,所以组件必须是不可拷贝的
 //
 //		History:						Author									Date										Description
 //										王科威									2020-07-01									创建
@@ -28,7 +29,8 @@ namespace base
 			COMPONENT_TYPE_HKD = 3,
 			COMPONENT_TYPE_DHD = 4,
 			COMPONENT_TYPE_ALM = 5,
-			COMPONENT_TYPE_AI = 6
+			COMPONENT_TYPE_AI = 6,
+			COMPONENT_TYPE_MED = 7
 		}ComponentType;
 
 		class AbstractComponent : private boost::noncopyable

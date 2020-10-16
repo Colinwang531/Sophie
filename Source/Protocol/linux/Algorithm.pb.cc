@@ -108,17 +108,19 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_Algorithm_2eproto::offsets[] P
   PROTOBUF_FIELD_OFFSET(::msg::AlgorithmInfo, type_),
   PROTOBUF_FIELD_OFFSET(::msg::AlgorithmInfo, gpu_),
   PROTOBUF_FIELD_OFFSET(::msg::AlgorithmInfo, cid_),
+  PROTOBUF_FIELD_OFFSET(::msg::AlgorithmInfo, aid_),
   PROTOBUF_FIELD_OFFSET(::msg::AlgorithmInfo, dectectfirst_),
   PROTOBUF_FIELD_OFFSET(::msg::AlgorithmInfo, track_),
   PROTOBUF_FIELD_OFFSET(::msg::AlgorithmInfo, dectectsecond_),
   PROTOBUF_FIELD_OFFSET(::msg::AlgorithmInfo, similar_),
-  6,
-  1,
-  0,
+  7,
   2,
+  0,
+  1,
   3,
   4,
   5,
+  6,
   PROTOBUF_FIELD_OFFSET(::msg::AlgorithmRequest, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::msg::AlgorithmRequest, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -148,10 +150,10 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_Algorithm_2eproto::offsets[] P
   1,
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
-  { 0, 12, sizeof(::msg::AlgorithmInfo)},
-  { 19, 25, sizeof(::msg::AlgorithmRequest)},
-  { 26, 33, sizeof(::msg::AlgorithmResponse)},
-  { 35, 43, sizeof(::msg::Algorithm)},
+  { 0, 13, sizeof(::msg::AlgorithmInfo)},
+  { 21, 27, sizeof(::msg::AlgorithmRequest)},
+  { 28, 35, sizeof(::msg::AlgorithmResponse)},
+  { 37, 45, sizeof(::msg::Algorithm)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -162,23 +164,23 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 };
 
 const char descriptor_table_protodef_Algorithm_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\017Algorithm.proto\022\003msg\"\371\001\n\rAlgorithmInfo"
+  "\n\017Algorithm.proto\022\003msg\"\206\002\n\rAlgorithmInfo"
   "\022%\n\004type\030\001 \002(\0162\027.msg.AlgorithmInfo.Type\022"
-  "\013\n\003gpu\030\002 \002(\005\022\013\n\003cid\030\003 \002(\t\022\024\n\014dectectfirs"
-  "t\030\004 \002(\002\022\r\n\005track\030\005 \002(\002\022\025\n\rdectectsecond\030"
-  "\006 \001(\002\022\017\n\007similar\030\007 \001(\002\"Z\n\004Type\022\n\n\006HELMET"
-  "\020\001\022\t\n\005PHONE\020\002\022\t\n\005SLEEP\020\003\022\t\n\005FIGHT\020\004\022\021\n\rA"
-  "TTENDANCE_IN\020\005\022\022\n\016ATTENDANCE_OUT\020\006\"=\n\020Al"
-  "gorithmRequest\022)\n\ralgorithminfo\030\001 \002(\0132\022."
-  "msg.AlgorithmInfo\"O\n\021AlgorithmResponse\022\016"
-  "\n\006result\030\001 \002(\005\022*\n\016algorithminfos\030\002 \003(\0132\022"
-  ".msg.AlgorithmInfo\"\347\001\n\tAlgorithm\022\'\n\007comm"
-  "and\030\001 \002(\0162\026.msg.Algorithm.Command\022/\n\020alg"
-  "orithmrequest\030\002 \001(\0132\025.msg.AlgorithmReque"
-  "st\0221\n\021algorithmresponse\030\003 \001(\0132\026.msg.Algo"
-  "rithmResponse\"M\n\007Command\022\021\n\rCONFIGURE_RE"
-  "Q\020\001\022\021\n\rCONFIGURE_REP\020\002\022\r\n\tQUERY_REQ\020\003\022\r\n"
-  "\tQUERY_REP\020\004"
+  "\013\n\003gpu\030\002 \002(\005\022\013\n\003cid\030\003 \002(\t\022\013\n\003aid\030\004 \002(\t\022\024"
+  "\n\014dectectfirst\030\005 \002(\002\022\r\n\005track\030\006 \002(\002\022\025\n\rd"
+  "ectectsecond\030\007 \001(\002\022\017\n\007similar\030\010 \001(\002\"Z\n\004T"
+  "ype\022\n\n\006HELMET\020\001\022\t\n\005PHONE\020\002\022\t\n\005SLEEP\020\003\022\t\n"
+  "\005FIGHT\020\004\022\021\n\rATTENDANCE_IN\020\005\022\022\n\016ATTENDANC"
+  "E_OUT\020\006\"=\n\020AlgorithmRequest\022)\n\ralgorithm"
+  "info\030\001 \002(\0132\022.msg.AlgorithmInfo\"O\n\021Algori"
+  "thmResponse\022\016\n\006result\030\001 \002(\005\022*\n\016algorithm"
+  "infos\030\002 \003(\0132\022.msg.AlgorithmInfo\"\347\001\n\tAlgo"
+  "rithm\022\'\n\007command\030\001 \002(\0162\026.msg.Algorithm.C"
+  "ommand\022/\n\020algorithmrequest\030\002 \001(\0132\025.msg.A"
+  "lgorithmRequest\0221\n\021algorithmresponse\030\003 \001"
+  "(\0132\026.msg.AlgorithmResponse\"M\n\007Command\022\021\n"
+  "\rCONFIGURE_REQ\020\001\022\021\n\rCONFIGURE_REP\020\002\022\r\n\tQ"
+  "UERY_REQ\020\003\022\r\n\tQUERY_REP\020\004"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_Algorithm_2eproto_deps[1] = {
 };
@@ -190,7 +192,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_Alg
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_Algorithm_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Algorithm_2eproto = {
-  false, false, descriptor_table_protodef_Algorithm_2eproto, "Algorithm.proto", 652,
+  false, false, descriptor_table_protodef_Algorithm_2eproto, "Algorithm.proto", 665,
   &descriptor_table_Algorithm_2eproto_once, descriptor_table_Algorithm_2eproto_sccs, descriptor_table_Algorithm_2eproto_deps, 4, 0,
   schemas, file_default_instances, TableStruct_Algorithm_2eproto::offsets,
   file_level_metadata_Algorithm_2eproto, 4, file_level_enum_descriptors_Algorithm_2eproto, file_level_service_descriptors_Algorithm_2eproto,
@@ -262,28 +264,31 @@ class AlgorithmInfo::_Internal {
  public:
   using HasBits = decltype(std::declval<AlgorithmInfo>()._has_bits_);
   static void set_has_type(HasBits* has_bits) {
-    (*has_bits)[0] |= 64u;
+    (*has_bits)[0] |= 128u;
   }
   static void set_has_gpu(HasBits* has_bits) {
-    (*has_bits)[0] |= 2u;
+    (*has_bits)[0] |= 4u;
   }
   static void set_has_cid(HasBits* has_bits) {
     (*has_bits)[0] |= 1u;
   }
-  static void set_has_dectectfirst(HasBits* has_bits) {
-    (*has_bits)[0] |= 4u;
+  static void set_has_aid(HasBits* has_bits) {
+    (*has_bits)[0] |= 2u;
   }
-  static void set_has_track(HasBits* has_bits) {
+  static void set_has_dectectfirst(HasBits* has_bits) {
     (*has_bits)[0] |= 8u;
   }
-  static void set_has_dectectsecond(HasBits* has_bits) {
+  static void set_has_track(HasBits* has_bits) {
     (*has_bits)[0] |= 16u;
   }
-  static void set_has_similar(HasBits* has_bits) {
+  static void set_has_dectectsecond(HasBits* has_bits) {
     (*has_bits)[0] |= 32u;
   }
+  static void set_has_similar(HasBits* has_bits) {
+    (*has_bits)[0] |= 64u;
+  }
   static bool MissingRequiredFields(const HasBits& has_bits) {
-    return ((has_bits[0] & 0x0000004f) ^ 0x0000004f) != 0;
+    return ((has_bits[0] & 0x0000009f) ^ 0x0000009f) != 0;
   }
 };
 
@@ -302,6 +307,11 @@ AlgorithmInfo::AlgorithmInfo(const AlgorithmInfo& from)
     cid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_cid(),
       GetArena());
   }
+  aid_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from._internal_has_aid()) {
+    aid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_aid(),
+      GetArena());
+  }
   ::memcpy(&gpu_, &from.gpu_,
     static_cast<size_t>(reinterpret_cast<char*>(&type_) -
     reinterpret_cast<char*>(&gpu_)) + sizeof(type_));
@@ -311,6 +321,7 @@ AlgorithmInfo::AlgorithmInfo(const AlgorithmInfo& from)
 void AlgorithmInfo::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_AlgorithmInfo_Algorithm_2eproto.base);
   cid_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  aid_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   ::memset(&gpu_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&similar_) -
       reinterpret_cast<char*>(&gpu_)) + sizeof(similar_));
@@ -326,6 +337,7 @@ AlgorithmInfo::~AlgorithmInfo() {
 void AlgorithmInfo::SharedDtor() {
   GOOGLE_DCHECK(GetArena() == nullptr);
   cid_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  aid_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
 void AlgorithmInfo::ArenaDtor(void* object) {
@@ -350,10 +362,15 @@ void AlgorithmInfo::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000001u) {
-    cid_.ClearNonDefaultToEmpty();
+  if (cached_has_bits & 0x00000003u) {
+    if (cached_has_bits & 0x00000001u) {
+      cid_.ClearNonDefaultToEmpty();
+    }
+    if (cached_has_bits & 0x00000002u) {
+      aid_.ClearNonDefaultToEmpty();
+    }
   }
-  if (cached_has_bits & 0x0000007eu) {
+  if (cached_has_bits & 0x000000fcu) {
     ::memset(&gpu_, 0, static_cast<size_t>(
         reinterpret_cast<char*>(&similar_) -
         reinterpret_cast<char*>(&gpu_)) + sizeof(similar_));
@@ -403,33 +420,44 @@ const char* AlgorithmInfo::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // required float dectectfirst = 4;
+      // required string aid = 4;
       case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 37)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
+          auto str = _internal_mutable_aid();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          #ifndef NDEBUG
+          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "msg.AlgorithmInfo.aid");
+          #endif  // !NDEBUG
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // required float dectectfirst = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 45)) {
           _Internal::set_has_dectectfirst(&has_bits);
           dectectfirst_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
           ptr += sizeof(float);
         } else goto handle_unusual;
         continue;
-      // required float track = 5;
-      case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 45)) {
+      // required float track = 6;
+      case 6:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 53)) {
           _Internal::set_has_track(&has_bits);
           track_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
           ptr += sizeof(float);
         } else goto handle_unusual;
         continue;
-      // optional float dectectsecond = 6;
-      case 6:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 53)) {
+      // optional float dectectsecond = 7;
+      case 7:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 61)) {
           _Internal::set_has_dectectsecond(&has_bits);
           dectectsecond_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
           ptr += sizeof(float);
         } else goto handle_unusual;
         continue;
-      // optional float similar = 7;
-      case 7:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 61)) {
+      // optional float similar = 8;
+      case 8:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 69)) {
           _Internal::set_has_similar(&has_bits);
           similar_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
           ptr += sizeof(float);
@@ -466,14 +494,14 @@ failure:
 
   cached_has_bits = _has_bits_[0];
   // required .msg.AlgorithmInfo.Type type = 1;
-  if (cached_has_bits & 0x00000040u) {
+  if (cached_has_bits & 0x00000080u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
       1, this->_internal_type(), target);
   }
 
   // required int32 gpu = 2;
-  if (cached_has_bits & 0x00000002u) {
+  if (cached_has_bits & 0x00000004u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(2, this->_internal_gpu(), target);
   }
@@ -488,28 +516,38 @@ failure:
         3, this->_internal_cid(), target);
   }
 
-  // required float dectectfirst = 4;
-  if (cached_has_bits & 0x00000004u) {
-    target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteFloatToArray(4, this->_internal_dectectfirst(), target);
+  // required string aid = 4;
+  if (cached_has_bits & 0x00000002u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->_internal_aid().data(), static_cast<int>(this->_internal_aid().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "msg.AlgorithmInfo.aid");
+    target = stream->WriteStringMaybeAliased(
+        4, this->_internal_aid(), target);
   }
 
-  // required float track = 5;
+  // required float dectectfirst = 5;
   if (cached_has_bits & 0x00000008u) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteFloatToArray(5, this->_internal_track(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteFloatToArray(5, this->_internal_dectectfirst(), target);
   }
 
-  // optional float dectectsecond = 6;
+  // required float track = 6;
   if (cached_has_bits & 0x00000010u) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteFloatToArray(6, this->_internal_dectectsecond(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteFloatToArray(6, this->_internal_track(), target);
   }
 
-  // optional float similar = 7;
+  // optional float dectectsecond = 7;
   if (cached_has_bits & 0x00000020u) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteFloatToArray(7, this->_internal_similar(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteFloatToArray(7, this->_internal_dectectsecond(), target);
+  }
+
+  // optional float similar = 8;
+  if (cached_has_bits & 0x00000040u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteFloatToArray(8, this->_internal_similar(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -531,6 +569,13 @@ size_t AlgorithmInfo::RequiredFieldsByteSizeFallback() const {
         this->_internal_cid());
   }
 
+  if (_internal_has_aid()) {
+    // required string aid = 4;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_aid());
+  }
+
   if (_internal_has_gpu()) {
     // required int32 gpu = 2;
     total_size += 1 +
@@ -539,12 +584,12 @@ size_t AlgorithmInfo::RequiredFieldsByteSizeFallback() const {
   }
 
   if (_internal_has_dectectfirst()) {
-    // required float dectectfirst = 4;
+    // required float dectectfirst = 5;
     total_size += 1 + 4;
   }
 
   if (_internal_has_track()) {
-    // required float track = 5;
+    // required float track = 6;
     total_size += 1 + 4;
   }
 
@@ -560,21 +605,26 @@ size_t AlgorithmInfo::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:msg.AlgorithmInfo)
   size_t total_size = 0;
 
-  if (((_has_bits_[0] & 0x0000004f) ^ 0x0000004f) == 0) {  // All required fields are present.
+  if (((_has_bits_[0] & 0x0000009f) ^ 0x0000009f) == 0) {  // All required fields are present.
     // required string cid = 3;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_cid());
+
+    // required string aid = 4;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_aid());
 
     // required int32 gpu = 2;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
         this->_internal_gpu());
 
-    // required float dectectfirst = 4;
+    // required float dectectfirst = 5;
     total_size += 1 + 4;
 
-    // required float track = 5;
+    // required float track = 6;
     total_size += 1 + 4;
 
     // required .msg.AlgorithmInfo.Type type = 1;
@@ -589,14 +639,14 @@ size_t AlgorithmInfo::ByteSizeLong() const {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000030u) {
-    // optional float dectectsecond = 6;
-    if (cached_has_bits & 0x00000010u) {
+  if (cached_has_bits & 0x00000060u) {
+    // optional float dectectsecond = 7;
+    if (cached_has_bits & 0x00000020u) {
       total_size += 1 + 4;
     }
 
-    // optional float similar = 7;
-    if (cached_has_bits & 0x00000020u) {
+    // optional float similar = 8;
+    if (cached_has_bits & 0x00000040u) {
       total_size += 1 + 4;
     }
 
@@ -633,26 +683,29 @@ void AlgorithmInfo::MergeFrom(const AlgorithmInfo& from) {
   (void) cached_has_bits;
 
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x0000007fu) {
+  if (cached_has_bits & 0x000000ffu) {
     if (cached_has_bits & 0x00000001u) {
       _internal_set_cid(from._internal_cid());
     }
     if (cached_has_bits & 0x00000002u) {
-      gpu_ = from.gpu_;
+      _internal_set_aid(from._internal_aid());
     }
     if (cached_has_bits & 0x00000004u) {
-      dectectfirst_ = from.dectectfirst_;
+      gpu_ = from.gpu_;
     }
     if (cached_has_bits & 0x00000008u) {
-      track_ = from.track_;
+      dectectfirst_ = from.dectectfirst_;
     }
     if (cached_has_bits & 0x00000010u) {
-      dectectsecond_ = from.dectectsecond_;
+      track_ = from.track_;
     }
     if (cached_has_bits & 0x00000020u) {
-      similar_ = from.similar_;
+      dectectsecond_ = from.dectectsecond_;
     }
     if (cached_has_bits & 0x00000040u) {
+      similar_ = from.similar_;
+    }
+    if (cached_has_bits & 0x00000080u) {
       type_ = from.type_;
     }
     _has_bits_[0] |= cached_has_bits;
@@ -683,6 +736,7 @@ void AlgorithmInfo::InternalSwap(AlgorithmInfo* other) {
   _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
   swap(_has_bits_[0], other->_has_bits_[0]);
   cid_.Swap(&other->cid_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  aid_.Swap(&other->aid_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
       PROTOBUF_FIELD_OFFSET(AlgorithmInfo, similar_)
       + sizeof(AlgorithmInfo::similar_)

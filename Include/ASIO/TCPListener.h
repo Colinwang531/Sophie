@@ -1,55 +1,55 @@
 //
-//		Copyright :					@2017, HHJT, All Rights Reserved
+//		Copyright :						@2020, ***, All Rights Reserved
 //
 //		Author :						王科威
 //		E-mail :						wangkw531@icloud.com
-//		Date :							2017-06-19
-//		Description:				TCP监听
+//		Date :							2020-05-06
+//		Description :					ASIO监听器类
 //
-//		History:						Author									Date													Description
-//											王科威										2017-06-19									创建
+//		History:						Author									Date										Description
+//										王科威									2020-05-06									创建
 //
 
-#ifndef TCP_LISTENER_H
-#define TCP_LISTENER_H
+#ifndef BASE_NETWORK_TCP_LISTENER_H
+#define BASE_NETWORK_TCP_LISTENER_H
 
 #include "boost/asio.hpp"
 #include "boost/enable_shared_from_this.hpp"
 #include "boost/function.hpp"
-#include "Defs.h"
 
-NS_BEGIN(asio, 2)
-
-typedef boost::function<void(boost::asio::ip::tcp::socket*, boost::system::error_code)> AfterRemoteConnectedNotificationCallback;
-
-class TCPListener : protected boost::enable_shared_from_this<TCPListener>
+namespace base
 {
-public:
-	TCPListener(AfterRemoteConnectedNotificationCallback callback = nullptr);
-	virtual ~TCPListener(void);
+	namespace network
+	{
+		typedef boost::function<void(boost::asio::ip::tcp::socket*, boost::system::error_code)> AfterGotRemoteConnectedNotificationCallback;
 
-	//	功能 : 启动监听
-	//
-	//	参数 : 
-	//			  @service [IN] io_service实例
-	//			  @portNum [IN] 监听端口
-	//
-	//	返回值 : 错误码
-	//
-	//	备注 :
-	//
-	Int32 asyncAccept(boost::asio::io_service& service, const UInt16 portNum = 60531);
+		class ASIOService;
 
-private:
-	void afterAsyncAcceptNotificationCallback(
-		boost::asio::ip::tcp::socket* so, 
-		boost::shared_ptr<boost::asio::ip::tcp::acceptor> acceptor,
-		boost::system::error_code error);
+		class TCPListener : public boost::enable_shared_from_this<TCPListener>
+		{
+		public:
+			TCPListener(
+				ASIOService& service, 
+				AfterGotRemoteConnectedNotificationCallback callback = nullptr);
+			virtual ~TCPListener(void);
 
-private:
-	AfterRemoteConnectedNotificationCallback afterRemoteConnectedNotificationCallback;
-};//class TCPListener
+		public:
+			//启动TCP监听
+			//@port : 监听端口号
+			//@Return : 错误码值
+			int setListen(const unsigned short port = 60531);
 
-NS_END
+		private:
+			void afterRemoteConnectedtNotificationCallback(
+				boost::asio::ip::tcp::socket* s,
+				boost::shared_ptr<boost::asio::ip::tcp::acceptor> ap,
+				boost::system::error_code e);
 
-#endif//TCP_LISTENER_H
+		private:
+			ASIOService& asioService;
+			AfterGotRemoteConnectedNotificationCallback afterGotRemoteConnectedNotificationCallback;
+		};//class TCPListener
+	}//namespace network
+}//namespace base
+
+#endif//BASE_NETWORK_TCP_LISTENER_H

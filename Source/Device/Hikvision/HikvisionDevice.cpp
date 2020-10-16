@@ -126,5 +126,22 @@ namespace base
 
 			return e;
 		}
+
+		int HikvisionDevice::captureRealplayJPEGImage(
+			const int cameraIdx /* = -1 */,
+			char* data /* = nullptr */,
+			const int bytes /* = 0 */)
+		{
+			DWORD picsize{ 0 };
+
+			if (-1 < userID && -1 < cameraIdx && data && 0 < bytes)
+			{
+				//默认抓取1080p/最佳质量图片
+				NET_DVR_JPEGPARA jpegParam{ 9, 0 };
+				NET_DVR_CaptureJPEGPicture_NEW(userID, cameraIdx, &jpegParam, data, bytes, &picsize);
+			}
+
+			return SurveillanceDevice::captureRealplayJPEGImage(cameraIdx, data, picsize);
+		}
 	}//namespace device
 }//namespace base

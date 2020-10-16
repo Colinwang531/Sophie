@@ -45,6 +45,22 @@ public:
 		}
 	}
 
+	void removeHas(const std::string name)
+	{
+		WriteLock wl{ mtx };
+		for (typename boost::unordered_map<Key, Value>::iterator it = umap.begin(); it != umap.end();)
+		{
+			if (-1 == it->first.find(name))
+			{
+				it = umap.erase(it);
+			}
+			else
+			{
+				++it;
+			}
+		}
+	}
+
 	void clear(void)
 	{
 		WriteLock wl{ mtx };

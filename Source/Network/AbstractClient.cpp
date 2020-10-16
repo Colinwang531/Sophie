@@ -97,5 +97,10 @@ namespace base
 
 			return e;
 		}
+
+		const std::string AbstractClient::buildAutoQueryRegisterSubroutineMessage()
+		{
+			return "";
+		}
 	}//namespace network
 }//namespace base

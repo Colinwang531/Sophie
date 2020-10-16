@@ -25,7 +25,7 @@ message AlarmInfo
 	required Type type = 1;
 	required string cid = 2;
 	required string time = 3;
-	required string picture = 4;
+	required bytes picture = 4;
 	repeated AlarmPosition alarmposition = 5;
 	optional string uid = 6;
 }

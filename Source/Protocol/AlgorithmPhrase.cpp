@@ -47,6 +47,7 @@ namespace base
 					if (aa)
 					{
 						aa->setGpuID(info.gpu());
+						aa->setStreamID(info.cid());
 						aa->setDetectThreshold(info.dectectfirst(), info.dectectsecond());
 						aa->setTrackThreshold(info.track());
 						pkt->setPacketData(aa);

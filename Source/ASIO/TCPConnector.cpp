@@ -1,44 +1,64 @@
 #include "boost/bind.hpp"
 #include "boost/checked_delete.hpp"
+#include "boost/functional/factory.hpp"
+#include "Define.h"
+#include "Error.h"
+#include "ASIO/ASIOService.h"
 #include "ASIO/TCPConnector.h"
 
-NS_BEGIN(asio, 2)
-
-TCPConnector::TCPConnector(
-	boost::asio::ip::tcp::socket* so /* = nullptr */, AfterRemoteConnectNotificationCallback callback /* = nullptr */)
-	: afterRemoteConnectNotificationCallback{ callback }, tcpSocket{ so }
-{}
-
-TCPConnector::~TCPConnector()
-{}
-
-void TCPConnector::asyncConnect(const char* address /* = nullptr */, const UInt16 port /* = 60531 */)
+namespace base
 {
-	if (tcpSocket)
+	namespace network
 	{
-		tcpSocket->async_connect(
-			boost::asio::ip::tcp::endpoint(boost::asio::ip::address::from_string(address), port),
-			boost::bind(
-				&TCPConnector::afterAsyncConnectNotificationCallback,
-				boost::enable_shared_from_this<TCPConnector>::shared_from_this(),
-				boost::asio::placeholders::error));
-	}
-}
+		TCPConnector::TCPConnector(
+			ASIOService& service,
+			AfterGotRemoteConnectedNotificationCallback callback /* = nullptr */)
+			: afterGotRemoteConnectedNotificationCallback{ callback }, asioService{ service }
+		{}
 
-void TCPConnector::afterAsyncConnectNotificationCallback(const boost::system::error_code error)
-{
-	const Int32 tempErrorCode{ error.value() };
+		TCPConnector::~TCPConnector()
+		{}
 
-	if (afterRemoteConnectNotificationCallback)
-	{
-		afterRemoteConnectNotificationCallback(tcpSocket, tempErrorCode);
-	}
+		int TCPConnector::setConnect(const char* address /* = nullptr */, const unsigned short port /* = 60531 */)
+		{
+			int e{ gMaxPortNumber > port && gMinPortNumber < port ? eSuccess : eInvalidParameter };
+			boost::asio::io_service& ioservice{ asioService.getIdle() };
 
-	if (tempErrorCode && tcpSocket)
-	{
-		tcpSocket->close();
-		boost::checked_delete(tcpSocket);
-	}
-}
+			if (eSuccess == e && !ioservice.stopped())
+			{
+				boost::asio::ip::tcp::socket* s{ boost::factory<boost::asio::ip::tcp::socket*>()(ioservice) };
 
-NS_END
+				if (s)
+				{
+					s->async_connect(
+						boost::asio::ip::tcp::endpoint(boost::asio::ip::address::from_string(address), port),
+						boost::bind(
+							&TCPConnector::afterRemoteConnectedNotificationCallback,
+							boost::enable_shared_from_this<TCPConnector>::shared_from_this(),
+							s,
+							boost::asio::placeholders::error));
+				} 
+				else
+				{
+					e = eBadNewObject;
+				}
+			}
+
+			return e;
+		}
+
+		void TCPConnector::afterRemoteConnectedNotificationCallback(boost::asio::ip::tcp::socket* s, const boost::system::error_code e)
+		{
+			if (afterGotRemoteConnectedNotificationCallback)
+			{
+				afterGotRemoteConnectedNotificationCallback(s, e);
+			}
+
+			if (e.value() && s)
+			{
+				s->close();
+				boost::checked_delete(s);
+			}
+		}
+	}//namespace network
+}//namespace base

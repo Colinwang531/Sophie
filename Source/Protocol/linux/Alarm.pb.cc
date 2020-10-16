@@ -136,7 +136,7 @@ const char descriptor_table_protodef_Alarm_2eproto[] PROTOBUF_SECTION_VARIABLE(p
   "\030\001 \002(\005\022\t\n\001y\030\002 \002(\005\022\t\n\001w\030\003 \002(\005\022\t\n\001h\030\004 \002(\005\""
   "\356\001\n\tAlarmInfo\022!\n\004type\030\001 \002(\0162\023.msg.AlarmI"
   "nfo.Type\022\013\n\003cid\030\002 \002(\t\022\014\n\004time\030\003 \002(\t\022\017\n\007p"
-  "icture\030\004 \002(\t\022)\n\ralarmposition\030\005 \003(\0132\022.ms"
+  "icture\030\004 \002(\014\022)\n\ralarmposition\030\005 \003(\0132\022.ms"
   "g.AlarmPosition\022\013\n\003uid\030\006 \001(\t\"Z\n\004Type\022\n\n\006"
   "HELMET\020\001\022\t\n\005PHONE\020\002\022\t\n\005SLEEP\020\003\022\t\n\005FIGHT\020"
   "\004\022\021\n\rATTENDANCE_IN\020\005\022\022\n\016ATTENDANCE_OUT\020\006"
@@ -723,14 +723,11 @@ const char* AlarmInfo::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // required string picture = 4;
+      // required bytes picture = 4;
       case 4:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
           auto str = _internal_mutable_picture();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          #ifndef NDEBUG
-          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "msg.AlarmInfo.picture");
-          #endif  // !NDEBUG
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -814,13 +811,9 @@ failure:
         3, this->_internal_time(), target);
   }
 
-  // required string picture = 4;
+  // required bytes picture = 4;
   if (cached_has_bits & 0x00000004u) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->_internal_picture().data(), static_cast<int>(this->_internal_picture().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
-      "msg.AlarmInfo.picture");
-    target = stream->WriteStringMaybeAliased(
+    target = stream->WriteBytesMaybeAliased(
         4, this->_internal_picture(), target);
   }
 
@@ -869,9 +862,9 @@ size_t AlarmInfo::RequiredFieldsByteSizeFallback() const {
   }
 
   if (_internal_has_picture()) {
-    // required string picture = 4;
+    // required bytes picture = 4;
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
         this->_internal_picture());
   }
 
@@ -898,9 +891,9 @@ size_t AlarmInfo::ByteSizeLong() const {
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_time());
 
-    // required string picture = 4;
+    // required bytes picture = 4;
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
         this->_internal_picture());
 
     // required .msg.AlarmInfo.Type type = 1;

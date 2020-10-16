@@ -31,7 +31,7 @@ namespace base
 			if (eSuccess == e)
 			{
 				std::string serviceName;
-				XMLParser().getValueByName("Config.xml", "Component.XMQ.Name", serviceName);
+				XMLParser().getValueByName("Config.xml", "Component.Disptcher.Name", serviceName);
 				startClient(upstreamAddress, serviceName);
 			}
 

@@ -106,11 +106,13 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_Component_2eproto::offsets[] P
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::msg::ComponentInfo, type_),
-  PROTOBUF_FIELD_OFFSET(::msg::ComponentInfo, cid_),
+  PROTOBUF_FIELD_OFFSET(::msg::ComponentInfo, componentid_),
+  PROTOBUF_FIELD_OFFSET(::msg::ComponentInfo, commid_),
   PROTOBUF_FIELD_OFFSET(::msg::ComponentInfo, cname_),
-  2,
+  3,
   0,
   1,
+  2,
   PROTOBUF_FIELD_OFFSET(::msg::ComponentRequest, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::msg::ComponentRequest, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -142,10 +144,10 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_Component_2eproto::offsets[] P
   1,
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
-  { 0, 8, sizeof(::msg::ComponentInfo)},
-  { 11, 17, sizeof(::msg::ComponentRequest)},
-  { 18, 26, sizeof(::msg::ComponentResponse)},
-  { 29, 37, sizeof(::msg::Component)},
+  { 0, 9, sizeof(::msg::ComponentInfo)},
+  { 13, 19, sizeof(::msg::ComponentRequest)},
+  { 20, 28, sizeof(::msg::ComponentResponse)},
+  { 31, 39, sizeof(::msg::Component)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -156,21 +158,22 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 };
 
 const char descriptor_table_protodef_Component_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\017Component.proto\022\003msg\"\217\001\n\rComponentInfo"
+  "\n\017Component.proto\022\003msg\"\260\001\n\rComponentInfo"
   "\022%\n\004type\030\001 \002(\0162\027.msg.ComponentInfo.Type\022"
-  "\013\n\003cid\030\002 \001(\t\022\r\n\005cname\030\003 \001(\t\";\n\004Type\022\007\n\003X"
-  "MQ\020\001\022\007\n\003WEB\020\002\022\007\n\003HKD\020\003\022\007\n\003DHD\020\004\022\007\n\003ALM\020\005"
-  "\022\006\n\002AI\020\006\"=\n\020ComponentRequest\022)\n\rcomponen"
-  "tinfo\030\001 \002(\0132\022.msg.ComponentInfo\"\\\n\021Compo"
-  "nentResponse\022\016\n\006result\030\001 \002(\005\022\013\n\003cid\030\002 \001("
-  "\t\022*\n\016componentinfos\030\003 \003(\0132\022.msg.Componen"
-  "tInfo\"\203\002\n\tComponent\022\'\n\007command\030\001 \002(\0162\026.m"
-  "sg.Component.Command\022/\n\020componentrequest"
-  "\030\002 \001(\0132\025.msg.ComponentRequest\0221\n\021compone"
-  "ntresponse\030\003 \001(\0132\026.msg.ComponentResponse"
-  "\"i\n\007Command\022\016\n\nSIGNIN_REQ\020\001\022\016\n\nSIGNIN_RE"
-  "P\020\002\022\017\n\013SIGNOUT_REQ\020\003\022\017\n\013SIGNOUT_REP\020\004\022\r\n"
-  "\tQUERY_REQ\020\005\022\r\n\tQUERY_REP\020\006"
+  "\023\n\013componentid\030\002 \001(\t\022\016\n\006commid\030\003 \001(\t\022\r\n\005"
+  "cname\030\004 \001(\t\"D\n\004Type\022\007\n\003XMQ\020\001\022\007\n\003WEB\020\002\022\007\n"
+  "\003HKD\020\003\022\007\n\003DHD\020\004\022\007\n\003ALM\020\005\022\006\n\002AI\020\006\022\007\n\003MED\020"
+  "\007\"=\n\020ComponentRequest\022)\n\rcomponentinfo\030\001"
+  " \002(\0132\022.msg.ComponentInfo\"\\\n\021ComponentRes"
+  "ponse\022\016\n\006result\030\001 \002(\005\022\013\n\003cid\030\002 \001(\t\022*\n\016co"
+  "mponentinfos\030\003 \003(\0132\022.msg.ComponentInfo\"\203"
+  "\002\n\tComponent\022\'\n\007command\030\001 \002(\0162\026.msg.Comp"
+  "onent.Command\022/\n\020componentrequest\030\002 \001(\0132"
+  "\025.msg.ComponentRequest\0221\n\021componentrespo"
+  "nse\030\003 \001(\0132\026.msg.ComponentResponse\"i\n\007Com"
+  "mand\022\016\n\nSIGNIN_REQ\020\001\022\016\n\nSIGNIN_REP\020\002\022\017\n\013"
+  "SIGNOUT_REQ\020\003\022\017\n\013SIGNOUT_REP\020\004\022\r\n\tQUERY_"
+  "REQ\020\005\022\r\n\tQUERY_REP\020\006"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_Component_2eproto_deps[1] = {
 };
@@ -182,7 +185,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_Com
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_Component_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Component_2eproto = {
-  false, false, descriptor_table_protodef_Component_2eproto, "Component.proto", 587,
+  false, false, descriptor_table_protodef_Component_2eproto, "Component.proto", 620,
   &descriptor_table_Component_2eproto_once, descriptor_table_Component_2eproto_sccs, descriptor_table_Component_2eproto_deps, 4, 0,
   schemas, file_default_instances, TableStruct_Component_2eproto::offsets,
   file_level_metadata_Component_2eproto, 4, file_level_enum_descriptors_Component_2eproto, file_level_service_descriptors_Component_2eproto,
@@ -203,6 +206,7 @@ bool ComponentInfo_Type_IsValid(int value) {
     case 4:
     case 5:
     case 6:
+    case 7:
       return true;
     default:
       return false;
@@ -216,6 +220,7 @@ constexpr ComponentInfo_Type ComponentInfo::HKD;
 constexpr ComponentInfo_Type ComponentInfo::DHD;
 constexpr ComponentInfo_Type ComponentInfo::ALM;
 constexpr ComponentInfo_Type ComponentInfo::AI;
+constexpr ComponentInfo_Type ComponentInfo::MED;
 constexpr ComponentInfo_Type ComponentInfo::Type_MIN;
 constexpr ComponentInfo_Type ComponentInfo::Type_MAX;
 constexpr int ComponentInfo::Type_ARRAYSIZE;
@@ -258,16 +263,19 @@ class ComponentInfo::_Internal {
  public:
   using HasBits = decltype(std::declval<ComponentInfo>()._has_bits_);
   static void set_has_type(HasBits* has_bits) {
-    (*has_bits)[0] |= 4u;
+    (*has_bits)[0] |= 8u;
   }
-  static void set_has_cid(HasBits* has_bits) {
+  static void set_has_componentid(HasBits* has_bits) {
     (*has_bits)[0] |= 1u;
   }
-  static void set_has_cname(HasBits* has_bits) {
+  static void set_has_commid(HasBits* has_bits) {
     (*has_bits)[0] |= 2u;
   }
+  static void set_has_cname(HasBits* has_bits) {
+    (*has_bits)[0] |= 4u;
+  }
   static bool MissingRequiredFields(const HasBits& has_bits) {
-    return ((has_bits[0] & 0x00000004) ^ 0x00000004) != 0;
+    return ((has_bits[0] & 0x00000008) ^ 0x00000008) != 0;
   }
 };
 
@@ -281,9 +289,14 @@ ComponentInfo::ComponentInfo(const ComponentInfo& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
       _has_bits_(from._has_bits_) {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  cid_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  if (from._internal_has_cid()) {
-    cid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_cid(),
+  componentid_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from._internal_has_componentid()) {
+    componentid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_componentid(),
+      GetArena());
+  }
+  commid_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from._internal_has_commid()) {
+    commid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_commid(),
       GetArena());
   }
   cname_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
@@ -297,7 +310,8 @@ ComponentInfo::ComponentInfo(const ComponentInfo& from)
 
 void ComponentInfo::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_ComponentInfo_Component_2eproto.base);
-  cid_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  componentid_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  commid_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   cname_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   type_ = 1;
 }
@@ -310,7 +324,8 @@ ComponentInfo::~ComponentInfo() {
 
 void ComponentInfo::SharedDtor() {
   GOOGLE_DCHECK(GetArena() == nullptr);
-  cid_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  componentid_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  commid_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   cname_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
@@ -336,11 +351,14 @@ void ComponentInfo::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000007u) {
+  if (cached_has_bits & 0x0000000fu) {
     if (cached_has_bits & 0x00000001u) {
-      cid_.ClearNonDefaultToEmpty();
+      componentid_.ClearNonDefaultToEmpty();
     }
     if (cached_has_bits & 0x00000002u) {
+      commid_.ClearNonDefaultToEmpty();
+    }
+    if (cached_has_bits & 0x00000004u) {
       cname_.ClearNonDefaultToEmpty();
     }
     type_ = 1;
@@ -370,20 +388,31 @@ const char* ComponentInfo::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_
           }
         } else goto handle_unusual;
         continue;
-      // optional string cid = 2;
+      // optional string componentid = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
-          auto str = _internal_mutable_cid();
+          auto str = _internal_mutable_componentid();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
           #ifndef NDEBUG
-          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "msg.ComponentInfo.cid");
+          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "msg.ComponentInfo.componentid");
           #endif  // !NDEBUG
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // optional string cname = 3;
+      // optional string commid = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
+          auto str = _internal_mutable_commid();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          #ifndef NDEBUG
+          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "msg.ComponentInfo.commid");
+          #endif  // !NDEBUG
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // optional string cname = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
           auto str = _internal_mutable_cname();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
           #ifndef NDEBUG
@@ -423,30 +452,40 @@ failure:
 
   cached_has_bits = _has_bits_[0];
   // required .msg.ComponentInfo.Type type = 1;
-  if (cached_has_bits & 0x00000004u) {
+  if (cached_has_bits & 0x00000008u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
       1, this->_internal_type(), target);
   }
 
-  // optional string cid = 2;
+  // optional string componentid = 2;
   if (cached_has_bits & 0x00000001u) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->_internal_cid().data(), static_cast<int>(this->_internal_cid().length()),
+      this->_internal_componentid().data(), static_cast<int>(this->_internal_componentid().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
-      "msg.ComponentInfo.cid");
+      "msg.ComponentInfo.componentid");
     target = stream->WriteStringMaybeAliased(
-        2, this->_internal_cid(), target);
+        2, this->_internal_componentid(), target);
   }
 
-  // optional string cname = 3;
+  // optional string commid = 3;
   if (cached_has_bits & 0x00000002u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->_internal_commid().data(), static_cast<int>(this->_internal_commid().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "msg.ComponentInfo.commid");
+    target = stream->WriteStringMaybeAliased(
+        3, this->_internal_commid(), target);
+  }
+
+  // optional string cname = 4;
+  if (cached_has_bits & 0x00000004u) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
       this->_internal_cname().data(), static_cast<int>(this->_internal_cname().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
       "msg.ComponentInfo.cname");
     target = stream->WriteStringMaybeAliased(
-        3, this->_internal_cname(), target);
+        4, this->_internal_cname(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -471,16 +510,23 @@ size_t ComponentInfo::ByteSizeLong() const {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000003u) {
-    // optional string cid = 2;
+  if (cached_has_bits & 0x00000007u) {
+    // optional string componentid = 2;
     if (cached_has_bits & 0x00000001u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-          this->_internal_cid());
+          this->_internal_componentid());
     }
 
-    // optional string cname = 3;
+    // optional string commid = 3;
     if (cached_has_bits & 0x00000002u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+          this->_internal_commid());
+    }
+
+    // optional string cname = 4;
+    if (cached_has_bits & 0x00000004u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
           this->_internal_cname());
@@ -519,14 +565,17 @@ void ComponentInfo::MergeFrom(const ComponentInfo& from) {
   (void) cached_has_bits;
 
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x00000007u) {
+  if (cached_has_bits & 0x0000000fu) {
     if (cached_has_bits & 0x00000001u) {
-      _internal_set_cid(from._internal_cid());
+      _internal_set_componentid(from._internal_componentid());
     }
     if (cached_has_bits & 0x00000002u) {
-      _internal_set_cname(from._internal_cname());
+      _internal_set_commid(from._internal_commid());
     }
     if (cached_has_bits & 0x00000004u) {
+      _internal_set_cname(from._internal_cname());
+    }
+    if (cached_has_bits & 0x00000008u) {
       type_ = from.type_;
     }
     _has_bits_[0] |= cached_has_bits;
@@ -556,7 +605,8 @@ void ComponentInfo::InternalSwap(ComponentInfo* other) {
   using std::swap;
   _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
   swap(_has_bits_[0], other->_has_bits_[0]);
-  cid_.Swap(&other->cid_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  componentid_.Swap(&other->componentid_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  commid_.Swap(&other->commid_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   cname_.Swap(&other->cname_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   swap(type_, other->type_);
 }

@@ -18,9 +18,6 @@ using XMLParser = base::xml::XMLParser;
 using XMLPacker = base::xml::XMLPacker;
 #include "HKDComponentClient.h"
 using HKDComponentClientPtr = boost::shared_ptr<base::network::AbstractClient>;
-#include "Device/Hikvision/HikvisionDevice.h"
-using AbstractDevice = base::device::AbstractDevice;
-using HikvisionDevice = base::device::HikvisionDevice;
 
 static std::string gMessageDispatcherCenterIP{ "127.0.0.1" };
 static unsigned short gMessageDispatcherCenterPort{ 61001 };
@@ -78,7 +75,7 @@ static int createNewAsynchronousClient(void)
 	{
 		if (!gMessageDispatcherCenterIP.empty() && gMinPortNumber < gMessageDispatcherCenterPort && gMaxPortNumber > gMessageDispatcherCenterPort)
 		{
-			HKDComponentClientPtr acp{ boost::make_shared<HKDComponentClient>() };
+			HKDComponentClientPtr acp{ boost::make_shared<HKDComponentClient>(gMessageDispatcherCenterIP) };
 			if (acp)
 			{
 				e = acp->startClient((boost::format("tcp://%s:%d") % gMessageDispatcherCenterIP % gMessageDispatcherCenterPort).str(), "HKD");
@@ -125,29 +122,6 @@ static int destroyAsynchronousClient(void)
 	}
 
 	return e;
-}
-
-static int testLoginDevice(void)
-{
-	base::device::AbstractDevice* abp{
-		new base::device::HikvisionDevice("FBAC", base::device::tagSurveillanceDeviceType_t::SURVEILLANCE_DEVICE_TYPE_NVR) };
-	if (abp)
-	{
-		base::device::SurveillanceDevice* sd{ boost::dynamic_pointer_cast<base::device::SurveillanceDevice>(abp) };
-		sd->setDeviceIPv4Address("192.168.0.200");
-		sd->setDevicePortNumber(8000);
-		sd->setLoginUserName("admin");
-		sd->setLoginUserPassword("eaton12345");
-		abp->startDevice();
-
-		std::vector<AbstractCamera> cameras;
-		sd->getDeviceCamera(cameras);
-
-		for (int i = 0; i != cameras.size(); ++i)
-		{
-			LOG(INFO) << "Camera ip = " << cameras[i].getIPAddress();
-		}
-	}
 }
 
 int main(int argc, char** argv)

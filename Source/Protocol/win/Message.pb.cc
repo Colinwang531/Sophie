@@ -19,6 +19,7 @@ extern PROTOBUF_INTERNAL_EXPORT_Algorithm_2eproto ::PROTOBUF_NAMESPACE_ID::inter
 extern PROTOBUF_INTERNAL_EXPORT_Component_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<2> scc_info_Component_Component_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_Crew_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<2> scc_info_Crew_Crew_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_Device_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<2> scc_info_Device_Device_2eproto;
+extern PROTOBUF_INTERNAL_EXPORT_Event_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_Event_Event_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_Status_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<2> scc_info_Status_Status_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_User_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<2> scc_info_User_User_2eproto;
 namespace msg {
@@ -37,15 +38,16 @@ static void InitDefaultsscc_info_MSG_Message_2eproto() {
   }
 }
 
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<7> scc_info_MSG_Message_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 7, 0, InitDefaultsscc_info_MSG_Message_2eproto}, {
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<8> scc_info_MSG_Message_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 8, 0, InitDefaultsscc_info_MSG_Message_2eproto}, {
       &scc_info_Alarm_Alarm_2eproto.base,
       &scc_info_Algorithm_Algorithm_2eproto.base,
       &scc_info_Component_Component_2eproto.base,
       &scc_info_Crew_Crew_2eproto.base,
       &scc_info_Device_Device_2eproto.base,
       &scc_info_Status_Status_2eproto.base,
-      &scc_info_User_User_2eproto.base,}};
+      &scc_info_User_User_2eproto.base,
+      &scc_info_Event_Event_2eproto.base,}};
 
 static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_Message_2eproto[1];
 static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_Message_2eproto[1];
@@ -67,9 +69,10 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_Message_2eproto::offsets[] PRO
   PROTOBUF_FIELD_OFFSET(::msg::MSG, device_),
   PROTOBUF_FIELD_OFFSET(::msg::MSG, status_),
   PROTOBUF_FIELD_OFFSET(::msg::MSG, user_),
-  9,
-  7,
+  PROTOBUF_FIELD_OFFSET(::msg::MSG, evt_),
+  10,
   8,
+  9,
   0,
   1,
   2,
@@ -77,9 +80,10 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_Message_2eproto::offsets[] PRO
   4,
   5,
   6,
+  7,
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
-  { 0, 15, sizeof(::msg::MSG)},
+  { 0, 16, sizeof(::msg::MSG)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -89,24 +93,26 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 const char descriptor_table_protodef_Message_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\rMessage.proto\022\003msg\032\013Alarm.proto\032\017Algor"
   "ithm.proto\032\017Component.proto\032\nCrew.proto\032"
-  "\014Device.proto\032\014Status.proto\032\nUser.proto\""
-  "\201\003\n\003MSG\022!\n\004type\030\001 \002(\0162\r.msg.MSG.Type:\004NO"
-  "NE\022\020\n\010sequence\030\002 \002(\003\022\021\n\ttimestamp\030\003 \002(\003\022"
-  "\031\n\005alarm\030\004 \001(\0132\n.msg.Alarm\022!\n\talgorithm\030"
-  "\005 \001(\0132\016.msg.Algorithm\022!\n\tcomponent\030\006 \001(\013"
-  "2\016.msg.Component\022\027\n\004crew\030\007 \001(\0132\t.msg.Cre"
-  "w\022\033\n\006device\030\010 \001(\0132\013.msg.Device\022\033\n\006status"
-  "\030\t \001(\0132\013.msg.Status\022\027\n\004user\030\n \001(\0132\t.msg."
-  "User\"e\n\004Type\022\010\n\004NONE\020\000\022\t\n\005ALARM\020\001\022\r\n\tALG"
-  "ORITHM\020\002\022\r\n\tCOMPONENT\020\003\022\010\n\004CREW\020\004\022\n\n\006DEV"
-  "ICE\020\005\022\n\n\006STATUS\020\006\022\010\n\004USER\020\007"
+  "\014Device.proto\032\014Status.proto\032\nUser.proto\032"
+  "\013Event.proto\"\245\003\n\003MSG\022!\n\004type\030\001 \002(\0162\r.msg"
+  ".MSG.Type:\004NONE\022\020\n\010sequence\030\002 \002(\003\022\021\n\ttim"
+  "estamp\030\003 \002(\003\022\031\n\005alarm\030\004 \001(\0132\n.msg.Alarm\022"
+  "!\n\talgorithm\030\005 \001(\0132\016.msg.Algorithm\022!\n\tco"
+  "mponent\030\006 \001(\0132\016.msg.Component\022\027\n\004crew\030\007 "
+  "\001(\0132\t.msg.Crew\022\033\n\006device\030\010 \001(\0132\013.msg.Dev"
+  "ice\022\033\n\006status\030\t \001(\0132\013.msg.Status\022\027\n\004user"
+  "\030\n \001(\0132\t.msg.User\022\027\n\003evt\030\013 \001(\0132\n.msg.Eve"
+  "nt\"p\n\004Type\022\010\n\004NONE\020\000\022\t\n\005ALARM\020\001\022\r\n\tALGOR"
+  "ITHM\020\002\022\r\n\tCOMPONENT\020\003\022\010\n\004CREW\020\004\022\n\n\006DEVIC"
+  "E\020\005\022\n\n\006STATUS\020\006\022\010\n\004USER\020\007\022\t\n\005EVENT\020\010"
   ;
-static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_Message_2eproto_deps[7] = {
+static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_Message_2eproto_deps[8] = {
   &::descriptor_table_Alarm_2eproto,
   &::descriptor_table_Algorithm_2eproto,
   &::descriptor_table_Component_2eproto,
   &::descriptor_table_Crew_2eproto,
   &::descriptor_table_Device_2eproto,
+  &::descriptor_table_Event_2eproto,
   &::descriptor_table_Status_2eproto,
   &::descriptor_table_User_2eproto,
 };
@@ -115,8 +121,8 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_Mes
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_Message_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Message_2eproto = {
-  false, false, descriptor_table_protodef_Message_2eproto, "Message.proto", 507,
-  &descriptor_table_Message_2eproto_once, descriptor_table_Message_2eproto_sccs, descriptor_table_Message_2eproto_deps, 1, 7,
+  false, false, descriptor_table_protodef_Message_2eproto, "Message.proto", 556,
+  &descriptor_table_Message_2eproto_once, descriptor_table_Message_2eproto_sccs, descriptor_table_Message_2eproto_deps, 1, 8,
   schemas, file_default_instances, TableStruct_Message_2eproto::offsets,
   file_level_metadata_Message_2eproto, 1, file_level_enum_descriptors_Message_2eproto, file_level_service_descriptors_Message_2eproto,
 };
@@ -138,6 +144,7 @@ bool MSG_Type_IsValid(int value) {
     case 5:
     case 6:
     case 7:
+    case 8:
       return true;
     default:
       return false;
@@ -153,6 +160,7 @@ constexpr MSG_Type MSG::CREW;
 constexpr MSG_Type MSG::DEVICE;
 constexpr MSG_Type MSG::STATUS;
 constexpr MSG_Type MSG::USER;
+constexpr MSG_Type MSG::EVENT;
 constexpr MSG_Type MSG::Type_MIN;
 constexpr MSG_Type MSG::Type_MAX;
 constexpr int MSG::Type_ARRAYSIZE;
@@ -164,13 +172,13 @@ class MSG::_Internal {
  public:
   using HasBits = decltype(std::declval<MSG>()._has_bits_);
   static void set_has_type(HasBits* has_bits) {
-    (*has_bits)[0] |= 512u;
+    (*has_bits)[0] |= 1024u;
   }
   static void set_has_sequence(HasBits* has_bits) {
-    (*has_bits)[0] |= 128u;
+    (*has_bits)[0] |= 256u;
   }
   static void set_has_timestamp(HasBits* has_bits) {
-    (*has_bits)[0] |= 256u;
+    (*has_bits)[0] |= 512u;
   }
   static const ::msg::Alarm& alarm(const MSG* msg);
   static void set_has_alarm(HasBits* has_bits) {
@@ -200,8 +208,12 @@ class MSG::_Internal {
   static void set_has_user(HasBits* has_bits) {
     (*has_bits)[0] |= 64u;
   }
+  static const ::msg::Event& evt(const MSG* msg);
+  static void set_has_evt(HasBits* has_bits) {
+    (*has_bits)[0] |= 128u;
+  }
   static bool MissingRequiredFields(const HasBits& has_bits) {
-    return ((has_bits[0] & 0x00000380) ^ 0x00000380) != 0;
+    return ((has_bits[0] & 0x00000700) ^ 0x00000700) != 0;
   }
 };
 
@@ -233,6 +245,10 @@ const ::msg::User&
 MSG::_Internal::user(const MSG* msg) {
   return *msg->user_;
 }
+const ::msg::Event&
+MSG::_Internal::evt(const MSG* msg) {
+  return *msg->evt_;
+}
 void MSG::clear_alarm() {
   if (alarm_ != nullptr) alarm_->Clear();
   _has_bits_[0] &= ~0x00000001u;
@@ -260,6 +276,10 @@ void MSG::clear_status() {
 void MSG::clear_user() {
   if (user_ != nullptr) user_->Clear();
   _has_bits_[0] &= ~0x00000040u;
+}
+void MSG::clear_evt() {
+  if (evt_ != nullptr) evt_->Clear();
+  _has_bits_[0] &= ~0x00000080u;
 }
 MSG::MSG(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
@@ -306,6 +326,11 @@ MSG::MSG(const MSG& from)
   } else {
     user_ = nullptr;
   }
+  if (from._internal_has_evt()) {
+    evt_ = new ::msg::Event(*from.evt_);
+  } else {
+    evt_ = nullptr;
+  }
   ::memcpy(&sequence_, &from.sequence_,
     static_cast<size_t>(reinterpret_cast<char*>(&type_) -
     reinterpret_cast<char*>(&sequence_)) + sizeof(type_));
@@ -334,6 +359,7 @@ void MSG::SharedDtor() {
   if (this != internal_default_instance()) delete device_;
   if (this != internal_default_instance()) delete status_;
   if (this != internal_default_instance()) delete user_;
+  if (this != internal_default_instance()) delete evt_;
 }
 
 void MSG::ArenaDtor(void* object) {
@@ -358,7 +384,7 @@ void MSG::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x0000007fu) {
+  if (cached_has_bits & 0x000000ffu) {
     if (cached_has_bits & 0x00000001u) {
       GOOGLE_DCHECK(alarm_ != nullptr);
       alarm_->Clear();
@@ -387,12 +413,15 @@ void MSG::Clear() {
       GOOGLE_DCHECK(user_ != nullptr);
       user_->Clear();
     }
+    if (cached_has_bits & 0x00000080u) {
+      GOOGLE_DCHECK(evt_ != nullptr);
+      evt_->Clear();
+    }
   }
-  sequence_ = PROTOBUF_LONGLONG(0);
-  if (cached_has_bits & 0x00000300u) {
-    ::memset(&timestamp_, 0, static_cast<size_t>(
+  if (cached_has_bits & 0x00000700u) {
+    ::memset(&sequence_, 0, static_cast<size_t>(
         reinterpret_cast<char*>(&type_) -
-        reinterpret_cast<char*>(&timestamp_)) + sizeof(type_));
+        reinterpret_cast<char*>(&sequence_)) + sizeof(type_));
   }
   _has_bits_.Clear();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
@@ -484,6 +513,13 @@ const char* MSG::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::intern
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
+      // optional .msg.Event evt = 11;
+      case 11:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 90)) {
+          ptr = ctx->ParseMessage(_internal_mutable_evt(), ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
       default: {
       handle_unusual:
         if ((tag & 7) == 4 || tag == 0) {
@@ -515,20 +551,20 @@ failure:
 
   cached_has_bits = _has_bits_[0];
   // required .msg.MSG.Type type = 1 [default = NONE];
-  if (cached_has_bits & 0x00000200u) {
+  if (cached_has_bits & 0x00000400u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
       1, this->_internal_type(), target);
   }
 
   // required int64 sequence = 2;
-  if (cached_has_bits & 0x00000080u) {
+  if (cached_has_bits & 0x00000100u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64ToArray(2, this->_internal_sequence(), target);
   }
 
   // required int64 timestamp = 3;
-  if (cached_has_bits & 0x00000100u) {
+  if (cached_has_bits & 0x00000200u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64ToArray(3, this->_internal_timestamp(), target);
   }
@@ -589,6 +625,14 @@ failure:
         10, _Internal::user(this), target, stream);
   }
 
+  // optional .msg.Event evt = 11;
+  if (cached_has_bits & 0x00000080u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        11, _Internal::evt(this), target, stream);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -627,7 +671,7 @@ size_t MSG::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:msg.MSG)
   size_t total_size = 0;
 
-  if (((_has_bits_[0] & 0x00000380) ^ 0x00000380) == 0) {  // All required fields are present.
+  if (((_has_bits_[0] & 0x00000700) ^ 0x00000700) == 0) {  // All required fields are present.
     // required int64 sequence = 2;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int64Size(
@@ -650,7 +694,7 @@ size_t MSG::ByteSizeLong() const {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x0000007fu) {
+  if (cached_has_bits & 0x000000ffu) {
     // optional .msg.Alarm alarm = 4;
     if (cached_has_bits & 0x00000001u) {
       total_size += 1 +
@@ -698,6 +742,13 @@ size_t MSG::ByteSizeLong() const {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
           *user_);
+    }
+
+    // optional .msg.Event evt = 11;
+    if (cached_has_bits & 0x00000080u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+          *evt_);
     }
 
   }
@@ -756,15 +807,17 @@ void MSG::MergeFrom(const MSG& from) {
       _internal_mutable_user()->::msg::User::MergeFrom(from._internal_user());
     }
     if (cached_has_bits & 0x00000080u) {
+      _internal_mutable_evt()->::msg::Event::MergeFrom(from._internal_evt());
+    }
+  }
+  if (cached_has_bits & 0x00000700u) {
+    if (cached_has_bits & 0x00000100u) {
       sequence_ = from.sequence_;
     }
-    _has_bits_[0] |= cached_has_bits;
-  }
-  if (cached_has_bits & 0x00000300u) {
-    if (cached_has_bits & 0x00000100u) {
+    if (cached_has_bits & 0x00000200u) {
       timestamp_ = from.timestamp_;
     }
-    if (cached_has_bits & 0x00000200u) {
+    if (cached_has_bits & 0x00000400u) {
       type_ = from.type_;
     }
     _has_bits_[0] |= cached_has_bits;
@@ -807,6 +860,9 @@ bool MSG::IsInitialized() const {
   }
   if (_internal_has_user()) {
     if (!user_->IsInitialized()) return false;
+  }
+  if (_internal_has_evt()) {
+    if (!evt_->IsInitialized()) return false;
   }
   return true;
 }

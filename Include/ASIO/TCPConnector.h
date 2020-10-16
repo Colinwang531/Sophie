@@ -1,65 +1,57 @@
 //
-//		Copyright :					@2017, HHJT, All Rights Reserved
+//		Copyright :						@2020, ***, All Rights Reserved
 //
 //		Author :						王科威
 //		E-mail :						wangkw531@icloud.com
-//		Date :							2017-07-14
-//		Description:				TCP连接器
+//		Date :							2020-05-06
+//		Description :					ASIO监听器类
 //
-//		History:						Author									Date													Description
-//											王科威										2017-07-14									创建
+//		History:						Author									Date										Description
+//										王科威									2020-05-06									创建
 //
 
-#ifndef TCP_CONNECTOR_H
-#define TCP_CONNECTOR_H
+#ifndef BASE_NETWORK_TCP_CONNECTOR_H
+#define BASE_NETWORK_TCP_CONNECTOR_H
 
 #include "boost/asio.hpp"
 #include "boost/enable_shared_from_this.hpp"
 #include "boost/function.hpp"
-#include "Defs.h"
+#include "boost/system/error_code.hpp"
 
-NS_BEGIN(asio, 2)
-
-typedef boost::function<void(boost::asio::ip::tcp::socket*, const Int32)> AfterRemoteConnectNotificationCallback;
-
-class TCPConnector : public boost::enable_shared_from_this<TCPConnector>
+namespace base
 {
-public:
-	TCPConnector(
-		boost::asio::ip::tcp::socket* so = nullptr,
-		AfterRemoteConnectNotificationCallback callback = nullptr);
-	virtual ~TCPConnector(void);
+	namespace network
+	{
+		typedef boost::function<void(boost::asio::ip::tcp::socket*, const boost::system::error_code)> AfterGotRemoteConnectedNotificationCallback;
 
-	//	功能 : 异步连接远程主机
-	//
-	//	参数 : 
-	//			  @address [IN] 主机IPv4地址
-	//			  @port [IN] 主机端口号
-	//
-	//	返回值 :
-	//
-	//	备注 :
-	//
-	void asyncConnect(const char* address = nullptr, const UInt16 port = 60531);
+		class ASIOService;
 
-private:
-	//	功能 : 连接事件捕获通知回调函数
-	//
-	//	参数 : 
-	//			  @error [IN] 网络错误码
-	//
-	//	返回值 :
-	//
-	//	备注 : 在使用async_connect方法进行异步连接时,捕获到的通知没有返回socket实例,因此无法将socket实例和连接事件对应起来
-	//			  为能解决对应的问题,暂时使用了2个回调函数进行通知,后期可修改为协程的调用方式
-	//
-	void afterAsyncConnectNotificationCallback(const boost::system::error_code error);
+		class TCPConnector : public boost::enable_shared_from_this<TCPConnector>
+		{
+		public:
+			TCPConnector(
+				ASIOService& service,
+				AfterGotRemoteConnectedNotificationCallback callback = nullptr);
+			virtual ~TCPConnector(void);
 
-private:
-	boost::asio::ip::tcp::socket* tcpSocket;
-	AfterRemoteConnectNotificationCallback afterRemoteConnectNotificationCallback;
-};//class TCPConnector
+			//启动TCP连接
+			//@address : 监听端IP地址
+			//@port : 监听端口号
+			//@Return : 错误码值
+			int setConnect(
+				const char* address = nullptr, 
+				const unsigned short port = 60531);
 
-NS_END
+		private:
+			void afterRemoteConnectedNotificationCallback(
+				boost::asio::ip::tcp::socket* s, 
+				const boost::system::error_code e);
 
-#endif//TCP_CONNECTOR_H
+		private:
+			ASIOService& asioService;
+			AfterGotRemoteConnectedNotificationCallback afterGotRemoteConnectedNotificationCallback;
+		};//class TCPConnector
+	}//namespace network
+}//namespace base
+
+#endif//BASE_NETWORK_TCP_CONNECTOR_H

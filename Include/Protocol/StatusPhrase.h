@@ -62,7 +62,7 @@ namespace base
 			//将MessagePacket实例转换为Protocol buffers的序列化字符串
 			//@pkt : MessagePacket实例
 			//@Return : 序列化字符串
-			void* packToStatusMessage(void* pkt = nullptr);
+			const std::string packMessage(DataPacketPtr pkt);
 		};//class StatusPacker
 	}//namespace protocol
 }//namespace base

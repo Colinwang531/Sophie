@@ -16,6 +16,7 @@ using MessagePacketPtr = boost::shared_ptr<base::packet::MessagePacket>;
 #include "Protocol/CrewPhrase.h"
 #include "Protocol/AlarmPhrase.h"
 #include "Protocol/DataPhrase.h"
+#include "Protocol/EventPhrase.h"
 
 namespace base
 {
@@ -33,7 +34,7 @@ namespace base
 			{
 				if (msg_.has_alarm())
 				{
-//					pkt = AlarmParser().parseAlarmMessage(msg_.release_alarm());
+					pkt = AlarmParser().parseMessage(msg_.release_alarm());
 				}
 				else if (msg_.has_algorithm())
 				{
@@ -45,7 +46,7 @@ namespace base
 				}
 				else if (msg_.has_crew())
 				{
-//					pkt = CrewParser().parseCrewMessage(msg_.release_crew());
+					pkt = CrewParser().parseMessage(msg_.release_crew());
 				}
 				else if (msg_.has_device())
 				{
@@ -57,6 +58,10 @@ namespace base
 				}
 				else if (msg_.has_user())
 				{
+				}
+				else if (msg_.has_evt())
+				{
+					pkt = EventParser().parseMessage(msg_.release_evt());
 				}
 			}
 
@@ -89,10 +94,12 @@ namespace base
 				{
 					case msg::MSG_Type::MSG_Type_ALARM:
 					{
+						msgstr = AlarmPacker().packMessage(pkt);
 						break;
 					}
 					case msg::MSG_Type::MSG_Type_ALGORITHM:
 					{
+						msgstr = AlgorithmPacker().packMessage(pkt);
 						break;
 					}
 					case msg::MSG_Type::MSG_Type_COMPONENT:
@@ -102,6 +109,7 @@ namespace base
 					}
 					case msg::MSG_Type::MSG_Type_CREW:
 					{
+						msgstr = CrewPacker().packMessage(pkt);
 						break;
 					}
 					case msg::MSG_Type::MSG_Type_DEVICE:
@@ -111,17 +119,16 @@ namespace base
 					}
 					case msg::MSG_Type::MSG_Type_STATUS:
 					{
-// 						msg::Status* ms{ 
-// 							reinterpret_cast<msg::Status*>(
-// 								StatusPacker().packToStatusMessage(pkt)) };
-// 						mm.set_allocated_status(ms);
-// 						mm.SerializeToString(&rep);
-// 						mm.release_status();
-
+						msgstr = StatusPacker().packMessage(pkt);
 						break;
 					}
 					case msg::MSG_Type::MSG_Type_USER:
 					{
+						break;
+					}
+					case msg::MSG_Type::MSG_Type_EVENT:
+					{
+						msgstr = EventPacker().packMessage(pkt);
 						break;
 					}
 					default:

@@ -56,6 +56,10 @@ namespace mq
 			//Worker实例注册线程
 			void autoRegisterToMajordomoBrokerThreadProc(void);
 
+			//子服务注册信息查询线程
+			//向BROKER端查询在线子服务信息
+			void autoQuerySubrountineThreadProc(void);
+
 		private:
 			const std::string workerName;
 			void* abstractClient;

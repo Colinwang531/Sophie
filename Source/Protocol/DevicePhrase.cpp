@@ -1,4 +1,3 @@
-#include "boost/checked_delete.hpp"
 #include "boost/make_shared.hpp"
 #include "Error.h"
 #include "Device/SurveillanceDevice.h"
@@ -131,28 +130,33 @@ namespace base
 					msg::Device_Command::Device_Command_DELETE_REP == command ||
 					msg::Device_Command::Device_Command_MODIFY_REP == command)
 				{
+					const int status{ msgpkt->getMessageStatus() };
 					msg::DeviceResponse* rep{ d->mutable_deviceresponse() };
-					rep->set_result(msgpkt->getMessageStatus());
+					rep->set_result(status);
 					msg::DeviceInfo* devinfo{ rep->add_deviceinfos() };
 					devinfo->set_enable(true);
 
-					const std::vector<AbstractCamera>* cameras{ 
-						reinterpret_cast<const std::vector<AbstractCamera>*>(pkt->getPacketData()) };
-					if (cameras)
+					if (eSuccess == status)
 					{
-						for (int i = 0; i != cameras->size(); ++i)
+						const std::vector<AbstractCamera>* cameras{
+							reinterpret_cast<const std::vector<AbstractCamera>*>(pkt->getPacketData()) };
+						if (cameras)
 						{
-							AbstractCamera ac{ (*cameras)[i] };
-							msg::CameraInfo* camerainfo{ devinfo->add_camerainfos() };
-							camerainfo->set_cid(ac.getCameraID());
-							camerainfo->set_index(ac.getCameraIndex());
-							camerainfo->set_enable(ac.getEnableFlag());
-							camerainfo->set_ip(ac.getIPAddress());
-							camerainfo->set_enable(ac.getEnableFlag());
+							for (int i = 0; i != cameras->size(); ++i)
+							{
+								AbstractCamera ac{ (*cameras)[i] };
+								msg::CameraInfo* camerainfo{ devinfo->add_camerainfos() };
+								camerainfo->set_cid(ac.getCameraID());
+								camerainfo->set_index(ac.getCameraIndex());
+								camerainfo->set_enable(ac.getEnableFlag());
+								camerainfo->set_ip(ac.getIPAddress());
+								camerainfo->set_enable(ac.getEnableFlag());
+							}
 						}
 					}
+
 					devinfo->set_did(
-						reinterpret_cast<const char*>(pkt->getPacketData(cameras ? 1 : 0)));
+						reinterpret_cast<const char*>(pkt->getPacketData(eSuccess == status ? 1 : 0)));
 				}
 
 				mm.SerializeToString(&msgstr);

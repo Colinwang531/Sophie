@@ -1,63 +1,98 @@
+#include "boost/bind.hpp"
+#include "boost/checked_delete.hpp"
+#include "boost/make_shared.hpp"
+#include "Timer/Timer.h"
+using TimerPtr = boost::shared_ptr<base::network::Timer>;
+#include "ASIO/TCPSession.h"
 #include "ASIO/TCPReceiver.h"
 
-NS_BEGIN(asio, 2)
-
-TCPReceiver::TCPReceiver(AfterReadDataNotificationCallback callback /* = nullptr */)
-	: afterReadDataNotificationCallback{ callback }, isReadData{ false }
-{}
-
-TCPReceiver::~TCPReceiver()
-{}
-
-void TCPReceiver::asyncRead(boost::asio::ip::tcp::socket* so /* = nullptr */, const UInt32 timeo /* = 0 */)
+namespace base
 {
-	if (so && so->is_open())
+	namespace network
 	{
-		so->async_read_some(
-			boost::asio::buffer(readDataBuffer, gMaxMTUBytes),
-			boost::bind(
-				&TCPReceiver::afterAsyncReadDataNotificationCallback,
-				boost::enable_shared_from_this<TCPReceiver>::shared_from_this(),
-				so,
-				boost::asio::placeholders::error,
-				boost::asio::placeholders::bytes_transferred));
-
-//		so->async_read_some(boost::asio::buffer(receiveData, gMaxMTUBytes), callback);
-
-		if (0 < timeo)
+		TCPReceiver::TCPReceiver(TCPSession* s)
+			: afterGotReadDataNotificationCallback{}, session{ s }, expired{ false }, dataBuffer{ nullptr }
 		{
-			TimerPtr tempReadDataTimeoutPtr{
-				boost::make_shared<NS(timer, 1)::Timer>(
-					so, boost::bind(&TCPReceiver::afterAsyncReadDataTimeoutNotificationCallback, this, _1, _2)) };
+			dataBuffer = new(std::nothrow) unsigned char[/*eMaxDataSize*/ 100 * 1024];
+		}
 
-			if (tempReadDataTimeoutPtr)
+		TCPReceiver::TCPReceiver(
+			AfterGotReadDataNotificationCallback callback)
+			: afterGotReadDataNotificationCallback{ callback }, session{ nullptr }, expired{ false }
+		{
+			dataBuffer = new(std::nothrow) unsigned char[/*eMaxDataSize*/100 * 1024];
+		}
+
+		TCPReceiver::~TCPReceiver()
+		{
+			boost::checked_array_delete(dataBuffer);
+		}
+
+		void TCPReceiver::recvData(
+			boost::asio::ip::tcp::socket* s /* = nullptr */, 
+			const int timeout /* = 0 */)
+		{
+			if (s && s->is_open() && dataBuffer)
 			{
-				tempReadDataTimeoutPtr->asyncWait(timeo);
-				readDataTimeoutPtr.swap(tempReadDataTimeoutPtr);
+				s->async_read_some(
+					boost::asio::buffer(dataBuffer, /*eMaxDataSize*/100 * 1024),
+					boost::bind(
+						&TCPReceiver::afterReadDataNotificationCallback,
+						boost::enable_shared_from_this<TCPReceiver>::shared_from_this(),
+						s,
+						boost::asio::placeholders::bytes_transferred,
+						boost::asio::placeholders::error));
+
+				if (0 < timeout)
+				{
+					TimerPtr timer{
+						boost::make_shared<Timer>(
+							boost::bind(
+								&TCPReceiver::afterReadDataExpiredNotificationCallback,
+								boost::enable_shared_from_this<TCPReceiver>::shared_from_this())) };
+
+					if (timer)
+					{
+						timer->waitTimeout(s, timeout);
+					}
+				}
 			}
 		}
-	}
-}
 
-void TCPReceiver::afterAsyncReadDataNotificationCallback(boost::system::error_code error, std::size_t transfferedBytes /* = 0 */)
-{
-	if (!isReadData)
-	{
-		isReadData = true;
-	}
+		void TCPReceiver::afterReadDataNotificationCallback(
+			boost::asio::ip::tcp::socket* s, 
+			std::size_t bytes, 
+			boost::system::error_code e)
+		{
+			if (!expired && session && session->valid())
+			{
+				if (e)
+				{
+					session->receivedExceptionNotification(e);
+				}
+				else
+				{
+					session->receivedDataNotification(dataBuffer, (int)bytes);
+				}
+			}
 
-	if (afterReadDataNotificationCallback)
-	{
-		afterReadDataNotificationCallback(so, readDataBuffer, transfferedBytes, error.value());
-	}
-}
+			if (!expired && afterGotReadDataNotificationCallback)
+			{
+				afterGotReadDataNotificationCallback(s, dataBuffer, (int)bytes);
+			}
+		}
 
-void TCPReceiver::afterAsyncReadDataTimeoutNotificationCallback(boost::asio::ip::tcp::socket* so /* = nullptr */, const Int32 error /* = 0 */)
-{
-	if (!isReadData && afterReadDataNotificationCallback)
-	{
-		afterReadDataNotificationCallback(so, nullptr, 0, -1);
-	}
-}
+		void TCPReceiver::afterReadDataExpiredNotificationCallback()
+		{
+			if (!expired)
+			{
+				expired = true;
 
-NS_END
+				if (session && session->valid())
+				{
+					session->receivedExpiredNotification();
+				}
+			}
+		}
+	}//namespace network
+}//namespace base

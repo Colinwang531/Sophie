@@ -23,13 +23,18 @@ using AbstractDevicePtr = boost::shared_ptr<AbstractDevice>;
 using SurveillanceDevicePtr = boost::shared_ptr<SurveillanceDevice>;
 #include "DataStruct/UnorderedMap.h"
 using AbstractDeviceGroup = UnorderedMap<const std::string, AbstractDevicePtr>;
-#include "Network/AbstractClient.h"
-using AbstractClient = base::network::AbstractClient;
+#include "HKDMediaStreamSession.h"
+using TCPSessionPtr = boost::shared_ptr<TCPSession>;
+using HKComponentStreamSessionGroup = UnorderedMap<const std::string, TCPSessionPtr>;
+#include "Network/AbstractMediaStreamClient.h"
+using AbstractMediaStreamClient = base::network::AbstractMediaStreamClient;
 
-class HKDComponentClient : public AbstractClient
+class HKDComponentClient : public AbstractMediaStreamClient
 {
 public:
-	HKDComponentClient(void);
+	HKDComponentClient(
+		const std::string address,
+		const unsigned short port = 60531);
 	virtual ~HKDComponentClient(void);
 
 protected:
@@ -39,6 +44,9 @@ protected:
 		const std::string toID,
 		const std::string msg) override;
 	const std::string buildAutoRegisterToBrokerMessage(void) override;
+	int createNewMediaStreamSession(
+		const std::string url, 
+		boost::asio::ip::tcp::socket* s) override;
 
 private:
 	const std::string getHKDClientInfoByName(const std::string name) const;
@@ -49,6 +57,13 @@ private:
 	void processDeviceMessage(
 		const std::string fromID, 
 		DataPacketPtr pkt);
+	void processEventMessage(
+		const std::string fromID,
+		DataPacketPtr pkt);
+	int processMediaStream(
+		const int command, 
+		const std::string did,
+		const std::vector<AbstractCamera> cameras);
 
 	int addNewDevice(
 		SurveillanceDevice* sd, 
@@ -64,5 +79,6 @@ private:
 
 private:
 	AbstractDeviceGroup deviceGroup;
+	HKComponentStreamSessionGroup streamSessionGroup;
 };//class HKDComponentClient
 

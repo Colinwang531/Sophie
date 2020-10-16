@@ -1,6 +1,10 @@
 #include "boost/checked_delete.hpp"
+#include "boost/make_shared.hpp"
 #include "Packet/Message/MessagePacket.h"
 using MessagePacket = base::packet::MessagePacket;
+using MessagePacketPtr = boost::shared_ptr<MessagePacket>;
+#include "Alarm/AbstractAlarm.h"
+using AbstractAlarm = base::alarm::AbstractAlarm;
 #ifdef WINDOWS
 #include "Protocol/win/Message.pb.h"
 #include "Protocol/win/Alarm.pb.h"
@@ -17,58 +21,67 @@ namespace base
 		AlarmParser::AlarmParser(){}
 		AlarmParser::~AlarmParser(){}
 
-		void* AlarmParser::parseAlarmMessage(void* msg /* = nullptr */)
+		DataPacketPtr AlarmParser::parseMessage(void* a /* = nullptr */)
 		{
-//			msg::MSG* mm{ reinterpret_cast<msg::MSG*>(msg) };
-			MessagePacket* ap{ nullptr };
-// 			msg::Alarm* ma{ mm->release_alarm() };
-// 
-// 			if (ap)
-// 			{
-// 				//报警消息没有命令类型区分,使用-1标识
-// 
-// 				ap = new(std::nothrow) MessagePacket(
-// 					base::packet::PacketType::PACKET_TYPE_STATUS, -1);
-// 
-// 				if (ap)
-// 				{
-// 					AbstractAlarm* aa{ nullptr };
-// 					const msg::AlarmInfo& info{ ma->alarminfo() };
-// 					const msg::AlarmInfo_Type type{ info.type() };
-// 
-// 					if (msg::AlarmInfo_Type::AlarmInfo_Type_ATTENDANCE_IN == type ||
-// 						msg::AlarmInfo_Type::AlarmInfo_Type_ATTENDANCE_OUT == type)
-// 					{
-// 						aa = new(std::nothrow) FaceAlarm(
-// 							info.uid(), ma->cid(), static_cast<base::alarm::AlarmType>(type));
-// 					} 
-// 					else
-// 					{
-// 						aa = new(std::nothrow) AbstractAlarm(
-// 							ma->cid(), static_cast<base::alarm::AlarmType>(type));
-// 					}
+			DataPacketPtr pkt{
+				boost::make_shared<MessagePacket>(
+					base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_ALARM) };
+
+			if (pkt)
+			{
+				msg::Alarm* ma{ reinterpret_cast<msg::Alarm*>(a) };
+				const msg::Alarm_Command command{ ma->command() };
+				MessagePacketPtr msgpkt{ boost::dynamic_pointer_cast<MessagePacket>(pkt) };
+				msgpkt->setMessagePacketCommand(static_cast<int>(command));
+
+				if (msg::Alarm_Command::Alarm_Command_NOTIFY == command)
+				{
+// 					const msg::AlarmInfo& info{ ma->release_alarminfo() };
+// 					AbstractAlarm* aa{
+// 						new(std::nothrow) AbstractAlarm(info.cid()) };
 // 
 // 					if (aa)
 // 					{
-// 						aa->setAlarmPicture(ma->picture());
-// 						aa->setAlarmTime(ma->time());
-// 						for (int i = 0; i != ma->alarminfo().alarmposition().size(); ++i)
-// 						{
-// 							const msg::AlarmPosition pos{ ma->alarminfo().alarmposition()[i] };
-// 							base::alarm::AlarmArea area{ pos.x(), pos.y(), pos.w(), pos.h() };
-// 							aa->addAlarmArea(area);
-// 						}
-// 						ap->setPacketData(aa);
-// 					} 
-// 					else
-// 					{
-// 						boost::checked_delete(boost::polymorphic_downcast<MessagePacket*>(ap));
-// 						ap = nullptr;
+// 						aa->set
 // 					}
-// 				}
-// 			}
+				}
+			}
 
-			return ap;
+			return pkt;
+		}
+
+		AlarmPacker::AlarmPacker() {}
+		AlarmPacker::~AlarmPacker() {}
+
+		const std::string AlarmPacker::packMessage(DataPacketPtr pkt)
+		{
+			std::string msgstr;
+			msg::MSG mm;
+			mm.set_type(msg::MSG_Type::MSG_Type_ALARM);
+			mm.set_sequence(pkt->getPacketSequence());
+			mm.set_timestamp(pkt->getPacketTimestamp());
+			msg::Alarm* c{ mm.mutable_alarm() };
+
+			if (c)
+			{
+				MessagePacketPtr msgpkt{ boost::dynamic_pointer_cast<MessagePacket>(pkt) };
+				c->set_command(msg::Alarm_Command::Alarm_Command_NOTIFY);
+				msg::AlarmInfo* info{ c->mutable_alarminfo() };
+				info->set_type(static_cast<msg::AlarmInfo_Type>(msgpkt->getMessagePacketCommand()));
+				info->set_picture(reinterpret_cast<const char*>(pkt->getPacketData(0)));
+				info->set_cid(reinterpret_cast<const char*>(pkt->getPacketData(1)));
+				info->set_time(reinterpret_cast<const char*>(pkt->getPacketData(2)));
+				msg::AlarmPosition* pos{ info->add_alarmposition() };
+				pos->set_x(*(reinterpret_cast<int*>(pkt->getPacketData(3))));
+				pos->set_y(*(reinterpret_cast<int*>(pkt->getPacketData(4))));
+				pos->set_w(*(reinterpret_cast<int*>(pkt->getPacketData(5))));
+				pos->set_h(*(reinterpret_cast<int*>(pkt->getPacketData(6))));
+				info->set_uid(reinterpret_cast<const char*>(pkt->getPacketData(7)));
+			}
+
+			mm.SerializeToString(&msgstr);
+			mm.release_component();
+			return msgstr;
 		}
 	}//namespace protocol
 }//namespace base

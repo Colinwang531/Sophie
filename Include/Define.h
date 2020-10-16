@@ -24,7 +24,4 @@ static const unsigned short gMaxPortNumber = 65530;
 //MTU
 static const unsigned int gMaxTransmitUnit = 512;
 
-//进程间通信ID标识
-static const char* gInprocCommID = "inproc://AsynchronousServer";
-
 #endif//DEFINE_H

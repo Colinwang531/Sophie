@@ -30,5 +30,17 @@ namespace base
 
 			return e;
 		}
+
+		const std::string Crew::getPersonPicture(const int idx /* = 0 */)
+		{
+			std::string image;
+
+			if (-1 < idx && idx < crewPictures.size())
+			{
+				image.append(crewPictures[idx]);
+			}
+
+			return image;
+		}
 	}//namespace packet
 }//namespace base

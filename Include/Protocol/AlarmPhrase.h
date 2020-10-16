@@ -13,6 +13,10 @@
 #ifndef BASE_PROTOCOL_ALARM_PHRASE_H
 #define BASE_PROTOCOL_ALARM_PHRASE_H
 
+#include "boost/shared_ptr.hpp"
+#include "Packet/DataPacket.h"
+using DataPacketPtr = boost::shared_ptr<base::packet::DataPacket>;
+
 namespace base
 {
 	namespace protocol
@@ -35,8 +39,23 @@ namespace base
 			~AlarmParser(void);
 
 		public:
-			void* parseAlarmMessage(void* msg = nullptr);
+			DataPacketPtr parseMessage(void* a = nullptr);
 		};//class AlarmParser
+
+		class AlarmPacker
+		{
+		public:
+			AlarmPacker(void);
+			~AlarmPacker(void);
+
+		public:
+			//封装算法消息
+			//@command : 命令类型
+			//@result : 错误码
+			//@data : 消息数据
+			//@Return : 消息内容
+			const std::string packMessage(DataPacketPtr pkt);
+		};//class AlarmPacker
 	}//namespace protocol
 }//namespace base
 

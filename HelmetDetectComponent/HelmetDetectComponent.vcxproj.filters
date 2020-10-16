@@ -100,11 +100,77 @@
     <Filter Include="3rd\boost\date_time\gregorian">
       <UniqueIdentifier>{9956bbfe-d572-491b-a7e6-37dc53bec4f0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Algorithm">
-      <UniqueIdentifier>{452473bc-3f0f-48ea-bc48-b0a35d9cd238}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Camera">
       <UniqueIdentifier>{aa868966-8d74-4889-87fa-a72a98ce695c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ASIO">
+      <UniqueIdentifier>{1a53e867-3cfa-4b4d-8f94-36d18b015d95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DataStruct">
+      <UniqueIdentifier>{38b1e7f2-1f39-4cb0-88fd-835761b58379}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Session">
+      <UniqueIdentifier>{322381e3-56a3-4801-bc1f-97d1978fb6a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Packet\Stream">
+      <UniqueIdentifier>{636ffa6b-ce31-44af-bdc7-a690d5900da8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Timer">
+      <UniqueIdentifier>{87634db0-a419-4d12-bc57-65a794fba898}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graph">
+      <UniqueIdentifier>{c05fa049-c57d-48db-83a6-821cbcaa3a88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Filter">
+      <UniqueIdentifier>{f1edd430-58d4-4802-acb6-3122ec427d7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pin">
+      <UniqueIdentifier>{6ce5bc7c-442c-482e-b1f6-38a3124ee12a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Filter\Cache">
+      <UniqueIdentifier>{f3e4dddd-1a88-4102-9aae-058a23fb19dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Filter\Decoder">
+      <UniqueIdentifier>{1890e261-a8ba-417a-9d78-29743bbae3ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Decoder">
+      <UniqueIdentifier>{7babff5a-258b-4e93-b912-b559d42764ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Decoder\SDK">
+      <UniqueIdentifier>{1016a38a-e201-48c1-bbb0-a777f509632e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Converter">
+      <UniqueIdentifier>{7eb7ed0f-d86e-4830-bf85-bd487fa9a9b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Filter\Converter">
+      <UniqueIdentifier>{83ea2715-7d55-450b-9e51-2e0457b248df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Encoder">
+      <UniqueIdentifier>{1cba9f0e-25cf-4ee5-84fc-412676fc56a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Encoder\JPEG">
+      <UniqueIdentifier>{459c33e4-2523-418c-a754-79c071480ebf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Filter\Encoder">
+      <UniqueIdentifier>{c6cb3a31-09a6-4daa-a671-2b1d2ec5fb23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Filter\AI">
+      <UniqueIdentifier>{79701e68-20fc-48f1-906a-6400bb7d4a6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI">
+      <UniqueIdentifier>{452473bc-3f0f-48ea-bc48-b0a35d9cd238}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\boost\filesystem">
+      <UniqueIdentifier>{593bfd19-73fb-4a95-817b-8d4ab600de8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graph\AI">
+      <UniqueIdentifier>{fb72b4dc-e511-425f-b9cb-d6cf51da5cfb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Person">
+      <UniqueIdentifier>{d231bb18-403b-41a4-acb4-a0102e03d675}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Alarm">
+      <UniqueIdentifier>{50145e7c-231e-48d6-ba3f-a77a9e4d32ad}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -903,7 +969,7 @@
       <Filter>3rd\boost\date_time\gregorian</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\AI\AbstractAlgorithm.cpp">
-      <Filter>Algorithm</Filter>
+      <Filter>AI</Filter>
     </ClCompile>
     <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\cmdline.cpp">
       <Filter>3rd\boost\program_options</Filter>
@@ -926,9 +992,6 @@
     <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\split.cpp">
       <Filter>3rd\boost\program_options</Filter>
     </ClCompile>
-    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\utf8_codecvt_facet.cpp">
-      <Filter>3rd\boost\program_options</Filter>
-    </ClCompile>
     <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\value_semantic.cpp">
       <Filter>3rd\boost\program_options</Filter>
     </ClCompile>
@@ -937,6 +1000,140 @@
     </ClCompile>
     <ClCompile Include="..\Source\Camera\AbstractCamera.cpp">
       <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\ASIO\ASIOService.cpp">
+      <Filter>ASIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\ASIO\TCPConnector.cpp">
+      <Filter>ASIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Network\AbstractMediaStreamClient.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Session\TCPStreamTargetSession.cpp">
+      <Filter>Session</Filter>
+    </ClCompile>
+    <ClCompile Include="HelmetMediaStreamSession.cpp" />
+    <ClCompile Include="..\Source\ASIO\TCPSession.cpp">
+      <Filter>ASIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\ASIO\TCPReceiver.cpp">
+      <Filter>ASIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\ASIO\TCPSender.cpp">
+      <Filter>ASIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Packet\Stream\StreamPacket.cpp">
+      <Filter>Packet\Stream</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Timer\Timer.cpp">
+      <Filter>Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Pin\AbstractPin.cpp">
+      <Filter>Pin</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Filter\AbstractFilter.cpp">
+      <Filter>Filter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graph\AbstractGraph.cpp">
+      <Filter>Graph</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Filter\Cache\StreamCacheFilter.cpp">
+      <Filter>Filter\Cache</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Filter\Decoder\StreamDecoderFilter.cpp">
+      <Filter>Filter\Decoder</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Decoder\SDK\HikvisionSDKDecoder.cpp">
+      <Filter>Decoder\SDK</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Decoder\AbstractDecoder.cpp">
+      <Filter>Decoder</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Converter\YV12ToYUV420PConverter.cpp">
+      <Filter>Converter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Converter\AbstractImageConverter.cpp">
+      <Filter>Converter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Filter\Converter\ImageConverterFilter.cpp">
+      <Filter>Filter\Converter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Converter\ImageX2YConverter.cpp">
+      <Filter>Converter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Encoder\AbstractEncoder.cpp">
+      <Filter>Encoder</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Encoder\JPEG\JPEGImageEncoder.cpp">
+      <Filter>Encoder\JPEG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Filter\Encoder\JPEGEncoderFilter.cpp">
+      <Filter>Filter\Encoder</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Filter\AI\AIFilter.cpp">
+      <Filter>Filter\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\codecvt_error_category.cpp">
+      <Filter>3rd\boost\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\directory.cpp">
+      <Filter>3rd\boost\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\exception.cpp">
+      <Filter>3rd\boost\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\operations.cpp">
+      <Filter>3rd\boost\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\path.cpp">
+      <Filter>3rd\boost\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\path_traits.cpp">
+      <Filter>3rd\boost\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\portability.cpp">
+      <Filter>3rd\boost\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\unique_path.cpp">
+      <Filter>3rd\boost\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\utf8_codecvt_facet.cpp">
+      <Filter>3rd\boost\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\windows_file_codecvt.cpp">
+      <Filter>3rd\boost\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\utf8_codecvt_facet_.cpp">
+      <Filter>3rd\boost\program_options</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graph\LivestreamGraph.cpp">
+      <Filter>Graph</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graph\AI\LivestreamAIGraph.cpp">
+      <Filter>Graph\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\win\Event.pb.cc">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\EventPhrase.cpp">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\AI\CVHelmetDetect.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Filter\AI\CVHelmetDetectFilter.cpp">
+      <Filter>Filter\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="HelmetDetectLivestreamGraph.cpp" />
+    <ClCompile Include="..\Source\Person\AbstractPerson.cpp">
+      <Filter>Person</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Person\Crew\Crew.cpp">
+      <Filter>Person</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Alarm\AbstractAlarm.cpp">
+      <Filter>Alarm</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1980,10 +2177,126 @@
       <Filter>Device</Filter>
     </ClInclude>
     <ClInclude Include="..\Include\AI\AbstractAlgorithm.h">
-      <Filter>Algorithm</Filter>
+      <Filter>AI</Filter>
     </ClInclude>
     <ClInclude Include="..\Include\Camera\AbstractCamera.h">
       <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\ASIO\TCPConnector.h">
+      <Filter>ASIO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\ASIO\ASIOService.h">
+      <Filter>ASIO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Network\AbstractMediaStreamClient.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\DataStruct\Vector.h">
+      <Filter>DataStruct</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\ASIO\TCPSession.h">
+      <Filter>ASIO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Session\TCPStreamTargetSession.h">
+      <Filter>Session</Filter>
+    </ClInclude>
+    <ClInclude Include="HelmetMediaStreamSession.h" />
+    <ClInclude Include="..\Include\ASIO\TCPReceiver.h">
+      <Filter>ASIO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\ASIO\TCPSender.h">
+      <Filter>ASIO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Packet\Stream\StreamPacket.h">
+      <Filter>Packet\Stream</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Timer\Timer.h">
+      <Filter>Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Pin\AbstractPin.h">
+      <Filter>Pin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Filter\AbstractFilter.h">
+      <Filter>Filter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Graph\AbstractGraph.h">
+      <Filter>Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Filter\Cache\StreamCacheFilter.h">
+      <Filter>Filter\Cache</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Filter\Decoder\StreamDecoderFilter.h">
+      <Filter>Filter\Decoder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Decoder\SDK\HikvisionSDKDecoder.h">
+      <Filter>Decoder\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Decoder\AbstractDecoder.h">
+      <Filter>Decoder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\DataStruct\FIFOQueue.h">
+      <Filter>DataStruct</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Converter\YV12ToYUV420PConverter.h">
+      <Filter>Converter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Converter\AbstractImageConverter.h">
+      <Filter>Converter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Filter\Converter\ImageConverterFilter.h">
+      <Filter>Filter\Converter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Converter\ImageX2YConverter.h">
+      <Filter>Converter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Encoder\AbstractEncoder.h">
+      <Filter>Encoder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Encoder\JPEG\JPEGImageEncoder.h">
+      <Filter>Encoder\JPEG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Filter\Encoder\JPEGEncoderFilter.h">
+      <Filter>Filter\Encoder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Filter\AI\AIFilter.h">
+      <Filter>Filter\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\error_handling.hpp">
+      <Filter>3rd\boost\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\windows_file_codecvt.hpp">
+      <Filter>3rd\boost\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\windows_tools.hpp">
+      <Filter>3rd\boost\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Graph\LivestreamGraph.h">
+      <Filter>Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Graph\AI\LivestreamAIGraph.h">
+      <Filter>Graph\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\win\Event.pb.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\EventPhrase.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\AI\CVHelmetDetect.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Filter\AI\CVHelmetDetectFilter.h">
+      <Filter>Filter\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="HelmetDetectLivestreamGraph.h" />
+    <ClInclude Include="..\Include\Person\AbstractPerson.h">
+      <Filter>Person</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Person\Crew\Crew.h">
+      <Filter>Person</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Alarm\AbstractAlarm.h">
+      <Filter>Alarm</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

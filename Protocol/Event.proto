@@ -1,0 +1,23 @@
+syntax = "proto2";
+
+package msg;
+
+message CaptureInfo
+{
+	required string did = 1;
+	required string cid = 2;
+	required int32 idx = 3;
+	optional string picture = 4;
+}
+
+message Event
+{
+	enum Command
+	{
+		CAPTURE_JPEG_REQ = 1;
+		CAPTURE_JPEG_REP = 2;
+	}
+	
+	required Command command = 1;
+	optional CaptureInfo captureinfo = 2;
+}

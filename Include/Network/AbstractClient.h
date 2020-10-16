@@ -16,6 +16,8 @@
 #ifndef BASE_NETWORK_ABSTRACT_CLIENT_H
 #define BASE_NETWORK_ABSTRACT_CLIENT_H
 
+#include <string>
+
 namespace base
 {
 	namespace network
@@ -78,6 +80,7 @@ namespace base
 				const std::string toID,
 				const std::string msg) = 0;
 			virtual const std::string buildAutoRegisterToBrokerMessage(void) = 0;
+			virtual const std::string buildAutoQueryRegisterSubroutineMessage(void);
 
 		protected:
 			//创建客户端模型

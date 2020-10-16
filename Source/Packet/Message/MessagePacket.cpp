@@ -47,6 +47,9 @@ namespace base
 			else if (MessagePacketType::MESSAGE_PACKET_TYPE_USER == messagePacketType)
 			{
 			}
+			else if (MessagePacketType::MESSAGE_PACKET_TYPE_EVENT == messagePacketType)
+			{
+			}
 		}
 	}//namespace packet
 }//namespace base

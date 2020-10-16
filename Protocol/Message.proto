@@ -7,6 +7,7 @@ import "Crew.proto";
 import "Device.proto";
 import "Status.proto";
 import "User.proto";
+import "Event.proto";
 
 package msg;
 
@@ -22,6 +23,7 @@ message MSG
 		DEVICE = 5;
 		STATUS = 6;
 		USER = 7;
+		EVENT = 8;
 	}
 	
 	required Type type = 1 [default = NONE];
@@ -35,4 +37,5 @@ message MSG
 	optional Device device = 8;
 	optional Status status = 9;
 	optional User user = 10;
+	optional Event evt = 11;
 }

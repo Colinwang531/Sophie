@@ -1,84 +1,94 @@
-// #include "boost/asio.hpp"
 #include "boost/bind.hpp"
-// #include "boost/thread/lock_guard.hpp"
-// #include "boost/make_shared.hpp"
-// #include "boost/numeric/conversion/cast.hpp"
+#include "boost/checked_delete.hpp"
+#include "Error.h"
+#include "ASIO/TCPSession.h"
 #include "ASIO/TCPSender.h"
 
-NS_BEGIN(asio, 2)
-
-TCPSender::TCPSender()
-//	: sendDataNotificationCallback{ callback }, sendDataNotificationCtx{ ctx }
-{}
-
-TCPSender::~TCPSender()
-{}
-
-void TCPSender::asyncSend(
-	boost::asio::ip::tcp::socket* so /* = nullptr */, const char* data /* = nullptr */, const Int32 bytes /* = 0 */, AfterSendDataNotificationCallback callback /* = nullptr */)
+namespace base
 {
-//	Int32 status{ ERR_BAD_OPERATE };
-
-	if (so && so->is_open())
+	namespace network
 	{
-// 		auto tempSenderSelf(boost::enable_shared_from_this<TCPSender>::shared_from_this());
-// 		boost::asio::async_write(*so, boost::asio::buffer(data, bytes),
-// 			[this, tempSenderSelf](boost::system::error_code ec, std::size_t bytes)
-// 		{
-// 		});
+		TCPSender::TCPSender(TCPSession* s /* = nullptr */)
+			: session{ s }, dataBuffer{ nullptr }, dataBufferBytes{ 0 }, sentDataBytes{ 0 }
+		{
+			dataBuffer = new(std::nothrow) unsigned char[3 * 1024 * 1024];
+		}
 
-// 		boost::asio::async_write(
-// 			*so, 
-// 			boost::asio::buffer(data, bytes),
-// 			boost::bind(
-// 				&TCPSender::afterSendDataNotificationCallback, 
-// 				boost::enable_shared_from_this<TCPSender>::shared_from_this(),
-// 				so,
-// 				boost::asio::placeholders::error,
-// 				boost::asio::placeholders::bytes_transferred));
-//		status = ERR_OK;
+		TCPSender::~TCPSender()
+		{
+			boost::checked_array_delete(dataBuffer);
+		}
 
-		boost::asio::async_write(*so, boost::asio::buffer(data, bytes), callback);
-	}
+		int TCPSender::sendData(
+			boost::asio::ip::tcp::socket* s /* = nullptr */, 
+			const unsigned char* data /* = nullptr */, 
+			const int bytes /* = 0 */)
+		{
+			int e{ s && s->is_open() && data && 0 < bytes ? eSuccess : eInvalidParameter };
 
-//	return status;
-}
+			if (eSuccess == e)
+			{
+// 				if (0 == dataBufferBytes)
+// 				{
+// 					memcpy(dataBuffer, data, bytes);
+// 					dataBufferBytes = bytes;
+// 					sentDataBytes = 0;
+// 				}
 
-// Int32 TCPSender::sendPartialData(
-// 	boost::asio::ip::tcp::socket* so /* = nullptr */, const char* data /* = nullptr */, const Int32 bytes /* = 0 */)
-// {
-// 	Int32 status{ ERR_BAD_OPERATE };
-// 
-// 	if (so && so->is_open())
-// 	{
-// 	 	so->async_write_some(
-// 			boost::asio::buffer(data, bytes),
-// 	 		boost::bind(
-// 	 			&TCPSender::afterSendDataNotificationCallback,
-// 	 			boost::enable_shared_from_this<TCPSender>::shared_from_this(),
-// 	 			so,
-// 	 			boost::asio::placeholders::error,
-// 	 			boost::asio::placeholders::bytes_transferred));
-// 	}
-// 
-// 	return ERR_OK;
-// }
+// 				boost::asio::async_write(
+// 					*s, 
+// 					boost::asio::buffer(data, bytes), 
+// 					boost::bind(
+// 						&TCPSender::afterSentDataNotificationCallback,
+// 						boost::enable_shared_from_this<TCPSender>::shared_from_this(),
+// 						s, 
+// 						boost::asio::placeholders::bytes_transferred, 
+// 						boost::asio::placeholders::error));
 
-// void TCPSender::afterSendDataNotificationCallback(
-// 	boost::asio::ip::tcp::socket* so, 
-// 	boost::system::error_code error, 
-// //	boost::shared_ptr<boost::asio::streambuf> streamBuf, 
-// 	const std::size_t transfferredBytes /* = 0 */)
-// {
-// // 	if (so && streamBuf && !error.value())
-// // 	{
-// // 		streamBuf->consume(transfferedBytes);
-// // 	}
-// 
-// 	if (sendDataNotificationCallback)
-// 	{
-// 		sendDataNotificationCallback(so, error.value(), static_cast<Int32>(transfferredBytes), sendDataNotificationCtx);
-// 	}
-// }
+				const int mtu{ 100 * 1024 };
+				int pos{ 0 }, sentBytes{ 0 };
 
-NS_END
+				while (pos < bytes)
+				{
+					int leftBytes = bytes - pos;
+					sentBytes = (leftBytes > mtu ? mtu : leftBytes);
+					s->async_write_some(
+						boost::asio::buffer(data + pos, sentBytes/*bytes*/),
+						boost::bind(
+							&TCPSender::afterSentDataNotificationCallback,
+							boost::enable_shared_from_this<TCPSender>::shared_from_this(),
+							s,
+							boost::asio::placeholders::bytes_transferred,
+							boost::asio::placeholders::error));
+					pos += sentBytes;
+				}
+			}
+			
+			return e;
+		}
+
+		void TCPSender::afterSentDataNotificationCallback(
+			boost::asio::ip::tcp::socket* s, 
+			std::size_t bytes, 
+			boost::system::error_code e)
+		{
+// 			if (!e && bytes < dataBufferBytes)
+// 			{
+// 				dataBufferBytes -= bytes;
+// 				sentDataBytes += bytes;
+// 				sendData(s, dataBuffer + sentDataBytes, dataBufferBytes);
+// 			}
+// 			else if (!e && session && session->valid())
+// 			{
+// 				dataBufferBytes = 0;
+// 				sentDataBytes = 0;
+// 				session->sentdDataNotification(e);
+// 			}
+
+			if (!e && session && session->valid())
+			{
+				session->sentdDataNotification(e);
+			}
+		}
+	}//namespace network
+}//namespace base

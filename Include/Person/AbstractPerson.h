@@ -26,6 +26,13 @@ namespace base
 			virtual ~AbstractPerson(void);
 
 		public:
+			//读/写人员ID标识
+			//@Return : 人员ID标识
+			inline const std::string getPersonID(void) const
+			{
+				return personID;
+			}
+
 			//读/写人员名称
 			//@name : 人员名称,可以空
 			//@Return : 人员名称
@@ -54,6 +61,11 @@ namespace base
 			//@picture : 人员照片数据,可以空
 			//@Return : 包命令类型
 			virtual int addPersonPicture(const std::string picture) = 0;
+
+			//获取人员图片数据
+			//@idx : 图片索引号
+			//@Return : 人员图片
+			virtual const std::string getPersonPicture(const int idx = 0) = 0;
 
 		private:
 			const std::string personID;

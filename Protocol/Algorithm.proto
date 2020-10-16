@@ -17,10 +17,11 @@ message AlgorithmInfo
 	required Type type = 1;
 	required int32 gpu = 2;
 	required string cid = 3;
-	required float dectectfirst = 4;
-	required float track = 5;
-	optional float dectectsecond = 6;
-	optional float similar = 7;
+	required string aid = 4;
+	required float dectectfirst = 5;
+	required float track = 6;
+	optional float dectectsecond = 7;
+	optional float similar = 8;
 }
 
 message AlgorithmRequest

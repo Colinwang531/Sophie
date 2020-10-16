@@ -72,7 +72,7 @@ namespace base
 			//连接超时处理
 			virtual void afterAutoCheckConnectionTimeoutProcess(void) = 0;
 
-			//服务端数据接收处理
+			//数据接收处理
 			//@commID : 通信ID标识
 			//@flagID : Request/Response标识
 			//@fromID : 发送者ID标识

@@ -62,7 +62,7 @@ namespace base
 
 			//获取包数据类型
 			//@Return : 包数据类型
-			inline const int getPacketType(void) const
+			inline const DataPacketType getPacketType(void) const
 			{
 				return packetType;
 			}
