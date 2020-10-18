@@ -17,7 +17,7 @@ using base::time::Time;
 #include "Protocol/DataPhrase.h"
 using DataParser = base::protocol::DataParser;
 using DataPacker = base::protocol::DataPacker;
-#include "Protocol/Component/ComponentPhrase.h"
+#include "Protocol/ComponentPhrase.h"
 //#include "Protocol/Device/DevicePhrase.h"
 #include "Xml/XmlCodec.h"
 using XMLParser = base::xml::XMLParser;

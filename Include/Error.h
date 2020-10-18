@@ -10,8 +10,8 @@
 //										王科威									2020-04-27									创建
 //
 
-#ifndef ERROR_H
-#define ERROR_H
+#ifndef BASE_ERROR_H
+#define BASE_ERROR_H
 
 //公共类
 static const int eSuccess = 0;
@@ -44,4 +44,4 @@ static const int eBadOpenFile = -4000;
 static const int eBadCloseFile = -4001;
 static const int eBadWriteData = -4002;
 
-#endif//ERROR_H
+#endif//BASE_ERROR_H

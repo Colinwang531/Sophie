@@ -53,7 +53,7 @@ namespace base
 					boost::checked_delete(mb);
 				}
 			}
-			else if (ServerModuleType::SERVER_MODULE_TYPE_ASYNC_DISPATHER == serverModuleType)
+			else if (ServerModuleType::SERVER_MODULE_TYPE_ASYNC_DISPATCHER == serverModuleType)
 			{
 			}
 			else if (ServerModuleType::SERVER_MODULE_TYPE_ASIO == serverModuleType)
@@ -83,7 +83,7 @@ namespace base
 					serverModule = nullptr;
 				}
 			}
-			else if (ServerModuleType::SERVER_MODULE_TYPE_ASYNC_DISPATHER == serverModuleType)
+			else if (ServerModuleType::SERVER_MODULE_TYPE_ASYNC_DISPATCHER == serverModuleType)
 			{
 			}
 			else if (ServerModuleType::SERVER_MODULE_TYPE_ASIO == serverModuleType)
@@ -112,7 +112,7 @@ namespace base
 						e = mb->sendData(commID, flagID, fromID, toID, msg);
 					}
 				}
-				else if (ServerModuleType::SERVER_MODULE_TYPE_ASYNC_DISPATHER == serverModuleType)
+				else if (ServerModuleType::SERVER_MODULE_TYPE_ASYNC_DISPATCHER == serverModuleType)
 				{
 				}
 				else if (ServerModuleType::SERVER_MODULE_TYPE_ASIO == serverModuleType)

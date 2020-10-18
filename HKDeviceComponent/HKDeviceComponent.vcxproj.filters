@@ -844,15 +844,6 @@
     <ClCompile Include="..\Source\Session\TCPStreamTargetSession.cpp">
       <Filter>Session</Filter>
     </ClCompile>
-    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\utf8_codecvt_facet_.cpp">
-      <Filter>3rd\boost\program_options</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Protocol\linux\Event.pb.cc">
-      <Filter>Protocol</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Protocol\EventPhrase.cpp">
-      <Filter>Protocol</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Person\AbstractPerson.cpp">
       <Filter>Person</Filter>
     </ClCompile>
@@ -861,6 +852,15 @@
     </ClCompile>
     <ClCompile Include="..\Source\Alarm\AbstractAlarm.cpp">
       <Filter>Alarm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\utf8_codecvt_facet_.cpp">
+      <Filter>3rd\boost\program_options</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\EventPhrase.cpp">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\linux\Event.pb.cc">
+      <Filter>Protocol</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -15198,12 +15198,6 @@
     <ClInclude Include="..\Include\Session\TCPStreamTargetSession.h">
       <Filter>Session</Filter>
     </ClInclude>
-    <ClInclude Include="..\Include\Protocol\linux\Event.pb.h">
-      <Filter>Protocol</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Include\Protocol\EventPhrase.h">
-      <Filter>Protocol</Filter>
-    </ClInclude>
     <ClInclude Include="..\Include\Person\AbstractPerson.h">
       <Filter>Person</Filter>
     </ClInclude>
@@ -15212,6 +15206,12 @@
     </ClInclude>
     <ClInclude Include="..\Include\Alarm\AbstractAlarm.h">
       <Filter>Alarm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\EventPhrase.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\linux\Event.pb.h">
+      <Filter>Protocol</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

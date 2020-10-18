@@ -12,10 +12,8 @@
 //										王科威									2020-07-02									公共数据迁移入该文件
 //
 
-#ifndef DEFINE_H
-#define DEFINE_H
-
-#include <vector>
+#ifndef BASE_DEFINE_H
+#define BASE_DEFINE_H
 
 //端口号使用范围
 static const unsigned short gMinPortNumber = 5000;
@@ -24,4 +22,4 @@ static const unsigned short gMaxPortNumber = 65530;
 //MTU
 static const unsigned int gMaxTransmitUnit = 512;
 
-#endif//DEFINE_H
+#endif//BASE_DEFINE_H
