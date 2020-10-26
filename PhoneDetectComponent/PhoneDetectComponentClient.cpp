@@ -1,4 +1,5 @@
 #include "boost/algorithm/string.hpp"
+#include "boost/format.hpp"
 #include "boost/make_shared.hpp"
 #include "boost/pointer_cast.hpp"
 #ifdef _WINDOWS
@@ -10,6 +11,9 @@
 #endif//_WINDOWS
 #include "Error.h"
 #include "Define.h"
+#include "ASIO/TCPConnector.h"
+using TCPConnector = base::network::TCPConnector;
+using TCPConnectorPtr = boost::shared_ptr<TCPConnector>;
 #include "Protocol/DataPhrase.h"
 using DataParser = base::protocol::DataParser;
 using DataPacker = base::protocol::DataPacker;
@@ -34,17 +38,50 @@ using MessagePacketPtr = boost::shared_ptr<MessagePacket>;
 PhoneDetectComponentClient::PhoneDetectComponentClient(
 	const std::string address, 
 	const unsigned short port /* = 60531 */)
-	: AbstractMediaStreamClient(address, port), sailStatus{ -1 }
+	: AbstractWorker(), sailStatus{ -1 }, mediaIP{ address }, mediaPort{ port }
 {}
 PhoneDetectComponentClient::~PhoneDetectComponentClient() {}
 
-void PhoneDetectComponentClient::afterClientPolledMessageProcess(
+int PhoneDetectComponentClient::createNewClient(const std::string address)
+{
+	int e{ !address.empty() ? eSuccess : eInvalidParameter };
+
+	if (eSuccess == e)
+	{
+		MajordomoWorkerPtr mdwp{
+			boost::make_shared<MajordomoWorker>(
+				boost::bind(&PhoneDetectComponentClient::afterPolledDataFromWorkerCallback, this, _1, _2, _3, _4, _5)) };
+		if (mdwp && eSuccess == mdwp->startWorker(address))
+		{
+			worker.swap(mdwp);
+			//在客户端注册或心跳之前创建UUID标识
+			AbstractWorker::generateUUIDWithName("Phone");
+			e = AbstractWorker::createNewClient("");
+			asioService.startService();
+		}
+		else
+		{
+			e = eBadNewObject;
+		}
+	}
+
+	return e;
+}
+
+int PhoneDetectComponentClient::destroyClient()
+{
+	asioService.stopService();
+	return worker ? worker->stopWorker() : eBadOperate;
+}
+
+void PhoneDetectComponentClient::afterPolledDataFromWorkerCallback(
+	const std::string roleID,
 	const std::string flagID,
 	const std::string fromID,
 	const std::string toID,
-	const std::string msg)
+	const std::string data)
 {
-	DataPacketPtr pkt{ DataParser().parseData(msg) };
+	DataPacketPtr pkt{ DataParser().parseData(data) };
 
 	if (pkt)
 	{
@@ -74,43 +111,54 @@ void PhoneDetectComponentClient::afterClientPolledMessageProcess(
 	}
 }
 
-const std::string PhoneDetectComponentClient::buildAutoRegisterToBrokerMessage()
+void PhoneDetectComponentClient::sendRegisterWorkerServerMessage()
 {
-	std::string msgstr;
+	std::string name, id;
+	XMLParser().getValueByName("Config.xml", "Component.Phone.ID", id);
+	XMLParser().getValueByName("Config.xml", "Component.Phone.Name", name);
 	AbstractComponent component(
 		base::component::ComponentType::COMPONENT_TYPE_AI);
-	component.setComponentID(getAlgorithmClientInfoByName("Component.Phone.ID"));
-	component.setComponentName(getAlgorithmClientInfoByName("Component.Phone.Name"));
-	boost::shared_ptr<DataPacket> pkt{
-		boost::make_shared<MessagePacket>(base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_COMPONENT) };
+	component.setComponentID(id);
+	component.setComponentName(name);
 
+	DataPacketPtr pkt{
+		boost::make_shared<MessagePacket>(
+			base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_COMPONENT) };
 	if (pkt)
 	{
-		MessagePacketPtr msgpkt{ boost::dynamic_pointer_cast<MessagePacket>(pkt) };
-		msgpkt->setMessagePacketCommand(
+		MessagePacketPtr mp{ boost::dynamic_pointer_cast<MessagePacket>(pkt) };
+		mp->setMessagePacketCommand(
 			static_cast<int>(base::protocol::ComponentCommand::COMPONENT_COMMAND_SIGNIN_REQ));
-		pkt->setPacketData(&component);
-		msgstr = DataPacker().packData(pkt);
+		mp->setPacketData(&component);
+		const std::string data{ DataPacker().packData(pkt) };
+		sendData("worker", "request", id, parentXMQID, data);
 	}
-
-	return msgstr;
 }
 
-const std::string PhoneDetectComponentClient::buildAutoQueryRegisterSubroutineMessage()
+void PhoneDetectComponentClient::sendQuerySystemServiceMessage()
 {
-	std::string msg;
 	boost::shared_ptr<DataPacket> pkt{
-		boost::make_shared<MessagePacket>(base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_COMPONENT) };
+		boost::make_shared<MessagePacket>(
+			base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_COMPONENT) };
 
 	if (pkt)
 	{
 		MessagePacketPtr msgpkt{ boost::dynamic_pointer_cast<MessagePacket>(pkt) };
 		msgpkt->setMessagePacketCommand(
 			static_cast<int>(base::protocol::ComponentCommand::COMPONENT_COMMAND_QUERY_REQ));
-		msg = DataPacker().packData(pkt);
+		const std::string data{ DataPacker().packData(pkt) };
+		sendData("worker", "request", AbstractWorker::getUUID(), parentXMQID, data);
 	}
+}
 
-	return msg;
+int PhoneDetectComponentClient::sendData(
+	const std::string roleID,
+	const std::string flagID,
+	const std::string fromID,
+	const std::string toID,
+	const std::string data)
+{
+	return worker ? worker->sendData(roleID, flagID, fromID, toID, data) : eBadOperate;
 }
 
 int PhoneDetectComponentClient::createNewMediaStreamSession(
@@ -124,7 +172,7 @@ int PhoneDetectComponentClient::createNewMediaStreamSession(
 		AbstractAlgorithm algo{ algorithmParamGroup.at() };
 		algorithmParamGroup.removeFront();
 		TCPSessionPtr session{
-			boost::make_shared<PhoneMediaStreamSession>(*this, url, algo, s) };
+			boost::make_shared<PhoneMediaStreamSession>(*this, AbstractWorker::getUUID(), url, algo, s) };
 
 		if (session)
 		{
@@ -170,10 +218,12 @@ void PhoneDetectComponentClient::processComponentMessage(
 
 	if (base::protocol::ComponentCommand::COMPONENT_COMMAND_SIGNIN_REP == command)
 	{
-		const char* componentID{ 
-			reinterpret_cast<const char*>(pkt->getPacketData()) };
-		//无论注册还是心跳都保存组件ID标识
-		setAlgorithmClientInfoWithName("Component.Phone.ID", componentID);
+// 		const char* componentID{ 
+// 			reinterpret_cast<const char*>(pkt->getPacketData()) };
+// 		//无论注册还是心跳都保存组件ID标识
+// 		setAlgorithmClientInfoWithName("Component.Phone.ID", componentID);
+
+		parentXMQID = reinterpret_cast<const char*>(pkt->getPacketData());
 	}
 	else if (base::protocol::ComponentCommand::COMPONENT_COMMAND_QUERY_REP == command)
 	{
@@ -234,7 +284,7 @@ void PhoneDetectComponentClient::processAlgorithmMessage(const std::string fromI
 				algorithmParamGroup.pushBack(*aa);
 				std::vector<std::string> streamIDGroup;
 				boost::split(streamIDGroup, streamID, boost::is_any_of(":"));
-				AbstractMediaStreamClient::connectMediaServerWithID(streamIDGroup[0], streamIDGroup[1], atoi(streamIDGroup[2].c_str()));
+				connectMediaServer(streamIDGroup[0], streamIDGroup[1], atoi(streamIDGroup[2].c_str()));
 
 				LOG(INFO) << "Deploy algorithm on stream ID = " << streamID << 
 					" GPU = " << aa->getGpuID() << 
@@ -255,6 +305,7 @@ void PhoneDetectComponentClient::processAlgorithmMessage(const std::string fromI
 
 	e = replyMessageWithResult(
 		fromID,
+		AbstractWorker::getUUID(),
 		static_cast<int>(base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_ALGORITHM),
 		static_cast<int>(command) + 1,
 		e,
@@ -276,6 +327,7 @@ void PhoneDetectComponentClient::processStatusMessage(const std::string fromID, 
 
 	replyMessageWithResult(
 		fromID,
+		AbstractWorker::getUUID(),
 		static_cast<int>(base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_STATUS),
 		static_cast<int>(command) + 1,
 		eSuccess,
@@ -284,6 +336,7 @@ void PhoneDetectComponentClient::processStatusMessage(const std::string fromID, 
 
 int PhoneDetectComponentClient::replyMessageWithResult(
 	const std::string fromID, 
+	const std::string toID,
 	const int type /* = 0 */, 
 	const int command /* = 0 */, 
 	const int result /* = 0 */, 
@@ -303,8 +356,60 @@ int PhoneDetectComponentClient::replyMessageWithResult(
 		const std::string rep{ DataPacker().packData(pkt) };
 
 		//客户端应答时必须交换fromID和toID
-		e = AbstractClient::sendMessageData("response", "", fromID, rep);
+		e = sendData("worker", "response", toID, fromID, rep);
 	}
 
 	return e;
+}
+
+int PhoneDetectComponentClient::connectMediaServer(
+	const std::string did,
+	const std::string cid,
+	const int idx /* = -1 */)
+{
+	int e{ mediaIP.empty() || cid.empty() || did.empty() || 0 > idx ? eInvalidParameter : eSuccess };
+
+	if (eSuccess == e)
+	{
+		TCPConnectorPtr connector{
+			boost::make_shared<TCPConnector>(
+				asioService,
+				boost::bind(&PhoneDetectComponentClient::afterRemoteConnectedNotificationCallback, this, _1, _2)) };
+		if (connector)
+		{
+			urlGroup.pushBack((boost::format("%s:%d") % did % idx).str());
+			e = connector->setConnect(mediaIP.c_str(), mediaPort);
+		}
+		else
+		{
+			e = eBadNewObject;
+		}
+	}
+
+	return e;
+}
+
+int PhoneDetectComponentClient::disconnectMediaServer(const std::string did)
+{
+	int e{ did.empty() ? eInvalidParameter : eSuccess };
+
+	if (eSuccess == e)
+	{
+	}
+
+	return e;
+}
+
+void PhoneDetectComponentClient::afterRemoteConnectedNotificationCallback(
+	boost::asio::ip::tcp::socket* s, const boost::system::error_code e)
+{
+	if (s && !e)
+	{
+		const std::string url{ urlGroup.at() };
+		if (!url.empty())
+		{
+			urlGroup.removeFront();
+			createNewMediaStreamSession(url, s);
+		}
+	}
 }

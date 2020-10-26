@@ -16,25 +16,14 @@
 #ifndef BASE_NETWORK_ABSTRACT_SERVER_H
 #define BASE_NETWORK_ABSTRACT_SERVER_H
 
-#include <vector>
-
 namespace base
 {
 	namespace network
 	{
-		typedef enum class tagServerModuleType_t : int
-		{
-			SERVER_MODULE_TYPE_NONE = 0,
-			SERVER_MODULE_TYPE_ASIO,
-			SERVER_MODULE_TYPE_MAJORDOMO_BROKER,
-			SERVER_MODULE_TYPE_ASYNC_DISPATCHER
-		}ServerModuleType;
-
 		class AbstractServer
 		{
 		public:
-			AbstractServer(
-				const ServerModuleType type = ServerModuleType::SERVER_MODULE_TYPE_NONE);
+			AbstractServer(void);
 			virtual ~AbstractServer(void);
 
 		public:
@@ -55,49 +44,41 @@ namespace base
 				return stopped;
 			}
 
-			//发送消息
+			//发送数据
 			//@commID : 通信ID标识
-			//@flagID : Request/Response标识
+			//@roleID : 角色ID标识
+			//@flagID : 标志ID标识
 			//@fromID : 发送者ID标识
 			//@toID : 接收者ID标识
-			//@msg : 消息数据
+			//@data : 消息数据
 			//@Return : 错误码
-			int sendMessageData(
+			virtual int sendData(
 				const std::string commID,
+				const std::string roleID,
 				const std::string flagID,
 				const std::string fromID,
 				const std::string toID,
-				const std::string msg);
+				const std::string data) = 0;
 
-			//连接超时处理
-			virtual void afterAutoCheckConnectionTimeoutProcess(void) = 0;
-
-			//数据接收处理
-			//@commID : 通信ID标识
-			//@flagID : Request/Response标识
-			//@fromID : 发送者ID标识
-			//@toID : 接收者ID标识
-			//@msg : 消息数据
-			virtual void afterServerPolledMessageProcess(
-				const std::string commID, 
-				const std::string flagID,
-				const std::string fromID,
-				const std::string toID,
-				const std::string msg) = 0;
+			//客户端在线/离线超时处理
+			virtual void afterAutoClientConnectionTimeoutProcess(void) = 0;
 
 		protected:
-			//创建本地服务端模型
+			//创建本地服务端
 			//@address : 本地监听地址
 			//@Return : 错误码
-			virtual int createNewServerModule(const std::string address);
+			virtual int createNewServer(
+				const std::string address) = 0;
 
-			//销毁本地服务端模型
+			//销毁本地服务端
 			//@Return : 错误码
-			virtual int destroyServerModule(void);
+			virtual int destroyServer(void) = 0;
+
+		private:
+			//客户端在线/离线检测线程
+			void autoCheckClientConnectionTimeoutThread(void);
 
 		protected:
-			const ServerModuleType serverModuleType;
-			void* serverModule;
 			bool stopped;
 		};//class AbstractServer
 	}//namespace network

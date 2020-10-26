@@ -35,8 +35,8 @@ namespace base
 				MessagePacketPtr msgpkt{ boost::dynamic_pointer_cast<MessagePacket>(pkt) };
 				msgpkt->setMessagePacketCommand(static_cast<int>(command));
 
-				if (msg::Algorithm_Command::Algorithm_Command_CONFIGURE_REQ == command ||
-					msg::Algorithm_Command::Algorithm_Command_QUERY_REQ == command)
+				if (msg::Algorithm_Command::Algorithm_Command_CONFIGURE_REQ == command// ||
+					/*msg::Algorithm_Command::Algorithm_Command_QUERY_REQ == command*/)
 				{
 					const msg::AlgorithmInfo& info{
 							ma->release_algorithmrequest()->algorithminfo() };

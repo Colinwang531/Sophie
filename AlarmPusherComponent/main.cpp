@@ -28,7 +28,7 @@ static void parseCommandLine(int argc, char** argv)
 	CommandLine cl;
 	cl.setCommandOptions("address,a", "127.0.0.1");
 	cl.setCommandOptions("port,p", "61001");
-	cl.setCommandOptions("name,n", "Unknown");
+	cl.setCommandOptions("name,n", "Alarm");
 
 	if (eSuccess == cl.parseCommandLine(argc, argv))
 	{
@@ -48,7 +48,7 @@ static void parseCommandLine(int argc, char** argv)
 		//优先使用配置文件中的名称,如果配置文件中的名称空再使用参数列表中的名称
 		//名称在第一次启动设置后就不能再修改
 		std::string configName;
-		XMLParser().getValueByName("Config.xml", "Component.Alarm.Name", configName);
+		XMLParser().getValueByName("Config.xml", "Component.ALM.Name", configName);
 		const char* name{ cl.getParameterByOption("name") };
 		if (configName.empty())
 		{
@@ -56,7 +56,7 @@ static void parseCommandLine(int argc, char** argv)
 			{
 				configName.append(name);
 				//名字直接写入配置文件,需要再去读
-				XMLPacker().setValueWithName("Config.xml", "Component.Alarm.Name", name);
+				XMLPacker().setValueWithName("Config.xml", "Component.ALM.Name", configName);
 			}
 		}
 
@@ -75,10 +75,12 @@ static int createNewAsynchronousClient(void)
 	{
 		if (!gMessageDispatcherCenterIP.empty() && gMinPortNumber < gMessageDispatcherCenterPort && gMaxPortNumber > gMessageDispatcherCenterPort)
 		{
-			AlarmPusherComponentClientPtr ap{ boost::make_shared<AlarmPusherComponentClient>() };
+			AlarmPusherComponentClientPtr ap{ 
+				boost::make_shared<AlarmPusherComponentClient>() };
 			if (ap)
 			{
-				e = ap->startClient((boost::format("tcp://%s:%d") % gMessageDispatcherCenterIP % gMessageDispatcherCenterPort).str(), "Stream");
+				e = ap->startClient(
+					(boost::format("tcp://%s:%d") % gMessageDispatcherCenterIP % gMessageDispatcherCenterPort).str());
 
 				if (eSuccess == e)
 				{

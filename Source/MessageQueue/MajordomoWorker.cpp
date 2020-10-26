@@ -1,17 +1,12 @@
 #include "boost/bind.hpp"
-#include "boost/date_time/posix_time/posix_time.hpp"
-#include "boost/thread.hpp"
+//#include "boost/date_time/posix_time/posix_time.hpp"
 #include "boost/uuid/uuid_generators.hpp"
 #include "boost/uuid/uuid_io.hpp"
 #include "Error.h"
 #include "Hardware/Cpu.h"
 using CPU = base::hardware::Cpu;
-#include "Time/XTime.h"
-using Time = base::time::Time;
 #include "Thread/ThreadPool.h"
 using ThreadPool = base::thread::ThreadPool;
-#include "Network/AbstractClient.h"
-using AbstractClient = base::network::AbstractClient;
 #include "MessageQueue/MessageData.h"
 using MessageData = mq::message::MessageData;
 #include "MessageQueue/MajordomoWorker.h"
@@ -21,9 +16,8 @@ namespace mq
     namespace module
     {
 		MajordomoWorker::MajordomoWorker(
-			const std::string name, void* client /* = nullptr */)
-			: workerName{ name }, abstractClient{ client }, dealer{ nullptr },
-			workerID{ boost::uuids::to_string(boost::uuids::random_generator()()) }
+			AfterClientRecievedDataCallback callback /* = nullptr */)
+			: afterClientRecievedDataCallback{ callback }, dealer{ nullptr }, stopped{ false }
 		{}
 
 		MajordomoWorker::~MajordomoWorker()
@@ -33,10 +27,9 @@ namespace mq
 
 		int MajordomoWorker::startWorker(const std::string address)
 		{
-			int e{ 
-				address.empty() || workerName.empty() || workerID.empty() ? eInvalidParameter : eSuccess };
+			int e{ ctx.valid() ? eSuccess : eBadOperate };
 
-			if (eSuccess == e && ctx.valid())
+			if (eSuccess == e)
 			{
 				const int cores{ CPU().getCPUCoreNumber() };
 				ctx.set(ZMQ_IO_THREADS, &cores, sizeof(const int));
@@ -44,23 +37,18 @@ namespace mq
 
 				if (dealer)
 				{
-					int linger{ 0 };
-					dealer->setsockopt(ZMQ_LINGER, &linger, sizeof(int));
-					dealer->setsockopt(ZMQ_IDENTITY, workerID.c_str(), workerID.length());
+					const int linger{ 0 };
+					const std::string commID{ 
+						boost::uuids::to_string(boost::uuids::random_generator()()) };
+
+					dealer->setsockopt(ZMQ_LINGER, &linger, sizeof(const int));
+					dealer->setsockopt(ZMQ_IDENTITY, commID.c_str(), commID.length());
 					e = dealer->connect(address.c_str()) ? eBadConnect : eSuccess;
 
 					if (eSuccess == e)
 					{
-						void* t1{
-							ThreadPool::get_mutable_instance().createNewThread(
-								boost::bind(&MajordomoWorker::pollerThreadProc, this)) };
-						void* t2{
-							ThreadPool::get_mutable_instance().createNewThread(
-								boost::bind(&MajordomoWorker::autoRegisterToMajordomoBrokerThreadProc, this)) };
-						void* t3{
-							ThreadPool::get_mutable_instance().createNewThread(
-								boost::bind(&MajordomoWorker::autoQuerySubrountineThreadProc, this)) };
-						e = t1 && t2 ? eSuccess : eBadNewThread;
+						return ThreadPool::get_mutable_instance().createNewThread(
+							boost::bind(&MajordomoWorker::pollerThreadProc, this)) ? eSuccess : eBadNewThread;
 					}
 					else
 					{
@@ -86,8 +74,10 @@ namespace mq
 
 			if (eSuccess == e)
 			{
+				stopped = true;
+				dealer->close();
 				ctx.destroy_socket(dealer);
-				ctx.shutdown();
+				ctx.terminate();
 				dealer = nullptr;
 			}
 
@@ -95,109 +85,51 @@ namespace mq
 		}
 
 		int MajordomoWorker::sendData(
+			const std::string roleID, 
 			const std::string flagID, 
 			const std::string fromID, 
 			const std::string toID, 
-			const std::string msg)
+			const std::string data)
 		{
-			MessageData md;
-			md.pushFront(msg);
-			md.pushFront(toID);
-			md.pushFront(fromID);
-			md.pushFront(flagID);
-			md.pushFront("");
-			return md.sendData(dealer);
+			MessageData msg;
+			msg.pushFront(data);
+			msg.pushFront(toID);
+			msg.pushFront(fromID);
+			msg.pushFront(flagID);
+			msg.pushFront(roleID);
+			msg.pushFront("");
+			return msg.sendData(dealer);
 		}
 
 		void MajordomoWorker::pollerThreadProc()
 		{
-			AbstractClient* ac{ reinterpret_cast<AbstractClient*>(abstractClient) };
 			zmq_pollitem_t socketItems[] = {
 					{ static_cast<void*>(dealer), 0, ZMQ_POLLIN, 0} };
 
-			while (ac && !ac->isStopped())
+			while (!stopped)
 			{
 				zmq_poll(socketItems, 1, 1);
 				if (socketItems[0].revents & ZMQ_POLLIN)
 				{
-					MessageData msgdata;
-					if (eSuccess == msgdata.recvData(dealer))
+					MessageData msg;
+					if (eSuccess == msg.recvData(dealer) && afterClientRecievedDataCallback)
 					{
-						//Delimiter
-						msgdata.popFront();
-						//Request/Response
-						const std::string flagID{ msgdata.popFront() };
-						//FromID
-						const std::string fromID{ msgdata.popFront() };
-						//ToID
-						const std::string toID{ msgdata.popFront() };
-						//Data
-						const std::string data{ msgdata.popFront() };
+						//数据格式
+						//-----------------------------------------------------------------------------------------
+						//| CommID | Empty | worker / client | request / response / upload | FromID | ToID | Data |
+						//-----------------------------------------------------------------------------------------
 
-						//数据内容
-						ac->afterClientPolledMessageProcess(flagID, fromID, toID, data);
+						//去掉空帧不处理
+						msg.popFront();
+						const std::string roleID{ msg.popFront() };
+						const std::string flagID{ msg.popFront() };
+						const std::string fromID{ msg.popFront() };
+						const std::string toID{ msg.popFront() };
+						const std::string data{ msg.popFront() };
+
+						afterClientRecievedDataCallback(roleID, flagID, fromID, toID, data);
 					}
 				}
-			}
-		}
-
-		void MajordomoWorker::autoRegisterToMajordomoBrokerThreadProc()
-		{
-			AbstractClient* ac{ reinterpret_cast<AbstractClient*>(abstractClient) };
-			//起始时间设为0保证第一次时间判断就执行注册
-			long long startTime{ 0 };
-
-			while (ac && !ac->isStopped())
-			{
-				long long currentTime{ Time().tickcount() };
-				if (30000 < currentTime - startTime)
-				{
-					startTime = currentTime;
-					//发送Worker实例注册消息
-					const std::string msgstr{ ac->buildAutoRegisterToBrokerMessage() };
-					if (!msgstr.empty())
-					{
-						MessageData msgdata;
-						msgdata.pushFront(msgstr);
-						msgdata.pushFront("");
-						msgdata.pushFront(workerID);
-						msgdata.pushFront("request");
-						msgdata.pushFront("");
-						msgdata.sendData(dealer);
-					}
-				}
-
-				boost::this_thread::sleep(boost::posix_time::seconds(1));
-			}
-		}
-
-		void MajordomoWorker::autoQuerySubrountineThreadProc()
-		{
-			AbstractClient* ac{ reinterpret_cast<AbstractClient*>(abstractClient) };
-			//起始时间设为0保证第一次时间判断就执行注册
-			long long startTime{ 0 };
-
-			while (ac && !ac->isStopped())
-			{
-				long long currentTime{ Time().tickcount() };
-				if (30000 < currentTime - startTime)
-				{
-					startTime = currentTime;
-					//发送子服务注册信息查询消息
-					const std::string msgstr{ ac->buildAutoQueryRegisterSubroutineMessage() };
-					if (!msgstr.empty())
-					{
-						MessageData msgdata;
-						msgdata.pushFront(msgstr);
-						msgdata.pushFront("");
-						msgdata.pushFront(workerID);
-						msgdata.pushFront("request");
-						msgdata.pushFront("");
-						msgdata.sendData(dealer);
-					}
-				}
-
-				boost::this_thread::sleep(boost::posix_time::seconds(1));
 			}
 		}
     }//namespace module

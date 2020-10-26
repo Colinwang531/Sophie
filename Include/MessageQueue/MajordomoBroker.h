@@ -13,24 +13,25 @@
 #ifndef MQ_MODULE_MAJORDOMO_BROKER_H
 #define MQ_MODULE_MAJORDOMO_BROKER_H
 
-// #include "DataStruct/UnorderedMap.h"
-// #include "MajordomoInfo.h"
-#include "MessageData.h"
-using MessageData = mq::message::MessageData;
+#include "boost/function.hpp"
+#include "ctx.hpp"
 
 namespace mq
 {
     namespace module
     {
+		typedef boost::function<void(const std::string, const std::string, const std::string, const std::string, const std::string, const std::string)> AfterServerRecievedDataCallback;
+
 		class MajordomoBroker
 		{
 		public:
-			MajordomoBroker(void* server = nullptr);
+			MajordomoBroker(
+				AfterServerRecievedDataCallback callback = nullptr);
 			virtual ~MajordomoBroker(void);
 
 		public:
 			//启动代理服务
-			//@address : "tcp://IP:PORT"
+			//@address : 服务端监听地址
 			//@Return : 错误码
 			//@Comment :  Bind broker to endpoint, can call this multiple times
 			//			  We use a single socket for both clients and workers.
@@ -42,30 +43,28 @@ namespace mq
 
 			//发送数据
 			//@commID : 通信ID标识
-			//@flagID : Request/Response标识
+			//@roleID : 角色ID标识
+			//@flagID : 标志ID标识
 			//@fromID : 发送者ID标识
 			//@toID : 接收者ID标识
-			//@msg : 消息数据
+			//@data : 消息数据
 			//@Return : 错误码
 			int sendData(
-				const std::string commID, 
+				const std::string commID,
+				const std::string roleID,
 				const std::string flagID,
 				const std::string fromID,
 				const std::string toID,
-				const std::string msg);
+				const std::string data);
 
 		private:
 			//消息获取线程
 			void pollerThreadProc(void);
 
-			//Worker实例超时检测线程
-			void autoCheckWorkerTimeoutThreadProc(void);
-
 		private:
-			void* abstractServer;
-			//0MQ context
+			AfterServerRecievedDataCallback afterServerRecievedDataCallback;
+			bool stopped;
 			zmq::ctx_t ctx;
-			//Socket for clients & workers
 			zmq::socket_base_t* router;
 		};//class MajordomoBroker
     }//namespace module

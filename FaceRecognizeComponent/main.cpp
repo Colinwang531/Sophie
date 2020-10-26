@@ -28,7 +28,7 @@ static void parseCommandLine(int argc, char** argv)
 	CommandLine cl;
 	cl.setCommandOptions("address,a", "127.0.0.1");
 	cl.setCommandOptions("port,p", "61001");
-	cl.setCommandOptions("name,n", "Unknown");
+	cl.setCommandOptions("name,n", "FaceRecognize");
 
 	if (eSuccess == cl.parseCommandLine(argc, argv))
 	{
@@ -79,7 +79,8 @@ static int createNewAsynchronousClient(void)
 				boost::make_shared<FaceRecognizeComponentClient>(gMessageDispatcherCenterIP) };
 			if (acp)
 			{
-				e = acp->startClient((boost::format("tcp://%s:%d") % gMessageDispatcherCenterIP % gMessageDispatcherCenterPort).str(), "FaceRecognize");
+				e = acp->startClient(
+					(boost::format("tcp://%s:%d") % gMessageDispatcherCenterIP % gMessageDispatcherCenterPort).str().c_str());
 
 				if (eSuccess == e)
 				{

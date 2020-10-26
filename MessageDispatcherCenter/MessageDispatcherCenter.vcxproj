@@ -333,8 +333,9 @@
     <ClCompile Include="..\Source\MessageQueue\MajordomoWorker.cpp" />
     <ClCompile Include="..\Source\MessageQueue\MessageData.cpp" />
     <ClCompile Include="..\Source\Network\AbstractClient.cpp" />
+    <ClCompile Include="..\Source\Network\AbstractWorker.cpp" />
     <ClCompile Include="..\Source\Network\AbstractServer.cpp" />
-    <ClCompile Include="..\Source\Network\AbstractUpstreamServer.cpp" />
+    <ClCompile Include="..\Source\Network\MajordomoUpstreamBroker.cpp" />
     <ClCompile Include="..\Source\Number\Number.cpp" />
     <ClCompile Include="..\Source\Packet\DataPacket.cpp" />
     <ClCompile Include="..\Source\Packet\Message\MessagePacket.cpp" />
@@ -4267,8 +4268,9 @@
     <ClInclude Include="..\Include\MessageQueue\MessageData.h" />
     <ClInclude Include="..\Include\Mutex\RWLock.h" />
     <ClInclude Include="..\Include\Network\AbstractClient.h" />
+    <ClInclude Include="..\Include\Network\AbstractWorker.h" />
     <ClInclude Include="..\Include\Network\AbstractServer.h" />
-    <ClInclude Include="..\Include\Network\AbstractUpstreamServer.h" />
+    <ClInclude Include="..\Include\Network\MajordomoUpstreamBroker.h" />
     <ClInclude Include="..\Include\Number\Number.h" />
     <ClInclude Include="..\Include\Packet\DataPacket.h" />
     <ClInclude Include="..\Include\Packet\Message\MessagePacket.h" />

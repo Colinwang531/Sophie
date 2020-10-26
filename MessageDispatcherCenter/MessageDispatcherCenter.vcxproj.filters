@@ -750,9 +750,6 @@
     <ClCompile Include="..\Source\MessageQueue\MessageData.cpp">
       <Filter>MessageQueue</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Network\AbstractUpstreamServer.cpp">
-      <Filter>Network</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\MessageQueue\MajordomoWorker.cpp">
       <Filter>MessageQueue</Filter>
     </ClCompile>
@@ -842,6 +839,12 @@
     </ClCompile>
     <ClCompile Include="..\Source\Alarm\AbstractAlarm.cpp">
       <Filter>Alarm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Network\AbstractWorker.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Network\MajordomoUpstreamBroker.cpp">
+      <Filter>Network</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -13075,9 +13078,6 @@
     <ClInclude Include="..\Include\MessageQueue\MessageData.h">
       <Filter>MessageQueue</Filter>
     </ClInclude>
-    <ClInclude Include="..\Include\Network\AbstractUpstreamServer.h">
-      <Filter>Network</Filter>
-    </ClInclude>
     <ClInclude Include="..\Include\MessageQueue\MajordomoWorker.h">
       <Filter>MessageQueue</Filter>
     </ClInclude>
@@ -13494,6 +13494,12 @@
     </ClInclude>
     <ClInclude Include="..\Include\Alarm\AbstractAlarm.h">
       <Filter>Alarm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Network\AbstractWorker.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Network\MajordomoUpstreamBroker.h">
+      <Filter>Network</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

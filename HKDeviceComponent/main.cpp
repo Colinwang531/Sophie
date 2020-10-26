@@ -28,7 +28,7 @@ static void parseCommandLine(int argc, char** argv)
 	CommandLine cl;
 	cl.setCommandOptions("address,a", "127.0.0.1");
 	cl.setCommandOptions("port,p", "61001");
-	cl.setCommandOptions("name,n", "Unknown");
+	cl.setCommandOptions("name,n", "HKD");
 
 	if (eSuccess == cl.parseCommandLine(argc, argv))
 	{
@@ -56,7 +56,7 @@ static void parseCommandLine(int argc, char** argv)
 			{
 				configName.append(name);
 				//名字直接写入配置文件,需要再去读
-				XMLPacker().setValueWithName("Config.xml", "Component.HKD.Name", name);
+				XMLPacker().setValueWithName("Config.xml", "Component.HKD.Name", configName);
 			}
 		}
 
@@ -75,10 +75,10 @@ static int createNewAsynchronousClient(void)
 	{
 		if (!gMessageDispatcherCenterIP.empty() && gMinPortNumber < gMessageDispatcherCenterPort && gMaxPortNumber > gMessageDispatcherCenterPort)
 		{
-			HKDComponentClientPtr acp{ boost::make_shared<HKDComponentClient>(gMessageDispatcherCenterIP) };
+			HKDComponentClientPtr acp{ boost::make_shared<HKDComponentClient>() };
 			if (acp)
 			{
-				e = acp->startClient((boost::format("tcp://%s:%d") % gMessageDispatcherCenterIP % gMessageDispatcherCenterPort).str(), "HKD");
+				e = acp->startClient((boost::format("tcp://%s:%d") % gMessageDispatcherCenterIP % gMessageDispatcherCenterPort).str().c_str());
 
 				if (eSuccess == e)
 				{

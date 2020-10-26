@@ -30,10 +30,11 @@ using AbstractFilterPtr = boost::shared_ptr<AbstractFilter>;
 
 SleepMediaStreamSession::SleepMediaStreamSession(
 	AbstractClient& parent,
+	const std::string uid,
 	const std::string url, 
 	const AbstractAlgorithm algo,
 	boost::asio::ip::tcp::socket* s /* = nullptr */)
-	: TCPStreamTargetSession(s), parentClient{ parent }, streamURL{ url }, algorithmParam{ algo }, frameSequence{ 0 }
+	: TCPStreamTargetSession(s), parentClient{ parent }, streamURL{ url }, algorithmParam{ algo }, frameSequence{ 0 }, uuid{uid}
 {}
 SleepMediaStreamSession::~SleepMediaStreamSession() {}
 
@@ -153,7 +154,7 @@ int SleepMediaStreamSession::sendURLFrameData(const std::string url)
 
 void SleepMediaStreamSession::alarmDataNotificationCallback(StreamPacketPtr pkt)
 {
-	if (pkt && !alarmCommunicationID.empty())
+	if (pkt && !alarmComponentID.empty())
 	{
 		boost::shared_ptr<DataPacket> datapkt{
 			boost::make_shared<MessagePacket>(base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_ALARM) };
@@ -177,11 +178,11 @@ void SleepMediaStreamSession::alarmDataNotificationCallback(StreamPacketPtr pkt)
 			datapkt->setPacketData((void*)&h);
 			//设置一个无效的用户ID
 			datapkt->setPacketData(nullptr);
-			datapkt->setPacketSequence(0);
+			datapkt->setPacketSequence(1);
 			datapkt->setPacketTimestamp(Time().tickcount());
 			msg = DataPacker().packData(datapkt);
 
-			parentClient.sendMessageData("notify", "", alarmCommunicationID, msg);
+			parentClient.sendData("worker", "notification", uuid, alarmComponentID, msg);
 			LOG(INFO) << "Sleep alarm x = " << x << ", y = " << y << ", w = " << w << ", h = " << h << ".";
 		}
 	}

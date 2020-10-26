@@ -4,6 +4,8 @@
 #include "boost/archive/iterators/base64_from_binary.hpp"
 #include "boost/archive/iterators/binary_from_base64.hpp"
 #include "boost/archive/iterators/transform_width.hpp"
+#include "boost/bind.hpp"
+#include "boost/format.hpp"
 #include "boost/make_shared.hpp"
 #include "boost/pointer_cast.hpp"
 #ifdef _WINDOWS
@@ -15,6 +17,9 @@
 #endif//_WINDOWS
 #include "Error.h"
 #include "Define.h"
+#include "ASIO/TCPConnector.h"
+using TCPConnector = base::network::TCPConnector;
+using TCPConnectorPtr = boost::shared_ptr<TCPConnector>;
 #include "Protocol/DataPhrase.h"
 using DataParser = base::protocol::DataParser;
 using DataPacker = base::protocol::DataPacker;
@@ -43,17 +48,50 @@ using MessagePacketPtr = boost::shared_ptr<MessagePacket>;
 FaceRecognizeComponentClient::FaceRecognizeComponentClient(
 	const std::string address, 
 	const unsigned short port /* = 60531 */)
-	: AbstractMediaStreamClient(address, port), sailStatus{ -1 }
+	: AbstractWorker(), sailStatus{ -1 }, mediaIP{ address }, mediaPort{ port }
 {}
 FaceRecognizeComponentClient::~FaceRecognizeComponentClient() {}
 
-void FaceRecognizeComponentClient::afterClientPolledMessageProcess(
-	const std::string flagID,
-	const std::string fromID,
-	const std::string toID,
-	const std::string msg)
+int FaceRecognizeComponentClient::createNewClient(const std::string address)
 {
-	DataPacketPtr pkt{ DataParser().parseData(msg) };
+	int e{ !address.empty() ? eSuccess : eInvalidParameter };
+
+	if (eSuccess == e)
+	{
+		MajordomoWorkerPtr mdwp{
+			boost::make_shared<MajordomoWorker>(
+				boost::bind(&FaceRecognizeComponentClient::afterPolledDataFromWorkerCallback, this, _1, _2, _3, _4, _5)) };
+		if (mdwp && eSuccess == mdwp->startWorker(address))
+		{
+			worker.swap(mdwp);
+			//在客户端注册或心跳之前创建UUID标识
+			AbstractWorker::generateUUIDWithName("FaceRecognize");
+			e = AbstractWorker::createNewClient("");
+			asioService.startService();
+		}
+		else
+		{
+			e = eBadNewObject;
+		}
+	}
+
+	return e;
+}
+
+int FaceRecognizeComponentClient::destroyClient()
+{
+	asioService.stopService();
+	return worker ? worker->stopWorker() : eBadOperate;
+}
+
+void FaceRecognizeComponentClient::afterPolledDataFromWorkerCallback(
+	const std::string roleID, 
+	const std::string flagID, 
+	const std::string fromID, 
+	const std::string toID, 
+	const std::string data)
+{
+	DataPacketPtr pkt{ DataParser().parseData(data) };
 
 	if (pkt)
 	{
@@ -87,43 +125,54 @@ void FaceRecognizeComponentClient::afterClientPolledMessageProcess(
 	}
 }
 
-const std::string FaceRecognizeComponentClient::buildAutoRegisterToBrokerMessage()
+void FaceRecognizeComponentClient::sendRegisterWorkerServerMessage()
 {
-	std::string msgstr;
+	std::string name, id;
+	XMLParser().getValueByName("Config.xml", "Component.FaceRecognize.ID", id);
+	XMLParser().getValueByName("Config.xml", "Component.FaceRecognize.Name", name);
 	AbstractComponent component(
 		base::component::ComponentType::COMPONENT_TYPE_AI);
-	component.setComponentID(getAlgorithmClientInfoByName("Component.FaceRecognize.ID"));
-	component.setComponentName(getAlgorithmClientInfoByName("Component.FaceRecognize.Name"));
-	boost::shared_ptr<DataPacket> pkt{
-		boost::make_shared<MessagePacket>(base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_COMPONENT) };
+	component.setComponentID(id);
+	component.setComponentName(name);
 
+	DataPacketPtr pkt{
+		boost::make_shared<MessagePacket>(
+			base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_COMPONENT) };
 	if (pkt)
 	{
-		MessagePacketPtr msgpkt{ boost::dynamic_pointer_cast<MessagePacket>(pkt) };
-		msgpkt->setMessagePacketCommand(
+		MessagePacketPtr mp{ boost::dynamic_pointer_cast<MessagePacket>(pkt) };
+		mp->setMessagePacketCommand(
 			static_cast<int>(base::protocol::ComponentCommand::COMPONENT_COMMAND_SIGNIN_REQ));
-		pkt->setPacketData(&component);
-		msgstr = DataPacker().packData(pkt);
+		mp->setPacketData(&component);
+		const std::string data{ DataPacker().packData(pkt) };
+		sendData("worker", "request", id, parentXMQID, data);
 	}
-
-	return msgstr;
 }
 
-const std::string FaceRecognizeComponentClient::buildAutoQueryRegisterSubroutineMessage()
+void FaceRecognizeComponentClient::sendQuerySystemServiceMessage()
 {
-	std::string msg;
 	boost::shared_ptr<DataPacket> pkt{
-		boost::make_shared<MessagePacket>(base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_COMPONENT) };
+		boost::make_shared<MessagePacket>(
+			base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_COMPONENT) };
 
 	if (pkt)
 	{
 		MessagePacketPtr msgpkt{ boost::dynamic_pointer_cast<MessagePacket>(pkt) };
 		msgpkt->setMessagePacketCommand(
 			static_cast<int>(base::protocol::ComponentCommand::COMPONENT_COMMAND_QUERY_REQ));
-		msg = DataPacker().packData(pkt);
+		const std::string data{ DataPacker().packData(pkt) };
+		sendData("worker", "request", AbstractWorker::getUUID(), parentXMQID, data);
 	}
+}
 
-	return msg;
+int FaceRecognizeComponentClient::sendData(
+	const std::string roleID, 
+	const std::string flagID, 
+	const std::string fromID, 
+	const std::string toID, 
+	const std::string data)
+{
+	return worker ? worker->sendData(roleID, flagID, fromID, toID, data) : eBadOperate;
 }
 
 int FaceRecognizeComponentClient::createNewMediaStreamSession(
@@ -137,7 +186,7 @@ int FaceRecognizeComponentClient::createNewMediaStreamSession(
 		AbstractAlgorithm algo{ algorithmParamGroup.at() };
 		algorithmParamGroup.removeFront();
 		TCPSessionPtr session{
-			boost::make_shared<FaceRecognizeMediaStreamSession>(*this, url, algo, s) };
+			boost::make_shared<FaceRecognizeMediaStreamSession>(*this, AbstractWorker::getUUID(), url, algo, s) };
 
 		if (session)
 		{
@@ -183,10 +232,12 @@ void FaceRecognizeComponentClient::processComponentMessage(
 
 	if (base::protocol::ComponentCommand::COMPONENT_COMMAND_SIGNIN_REP == command)
 	{
-		const char* componentID{ 
-			reinterpret_cast<const char*>(pkt->getPacketData()) };
-		//无论注册还是心跳都保存组件ID标识
-		setAlgorithmClientInfoWithName("Component.FaceRecognize.ID", componentID);
+// 		const char* componentID{ 
+// 			reinterpret_cast<const char*>(pkt->getPacketData()) };
+// 		//无论注册还是心跳都保存组件ID标识
+// 		setAlgorithmClientInfoWithName("Component.FaceRecognize.ID", componentID);
+
+		parentXMQID = reinterpret_cast<const char*>(pkt->getPacketData());
 	}
 	else if (base::protocol::ComponentCommand::COMPONENT_COMMAND_QUERY_REP == command)
 	{
@@ -247,7 +298,7 @@ void FaceRecognizeComponentClient::processAlgorithmMessage(const std::string fro
 				algorithmParamGroup.pushBack(*aa);
 				std::vector<std::string> streamIDGroup;
 				boost::split(streamIDGroup, streamID, boost::is_any_of(":"));
-				AbstractMediaStreamClient::connectMediaServerWithID(streamIDGroup[0], streamIDGroup[1], atoi(streamIDGroup[2].c_str()));
+				connectMediaServer(streamIDGroup[0], streamIDGroup[1], atoi(streamIDGroup[2].c_str()));
 
 				LOG(INFO) << "Deploy algorithm on stream ID = " << streamID << 
 					" GPU = " << aa->getGpuID() << 
@@ -268,6 +319,7 @@ void FaceRecognizeComponentClient::processAlgorithmMessage(const std::string fro
 
 	e = replyMessageWithResult(
 		fromID,
+		AbstractWorker::getUUID(),
 		static_cast<int>(base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_ALGORITHM),
 		static_cast<int>(command) + 1,
 		e,
@@ -293,6 +345,7 @@ void FaceRecognizeComponentClient::processStatusMessage(const std::string fromID
 
 	replyMessageWithResult(
 		fromID,
+		AbstractWorker::getUUID(),
 		static_cast<int>(base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_STATUS),
 		static_cast<int>(command) + 1,
 		eSuccess,
@@ -323,13 +376,13 @@ void FaceRecognizeComponentClient::processCrewMessage(const std::string fromID, 
 			std::stringstream result;
 			try
 			{
-				int endIndex = image.size() - 2;
+				int endIndex = (int)image.size() - 2;
 				if (image[endIndex] == '=')
 				{
 					image.erase(endIndex);
 				}
 
-				endIndex = image.size() - 1;
+				endIndex = (int)image.size() - 1;
 				if (image[endIndex] == '=')
 				{
 					image.erase(endIndex);
@@ -353,6 +406,7 @@ void FaceRecognizeComponentClient::processCrewMessage(const std::string fromID, 
 
 	replyMessageWithResult(
 		fromID,
+		AbstractWorker::getUUID(),
 		static_cast<int>(base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_CREW),
 		static_cast<int>(command) + 1,
 		eSuccess,
@@ -361,6 +415,7 @@ void FaceRecognizeComponentClient::processCrewMessage(const std::string fromID, 
 
 int FaceRecognizeComponentClient::replyMessageWithResult(
 	const std::string fromID, 
+	const std::string toID,
 	const int type /* = 0 */, 
 	const int command /* = 0 */, 
 	const int result /* = 0 */, 
@@ -380,8 +435,61 @@ int FaceRecognizeComponentClient::replyMessageWithResult(
 		const std::string rep{ DataPacker().packData(pkt) };
 
 		//客户端应答时必须交换fromID和toID
-		e = AbstractClient::sendMessageData("response", "", fromID, rep);
+		e = sendData("worker", "response", toID, fromID, rep);
 	}
 
 	return e;
 }
+
+int FaceRecognizeComponentClient::connectMediaServer(
+	const std::string did,
+	const std::string cid,
+	const int idx /* = -1 */)
+{
+	int e{ mediaIP.empty() || cid.empty() || did.empty() || 0 > idx ? eInvalidParameter : eSuccess };
+
+	if (eSuccess == e)
+	{
+		TCPConnectorPtr connector{
+			boost::make_shared<TCPConnector>(
+				asioService,
+				boost::bind(&FaceRecognizeComponentClient::afterRemoteConnectedNotificationCallback, this, _1, _2)) };
+		if (connector)
+		{
+			urlGroup.pushBack((boost::format("%s:%d") % did % idx).str());
+			e = connector->setConnect(mediaIP.c_str(), mediaPort);
+		}
+		else
+		{
+			e = eBadNewObject;
+		}
+	}
+
+	return e;
+}
+
+int FaceRecognizeComponentClient::disconnectMediaServer(const std::string did)
+{
+	int e{ did.empty() ? eInvalidParameter : eSuccess };
+
+	if (eSuccess == e)
+	{
+	}
+
+	return e;
+}
+
+void FaceRecognizeComponentClient::afterRemoteConnectedNotificationCallback(
+	boost::asio::ip::tcp::socket* s, const boost::system::error_code e)
+{
+	if (s && !e)
+	{
+		const std::string url{ urlGroup.at() };
+		if (!url.empty())
+		{
+			urlGroup.removeFront();
+			createNewMediaStreamSession(url, s);
+		}
+	}
+}
+

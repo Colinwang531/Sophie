@@ -1,4 +1,5 @@
 #include "boost/algorithm/string.hpp"
+#include "boost/bind.hpp"
 #include "boost/make_shared.hpp"
 #include "boost/pointer_cast.hpp"
 #ifdef _WINDOWS
@@ -25,17 +26,48 @@ using MessagePacketPtr = boost::shared_ptr<MessagePacket>;
 #include "AlarmPusherComponentClient.h"
 
 AlarmPusherComponentClient::AlarmPusherComponentClient()
-	: AbstractClient(base::network::ClientModuleType::CLIENT_MODULE_TYPE_MAJORDOMO_WORKER)
+	: AbstractWorker()
 {}
 AlarmPusherComponentClient::~AlarmPusherComponentClient() {}
 
-void AlarmPusherComponentClient::afterClientPolledMessageProcess(
-	const std::string flagID,
-	const std::string fromID,
-	const std::string toID,
-	const std::string msg)
+int AlarmPusherComponentClient::createNewClient(const std::string address)
 {
-	DataPacketPtr pkt{ DataParser().parseData(msg) };
+	int e{ !address.empty() ? eSuccess : eInvalidParameter };
+
+	if (eSuccess == e)
+	{
+		MajordomoWorkerPtr mdwp{
+			boost::make_shared<MajordomoWorker>(
+				boost::bind(&AlarmPusherComponentClient::afterPolledDataFromWorkerCallback, this, _1, _2, _3, _4, _5)) };
+		if (mdwp && eSuccess == mdwp->startWorker(address))
+		{
+			worker.swap(mdwp);
+			//在客户端注册或心跳之前创建UUID标识
+			AbstractWorker::generateUUIDWithName("ALM");
+			e = AbstractWorker::createNewClient("");
+		}
+		else
+		{
+			e = eBadNewObject;
+		}
+	}
+
+	return e;
+}
+
+int AlarmPusherComponentClient::destroyClient()
+{
+	return worker ? worker->stopWorker() : eBadOperate;
+}
+
+void AlarmPusherComponentClient::afterPolledDataFromWorkerCallback(
+	const std::string roleID, 
+	const std::string flagID, 
+	const std::string fromID, 
+	const std::string toID, 
+	const std::string data)
+{
+	DataPacketPtr pkt{ DataParser().parseData(data) };
 
 	if (pkt)
 	{
@@ -48,7 +80,7 @@ void AlarmPusherComponentClient::afterClientPolledMessageProcess(
 		}
 		else if (base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_ALARM == type)
 		{
-			processAlarmMessage(msg);
+			processAlarmMessage(data);
 		}
 		else
 		{
@@ -61,43 +93,54 @@ void AlarmPusherComponentClient::afterClientPolledMessageProcess(
 	}
 }
 
-const std::string AlarmPusherComponentClient::buildAutoRegisterToBrokerMessage()
+void AlarmPusherComponentClient::sendRegisterWorkerServerMessage()
 {
-	std::string msgstr;
+	std::string name, id;
+	XMLParser().getValueByName("Config.xml", "Component.ALM.ID", id);
+	XMLParser().getValueByName("Config.xml", "Component.ALM.Name", name);
 	AbstractComponent component(
 		base::component::ComponentType::COMPONENT_TYPE_ALM);
-	component.setComponentID(getMediaStreamClientInfoByName("Component.Alarm.ID"));
-	component.setComponentName(getMediaStreamClientInfoByName("Component.Alarm.Name"));
-	boost::shared_ptr<DataPacket> pkt{
-		boost::make_shared<MessagePacket>(base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_COMPONENT) };
+	component.setComponentID(id);
+	component.setComponentName(name);
 
+	DataPacketPtr pkt{
+		boost::make_shared<MessagePacket>(
+			base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_COMPONENT) };
 	if (pkt)
 	{
-		MessagePacketPtr msgpkt{ boost::dynamic_pointer_cast<MessagePacket>(pkt) };
-		msgpkt->setMessagePacketCommand(
+		MessagePacketPtr mp{ boost::dynamic_pointer_cast<MessagePacket>(pkt) };
+		mp->setMessagePacketCommand(
 			static_cast<int>(base::protocol::ComponentCommand::COMPONENT_COMMAND_SIGNIN_REQ));
-		pkt->setPacketData(&component);
-		msgstr = DataPacker().packData(pkt);
+		mp->setPacketData(&component);
+		const std::string data{ DataPacker().packData(pkt) };
+		sendData("worker", "request", id, parentXMQID, data);
 	}
-
-	return msgstr;
 }
 
-const std::string AlarmPusherComponentClient::buildAutoQueryRegisterSubroutineMessage()
+void AlarmPusherComponentClient::sendQuerySystemServiceMessage()
 {
-	std::string msg;
 	boost::shared_ptr<DataPacket> pkt{
-		boost::make_shared<MessagePacket>(base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_COMPONENT) };
+		boost::make_shared<MessagePacket>(
+			base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_COMPONENT) };
 
 	if (pkt)
 	{
 		MessagePacketPtr msgpkt{ boost::dynamic_pointer_cast<MessagePacket>(pkt) };
 		msgpkt->setMessagePacketCommand(
 			static_cast<int>(base::protocol::ComponentCommand::COMPONENT_COMMAND_QUERY_REQ));
-		msg = DataPacker().packData(pkt);
+		const std::string data{ DataPacker().packData(pkt) };
+		sendData("worker", "request", AbstractWorker::getUUID(), parentXMQID, data);
 	}
+}
 
-	return msg;
+int AlarmPusherComponentClient::sendData(
+	const std::string roleID, 
+	const std::string flagID, 
+	const std::string fromID, 
+	const std::string toID, 
+	const std::string data)
+{
+	return worker ? worker->sendData(roleID, flagID, fromID, toID, data) : eBadOperate;
 }
 
 const std::string AlarmPusherComponentClient::getMediaStreamClientInfoByName(const std::string name) const
@@ -122,10 +165,12 @@ void AlarmPusherComponentClient::processComponentMessage(DataPacketPtr pkt)
 
 	if (base::protocol::ComponentCommand::COMPONENT_COMMAND_SIGNIN_REP == command)
 	{
-		const char* componentID{
-			reinterpret_cast<const char*>(pkt->getPacketData()) };
-		//无论注册还是心跳都保存组件ID标识
-		setMediaStreamClientInfoWithName("Component.Alarm.ID", componentID);
+// 		const char* componentID{
+// 			reinterpret_cast<const char*>(pkt->getPacketData()) };
+// 		//无论注册还是心跳都保存组件ID标识
+// 		setMediaStreamClientInfoWithName("Component.Alarm.ID", componentID);
+
+		parentXMQID = reinterpret_cast<const char*>(pkt->getPacketData());
 	}
 	else if (base::protocol::ComponentCommand::COMPONENT_COMMAND_QUERY_REP == command)
 	{
@@ -155,5 +200,9 @@ void AlarmPusherComponentClient::processComponentMessage(DataPacketPtr pkt)
 
 void AlarmPusherComponentClient::processAlarmMessage(const std::string msg)
 {
-	AbstractClient::sendMessageData("notify", "", webComponentID, msg);
+	if (worker)
+	{
+		worker->sendData("worker", "notification", AbstractWorker::getUUID(), webComponentID, msg);
+		LOG(INFO) << "Push alarm message from " << AbstractWorker::getUUID() << " to WEB service " << webComponentID << ".";
+	}
 }

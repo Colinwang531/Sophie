@@ -36,8 +36,8 @@ namespace base
 			//@baudrate : 波特率
 			//@Return : 错误码
 			int openPort(
-				const unsigned char idx = 0, 
-				const unsigned int baudrate = 4800);
+				const int idx = 0, 
+				const int baudrate = 4800);
 
 			//关闭串口
 			//@Return : 错误码
@@ -56,7 +56,8 @@ namespace base
 			//串口数据缓存
 			enum
 			{
-				eMaxSize = 500 * 1024
+				eMaxPort = 16,
+				eMaxSize = 1//500 * 1024
 			};
 			char comPortDataCache[eMaxSize];
 		};//class ComPort

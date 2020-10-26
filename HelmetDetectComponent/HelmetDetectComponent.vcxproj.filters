@@ -1007,9 +1007,6 @@
     <ClCompile Include="..\Source\ASIO\TCPConnector.cpp">
       <Filter>ASIO</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Network\AbstractMediaStreamClient.cpp">
-      <Filter>Network</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Session\TCPStreamTargetSession.cpp">
       <Filter>Session</Filter>
     </ClCompile>
@@ -1134,6 +1131,9 @@
     </ClCompile>
     <ClCompile Include="..\Source\Alarm\AbstractAlarm.cpp">
       <Filter>Alarm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Network\AbstractWorker.cpp">
+      <Filter>Network</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2188,9 +2188,6 @@
     <ClInclude Include="..\Include\ASIO\ASIOService.h">
       <Filter>ASIO</Filter>
     </ClInclude>
-    <ClInclude Include="..\Include\Network\AbstractMediaStreamClient.h">
-      <Filter>Network</Filter>
-    </ClInclude>
     <ClInclude Include="..\Include\DataStruct\Vector.h">
       <Filter>DataStruct</Filter>
     </ClInclude>
@@ -2297,6 +2294,9 @@
     </ClInclude>
     <ClInclude Include="..\Include\Alarm\AbstractAlarm.h">
       <Filter>Alarm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Network\AbstractWorker.h">
+      <Filter>Network</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

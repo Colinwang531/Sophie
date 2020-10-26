@@ -32,10 +32,11 @@ using CVFaceRecognizeDetectFilterPtr = boost::shared_ptr<CVFaceRecognizeDetectFi
 
 FaceRecognizeMediaStreamSession::FaceRecognizeMediaStreamSession(
 	AbstractClient& parent,
-	const std::string url, 
+	const std::string uid,
+	const std::string url,
 	const AbstractAlgorithm algo,
 	boost::asio::ip::tcp::socket* s /* = nullptr */)
-	: TCPStreamTargetSession(s), parentClient{ parent }, streamURL{ url }, algorithmParam{ algo }, frameSequence{ 0 }
+	: TCPStreamTargetSession(s), parentClient{ parent }, streamURL{ url }, algorithmParam{ algo }, frameSequence{ 0 }, uuid{ uid }
 {}
 FaceRecognizeMediaStreamSession::~FaceRecognizeMediaStreamSession() {}
 
@@ -212,11 +213,11 @@ void FaceRecognizeMediaStreamSession::alarmDataNotificationCallback(StreamPacket
 			memcpy(uid, &matchID, 32);
 #endif//WINDOWS
 			datapkt->setPacketData(uid);
-			datapkt->setPacketSequence(0);
+			datapkt->setPacketSequence(1);
 			datapkt->setPacketTimestamp(Time().tickcount());
 			msg = DataPacker().packData(datapkt);
 
-			parentClient.sendMessageData("notify", "", alarmComponentID, msg);
+			parentClient.sendData("worker", "notification", uuid, alarmComponentID, msg);
 			LOG(INFO) << "Face recognize alarm match ID = " << matchID << ", similar = " << similar << ", type = " << algorithmType << ".";
 		}
 	}

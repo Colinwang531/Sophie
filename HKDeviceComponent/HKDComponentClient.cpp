@@ -1,4 +1,5 @@
 #include "boost/algorithm/string.hpp"
+#include "boost/format.hpp"
 #include "boost/make_shared.hpp"
 #include "boost/pointer_cast.hpp"
 #ifdef _WINDOWS
@@ -10,6 +11,9 @@
 #endif//_WINDOWS
 #include "Error.h"
 #include "Define.h"
+#include "ASIO/TCPConnector.h"
+using TCPConnector = base::network::TCPConnector;
+using TCPConnectorPtr = boost::shared_ptr<TCPConnector>;
 #include "Protocol/DataPhrase.h"
 using DataParser = base::protocol::DataParser;
 using DataPacker = base::protocol::DataPacker;
@@ -28,20 +32,53 @@ using MessagePacket = base::packet::MessagePacket;
 using MessagePacketPtr = boost::shared_ptr<MessagePacket>;
 #include "HKDComponentClient.h"
 
-HKDComponentClient::HKDComponentClient(
-	const std::string address, 
-	const unsigned short port /* = 60531 */)
-	: AbstractMediaStreamClient(address, port)
+HKDComponentClient::HKDComponentClient()
+// 	const std::string address, 
+// 	const unsigned short port /* = 60531 */)
+	: /*AbstractMediaStreamClient(address, port)*/ AbstractWorker()
 {}
 HKDComponentClient::~HKDComponentClient() {}
 
-void HKDComponentClient::afterClientPolledMessageProcess(
-	const std::string flagID,
-	const std::string fromID,
-	const std::string toID,
-	const std::string msg)
+int HKDComponentClient::createNewClient(const std::string address)
 {
-	DataPacketPtr pkt{ DataParser().parseData(msg) };
+	int e{ !address.empty() ? eSuccess : eInvalidParameter };
+
+	if (eSuccess == e)
+	{
+		MajordomoWorkerPtr mdwp{
+			boost::make_shared<MajordomoWorker>(
+				boost::bind(&HKDComponentClient::afterPolledDataFromWorkerCallback, this, _1, _2, _3, _4, _5)) };
+		if (mdwp && eSuccess == mdwp->startWorker(address))
+		{
+			worker.swap(mdwp);
+			//在客户端注册或心跳之前创建UUID标识
+			AbstractWorker::generateUUIDWithName("HKD");
+			e = AbstractWorker::createNewClient("");
+			asioService.startService();
+		}
+		else
+		{
+			e = eBadNewObject;
+		}
+	}
+
+	return e;
+}
+
+int HKDComponentClient::destroyClient()
+{
+	asioService.stopService();
+	return worker ? worker->stopWorker() : eBadOperate;
+}
+
+void HKDComponentClient::afterPolledDataFromWorkerCallback(
+	const std::string roleID, 
+	const std::string flagID, 
+	const std::string fromID, 
+	const std::string toID, 
+	const std::string data)
+{
+	DataPacketPtr pkt{ DataParser().parseData(data) };
 
 	if (pkt)
 	{
@@ -54,11 +91,11 @@ void HKDComponentClient::afterClientPolledMessageProcess(
 		}
 		else if (base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_DEVICE == type)
 		{
-			processDeviceMessage(fromID, pkt);
+			processDeviceMessage(fromID, toID, pkt);
 		}
 		else if (base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_EVENT == type)
 		{
-			processEventMessage(fromID, pkt);
+			processEventMessage(fromID, toID, pkt);
 		}
 		else
 		{
@@ -71,26 +108,38 @@ void HKDComponentClient::afterClientPolledMessageProcess(
 	}
 }
 
-const std::string HKDComponentClient::buildAutoRegisterToBrokerMessage()
+void HKDComponentClient::sendRegisterWorkerServerMessage()
 {
-	std::string msgstr;
+	std::string name, id;
+	XMLParser().getValueByName("Config.xml", "Component.HKD.ID", id);
+	XMLParser().getValueByName("Config.xml", "Component.HKD.Name", name);
 	AbstractComponent component(
 		base::component::ComponentType::COMPONENT_TYPE_HKD);
-	component.setComponentID(getHKDClientInfoByName("Component.HKD.ID"));
-	component.setComponentName(getHKDClientInfoByName("Component.HKD.Name"));
-	boost::shared_ptr<DataPacket> pkt{
-		boost::make_shared<MessagePacket>(base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_COMPONENT) };
+	component.setComponentID(id);
+	component.setComponentName(name);
 
+	DataPacketPtr pkt{
+		boost::make_shared<MessagePacket>(
+			base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_COMPONENT) };
 	if (pkt)
 	{
-		MessagePacketPtr msgpkt{ boost::dynamic_pointer_cast<MessagePacket>(pkt) };
-		msgpkt->setMessagePacketCommand(
+		MessagePacketPtr mp{ boost::dynamic_pointer_cast<MessagePacket>(pkt) };
+		mp->setMessagePacketCommand(
 			static_cast<int>(base::protocol::ComponentCommand::COMPONENT_COMMAND_SIGNIN_REQ));
-		pkt->setPacketData(&component);
-		msgstr = DataPacker().packData(pkt);
+		mp->setPacketData(&component);
+		const std::string data{ DataPacker().packData(pkt) };
+		sendData("worker", "request", id, parentXMQID, data);
 	}
+}
 
-	return msgstr;
+int HKDComponentClient::sendData(
+	const std::string roleID, 
+	const std::string flagID, 
+	const std::string fromID, 
+	const std::string toID, 
+	const std::string data)
+{
+	return worker ? worker->sendData(roleID, flagID, fromID, toID, data) : eBadOperate;
 }
 
 int HKDComponentClient::createNewMediaStreamSession(
@@ -143,14 +192,17 @@ void HKDComponentClient::processComponentMessage(DataPacketPtr pkt)
 
 	if (base::protocol::ComponentCommand::COMPONENT_COMMAND_SIGNIN_REP == command)
 	{
-		const char* componentID{
-			reinterpret_cast<const char*>(pkt->getPacketData()) };
-		//无论注册还是心跳都保存组件ID标识
-		setHKDClientInfoWithName("Component.HKD.ID", componentID);
+// 		const char* componentID{
+// 			reinterpret_cast<const char*>(pkt->getPacketData()) };
+// 		//无论注册还是心跳都保存组件ID标识
+// 		setHKDClientInfoWithName("Component.HKD.ID", componentID);
+
+		parentXMQID = reinterpret_cast<const char*>(pkt->getPacketData());
 	}
 }
 
-void HKDComponentClient::processDeviceMessage(const std::string fromID, DataPacketPtr pkt)
+void HKDComponentClient::processDeviceMessage(
+	const std::string fromID, const std::string toID, DataPacketPtr pkt)
 {
 	MessagePacketPtr msgpkt{ boost::dynamic_pointer_cast<MessagePacket>(pkt) };
 	const base::protocol::DeviceCommand command{
@@ -180,6 +232,7 @@ void HKDComponentClient::processDeviceMessage(const std::string fromID, DataPack
 
 	replyMessageWithResult(
 		fromID,
+		toID,
 		static_cast<int>(command) + 1,
 		e,
 		pkt->getPacketSequence() + 1,
@@ -193,7 +246,8 @@ void HKDComponentClient::processDeviceMessage(const std::string fromID, DataPack
 	}
 }
 
-void HKDComponentClient::processEventMessage(const std::string fromID, DataPacketPtr pkt)
+void HKDComponentClient::processEventMessage(
+	const std::string fromID, const std::string toID, DataPacketPtr pkt)
 {
 	MessagePacketPtr msgpkt{ 
 		boost::dynamic_pointer_cast<MessagePacket>(pkt) };
@@ -227,7 +281,7 @@ void HKDComponentClient::processEventMessage(const std::string fromID, DataPacke
 	const std::string rep{ DataPacker().packData(pkt) };
 
 	//客户端应答时必须交换fromID和toID
-	e = AbstractClient::sendMessageData("response", "", fromID, rep);
+	e = sendData("worker", "response", toID, fromID, rep);
 }
 
 int HKDComponentClient::processMediaStream(
@@ -243,13 +297,13 @@ int HKDComponentClient::processMediaStream(
 	{
 		for (int i = 0; i != cameras.size(); ++i)
 		{
-			AbstractMediaStreamClient::disconnectMediaServer(did);
+			disconnectMediaServer(did);
 		}
 	}
 
 	for (int i = 0; i != cameras.size(); ++i)
 	{
-		AbstractMediaStreamClient::connectMediaServerWithID(did, cameras[i].getCameraID(), cameras[i].getCameraIndex());
+		connectMediaServer(did, cameras[i].getCameraID(), cameras[i].getCameraIndex());
 	}
 
 	return e;
@@ -341,6 +395,7 @@ int HKDComponentClient::deleteDeviceByID(const std::string did)
 
 int HKDComponentClient::replyMessageWithResult(
 	const std::string fromID, 
+	const std::string toID,
 	const int command, 
 	const int result, 
 	const long long sequence, 
@@ -370,8 +425,60 @@ int HKDComponentClient::replyMessageWithResult(
 		const std::string rep{ DataPacker().packData(pkt) };
 
 		//客户端应答时必须交换fromID和toID
-		e = AbstractClient::sendMessageData("response", "", fromID, rep);
+		e = sendData("worker", "response", toID, fromID, rep);
 	}
 
 	return e;
+}
+
+int HKDComponentClient::connectMediaServer(
+	const std::string did, 
+	const std::string cid, 
+	const int idx /* = -1 */)
+{
+	int e{ cid.empty() || did.empty() || 0 > idx ? eInvalidParameter : eSuccess };
+
+	if (eSuccess == e)
+	{
+		TCPConnectorPtr connector{ 
+			boost::make_shared<TCPConnector>(
+				asioService,
+				boost::bind(&HKDComponentClient::afterRemoteConnectedNotificationCallback, this, _1, _2)) };
+		if (connector)
+		{
+			urlGroup.pushBack((boost::format("%s:%d") % did % idx).str());
+			e = connector->setConnect("127.0.0.1", 60531);
+		}
+		else
+		{
+			e = eBadNewObject;
+		}
+	}
+
+	return e;
+}
+
+int HKDComponentClient::disconnectMediaServer(const std::string did)
+{
+	int e{ did.empty() ? eInvalidParameter : eSuccess };
+
+	if (eSuccess == e)
+	{
+	}
+
+	return e;
+}
+
+void HKDComponentClient::afterRemoteConnectedNotificationCallback(
+	boost::asio::ip::tcp::socket* s, const boost::system::error_code e)
+{
+	if (s && !e)
+	{
+		const std::string url{ urlGroup.at() };
+		if (!url.empty())
+		{
+			urlGroup.removeFront();
+			createNewMediaStreamSession(url, s);
+		}
+	}
 }

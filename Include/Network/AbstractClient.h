@@ -22,28 +22,17 @@ namespace base
 {
 	namespace network
 	{
-		typedef enum class tagClientModuleType_t : int
-		{
-			CLIENT_MODULE_TYPE_NONE = 0,
-			CLIENT_MODULE_TYPE_MAJORDOMO_WORKER,
-			CLIENT_MODULE_TYPE_MAJORDOMO_CLIENT,
-		}ClientModuleType;
-
 		class AbstractClient
 		{
 		public:
-			AbstractClient(
-				const ClientModuleType type = ClientModuleType::CLIENT_MODULE_TYPE_NONE);
+			AbstractClient(void);
 			virtual ~AbstractClient(void);
 
 		public:
 			//启动客户端
-			//@address : 服务端地址
-			//@name : 服务端名称
+			//@address : 服务端连接地址
 			//@Return : 错误码
-			int startClient(
-				const std::string address,
-				const std::string name);
+			int startClient(const std::string address);
 
 			//停止客户端
 			//@Return : 错误码
@@ -57,47 +46,32 @@ namespace base
 				return stopped;
 			}
 
-			//发送消息
-			//@flagID : Request/Response标识
+			//发送数据
+			//@roleID : 角色ID标识
+			//@flagID : 标志ID标识
 			//@fromID : 发送者ID标识
 			//@toID : 接收者ID标识
-			//@msg : 消息数据
+			//@data : 消息数据
 			//@Return : 错误码
-			int sendMessageData(
+			virtual int sendData(
+				const std::string roleID,
 				const std::string flagID,
 				const std::string fromID,
 				const std::string toID,
-				const std::string msg);
-
-			//客户端数据接收处理
-			//@flagID : Request/Response标识
-			//@fromID : 发送者ID标识
-			//@toID : 接收者ID标识
-			//@msg : 消息数据
-			virtual void afterClientPolledMessageProcess(
-				const std::string flagID,
-				const std::string fromID,
-				const std::string toID,
-				const std::string msg) = 0;
-			virtual const std::string buildAutoRegisterToBrokerMessage(void) = 0;
-			virtual const std::string buildAutoQueryRegisterSubroutineMessage(void);
+				const std::string data) = 0;
 
 		protected:
-			//创建客户端模型
+			//创建客户端
 			//@address : 服务端地址
-			//@name : 服务端名称
 			//@Return : 错误码
-			virtual int createNewClientModule(
-				const std::string address,
-				const std::string name);
+			virtual int createNewClient(
+				const std::string address) = 0;
 
-			//销毁客户端模型
+			//销毁客户端
 			//@Return : 错误码
-			virtual int destroyClientModule(void);
+			virtual int destroyClient(void) = 0;
 			
 		protected:
-			const ClientModuleType clientModuleType;
-			void* clientModule;
 			bool stopped;
 		};//class AbstractClient
 	}//namespace network

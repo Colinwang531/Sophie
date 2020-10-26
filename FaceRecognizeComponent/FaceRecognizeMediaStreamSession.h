@@ -26,6 +26,7 @@ class FaceRecognizeMediaStreamSession : public TCPStreamTargetSession
 public:
 	FaceRecognizeMediaStreamSession(
 		AbstractClient& parent,
+		const std::string uid,
 		const std::string url,
 		const AbstractAlgorithm algo,
 		boost::asio::ip::tcp::socket* s = nullptr);
@@ -50,6 +51,7 @@ private:
 
 private:
 	AbstractClient& parentClient;
+	const std::string uuid;
 	const std::string streamURL;
 	std::string alarmComponentID;
 	const AbstractAlgorithm algorithmParam;

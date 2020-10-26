@@ -31,7 +31,7 @@ static void parseCommandLine(int argc, char** argv)
 	CommandLine cl;
 	cl.setCommandOptions("address,a", "127.0.0.1");
 	cl.setCommandOptions("port,p", "61001");
-	cl.setCommandOptions("name,n", "Unknown");
+	cl.setCommandOptions("name,n", "Helmet");
 
 	if (eSuccess == cl.parseCommandLine(argc, argv))
 	{
@@ -59,7 +59,7 @@ static void parseCommandLine(int argc, char** argv)
 			{
 				configName.append(name);
 				//名字直接写入配置文件,需要再去读
-				XMLPacker().setValueWithName("Config.xml", "Component.Helmet.Name", name);
+				XMLPacker().setValueWithName("Config.xml", "Component.Helmet.Name", configName);
 			}
 		}
 
@@ -85,7 +85,7 @@ static int createNewAsynchronousClient(void)
 			if (acp)
 			{
 				e = acp->startClient(
-					(boost::format("tcp://%s:%d") % gMessageDispatcherCenterIP % gMessageDispatcherCenterPort).str(), "Helmet");
+					(boost::format("tcp://%s:%d") % gMessageDispatcherCenterIP % gMessageDispatcherCenterPort).str());
 
 				if (eSuccess == e)
 				{

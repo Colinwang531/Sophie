@@ -1,3 +1,4 @@
+#include "boost/algorithm/string.hpp"
 #include "boost/bind.hpp"
 #include "boost/format.hpp"
 #include "boost/make_shared.hpp"
@@ -27,12 +28,36 @@ static unsigned short gMessageDispatcherCenterPort{ 61001 };
 MOtherClockComponentClientPtr gMotherClockComponentClientPtr;
 static unsigned int gComPortIndex{ 0 };
 static unsigned int gComPortBaudrate{ 0 };
+static std::string clockAsyncData;
 
 static void comportDataNotificationCallback(
 	const char* data = nullptr, 
 	const int bytes = 0)
 {
-	printf("Data = %s, bytes = %d.\r\n", data, bytes);
+	if ('$' == *data)
+	{
+		printf("%s\r\n", clockAsyncData.c_str());
+		if (!clockAsyncData.empty())
+		{
+			std::vector<std::string> clockDatas;
+			boost::split(clockDatas, clockAsyncData, boost::is_any_of(","));
+
+			if (!clockDatas[0].compare("$ZQZDA") || !clockDatas[0].compare("$CJZDA") || !clockDatas[0].compare("$GPZDA"))
+			{
+				const std::string clockDesc{
+					(boost::format("%s-%s-%s,%s:%s:%s,%s") % 
+					clockDatas[4] % clockDatas[3] % clockDatas[2] % 
+						clockDatas[1].substr(0, 2) % clockDatas[1].substr(2, 2) % clockDatas[1].substr(4, 2) % 
+						clockDatas[5]).str() };
+
+//				printf("%s.\r\n", clockDesc);
+				clockAsyncData.clear();
+			}
+		}
+	}
+
+	clockAsyncData.append(data, bytes);
+//	printf("%s\r\n", clockAsyncData.c_str());
 }
 
 static void parseCommandLine(int argc, char** argv)
@@ -42,7 +67,7 @@ static void parseCommandLine(int argc, char** argv)
 	cl.setCommandOptions("port,p", "61001");
 	cl.setCommandOptions("name,n", "Clock");
 	cl.setCommandOptions("com,c", "0");
-	cl.setCommandOptions("baudrate,b", "0");
+	cl.setCommandOptions("baudrate,b", "4800");
 
 	if (eSuccess == cl.parseCommandLine(argc, argv))
 	{
@@ -59,21 +84,6 @@ static void parseCommandLine(int argc, char** argv)
 			gMessageDispatcherCenterPort = static_cast<unsigned short>(atoi(port));
 		}
 
-		//优先使用配置文件中的名称,如果配置文件中的名称空再使用参数列表中的名称
-		//名称在第一次启动设置后就不能再修改
-		std::string configName;
-		XMLParser().getValueByName("Config.xml", "Component.Clock.Name", configName);
-		const char* name{ cl.getParameterByOption("name") };
-		if (configName.empty())
-		{
-			if (name)
-			{
-				configName.append(name);
-				//名字直接写入配置文件,需要再去读
-				XMLPacker().setValueWithName("Config.xml", "Component.Clock.Name", name);
-			}
-		}
-
 		const char* comport{ cl.getParameterByOption("com") };
 		if (comport)
 		{
@@ -84,6 +94,21 @@ static void parseCommandLine(int argc, char** argv)
 		if (baudrate)
 		{
 			gComPortBaudrate = static_cast<unsigned int>(atoi(baudrate));
+		}
+
+		//优先使用配置文件中的名称,如果配置文件中的名称空再使用参数列表中的名称
+		//名称在第一次启动设置后就不能再修改
+		std::string configName;
+		XMLParser().getValueByName("Config.xml", "Component.CLK.Name", configName);
+		const char* name{ cl.getParameterByOption("name") };
+		if (configName.empty())
+		{
+			if (name)
+			{
+				configName.append(name);
+				//名字直接写入配置文件,需要再去读
+				XMLPacker().setValueWithName("Config.xml", "Component.CLK.Name", configName);
+			}
 		}
 
 		LOG(INFO) <<
@@ -107,7 +132,8 @@ static int createNewAsynchronousClient(void)
 				boost::make_shared<MotherClockComponentClient>() };
 			if (ap)
 			{
-				e = ap->startClient((boost::format("tcp://%s:%d") % gMessageDispatcherCenterIP % gMessageDispatcherCenterPort).str(), "Clock");
+				e = ap->startClient(
+					(boost::format("tcp://%s:%d") % gMessageDispatcherCenterIP % gMessageDispatcherCenterPort).str());
 
 				if (eSuccess == e)
 				{

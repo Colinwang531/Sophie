@@ -37,6 +37,7 @@ namespace base
 					//After the acceptor has been initialized, listen() is called to make the acceptor start listening.
 					//Then async_accept() is called to accept the first connection attempt.
 					//A socket has to be passed as a first parameter to async_accept(), which will be used to send and receive data on a new connection.
+					ap->set_option(boost::asio::ip::tcp::acceptor::reuse_address(true));
 					ap->listen();
 					ap->async_accept(*s,
 						boost::bind(

@@ -1,4 +1,6 @@
-#include <string.h>
+//#include <string.h>
+#include "boost/filesystem/path.hpp" 
+#include "boost/filesystem/operations.hpp"
 #include "CH-HCNetSDKV6.1.4.17_build20200331_Linux64/HCNetSDK.h"
 #include "Error.h"
 #include "Define.h"
@@ -40,6 +42,11 @@ namespace base
 			{
 				if (1 == SurveillanceDevice::loginDevice())
 				{
+// 					const std::string exePath{ 
+// 						boost::filesystem::initial_path<boost::filesystem::path>().string() };
+// 					NET_DVR_LOCAL_SDK_PATH path{ 0 };
+// 					sprintf(path.sPath, "/root/projects/bin/x64/Debug/");
+// 					e = NET_DVR_SetSDKInitCfg(NET_SDK_INIT_CFG_SDK_PATH, &path);
 					e = NET_DVR_Init() ? eSuccess : eBadInitSDK;
 				}
 

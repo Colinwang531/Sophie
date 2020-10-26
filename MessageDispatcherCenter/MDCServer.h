@@ -12,10 +12,8 @@
 
 #include "boost/shared_ptr.hpp"
 #include "DataStruct/UnorderedMap.h"
-#include "Network/AbstractUpstreamServer.h"
-using AbstractUpstreamServer = base::network::AbstractUpstreamServer;
-using ServerModuleType = base::network::ServerModuleType;
-using ClientModuleType = base::network::ClientModuleType;
+#include "Network/MajordomoUpstreamBroker.h"
+using MajordomoUpstreamBroker = base::network::MajordomoUpstreamBroker;
 #include "Packet/DataPacket.h"
 using DataPacket = base::packet::DataPacket;
 using DataPacketPtr = boost::shared_ptr<DataPacket>;
@@ -23,61 +21,55 @@ using DataPacketPtr = boost::shared_ptr<DataPacket>;
 using AbstractComponent = base::component::AbstractComponent;
 using AbstractComponentPtr = boost::shared_ptr<AbstractComponent>;
 
-class MDCServer final : public AbstractUpstreamServer
+class MDCServer final : public MajordomoUpstreamBroker
 {
 public:
-	MDCServer(
-		const ServerModuleType server = ServerModuleType::SERVER_MODULE_TYPE_NONE,
-		const ClientModuleType upstream = ClientModuleType::CLIENT_MODULE_TYPE_NONE,
-		const std::string address = "tcp:\\127.0.0.1:61001",
-		const std::string name = "MDCServer");
+	MDCServer(void);
 	~MDCServer(void);
 
 protected:
-	void afterServerPolledMessageProcess(
+	void afterPolledDataFromServerCallback(
 		const std::string commID,
+		const std::string roleID,
 		const std::string flagID,
 		const std::string fromID,
 		const std::string toID,
-		const std::string msg) override;
-	void afterClientPolledMessageProcess(
+		const std::string data) override;
+	void afterPolledDataFromWorkerCallback(
+		const std::string roleID,
 		const std::string flagID,
 		const std::string fromID,
 		const std::string toID,
-		const std::string msg) override;
-	void afterAutoCheckConnectionTimeoutProcess(void) override;
-	const std::string buildAutoRegisterToBrokerMessage(void) override;
+		const std::string data) override;
+	void afterAutoClientConnectionTimeoutProcess(void) override;
+	void sendRegisterWorkerServerMessage(void) override;
 
 private:
-	const std::string getMDCServerInfoByName(
-		const std::string name) const;
-	void setMDCServerInfoWithName(
-		const std::string name, const std::string value);
-
 	//服务端数据接收处理
 	//@commID : 通信ID标识
 	//@flagID : Request/Response标识
 	//@fromID : 发送者ID标识
 	//@toID : 接收者ID标识
 	//@msg : 消息数据
-	void processServerPolledMessage(
+	void processPolledDataFromServer(
 		const std::string commID,
+		const std::string roleID,
 		const std::string flagID,
 		const std::string fromID,
 		const std::string toID,
-		const std::string msg);
+		const std::string data);
 	//服务端数据转发处理
 	//@commID : 通信ID标识
 	//@flagID : Request/Response标识
 	//@fromID : 发送者ID标识
 	//@toID : 接收者ID标识
 	//@msg : 消息数据
-	void forwardServerPolledMessage(
+	void forwardPolledDataFromServer(
 		const std::string commID,
 		const std::string flagID,
 		const std::string fromID,
 		const std::string toID,
-		const std::string msg);
+		const std::string data);
 
 	//处理组件消息
 	//@commID : 通信ID标识
@@ -143,5 +135,9 @@ private:
 	//KEY是组件ID标识
 	using RegisterComponentGroup = UnorderedMap<const std::string, AbstractComponentPtr>;
 	RegisterComponentGroup registerComponentGroup;
+	//自身ID标识在上传报警图片时使用
+	//但很不合理
+	std::string ownerXMQID;
+	std::string parentXMQID;
 };//class MDCServer
 

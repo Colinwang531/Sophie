@@ -7,18 +7,21 @@
 #include "glog/log_severity.h"
 #include "glog/logging.h"
 #endif//_WINDOWS
-#include "Define.h"
 #include "Error.h"
+#include "Xml/XmlCodec.h"
+using XMLParser = base::xml::XMLParser;
+using XMLPacker = base::xml::XMLPacker;
 #include "CommandLine/CommandLine.h"
 using CommandLine = base::commandline::CommandLine;
 #include "MDCServer.h"
-using AbstractServerPtr = boost::shared_ptr<base::network::AbstractServer>;
+using MajordomoUpstreamBroker = base::network::MajordomoUpstreamBroker;
+using MDCServerPtr = boost::shared_ptr<MajordomoUpstreamBroker>;
 
 static std::string gServiceName;
 static std::string gUpstreamIP;
 static unsigned short gUpstreamPort{ 0 };
 static unsigned short gListenPort{ 0 };
-static AbstractServerPtr gMDCServerPtr;
+static MDCServerPtr gMDCServerPtr;
 
 static void parseCommandLine(int argc, char** argv)
 {
@@ -26,7 +29,7 @@ static void parseCommandLine(int argc, char** argv)
 	cl.setCommandOptions("listen,l", "61001");
 	cl.setCommandOptions("upstream,u", "127.0.0.1");
 	cl.setCommandOptions("port,p", "61101");
-	cl.setCommandOptions("name,n", "MDC");
+	cl.setCommandOptions("name,n", "Dispatcher");
 
 	if (eSuccess == cl.parseCommandLine(argc, argv))
 	{
@@ -48,35 +51,40 @@ static void parseCommandLine(int argc, char** argv)
 			gListenPort = atoi(listenPort);
 		}
 
-		const char* serviceName{ cl.getParameterByOption("name") };
-		if (serviceName)
+		//优先使用配置文件中的名称,如果配置文件中的名称空再使用参数列表中的名称
+		//名称在第一次启动设置后就不能再修改
+		std::string configName;
+		XMLParser().getValueByName("Config.xml", "Component.Dispatcher.Name", configName);
+		const char* name{ cl.getParameterByOption("name") };
+		if (configName.empty())
 		{
-			gServiceName.append(serviceName);
+			if (name)
+			{
+				configName.append(name);
+				//名字直接写入配置文件,需要再去读
+				XMLPacker().setValueWithName("Config.xml", "Component.Dispatcher.Name", configName);
+			}
 		}
+
+		LOG(INFO) << "Listen port = " << gListenPort <<
+			", Name = " << configName <<
+			", upstream address = " << gUpstreamIP <<
+			", upstream port = " << gUpstreamPort << ".";
 	}
 }
 
-static int createNewAsynchronousServer(void)
+static int createNewMDCServer(void)
 {
 	int e{ gMDCServerPtr ? eObjectExisted : eSuccess };
 
-	AbstractServerPtr server{ 
-		boost::make_shared<MDCServer>(
-			ServerModuleType::SERVER_MODULE_TYPE_MAJORDOMO_BROKER,
-			ClientModuleType::CLIENT_MODULE_TYPE_MAJORDOMO_WORKER,
-			gUpstreamIP.empty() ? "" : (boost::format("tcp://%s:%d") % gUpstreamIP % gUpstreamPort).str(),
-			gServiceName) };
-	if (server)
+	MDCServerPtr mdcsp{ boost::make_shared<MDCServer>() };
+	if (mdcsp)
 	{
-		e = server->startServer(gListenPort);
-
+		e = mdcsp->startServer(gListenPort);
 		if (eSuccess == e)
 		{
-			gMDCServerPtr.swap(server);
-		}
-		else
-		{
-			e = eBadOperate;
+			mdcsp->startClient((boost::format("tcp://%s:%d") % gUpstreamIP % gUpstreamPort).str().c_str());
+			gMDCServerPtr.swap(mdcsp);
 		}
 	}
 	else
@@ -87,7 +95,7 @@ static int createNewAsynchronousServer(void)
 	return e;
 }
 
-static int destroyAsynchronousServer(void)
+static int destroyMDCServer(void)
 {
 	int e{ gMDCServerPtr ? eSuccess : eBadOperate };
 
@@ -97,6 +105,7 @@ static int destroyAsynchronousServer(void)
 
 		if (eSuccess == e)
 		{
+			gMDCServerPtr->stopClient();
 			gMDCServerPtr.reset();
 		}
 		else
@@ -122,29 +131,27 @@ int main(int argc, char* argv[])
 	);
 
 	parseCommandLine(argc, argv);
-	LOG(INFO) << "Server local listen port is " << gListenPort <<
-		", upstream address is " << gUpstreamIP << ", upstream port is " << gUpstreamPort;
 
-	int e{ createNewAsynchronousServer() };
+	int e{ createNewMDCServer() };
 	if (eSuccess == e)
 	{
-		LOG(INFO) << "Create new asynchronous server result = " << e << ".";
+		LOG(INFO) << "Create new MDC server result = " << e << ".";
 	} 
 	else
 	{
-		LOG(WARNING) << "Create new asynchronous server result = " << e << ".";
+		LOG(WARNING) << "Create new MDC server result = " << e << ".";
 	}
 
 	getchar();
 
-	e = destroyAsynchronousServer();
+	e = destroyMDCServer();
 	if (eSuccess == e)
 	{
-		LOG(INFO) << "Destroy asynchronous server result = " << e << ".";
+		LOG(INFO) << "Destroy MDC server result = " << e << ".";
 	}
 	else
 	{
-		LOG(WARNING) << "Destroy asynchronous server result = " << e << ".";
+		LOG(WARNING) << "Destroy MDC server result = " << e << ".";
 	}
 
 	google::ShutdownGoogleLogging();

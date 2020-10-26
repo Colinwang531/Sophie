@@ -25,15 +25,46 @@ using MessagePacketPtr = boost::shared_ptr<MessagePacket>;
 #include "AISPusherComponentClient.h"
 
 AISPusherComponentClient::AISPusherComponentClient()
-	: AbstractClient(base::network::ClientModuleType::CLIENT_MODULE_TYPE_MAJORDOMO_WORKER)
+	: AbstractWorker()
 {}
 AISPusherComponentClient::~AISPusherComponentClient() {}
 
-void AISPusherComponentClient::afterClientPolledMessageProcess(
+int AISPusherComponentClient::createNewClient(const std::string address)
+{
+	int e{ !address.empty() ? eSuccess : eInvalidParameter };
+
+	if (eSuccess == e)
+	{
+		MajordomoWorkerPtr mdwp{
+			boost::make_shared<MajordomoWorker>(
+				boost::bind(&AISPusherComponentClient::afterPolledDataFromWorkerCallback, this, _1, _2, _3, _4, _5)) };
+		if (mdwp && eSuccess == mdwp->startWorker(address))
+		{
+			worker.swap(mdwp);
+			//在客户端注册或心跳之前创建UUID标识
+			AbstractWorker::generateUUIDWithName("AIS");
+			e = AbstractWorker::createNewClient("");
+		}
+		else
+		{
+			e = eBadNewObject;
+		}
+	}
+
+	return e;
+}
+
+int AISPusherComponentClient::destroyClient()
+{
+	return worker ? worker->stopWorker() : eBadOperate;
+}
+
+void AISPusherComponentClient::afterPolledDataFromWorkerCallback(
+	const std::string roleID,
 	const std::string flagID,
 	const std::string fromID,
 	const std::string toID,
-	const std::string msg)
+	const std::string data)
 {
 	DataPacketPtr pkt{ DataParser().parseData(msg) };
 
@@ -57,43 +88,44 @@ void AISPusherComponentClient::afterClientPolledMessageProcess(
 	}
 }
 
-const std::string AISPusherComponentClient::buildAutoRegisterToBrokerMessage()
+void AISPusherComponentClient::sendRegisterWorkerServerMessage()
 {
-	std::string msgstr;
+	std::string name, id;
+	XMLParser().getValueByName("Config.xml", "Component.AIS.ID", id);
+	XMLParser().getValueByName("Config.xml", "Component.AIS.Name", name);
 	AbstractComponent component(
-		base::component::ComponentType::COMPONENT_TYPE_ALM);
-	component.setComponentID(getMediaStreamClientInfoByName("Component.AIS.ID"));
-	component.setComponentName(getMediaStreamClientInfoByName("Component.AIS.Name"));
-	boost::shared_ptr<DataPacket> pkt{
-		boost::make_shared<MessagePacket>(base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_COMPONENT) };
+		base::component::ComponentType::COMPONENT_TYPE_AIS);
+	component.setComponentID(id);
+	component.setComponentName(name);
 
+	DataPacketPtr pkt{
+		boost::make_shared<MessagePacket>(
+			base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_COMPONENT) };
 	if (pkt)
 	{
-		MessagePacketPtr msgpkt{ boost::dynamic_pointer_cast<MessagePacket>(pkt) };
-		msgpkt->setMessagePacketCommand(
+		MessagePacketPtr mp{ boost::dynamic_pointer_cast<MessagePacket>(pkt) };
+		mp->setMessagePacketCommand(
 			static_cast<int>(base::protocol::ComponentCommand::COMPONENT_COMMAND_SIGNIN_REQ));
-		pkt->setPacketData(&component);
-		msgstr = DataPacker().packData(pkt);
+		mp->setPacketData(&component);
+		const std::string data{ DataPacker().packData(pkt) };
+		sendData("worker", "request", id, parentXMQID, data);
 	}
-
-	return msgstr;
 }
 
-const std::string AISPusherComponentClient::buildAutoQueryRegisterSubroutineMessage()
+void AISPusherComponentClient::sendQuerySystemServiceMessage()
 {
-	std::string msg;
 	boost::shared_ptr<DataPacket> pkt{
-		boost::make_shared<MessagePacket>(base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_COMPONENT) };
+		boost::make_shared<MessagePacket>(
+			base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_COMPONENT) };
 
 	if (pkt)
 	{
 		MessagePacketPtr msgpkt{ boost::dynamic_pointer_cast<MessagePacket>(pkt) };
 		msgpkt->setMessagePacketCommand(
 			static_cast<int>(base::protocol::ComponentCommand::COMPONENT_COMMAND_QUERY_REQ));
-		msg = DataPacker().packData(pkt);
+		const std::string data{ DataPacker().packData(pkt) };
+		sendData("worker", "request", AbstractWorker::getUUID(), parentXMQID, data);
 	}
-
-	return msg;
 }
 
 const std::string AISPusherComponentClient::getMediaStreamClientInfoByName(const std::string name) const

@@ -13,23 +13,25 @@
 #ifndef MQ_MODULE_MAJORDOMO_WORKER_H
 #define MQ_MODULE_MAJORDOMO_WORKER_H
 
+#include "boost/function.hpp"
 #include "ctx.hpp"
-#include "socket_base.hpp"
 
 namespace mq
 {
     namespace module
     {
+		typedef boost::function<void(const std::string, const std::string, const std::string, const std::string, const std::string)> AfterClientRecievedDataCallback;
+
 		class MajordomoWorker 
 		{
 		public:
 			MajordomoWorker(
-				const std::string name, void* client = nullptr);
+				AfterClientRecievedDataCallback callback = nullptr);
 			virtual ~MajordomoWorker(void);
 
 		public:
 			//启动Worker实例
-			//@address : "tcp://IP:PORT"
+			//@address : 服务端监听地址
 			//@Return : 错误码
 			int startWorker(const std::string address);
 
@@ -38,36 +40,28 @@ namespace mq
 			int stopWorker(void);
 
 			//发送消息
-			//@flagID : Request/Response标识
+			//@roleID : 角色ID标识
+			//@flagID : 标志ID标识
 			//@fromID : 发送者ID标识
 			//@toID : 接收者ID标识
-			//@msg : 消息数据
+			//@data : 消息数据
 			//@Return : 错误码
 			int sendData(
+				const std::string roleID,
 				const std::string flagID,
 				const std::string fromID,
 				const std::string toID,
-				const std::string msg);
+				const std::string data);
 
 		private:
 			//消息获取线程
 			void pollerThreadProc(void);
 
-			//Worker实例注册线程
-			void autoRegisterToMajordomoBrokerThreadProc(void);
-
-			//子服务注册信息查询线程
-			//向BROKER端查询在线子服务信息
-			void autoQuerySubrountineThreadProc(void);
-
 		private:
-			const std::string workerName;
-			void* abstractClient;
-			//0MQ context
+			AfterClientRecievedDataCallback afterClientRecievedDataCallback;
+			bool stopped;
 			zmq::ctx_t ctx;
-			//Socket for clients & workers
 			zmq::socket_base_t* dealer;
-			const std::string workerID;
 		};//class MajordomoWorker
     }//namespace module
 }//namespace mq

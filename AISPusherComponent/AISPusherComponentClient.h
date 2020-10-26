@@ -14,23 +14,42 @@
 #include "Packet/DataPacket.h"
 using DataPacket = base::packet::DataPacket;
 using DataPacketPtr = boost::shared_ptr<DataPacket>;
-#include "Network/AbstractClient.h"
-using AbstractClient = base::network::AbstractClient;
+#include "MessageQueue/MajordomoWorker.h"
+using MajordomoWorker = mq::module::MajordomoWorker;
+using MajordomoWorkerPtr = boost::shared_ptr<MajordomoWorker>;
+#include "Network/AbstractWorker.h"
+using AbstractWorker = base::network::AbstractWorker;
 
-class AISPusherComponentClient : public AbstractClient
+class AISPusherComponentClient : public AbstractWorker
 {
 public:
 	AISPusherComponentClient(void);
 	virtual ~AISPusherComponentClient(void);
 
 protected:
-	void afterClientPolledMessageProcess(
+	int createNewClient(const std::string address) override;
+	int destroyClient(void) override;
+	//WORKER端数据读取回调
+	//@roleID : 角色ID标识
+	//@flagID : 标志ID标识
+	//@fromID : 发送者ID标识
+	//@toID : 接收者ID标识
+	//@data : 消息数据
+	//@Return : 错误码
+	void afterPolledDataFromWorkerCallback(
+		const std::string roleID,
 		const std::string flagID,
 		const std::string fromID,
 		const std::string toID,
-		const std::string msg) override;
-	const std::string buildAutoRegisterToBrokerMessage(void) override;
-	const std::string buildAutoQueryRegisterSubroutineMessage(void) override;
+		const std::string data);
+	void sendRegisterWorkerServerMessage(void) override;
+	void sendQuerySystemServiceMessage(void) override;
+	int sendData(
+		const std::string roleID,
+		const std::string flagID,
+		const std::string fromID,
+		const std::string toID,
+		const std::string data) override;
 
 private:
 	const std::string getMediaStreamClientInfoByName(const std::string name) const;
@@ -40,6 +59,8 @@ private:
 	void processComponentMessage(DataPacketPtr pkt);
 
 private:
+	MajordomoWorkerPtr worker;
+	std::string parentXMQID;
 	std::string webComponentID;
 };//class AISPusherComponentClient
 

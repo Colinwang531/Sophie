@@ -18,63 +18,67 @@ using base::time::Time;
 using DataParser = base::protocol::DataParser;
 using DataPacker = base::protocol::DataPacker;
 #include "Protocol/ComponentPhrase.h"
-//#include "Protocol/Device/DevicePhrase.h"
 #include "Xml/XmlCodec.h"
 using XMLParser = base::xml::XMLParser;
 using XMLPacker = base::xml::XMLPacker;
 #include "Packet/Message/MessagePacket.h"
 using MessagePacket = base::packet::MessagePacket;
 using MessagePacketPtr = boost::shared_ptr<MessagePacket>;
-#include "Component/AbstractComponent.h"
-using AbstractComponent = base::component::AbstractComponent;
-using AbstractComponentPtr = boost::shared_ptr<AbstractComponent>;
 #include "MDCServer.h"
 
-MDCServer::MDCServer(
-	const ServerModuleType server/* = ServerModuleType::SERVER_MODULE_TYPE_NONE*/,
-	const ClientModuleType upstream/* = ClientModuleType::CLIENT_MODULE_TYPE_NONE*/,
-	const std::string address/* = "tcp:\\127.0.0.1:61001"*/,
-	const std::string name/* = "MDCServer"*/)
-	: AbstractUpstreamServer(server, upstream, address)
-{
-	setMDCServerInfoWithName("Component.Disptcher.Name", name);
-}
+MDCServer::MDCServer() : MajordomoUpstreamBroker()
+{}
 
 MDCServer::~MDCServer()
 {}
 
-void MDCServer::afterServerPolledMessageProcess(
+void MDCServer::afterPolledDataFromServerCallback(
 	const std::string commID, 
+	const std::string roleID, 
 	const std::string flagID, 
 	const std::string fromID, 
 	const std::string toID, 
-	const std::string msg)
+	const std::string data)
 {
-// 	LOG(INFO) << "Server polled message with CommID = " << commID
-// 		<< ", FlagID = " << flagID
-// 		<< ", fromID = " << fromID
-// 		<< ", toID = " << toID << ".";
-
-	//toID为空表示消息在MDC处理,
+	//toID为空或者等于自己的ID标识表示消息在MDC处理,
 	//否则向toID的服务转发消息
-	if (toID.empty())
+	if (toID.empty() || !toID.compare(AbstractWorker::getUUID()))
 	{
-		processServerPolledMessage(commID, flagID, fromID, toID, msg);
+		if (!flagID.compare("upload"))
+		{
+			//先向上级XMQ转发消息
+			//如果消息转发失败则交给WEB处理
+			int e{ sendData("worker", flagID, ownerXMQID, fromID, data) };
+
+			if (eSuccess == e)
+			{
+				LOG(INFO) << "Forward upload message to upstream server.";
+			}
+			else
+			{
+				LOG(WARNING) << "Forward upload message to upstream service failed.";
+			}
+		}
+		else
+		{
+			processPolledDataFromServer(commID, roleID, flagID, fromID, toID, data);
+		}
 	} 
 	else
 	{
-		forwardServerPolledMessage(commID, flagID, fromID, toID, msg);
+		forwardPolledDataFromServer(commID, flagID, fromID, toID, data);
 	}
 }
 
-void MDCServer::afterClientPolledMessageProcess(
+void MDCServer::afterPolledDataFromWorkerCallback(
+	const std::string roleID, 
 	const std::string flagID, 
 	const std::string fromID, 
 	const std::string toID, 
-	const std::string msg)
+	const std::string data)
 {
 	//客户端消息处理
-	DataPacketPtr pkt{ DataParser().parseData(msg) };
+	DataPacketPtr pkt{ DataParser().parseData(data) };
 
 	if (pkt)
 	{
@@ -85,12 +89,15 @@ void MDCServer::afterClientPolledMessageProcess(
 		{
 			processComponentMessage("", flagID, fromID, pkt);
 		}
-		else if (base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_COMPONENT == type ||
-			base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_ALGORITHM == type ||
+		else if (base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_ALGORITHM == type ||
 			base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_CREW == type || 
 			base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_DEVICE == type ||
 			base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_STATUS == type)
 		{
+			//去掉toID标识中的第一个路由地址
+			std::vector<std::string> addressGroup;
+			boost::split(addressGroup, toID, boost::is_any_of(":"));
+
 			//直接查询WEB组件ID标识并向其转发消息
 			std::vector<AbstractComponentPtr> components;
 			registerComponentGroup.values(components);
@@ -99,12 +106,12 @@ void MDCServer::afterClientPolledMessageProcess(
 			{
 				if (base::component::ComponentType::COMPONENT_TYPE_WEB == components[i]->getComponentType())
 				{
-					forwardServerPolledMessage(
+					forwardPolledDataFromServer(
 						components[i]->getCommunicationID(), 
 						flagID, 
 						fromID, 
-						components[i]->getComponentID(),
-						msg);
+						addressGroup[1],
+						data);
 					LOG(INFO) << "Forward upstream polled message to WEB service.";
 				}
 			}
@@ -120,7 +127,7 @@ void MDCServer::afterClientPolledMessageProcess(
 	}
 }
 
-void MDCServer::afterAutoCheckConnectionTimeoutProcess()
+void MDCServer::afterAutoClientConnectionTimeoutProcess()
 {
 	std::vector<AbstractComponentPtr> acp;
 	registerComponentGroup.values(acp);
@@ -136,51 +143,41 @@ void MDCServer::afterAutoCheckConnectionTimeoutProcess()
 	}
 }
 
-const std::string MDCServer::buildAutoRegisterToBrokerMessage()
+void MDCServer::sendRegisterWorkerServerMessage()
 {
-	std::string msgstr;
+	std::string name, id;
+	XMLParser().getValueByName("Config.xml", "Component.Dispatcher.ID", id);
+	XMLParser().getValueByName("Config.xml", "Component.Dispatcher.Name", name);
 	AbstractComponent component(
 		base::component::ComponentType::COMPONENT_TYPE_XMQ);
-	component.setComponentID(getMDCServerInfoByName("Component.Disptcher.ID"));
-	component.setComponentName(getMDCServerInfoByName("Component.Disptcher.Name"));
-	DataPacketPtr datapkt{ 
+	component.setComponentID(id);
+	component.setComponentName(name);
+	ownerXMQID = id;
+
+	DataPacketPtr pkt{ 
 		boost::make_shared<MessagePacket>(
 			base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_COMPONENT) };
-
-	if (datapkt)
+	if (pkt)
 	{
-		MessagePacketPtr msgpkt{ boost::dynamic_pointer_cast<MessagePacket>(datapkt) };
-		msgpkt->setMessagePacketCommand(
+		MessagePacketPtr mp{ boost::dynamic_pointer_cast<MessagePacket>(pkt) };
+		mp->setMessagePacketCommand(
 			static_cast<int>(base::protocol::ComponentCommand::COMPONENT_COMMAND_SIGNIN_REQ));
-		datapkt->setPacketData(&component);
-		msgstr = DataPacker().packData(datapkt);
+		mp->setPacketData(&component);
+		const std::string data{ DataPacker().packData(pkt) };
+		sendData("worker", "request", id, "", data);
 	}
-
-	return msgstr;
 }
 
-const std::string MDCServer::getMDCServerInfoByName(const std::string name) const
-{
-	std::string value;
-	XMLParser().getValueByName("Config.xml", name, value);
-	return value;
-}
-
-void MDCServer::setMDCServerInfoWithName(
-	const std::string name, const std::string value)
-{
-	XMLPacker().setValueWithName("Config.xml", name, value);
-}
-
-void MDCServer::processServerPolledMessage(
-	const std::string commID,
-	const std::string flagID,
-	const std::string fromID,
-	const std::string toID,
-	const std::string msg)
+void MDCServer::processPolledDataFromServer(
+	const std::string commID, 
+	const std::string roleID, 
+	const std::string flagID, 
+	const std::string fromID, 
+	const std::string toID, 
+	const std::string data)
 {
 	//服务端只处理组件类消息
-	DataPacketPtr pkt{ DataParser().parseData(msg) };
+	DataPacketPtr pkt{ DataParser().parseData(data) };
 
 	if (pkt)
 	{
@@ -190,6 +187,27 @@ void MDCServer::processServerPolledMessage(
 		if (base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_COMPONENT == type)
 		{
 			processComponentMessage(commID, flagID, fromID, pkt);
+		}
+		else if (base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_ALARM == type)
+		{
+			//直接查询WEB组件ID标识并向其转发消息
+			std::vector<AbstractComponentPtr> components;
+			registerComponentGroup.values(components);
+
+			for (int i = 0; i != components.size(); ++i)
+			{
+				if (base::component::ComponentType::COMPONENT_TYPE_WEB == components[i]->getComponentType())
+				{
+					forwardPolledDataFromServer(
+						components[i]->getCommunicationID(),
+						flagID,
+						fromID,
+						"",
+						data);
+				}
+			}
+
+			LOG(INFO) << "Push alarm message to WEB service.";
 		}
 		else
 		{
@@ -202,14 +220,14 @@ void MDCServer::processServerPolledMessage(
 	}
 }
 
-void MDCServer::forwardServerPolledMessage(
-	const std::string commID,
-	const std::string flagID,
-	const std::string fromID,
-	const std::string toID,
-	const std::string msg)
+void MDCServer::forwardPolledDataFromServer(
+	const std::string commID, 
+	const std::string flagID, 
+	const std::string fromID, 
+	const std::string toID, 
+	const std::string data)
 {
-	if (!flagID.compare("request") || !flagID.compare("notify"))
+	if (!flagID.compare("request") || !flagID.compare("notification"))
 	{
 		//分解toID查看下一个路由地址
 		std::vector<std::string> addressGroup;
@@ -218,19 +236,20 @@ void MDCServer::forwardServerPolledMessage(
 
 		if (component)
 		{
-			const std::size_t pos{ toID.find_first_of(":") };
-			const std::string communicationID{ component->getCommunicationID() };
+// 			const std::size_t pos{ toID.find_first_of(":") };
+ 			const std::string communicationID{ component->getCommunicationID() };
 			int e{ 
-				AbstractServer::sendMessageData(
+				sendData(
 					communicationID,
+					"server",
 					flagID, 
 					fromID, 
-					toID.substr(-1 < pos ? pos : 0, toID.length()), 
-					msg) };
+					toID,//toID.substr(-1 < pos ? pos : 0, toID.length()), 
+					data) };
 
 			if (eSuccess == e)
 			{
-				LOG(INFO) << "Forward request / notify message to component name = " << component->getComponentName()
+				LOG(INFO) << "Forward request message to component name = " << component->getComponentName()
 					<< ", CommunicationID = " << communicationID
 // 					<< ", FlagID = " << flagID
 // 					<< ", fromID = " << fromID
@@ -240,7 +259,7 @@ void MDCServer::forwardServerPolledMessage(
 			} 
 			else
 			{
-				LOG(WARNING) << "Forward request / notify message failed to component name = " << component->getComponentName()
+				LOG(WARNING) << "Forward request message failed to component name = " << component->getComponentName()
 					<< ", CommunicationID = " << communicationID
 // 					<< ", FlagID = " << flagID
 // 					<< ", fromID = " << fromID
@@ -251,32 +270,33 @@ void MDCServer::forwardServerPolledMessage(
 		} 
 		else
 		{
-			LOG(ERROR) << "Can not forward to component ID = " << addressGroup[0] << ".";
+			LOG(ERROR) << "Can not forward to component ID = " << toID << ".";
 		}
 	}
 	else if (!flagID.compare("response"))
 	{
 		int e{ eSuccess };
-		std::string addressID{ "Upstream" };
+		std::string componentName;
 		AbstractComponentPtr component{ registerComponentGroup.at(toID) };
 
 		//如果toID存在则在服务端转发
 		//如果toID不存在则在客户端转发
 		if (component)
 		{
-			e = AbstractServer::sendMessageData(component->getCommunicationID(), flagID, fromID, toID, msg);
-			addressID = component->getComponentName();
+			e = sendData(component->getCommunicationID(), "server", flagID, fromID, toID, data);
+			componentName = component->getComponentName();
 		} 
 		else
 		{
 			//不要交换fromID和toID
 			//发送端发送时交换,转发就不要交换了
-			e = AbstractClient::sendMessageData(flagID, fromID, toID, msg);
+			e = sendData("server", flagID, fromID, toID, data);
+			componentName = "Upstream";
 		}
 
 		if (eSuccess == e)
 		{
-			LOG(INFO) << "Forward response message to component name = " << addressID
+			LOG(INFO) << "Forward response message to component name = " << componentName
 // 				<< ", FlagID = " << flagID
 // 				<< ", fromID = " << fromID
 // 				<< ", toID = " << toID
@@ -285,12 +305,34 @@ void MDCServer::forwardServerPolledMessage(
 		}
 		else
 		{
-			LOG(WARNING) << "Forward response message failed to component name = " << addressID
+			LOG(WARNING) << "Forward response message failed to component name = " << componentName
 // 				<< ", FlagID = " << flagID
 // 				<< ", fromID = " << fromID
 // 				<< ", toID = " << toID
 // 				<< ", length = " << msg.length() 
 				<< ".";
+		}
+	}
+	else if (!flagID.compare("upload")/* && !fromID.compare(toID)*/)
+	{
+		std::vector<AbstractComponentPtr> acps;
+		registerComponentGroup.values(acps);
+
+		for (int i = 0; i != acps.size(); ++i)
+		{
+			if (base::component::ComponentType::COMPONENT_TYPE_WEB == acps[i]->getComponentType())
+			{
+				const std::string webcommid{ acps[i]->getCommunicationID() }, webcompid{ acps[i]->getComponentID() };
+				sendData(
+					webcommid,
+					"server",
+					flagID,
+					fromID,
+					webcompid,
+					data);
+				LOG(INFO) << "Forward upload alarm message to WEB Component ID = " << webcompid << 
+					" , Communicateion ID = " << webcommid << ".";
+			}
 		}
 	}
 }
@@ -314,35 +356,37 @@ void MDCServer::processComponentMessage(
 		std::string componentID{ ac->getComponentID() };
 		const std::string componentName{ ac->getComponentName() };
 		const base::component::ComponentType componentType{ ac->getComponentType() };
-		int e{ eSuccess };
-
-		if (componentID.empty())
-		{
-			componentID = boost::uuids::to_string(boost::uuids::random_generator()());
-			//为新注册的组件分配ID标识
-			e = addNewRegisterComponent(componentID, componentName, commID, componentType);
-		}
-		else
-		{
-			e = updateRegisterCompnent(componentID, componentName, commID, componentType);
-		}
+// 		int e{ eSuccess };
+// 
+// 		if (componentID.empty())
+// 		{
+// 			componentID = boost::uuids::to_string(boost::uuids::random_generator()());
+// 			//为新注册的组件分配ID标识
+// 			e = addNewRegisterComponent(componentID, componentName, commID, componentType);
+// 		}
+// 		else
+// 		{
+// 			e = updateRegisterCompnent(componentID, componentName, commID, componentType);
+// 		}
 
 		//commID和fromID一样
 		replyMessageWithResultAndExtendID(
 			commID,
-			componentID,
+			AbstractWorker::getUUID(),
 			fromID,
 			static_cast<int>(base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_COMPONENT),
 			static_cast<int>(base::protocol::ComponentCommand::COMPONENT_COMMAND_SIGNIN_REP),
-			e,
+			updateRegisterCompnent(componentID, componentName, commID, componentType),
 			pkt->getPacketSequence() + 1);
 	}
 	else if (base::protocol::ComponentCommand::COMPONENT_COMMAND_SIGNIN_REP == command)
 	{
-		const char* componentID{
-			reinterpret_cast<const char*>(pkt->getPacketData()) };
-		//无论注册还是心跳都保存组件ID标识
-		setMDCServerInfoWithName("Component.Disptcher.ID", componentID);
+// 		const char* componentID{
+// 			reinterpret_cast<const char*>(pkt->getPacketData()) };
+// 		//无论注册还是心跳都保存组件ID标识
+// 		setMDCServerInfoWithName("Component.Disptcher.ID", componentID);
+
+		parentXMQID = reinterpret_cast<const char*>(pkt->getPacketData());
 	}
 	else if (base::protocol::ComponentCommand::COMPONENT_COMMAND_SIGNOUT_REQ == command)
 	{
@@ -367,8 +411,15 @@ void MDCServer::processComponentMessage(
 			const std::string msgstr{ DataPacker().packData(datapkt) };
 			if (!msgstr.empty())
 			{
-				//commID和fromID一样
-				AbstractServer::sendMessageData(commID, "response", "", fromID, msgstr);
+				AbstractComponentPtr acp{ registerComponentGroup.at(fromID) };
+				if (acp)
+				{
+					sendData(commID, "worker", "response", AbstractWorker::getUUID(), fromID, msgstr);
+				} 
+				else
+				{
+					sendData("worker", "response", AbstractWorker::getUUID(), fromID, msgstr);
+				}
 			}
 		}
 	}
@@ -395,7 +446,6 @@ int MDCServer::addNewRegisterComponent(
 		LOG(INFO) << "Add a new component name = " << serviceName <<
 			", ID = " << componentID <<
 			", CommID = " << communicationID <<
-//			", Name = " << serviceName <<
 			", Timestamp = " << acp->getComponentTimestamp() 
 			<< ".";
 	} 
@@ -467,7 +517,7 @@ int MDCServer::replyMessageWithResultAndExtendID(
 
 		if (base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_COMPONENT == static_cast<base::packet::MessagePacketType>(pkttype))
 		{
-			e = AbstractServer::sendMessageData(commID, "response", "", fromID, DataPacker().packData(datapkt));
+			e = sendData(commID, "server", "response", extendID, fromID, DataPacker().packData(datapkt));
 		}
 	}
 

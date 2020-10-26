@@ -4,6 +4,6 @@
     <DebuggerFlavor>LinuxDebugger</DebuggerFlavor>
     <RemoteDebugTarget>-2048585875;127.0.0.1 (username=, port=60022, authentication=Password)</RemoteDebugTarget>
     <RemoteDebuggerWorkingDirectory>/root/projects/bin/$(Platform)/$(Configuration)</RemoteDebuggerWorkingDirectory>
-    <RemoteDebuggerCommandArguments>-l 61002 -u 127.0.0.1 -p 61001 -n LandRover</RemoteDebuggerCommandArguments>
+    <RemoteDebuggerCommandArguments>-l 61001 -u 192.168.0.13 -p 53101 -n Future</RemoteDebuggerCommandArguments>
   </PropertyGroup>
 </Project>

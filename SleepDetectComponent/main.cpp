@@ -31,7 +31,7 @@ static void parseCommandLine(int argc, char** argv)
 	CommandLine cl;
 	cl.setCommandOptions("address,a", "127.0.0.1");
 	cl.setCommandOptions("port,p", "61001");
-	cl.setCommandOptions("name,n", "Unknown");
+	cl.setCommandOptions("name,n", "Sleep");
 
 	if (eSuccess == cl.parseCommandLine(argc, argv))
 	{
@@ -59,7 +59,7 @@ static void parseCommandLine(int argc, char** argv)
 			{
 				configName.append(name);
 				//名字直接写入配置文件,需要再去读
-				XMLPacker().setValueWithName("Config.xml", "Component.Sleep.Name", name);
+				XMLPacker().setValueWithName("Config.xml", "Component.Sleep.Name", configName);
 			}
 		}
 
@@ -82,7 +82,8 @@ static int createNewAsynchronousClient(void)
 				boost::make_shared<SleepDetectComponentClient>(gMessageDispatcherCenterIP) };
 			if (acp)
 			{
-				e = acp->startClient((boost::format("tcp://%s:%d") % gMessageDispatcherCenterIP % gMessageDispatcherCenterPort).str(), "Sleep");
+				e = acp->startClient(
+					(boost::format("tcp://%s:%d") % gMessageDispatcherCenterIP % gMessageDispatcherCenterPort).str());
 
 				if (eSuccess == e)
 				{

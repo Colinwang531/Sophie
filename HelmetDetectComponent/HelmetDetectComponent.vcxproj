@@ -433,7 +433,7 @@
     <ClCompile Include="..\Source\MessageQueue\MajordomoWorker.cpp" />
     <ClCompile Include="..\Source\MessageQueue\MessageData.cpp" />
     <ClCompile Include="..\Source\Network\AbstractClient.cpp" />
-    <ClCompile Include="..\Source\Network\AbstractMediaStreamClient.cpp" />
+    <ClCompile Include="..\Source\Network\AbstractWorker.cpp" />
     <ClCompile Include="..\Source\Packet\DataPacket.cpp" />
     <ClCompile Include="..\Source\Packet\Message\MessagePacket.cpp" />
     <ClCompile Include="..\Source\Packet\Stream\StreamPacket.cpp" />
@@ -825,7 +825,7 @@
     <ClInclude Include="..\Include\MessageQueue\MajordomoWorker.h" />
     <ClInclude Include="..\Include\MessageQueue\MessageData.h" />
     <ClInclude Include="..\Include\Network\AbstractClient.h" />
-    <ClInclude Include="..\Include\Network\AbstractMediaStreamClient.h" />
+    <ClInclude Include="..\Include\Network\AbstractWorker.h" />
     <ClInclude Include="..\Include\Packet\DataPacket.h" />
     <ClInclude Include="..\Include\Packet\Message\MessagePacket.h" />
     <ClInclude Include="..\Include\Packet\Stream\StreamPacket.h" />

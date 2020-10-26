@@ -43,7 +43,7 @@ static void parseCommandLine(int argc, char** argv)
 	CommandLine cl;
 	cl.setCommandOptions("address,a", "127.0.0.1");
 	cl.setCommandOptions("port,p", "61001");
-	cl.setCommandOptions("name,n", "Unknown");
+	cl.setCommandOptions("name,n", "Stream");
 
 	if (eSuccess == cl.parseCommandLine(argc, argv))
 	{
@@ -63,7 +63,7 @@ static void parseCommandLine(int argc, char** argv)
 		//优先使用配置文件中的名称,如果配置文件中的名称空再使用参数列表中的名称
 		//名称在第一次启动设置后就不能再修改
 		std::string configName;
-		XMLParser().getValueByName("Config.xml", "Component.Stream.Name", configName);
+		XMLParser().getValueByName("Config.xml", "Component.MED.Name", configName);
 		const char* name{ cl.getParameterByOption("name") };
 		if (configName.empty())
 		{
@@ -71,7 +71,7 @@ static void parseCommandLine(int argc, char** argv)
 			{
 				configName.append(name);
 				//名字直接写入配置文件,需要再去读
-				XMLPacker().setValueWithName("Config.xml", "Component.Stream.Name", name);
+				XMLPacker().setValueWithName("Config.xml", "Component.MED.Name", configName);
 			}
 		}
 
@@ -93,7 +93,8 @@ static int createNewAsynchronousClient(void)
 			MediaStreamComponentClientPtr mscp{ boost::make_shared<MediaStreamComponentClient>() };
 			if (mscp)
 			{
-				e = mscp->startClient((boost::format("tcp://%s:%d") % gMessageDispatcherCenterIP % gMessageDispatcherCenterPort).str(), "Stream");
+				e = mscp->startClient(
+					(boost::format("tcp://%s:%d") % gMessageDispatcherCenterIP % gMessageDispatcherCenterPort).str().c_str());
 
 				if (eSuccess == e)
 				{

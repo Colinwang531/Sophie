@@ -30,10 +30,11 @@ using AbstractFilterPtr = boost::shared_ptr<AbstractFilter>;
 
 HelmetMediaStreamSession::HelmetMediaStreamSession(
 	AbstractClient& parent,
-	const std::string url, 
+	const std::string uid,
+	const std::string url,
 	const AbstractAlgorithm algo,
 	boost::asio::ip::tcp::socket* s /* = nullptr */)
-	: TCPStreamTargetSession(s), parentClient{ parent }, streamURL{ url }, algorithmParam{ algo }, frameSequence{ 0 }
+	: TCPStreamTargetSession(s), parentClient{ parent }, streamURL{ url }, algorithmParam{ algo }, frameSequence{ 0 }, uuid{ uid }
 {}
 HelmetMediaStreamSession::~HelmetMediaStreamSession() {}
 
@@ -177,11 +178,11 @@ void HelmetMediaStreamSession::alarmDataNotificationCallback(StreamPacketPtr pkt
 			datapkt->setPacketData((void*)&h);
 			//设置一个无效的用户ID
 			datapkt->setPacketData((void*)"0");
-			datapkt->setPacketSequence(0);
+			datapkt->setPacketSequence(1);
 			datapkt->setPacketTimestamp(Time().tickcount());
 			msg = DataPacker().packData(datapkt);
 
- 			parentClient.sendMessageData("notify", "", alarmComponentID, msg);
+ 			parentClient.sendData("worker", "notification", uuid, alarmComponentID, msg);
 			LOG(INFO) << "Helmet alarm x = " << x << ", y = " << y << ", w = " << w << ", h = " << h << ".";
 		}
 	}

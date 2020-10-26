@@ -867,6 +867,9 @@
     <ClCompile Include="..\Source\Alarm\AbstractAlarm.cpp">
       <Filter>Alarm</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\Network\AbstractWorker.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="3rd">
@@ -15141,6 +15144,9 @@
     </ClInclude>
     <ClInclude Include="..\Include\Alarm\AbstractAlarm.h">
       <Filter>Alarm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Network\AbstractWorker.h">
+      <Filter>Network</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

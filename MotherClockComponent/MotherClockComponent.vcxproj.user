@@ -3,6 +3,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <RemoteDebuggerWorkingDirectory>/root/projects/bin/$(Platform)/$(Configuration)</RemoteDebuggerWorkingDirectory>
     <DebuggerFlavor>LinuxDebugger</DebuggerFlavor>
-    <RemoteDebuggerCommandArguments>-a 127.0.0.1 -p 61001 -n MotherClock -c 3 -b 4800</RemoteDebuggerCommandArguments>
+    <RemoteDebuggerCommandArguments>-a 127.0.0.1 -p 61001 -n MotherClock -c 0 -b 4800</RemoteDebuggerCommandArguments>
   </PropertyGroup>
 </Project>

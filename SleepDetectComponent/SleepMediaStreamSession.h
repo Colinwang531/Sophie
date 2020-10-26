@@ -26,6 +26,7 @@ class SleepMediaStreamSession : public TCPStreamTargetSession
 public:
 	SleepMediaStreamSession(
 		AbstractClient& parent,
+		const std::string uid,
 		const std::string url,
 		const AbstractAlgorithm algo,
 		boost::asio::ip::tcp::socket* s = nullptr);
@@ -36,7 +37,7 @@ public:
 	int stopSession(void) override;
 	inline void setAlarmCommunicationID(const std::string id)
 	{
-		alarmCommunicationID = id;
+		alarmComponentID = id;
 	}
 	
 protected:
@@ -49,8 +50,9 @@ private:
 
 private:
 	AbstractClient& parentClient;
+	const std::string uuid;
 	const std::string streamURL;
-	std::string alarmCommunicationID;
+	std::string alarmComponentID;
 	const AbstractAlgorithm algorithmParam;
 	long long frameSequence;
 	AbstractGraphPtr livestreamSleepGraphPtr;

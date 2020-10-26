@@ -338,7 +338,7 @@
     <ClCompile Include="..\Source\MessageQueue\MessageData.cpp" />
     <ClCompile Include="..\Source\MessageQueue\MajordomoWorker.cpp" />
     <ClCompile Include="..\Source\Network\AbstractClient.cpp" />
-    <ClCompile Include="..\Source\Network\AbstractMediaStreamClient.cpp" />
+    <ClCompile Include="..\Source\Network\AbstractWorker.cpp" />
     <ClCompile Include="..\Source\Number\Number.cpp" />
     <ClCompile Include="..\Source\Packet\DataPacket.cpp" />
     <ClCompile Include="..\Source\Packet\Message\MessagePacket.cpp" />
@@ -1610,6 +1610,18 @@
     <ClInclude Include="..\3rdPart\boost_1_72_0\boost\exception\to_string_stub.hpp" />
     <ClInclude Include="..\3rdPart\boost_1_72_0\boost\exception_ptr.hpp" />
     <ClInclude Include="..\3rdPart\boost_1_72_0\boost\filesystem.hpp" />
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\filesystem\config.hpp" />
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\filesystem\convenience.hpp" />
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\filesystem\detail\macro_value.hpp" />
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\filesystem\detail\utf8_codecvt_facet.hpp" />
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\filesystem\directory.hpp" />
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\filesystem\exception.hpp" />
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\filesystem\file_status.hpp" />
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\filesystem\fstream.hpp" />
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\filesystem\operations.hpp" />
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\filesystem\path.hpp" />
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\filesystem\path_traits.hpp" />
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\filesystem\string_file.hpp" />
     <ClInclude Include="..\3rdPart\boost_1_72_0\boost\flyweight.hpp" />
     <ClInclude Include="..\3rdPart\boost_1_72_0\boost\foreach.hpp" />
     <ClInclude Include="..\3rdPart\boost_1_72_0\boost\foreach_fwd.hpp" />
@@ -4802,7 +4814,7 @@
     <ClInclude Include="..\Include\MessageQueue\MajordomoWorker.h" />
     <ClInclude Include="..\Include\Mutex\RWLock.h" />
     <ClInclude Include="..\Include\Network\AbstractClient.h" />
-    <ClInclude Include="..\Include\Network\AbstractMediaStreamClient.h" />
+    <ClInclude Include="..\Include\Network\AbstractWorker.h" />
     <ClInclude Include="..\Include\Number\Number.h" />
     <ClInclude Include="..\Include\Packet\DataPacket.h" />
     <ClInclude Include="..\Include\Packet\Message\MessagePacket.h" />

@@ -828,9 +828,6 @@
     <ClCompile Include="..\Source\ASIO\TCPSession.cpp">
       <Filter>ASIO</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Network\AbstractMediaStreamClient.cpp">
-      <Filter>Network</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Timer\Timer.cpp">
       <Filter>Timer</Filter>
     </ClCompile>
@@ -861,6 +858,9 @@
     </ClCompile>
     <ClCompile Include="..\Source\Protocol\linux\Event.pb.cc">
       <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Network\AbstractWorker.cpp">
+      <Filter>Network</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1823,6 +1823,12 @@
     </Filter>
     <Filter Include="Alarm">
       <UniqueIdentifier>{04dbf05e-5658-49b7-b19e-74bb3c894f54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\boost\filesystem">
+      <UniqueIdentifier>{85916460-a6db-41ef-8700-1cd5e7134858}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\boost\filesystem\detail">
+      <UniqueIdentifier>{e971a5d9-8ad0-4e0b-bdd4-a165e692b410}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -15029,9 +15035,6 @@
     <ClInclude Include="..\Include\ASIO\TCPSession.h">
       <Filter>ASIO</Filter>
     </ClInclude>
-    <ClInclude Include="..\Include\Network\AbstractMediaStreamClient.h">
-      <Filter>Network</Filter>
-    </ClInclude>
     <ClInclude Include="..\Include\Timer\Timer.h">
       <Filter>Timer</Filter>
     </ClInclude>
@@ -15212,6 +15215,45 @@
     </ClInclude>
     <ClInclude Include="..\Include\Protocol\linux\Event.pb.h">
       <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Network\AbstractWorker.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\filesystem\config.hpp">
+      <Filter>3rd\boost\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\filesystem\convenience.hpp">
+      <Filter>3rd\boost\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\filesystem\directory.hpp">
+      <Filter>3rd\boost\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\filesystem\exception.hpp">
+      <Filter>3rd\boost\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\filesystem\file_status.hpp">
+      <Filter>3rd\boost\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\filesystem\fstream.hpp">
+      <Filter>3rd\boost\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\filesystem\operations.hpp">
+      <Filter>3rd\boost\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\filesystem\path.hpp">
+      <Filter>3rd\boost\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\filesystem\path_traits.hpp">
+      <Filter>3rd\boost\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\filesystem\string_file.hpp">
+      <Filter>3rd\boost\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\filesystem\detail\macro_value.hpp">
+      <Filter>3rd\boost\filesystem\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\boost\filesystem\detail\utf8_codecvt_facet.hpp">
+      <Filter>3rd\boost\filesystem\detail</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

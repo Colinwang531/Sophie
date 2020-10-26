@@ -20,10 +20,10 @@ namespace base
 		}
 
 		int ComPort::openPort(
-			const unsigned char idx /* = 0 */, 
-			const unsigned int baudrate /* = 4800 */)
+			const int idx /* = 0 */, 
+			const int baudrate /* = 4800 */)
 		{
-			int e{ 0xFFFF > idx ? eSuccess : eInvalidParameter };
+			int e{ -1 < idx && eMaxPort > idx && 0 < baudrate ? eSuccess : eInvalidParameter };
 
 			if (eSuccess == e)
 			{
@@ -32,7 +32,7 @@ namespace base
 				if (cpp)
 				{
 					boost::system::error_code ec;
-					const std::string desc{ (boost::format("COM%d") % idx).str() };
+					const std::string desc{ (boost::format("/dev/ttyUSB%d") % idx).str() };
 					cpp->open(desc, ec);
 
 					if (!ec)
@@ -57,6 +57,14 @@ namespace base
 									boost::asio::placeholders::bytes_transferred));
 						}
 					}
+					else
+					{
+						e = eBadOperate;
+					}
+				}
+				else
+				{
+					e = eBadNewObject;
 				}
 			}
 
@@ -96,10 +104,7 @@ namespace base
 
 		void ComPort::processDataReceiveWorkerThread()
 		{
-			if (ios.stopped())
-			{
-				ios.run();
-			}
+			ios.run();
 		}
 	}//namespace com
 }//namespace base
