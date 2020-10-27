@@ -1,5 +1,6 @@
 #include "boost/algorithm/string.hpp"
 #include "boost/bind.hpp"
+#include "boost/format.hpp"
 #include "boost/make_shared.hpp"
 #include "boost/pointer_cast.hpp"
 #ifdef _WINDOWS
@@ -15,6 +16,7 @@
 using DataParser = base::protocol::DataParser;
 using DataPacker = base::protocol::DataPacker;
 #include "Protocol/ComponentPhrase.h"
+#include "Protocol/EventPhrase.h"
 #include "Xml/XmlCodec.h"
 using XMLParser = base::xml::XMLParser;
 using XMLPacker = base::xml::XMLPacker;
@@ -81,6 +83,10 @@ void AlarmPusherComponentClient::afterPolledDataFromWorkerCallback(
 		else if (base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_ALARM == type)
 		{
 			processAlarmMessage(data);
+		}
+		else if (base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_EVENT == type)
+		{
+			processEventMessage(pkt);
 		}
 		else
 		{
@@ -200,9 +206,23 @@ void AlarmPusherComponentClient::processComponentMessage(DataPacketPtr pkt)
 
 void AlarmPusherComponentClient::processAlarmMessage(const std::string msg)
 {
-	if (worker)
+	if (!motherClockTime.empty())
 	{
-		worker->sendData("worker", "notification", AbstractWorker::getUUID(), webComponentID, msg);
+		//×·¼ÓÄ¸ÖÓÊ±¼ä
+		const std::string combine{ (boost::format("%s#%s") % msg % motherClockTime).str() };
+		sendData("worker", "notification", AbstractWorker::getUUID(), webComponentID, combine);
 		LOG(INFO) << "Push alarm message from " << AbstractWorker::getUUID() << " to WEB service " << webComponentID << ".";
+	}
+}
+
+void AlarmPusherComponentClient::processEventMessage(DataPacketPtr pkt)
+{
+	MessagePacketPtr msgpkt{ boost::dynamic_pointer_cast<MessagePacket>(pkt) };
+	const base::protocol::EventCommand command{
+		static_cast<base::protocol::EventCommand>(msgpkt->getMessagePacketCommand()) };
+
+	if (base::protocol::EventCommand::EVENT_COMMAND_SYNC_CLOCK == command)
+	{
+		motherClockTime = reinterpret_cast<const char*>(pkt->getPacketData());
 	}
 }

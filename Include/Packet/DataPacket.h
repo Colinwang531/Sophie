@@ -73,6 +73,7 @@ namespace base
 			//@Return : 包数据
 			//@Comment : 不分配内存空间,不保证数据有效性
 			void setPacketData(void* data = nullptr);
+			void setPacketData(const int idx = 0, void* data = nullptr);
 			void* getPacketData(const int idx = 0);
 
 		private:

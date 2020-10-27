@@ -34,9 +34,10 @@ static void comportDataNotificationCallback(
 	const char* data = nullptr, 
 	const int bytes = 0)
 {
-	if ('$' == *data)
+	clockAsyncData.append(data, bytes);
+
+	if ('\n' == *data)
 	{
-		printf("%s\r\n", clockAsyncData.c_str());
 		if (!clockAsyncData.empty())
 		{
 			std::vector<std::string> clockDatas;
@@ -44,20 +45,30 @@ static void comportDataNotificationCallback(
 
 			if (!clockDatas[0].compare("$ZQZDA") || !clockDatas[0].compare("$CJZDA") || !clockDatas[0].compare("$GPZDA"))
 			{
-				const std::string clockDesc{
-					(boost::format("%s-%s-%s,%s:%s:%s,%s") % 
-					clockDatas[4] % clockDatas[3] % clockDatas[2] % 
-						clockDatas[1].substr(0, 2) % clockDatas[1].substr(2, 2) % clockDatas[1].substr(4, 2) % 
-						clockDatas[5]).str() };
+				char clockDesc[128]{ 0 };
+#ifdef WINDOWS
+				sprintf_s(clockDesc, 128, "%s-%s-%s,%s:%s:%s,%s",
+					clockDatas[4].c_str(), clockDatas[3].c_str(), clockDatas[2].c_str(),
+					clockDatas[1].substr(0, 2).c_str(), clockDatas[1].substr(2, 2).c_str(), clockDatas[1].substr(4, 2).c_str(),
+					clockDatas[5].c_str());
+#else
+				sprintf(clockDesc, "%s-%s-%s,%s:%s:%s,%s",
+					clockDatas[4].c_str(), clockDatas[3].c_str(), clockDatas[2].c_str(),
+					clockDatas[1].substr(0, 2).c_str(), clockDatas[1].substr(2, 2).c_str(), clockDatas[1].substr(4, 2).c_str(),
+					clockDatas[5].c_str());
+#endif//WINDOWS
 
-//				printf("%s.\r\n", clockDesc);
+				if (gMotherClockComponentClientPtr)
+				{
+					boost::shared_ptr<MotherClockComponentClient> mccp{ 
+						boost::dynamic_pointer_cast<MotherClockComponentClient>(gMotherClockComponentClientPtr) };
+					mccp->buildMotherClockMessage(clockDesc);
+				}
+
 				clockAsyncData.clear();
 			}
 		}
 	}
-
-	clockAsyncData.append(data, bytes);
-//	printf("%s\r\n", clockAsyncData.c_str());
 }
 
 static void parseCommandLine(int argc, char** argv)

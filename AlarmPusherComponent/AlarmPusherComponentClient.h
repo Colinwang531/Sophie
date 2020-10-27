@@ -58,10 +58,12 @@ private:
 		const std::string value);
 	void processComponentMessage(DataPacketPtr pkt);
 	void processAlarmMessage(const std::string msg);
+	void processEventMessage(DataPacketPtr pkt);
 
 private:
 	MajordomoWorkerPtr worker;
 	std::string parentXMQID;
 	std::string webComponentID;
+	std::string motherClockTime;
 };//class AlarmPusherComponentClient
 

@@ -26,6 +26,8 @@ namespace base
 			EVENT_COMMAND_NONE = 0,
 			EVENT_COMMAND_CAPTURE_JPEG_REQ = 1,
 			EVENT_COMMAND_CAPTURE_JPEG_REP = 2,
+			EVENT_COMMAND_SYNC_CLOCK = 3,
+			EVENT_COMMAND_SYNC_AIS = 4
 		}EventCommand;
 
 		class EventParser

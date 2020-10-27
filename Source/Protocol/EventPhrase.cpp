@@ -68,6 +68,11 @@ namespace base
 						boost::checked_delete(cameraIdx);
 					}
 				}
+				else if (msg::Event_Command::Event_Command_SYNC_CLOCK == command)
+				{
+					msg::Clock* info{ me->release_clock() };
+					pkt->setPacketData((void*)info->time().c_str());
+				}
 			}
 
 			return pkt;
@@ -101,6 +106,18 @@ namespace base
 					info->set_cid((const char*)pkt->getPacketData(1));
 					info->set_idx(*((int*)pkt->getPacketData(2)));
 					info->set_picture((const char*)pkt->getPacketData(3));
+				}
+				else if (msg::Event_Command::Event_Command_SYNC_CLOCK == command)
+				{
+					msg::Clock* info{ e->mutable_clock() };
+					info->set_time((const char*)pkt->getPacketData());
+				}
+				else if (msg::Event_Command::Event_Command_SYNC_AIS == command)
+				{
+					msg::Ais* info{ e->mutable_ais() };
+					info->set_status(atoi((const char*)pkt->getPacketData()));
+					info->set_longitude((const char*)pkt->getPacketData(1));
+					info->set_latitude((const char*)pkt->getPacketData(2));
 				}
 
 				mm.SerializeToString(&msgstr);

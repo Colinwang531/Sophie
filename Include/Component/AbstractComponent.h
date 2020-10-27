@@ -30,7 +30,9 @@ namespace base
 			COMPONENT_TYPE_DHD = 4,
 			COMPONENT_TYPE_ALM = 5,
 			COMPONENT_TYPE_AI = 6,
-			COMPONENT_TYPE_MED = 7
+			COMPONENT_TYPE_MED = 7,
+			COMPONENT_TYPE_CLK = 8,
+			COMPONENT_TYPE_AIS = 9,
 		}ComponentType;
 
 		class AbstractComponent : private boost::noncopyable

@@ -26,6 +26,9 @@ public:
 	MotherClockComponentClient(void);
 	virtual ~MotherClockComponentClient(void);
 
+public:
+	void buildMotherClockMessage(const std::string msg);
+
 protected:
 	int createNewClient(const std::string address) override;
 	int destroyClient(void) override;
@@ -57,7 +60,6 @@ private:
 		const std::string name,
 		const std::string value);
 	void processComponentMessage(DataPacketPtr pkt);
-	void buildMotherClockMessage(const std::string msg);
 
 private:
 	MajordomoWorkerPtr worker;

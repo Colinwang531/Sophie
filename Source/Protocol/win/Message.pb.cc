@@ -19,7 +19,7 @@ extern PROTOBUF_INTERNAL_EXPORT_Algorithm_2eproto ::PROTOBUF_NAMESPACE_ID::inter
 extern PROTOBUF_INTERNAL_EXPORT_Component_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<2> scc_info_Component_Component_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_Crew_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<2> scc_info_Crew_Crew_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_Device_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<2> scc_info_Device_Device_2eproto;
-extern PROTOBUF_INTERNAL_EXPORT_Event_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_Event_Event_2eproto;
+extern PROTOBUF_INTERNAL_EXPORT_Event_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<3> scc_info_Event_Event_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_Status_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<2> scc_info_Status_Status_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_User_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<2> scc_info_User_User_2eproto;
 namespace msg {

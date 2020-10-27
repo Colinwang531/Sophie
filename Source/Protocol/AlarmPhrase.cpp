@@ -34,17 +34,27 @@ namespace base
 				MessagePacketPtr msgpkt{ boost::dynamic_pointer_cast<MessagePacket>(pkt) };
 				msgpkt->setMessagePacketCommand(static_cast<int>(command));
 
-				if (msg::Alarm_Command::Alarm_Command_NOTIFY == command)
-				{
-// 					const msg::AlarmInfo& info{ ma->release_alarminfo() };
-// 					AbstractAlarm* aa{
-// 						new(std::nothrow) AbstractAlarm(info.cid()) };
+// 				if (msg::Alarm_Command::Alarm_Command_NOTIFY == command)
+// 				{
+// 					const msg::AlarmInfo* info{ ma->release_alarminfo() };
+// 					const std::string picture{ info->picture() }, cid{ info->cid() }, time{ info->time() }, uid{ info->uid() };
+// 					const msg::AlarmPosition& pos{ info->alarmposition() };
+// 					const int x{ pos.x() }, y{ pos.y() }, w{ pos.w() }, h{ pos.h() };
 // 
-// 					if (aa)
-// 					{
-// 						aa->set
-// 					}
-				}
+// 					char* pictureBuffer{ new(std::nothrow) char[picture.length()] };
+// 					char* cidBuffer{ new(std::nothrow) char[cid.length()] };
+// 					char* timeBuffer{ new(std::nothrow) char[time.length()] };
+// 					char* uidBuffer{ new(std::nothrow) char[uid.length()] };
+// 					int* xBuffer{ new(std::nothrow) int };
+// 					int* yBuffer{ new(std::nothrow) int };
+// 					int* wBuffer{ new(std::nothrow) int };
+// 					int* hBuffer{ new(std::nothrow) int };
+// 
+// 					pkt->setPacketData((void*).c_str());
+// 					pkt->setPacketData((void*)info->cid().c_str());
+// 					pkt->setPacketData((void*)info->time().c_str());
+// 					pkt->setPacketData((void*)&pos.x());
+// 				}
 			}
 
 			return pkt;

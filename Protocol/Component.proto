@@ -13,6 +13,8 @@ message ComponentInfo
 		ALM = 5;
 		AI = 6;
 		MED = 7;
+		CLK = 8;
+		AIS = 9;
 	}
 	
 	required Type type = 1;

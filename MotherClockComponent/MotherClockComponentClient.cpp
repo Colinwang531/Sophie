@@ -15,6 +15,7 @@
 using DataParser = base::protocol::DataParser;
 using DataPacker = base::protocol::DataPacker;
 #include "Protocol/ComponentPhrase.h"
+#include "Protocol/EventPhrase.h"
 #include "Xml/XmlCodec.h"
 using XMLParser = base::xml::XMLParser;
 using XMLPacker = base::xml::XMLPacker;
@@ -95,7 +96,7 @@ void MotherClockComponentClient::sendRegisterWorkerServerMessage()
 	XMLParser().getValueByName("Config.xml", "Component.CLK.ID", id);
 	XMLParser().getValueByName("Config.xml", "Component.CLK.Name", name);
 	AbstractComponent component(
-		base::component::ComponentType::COMPONENT_TYPE_ALM);
+		base::component::ComponentType::COMPONENT_TYPE_CLK);
 	component.setComponentID(id);
 	component.setComponentName(name);
 
@@ -125,7 +126,7 @@ void MotherClockComponentClient::sendQuerySystemServiceMessage()
 		msgpkt->setMessagePacketCommand(
 			static_cast<int>(base::protocol::ComponentCommand::COMPONENT_COMMAND_QUERY_REQ));
 		const std::string data{ DataPacker().packData(pkt) };
-		sendData("worker", "request", AbstractWorker::getUUID(), parentXMQID, data);
+		sendData("worker", "request", getUUID(), parentXMQID, data);
 	}
 }
 
@@ -196,6 +197,20 @@ void MotherClockComponentClient::processComponentMessage(DataPacketPtr pkt)
 
 void MotherClockComponentClient::buildMotherClockMessage(const std::string msg)
 {
-
-//	AbstractClient::sendMessageData("notify", "", alarmPusherComponentID, msg);
+	if (!msg.empty() && !alarmPusherComponentID.empty())
+	{
+		DataPacketPtr pkt{
+		boost::make_shared<MessagePacket>(
+			base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_EVENT) };
+		if (pkt)
+		{
+			MessagePacketPtr mp{ boost::dynamic_pointer_cast<MessagePacket>(pkt) };
+			mp->setMessagePacketCommand(
+				static_cast<int>(base::protocol::EventCommand::EVENT_COMMAND_SYNC_CLOCK));
+			mp->setPacketData((void*)msg.c_str());
+			const std::string data{ DataPacker().packData(pkt) };
+			sendData("worker", "notification", getUUID(), alarmPusherComponentID, data);
+			LOG(INFO) << "Push clock time = " << msg << " to alarm service " << alarmPusherComponentID << ".";
+		}
+	}
 }

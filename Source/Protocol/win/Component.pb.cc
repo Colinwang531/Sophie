@@ -154,22 +154,22 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 };
 
 const char descriptor_table_protodef_Component_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\017Component.proto\022\003msg\"\260\001\n\rComponentInfo"
+  "\n\017Component.proto\022\003msg\"\302\001\n\rComponentInfo"
   "\022%\n\004type\030\001 \002(\0162\027.msg.ComponentInfo.Type\022"
   "\023\n\013componentid\030\002 \001(\t\022\016\n\006commid\030\003 \001(\t\022\r\n\005"
-  "cname\030\004 \001(\t\"D\n\004Type\022\007\n\003XMQ\020\001\022\007\n\003WEB\020\002\022\007\n"
+  "cname\030\004 \001(\t\"V\n\004Type\022\007\n\003XMQ\020\001\022\007\n\003WEB\020\002\022\007\n"
   "\003HKD\020\003\022\007\n\003DHD\020\004\022\007\n\003ALM\020\005\022\006\n\002AI\020\006\022\007\n\003MED\020"
-  "\007\"=\n\020ComponentRequest\022)\n\rcomponentinfo\030\001"
-  " \002(\0132\022.msg.ComponentInfo\"\\\n\021ComponentRes"
-  "ponse\022\016\n\006result\030\001 \002(\005\022\013\n\003cid\030\002 \001(\t\022*\n\016co"
-  "mponentinfos\030\003 \003(\0132\022.msg.ComponentInfo\"\203"
-  "\002\n\tComponent\022\'\n\007command\030\001 \002(\0162\026.msg.Comp"
-  "onent.Command\022/\n\020componentrequest\030\002 \001(\0132"
-  "\025.msg.ComponentRequest\0221\n\021componentrespo"
-  "nse\030\003 \001(\0132\026.msg.ComponentResponse\"i\n\007Com"
-  "mand\022\016\n\nSIGNIN_REQ\020\001\022\016\n\nSIGNIN_REP\020\002\022\017\n\013"
-  "SIGNOUT_REQ\020\003\022\017\n\013SIGNOUT_REP\020\004\022\r\n\tQUERY_"
-  "REQ\020\005\022\r\n\tQUERY_REP\020\006"
+  "\007\022\007\n\003CLK\020\010\022\007\n\003AIS\020\t\"=\n\020ComponentRequest\022"
+  ")\n\rcomponentinfo\030\001 \002(\0132\022.msg.ComponentIn"
+  "fo\"\\\n\021ComponentResponse\022\016\n\006result\030\001 \002(\005\022"
+  "\013\n\003cid\030\002 \001(\t\022*\n\016componentinfos\030\003 \003(\0132\022.m"
+  "sg.ComponentInfo\"\203\002\n\tComponent\022\'\n\007comman"
+  "d\030\001 \002(\0162\026.msg.Component.Command\022/\n\020compo"
+  "nentrequest\030\002 \001(\0132\025.msg.ComponentRequest"
+  "\0221\n\021componentresponse\030\003 \001(\0132\026.msg.Compon"
+  "entResponse\"i\n\007Command\022\016\n\nSIGNIN_REQ\020\001\022\016"
+  "\n\nSIGNIN_REP\020\002\022\017\n\013SIGNOUT_REQ\020\003\022\017\n\013SIGNO"
+  "UT_REP\020\004\022\r\n\tQUERY_REQ\020\005\022\r\n\tQUERY_REP\020\006"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_Component_2eproto_deps[1] = {
 };
@@ -181,7 +181,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_Com
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_Component_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Component_2eproto = {
-  false, false, descriptor_table_protodef_Component_2eproto, "Component.proto", 620,
+  false, false, descriptor_table_protodef_Component_2eproto, "Component.proto", 638,
   &descriptor_table_Component_2eproto_once, descriptor_table_Component_2eproto_sccs, descriptor_table_Component_2eproto_deps, 4, 0,
   schemas, file_default_instances, TableStruct_Component_2eproto::offsets,
   file_level_metadata_Component_2eproto, 4, file_level_enum_descriptors_Component_2eproto, file_level_service_descriptors_Component_2eproto,
@@ -203,6 +203,8 @@ bool ComponentInfo_Type_IsValid(int value) {
     case 5:
     case 6:
     case 7:
+    case 8:
+    case 9:
       return true;
     default:
       return false;
@@ -217,6 +219,8 @@ constexpr ComponentInfo_Type ComponentInfo::DHD;
 constexpr ComponentInfo_Type ComponentInfo::ALM;
 constexpr ComponentInfo_Type ComponentInfo::AI;
 constexpr ComponentInfo_Type ComponentInfo::MED;
+constexpr ComponentInfo_Type ComponentInfo::CLK;
+constexpr ComponentInfo_Type ComponentInfo::AIS;
 constexpr ComponentInfo_Type ComponentInfo::Type_MIN;
 constexpr ComponentInfo_Type ComponentInfo::Type_MAX;
 constexpr int ComponentInfo::Type_ARRAYSIZE;

@@ -48,7 +48,7 @@ struct TableStruct_Event_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxiliaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[2]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[4]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -56,26 +56,36 @@ struct TableStruct_Event_2eproto {
 };
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Event_2eproto;
 namespace msg {
+class Ais;
+class AisDefaultTypeInternal;
+extern AisDefaultTypeInternal _Ais_default_instance_;
 class CaptureInfo;
 class CaptureInfoDefaultTypeInternal;
 extern CaptureInfoDefaultTypeInternal _CaptureInfo_default_instance_;
+class Clock;
+class ClockDefaultTypeInternal;
+extern ClockDefaultTypeInternal _Clock_default_instance_;
 class Event;
 class EventDefaultTypeInternal;
 extern EventDefaultTypeInternal _Event_default_instance_;
 }  // namespace msg
 PROTOBUF_NAMESPACE_OPEN
+template<> ::msg::Ais* Arena::CreateMaybeMessage<::msg::Ais>(Arena*);
 template<> ::msg::CaptureInfo* Arena::CreateMaybeMessage<::msg::CaptureInfo>(Arena*);
+template<> ::msg::Clock* Arena::CreateMaybeMessage<::msg::Clock>(Arena*);
 template<> ::msg::Event* Arena::CreateMaybeMessage<::msg::Event>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace msg {
 
 enum Event_Command : int {
   Event_Command_CAPTURE_JPEG_REQ = 1,
-  Event_Command_CAPTURE_JPEG_REP = 2
+  Event_Command_CAPTURE_JPEG_REP = 2,
+  Event_Command_SYNC_CLOCK = 3,
+  Event_Command_SYNC_AIS = 4
 };
 bool Event_Command_IsValid(int value);
 constexpr Event_Command Event_Command_Command_MIN = Event_Command_CAPTURE_JPEG_REQ;
-constexpr Event_Command Event_Command_Command_MAX = Event_Command_CAPTURE_JPEG_REP;
+constexpr Event_Command Event_Command_Command_MAX = Event_Command_SYNC_AIS;
 constexpr int Event_Command_Command_ARRAYSIZE = Event_Command_Command_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* Event_Command_descriptor();
@@ -311,6 +321,356 @@ class CaptureInfo PROTOBUF_FINAL :
 };
 // -------------------------------------------------------------------
 
+class Clock PROTOBUF_FINAL :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:msg.Clock) */ {
+ public:
+  inline Clock() : Clock(nullptr) {}
+  virtual ~Clock();
+
+  Clock(const Clock& from);
+  Clock(Clock&& from) noexcept
+    : Clock() {
+    *this = ::std::move(from);
+  }
+
+  inline Clock& operator=(const Clock& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline Clock& operator=(Clock&& from) noexcept {
+    if (GetArena() == from.GetArena()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance);
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const Clock& default_instance();
+
+  static inline const Clock* internal_default_instance() {
+    return reinterpret_cast<const Clock*>(
+               &_Clock_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    1;
+
+  friend void swap(Clock& a, Clock& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(Clock* other) {
+    if (other == this) return;
+    if (GetArena() == other->GetArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(Clock* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline Clock* New() const final {
+    return CreateMaybeMessage<Clock>(nullptr);
+  }
+
+  Clock* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<Clock>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const Clock& from);
+  void MergeFrom(const Clock& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(Clock* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "msg.Clock";
+  }
+  protected:
+  explicit Clock(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_Event_2eproto);
+    return ::descriptor_table_Event_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kTimeFieldNumber = 1,
+  };
+  // required string time = 1;
+  bool has_time() const;
+  private:
+  bool _internal_has_time() const;
+  public:
+  void clear_time();
+  const std::string& time() const;
+  void set_time(const std::string& value);
+  void set_time(std::string&& value);
+  void set_time(const char* value);
+  void set_time(const char* value, size_t size);
+  std::string* mutable_time();
+  std::string* release_time();
+  void set_allocated_time(std::string* time);
+  private:
+  const std::string& _internal_time() const;
+  void _internal_set_time(const std::string& value);
+  std::string* _internal_mutable_time();
+  public:
+
+  // @@protoc_insertion_point(class_scope:msg.Clock)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr time_;
+  friend struct ::TableStruct_Event_2eproto;
+};
+// -------------------------------------------------------------------
+
+class Ais PROTOBUF_FINAL :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:msg.Ais) */ {
+ public:
+  inline Ais() : Ais(nullptr) {}
+  virtual ~Ais();
+
+  Ais(const Ais& from);
+  Ais(Ais&& from) noexcept
+    : Ais() {
+    *this = ::std::move(from);
+  }
+
+  inline Ais& operator=(const Ais& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline Ais& operator=(Ais&& from) noexcept {
+    if (GetArena() == from.GetArena()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance);
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const Ais& default_instance();
+
+  static inline const Ais* internal_default_instance() {
+    return reinterpret_cast<const Ais*>(
+               &_Ais_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    2;
+
+  friend void swap(Ais& a, Ais& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(Ais* other) {
+    if (other == this) return;
+    if (GetArena() == other->GetArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(Ais* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline Ais* New() const final {
+    return CreateMaybeMessage<Ais>(nullptr);
+  }
+
+  Ais* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<Ais>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const Ais& from);
+  void MergeFrom(const Ais& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(Ais* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "msg.Ais";
+  }
+  protected:
+  explicit Ais(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_Event_2eproto);
+    return ::descriptor_table_Event_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kLongitudeFieldNumber = 2,
+    kLatitudeFieldNumber = 3,
+    kStatusFieldNumber = 1,
+  };
+  // required string longitude = 2;
+  bool has_longitude() const;
+  private:
+  bool _internal_has_longitude() const;
+  public:
+  void clear_longitude();
+  const std::string& longitude() const;
+  void set_longitude(const std::string& value);
+  void set_longitude(std::string&& value);
+  void set_longitude(const char* value);
+  void set_longitude(const char* value, size_t size);
+  std::string* mutable_longitude();
+  std::string* release_longitude();
+  void set_allocated_longitude(std::string* longitude);
+  private:
+  const std::string& _internal_longitude() const;
+  void _internal_set_longitude(const std::string& value);
+  std::string* _internal_mutable_longitude();
+  public:
+
+  // required string latitude = 3;
+  bool has_latitude() const;
+  private:
+  bool _internal_has_latitude() const;
+  public:
+  void clear_latitude();
+  const std::string& latitude() const;
+  void set_latitude(const std::string& value);
+  void set_latitude(std::string&& value);
+  void set_latitude(const char* value);
+  void set_latitude(const char* value, size_t size);
+  std::string* mutable_latitude();
+  std::string* release_latitude();
+  void set_allocated_latitude(std::string* latitude);
+  private:
+  const std::string& _internal_latitude() const;
+  void _internal_set_latitude(const std::string& value);
+  std::string* _internal_mutable_latitude();
+  public:
+
+  // required int32 status = 1;
+  bool has_status() const;
+  private:
+  bool _internal_has_status() const;
+  public:
+  void clear_status();
+  ::PROTOBUF_NAMESPACE_ID::int32 status() const;
+  void set_status(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_status() const;
+  void _internal_set_status(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:msg.Ais)
+ private:
+  class _Internal;
+
+  // helper for ByteSizeLong()
+  size_t RequiredFieldsByteSizeFallback() const;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr longitude_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr latitude_;
+  ::PROTOBUF_NAMESPACE_ID::int32 status_;
+  friend struct ::TableStruct_Event_2eproto;
+};
+// -------------------------------------------------------------------
+
 class Event PROTOBUF_FINAL :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:msg.Event) */ {
  public:
@@ -359,7 +719,7 @@ class Event PROTOBUF_FINAL :
                &_Event_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    1;
+    3;
 
   friend void swap(Event& a, Event& b) {
     a.Swap(&b);
@@ -432,6 +792,10 @@ class Event PROTOBUF_FINAL :
     Event_Command_CAPTURE_JPEG_REQ;
   static constexpr Command CAPTURE_JPEG_REP =
     Event_Command_CAPTURE_JPEG_REP;
+  static constexpr Command SYNC_CLOCK =
+    Event_Command_SYNC_CLOCK;
+  static constexpr Command SYNC_AIS =
+    Event_Command_SYNC_AIS;
   static inline bool Command_IsValid(int value) {
     return Event_Command_IsValid(value);
   }
@@ -461,6 +825,8 @@ class Event PROTOBUF_FINAL :
 
   enum : int {
     kCaptureinfoFieldNumber = 2,
+    kClockFieldNumber = 3,
+    kAisFieldNumber = 4,
     kCommandFieldNumber = 1,
   };
   // optional .msg.CaptureInfo captureinfo = 2;
@@ -480,6 +846,42 @@ class Event PROTOBUF_FINAL :
   void unsafe_arena_set_allocated_captureinfo(
       ::msg::CaptureInfo* captureinfo);
   ::msg::CaptureInfo* unsafe_arena_release_captureinfo();
+
+  // optional .msg.Clock clock = 3;
+  bool has_clock() const;
+  private:
+  bool _internal_has_clock() const;
+  public:
+  void clear_clock();
+  const ::msg::Clock& clock() const;
+  ::msg::Clock* release_clock();
+  ::msg::Clock* mutable_clock();
+  void set_allocated_clock(::msg::Clock* clock);
+  private:
+  const ::msg::Clock& _internal_clock() const;
+  ::msg::Clock* _internal_mutable_clock();
+  public:
+  void unsafe_arena_set_allocated_clock(
+      ::msg::Clock* clock);
+  ::msg::Clock* unsafe_arena_release_clock();
+
+  // optional .msg.Ais ais = 4;
+  bool has_ais() const;
+  private:
+  bool _internal_has_ais() const;
+  public:
+  void clear_ais();
+  const ::msg::Ais& ais() const;
+  ::msg::Ais* release_ais();
+  ::msg::Ais* mutable_ais();
+  void set_allocated_ais(::msg::Ais* ais);
+  private:
+  const ::msg::Ais& _internal_ais() const;
+  ::msg::Ais* _internal_mutable_ais();
+  public:
+  void unsafe_arena_set_allocated_ais(
+      ::msg::Ais* ais);
+  ::msg::Ais* unsafe_arena_release_ais();
 
   // required .msg.Event.Command command = 1;
   bool has_command() const;
@@ -504,6 +906,8 @@ class Event PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   ::msg::CaptureInfo* captureinfo_;
+  ::msg::Clock* clock_;
+  ::msg::Ais* ais_;
   int command_;
   friend struct ::TableStruct_Event_2eproto;
 };
@@ -770,11 +1174,269 @@ inline void CaptureInfo::set_allocated_picture(std::string* picture) {
 
 // -------------------------------------------------------------------
 
+// Clock
+
+// required string time = 1;
+inline bool Clock::_internal_has_time() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool Clock::has_time() const {
+  return _internal_has_time();
+}
+inline void Clock::clear_time() {
+  time_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline const std::string& Clock::time() const {
+  // @@protoc_insertion_point(field_get:msg.Clock.time)
+  return _internal_time();
+}
+inline void Clock::set_time(const std::string& value) {
+  _internal_set_time(value);
+  // @@protoc_insertion_point(field_set:msg.Clock.time)
+}
+inline std::string* Clock::mutable_time() {
+  // @@protoc_insertion_point(field_mutable:msg.Clock.time)
+  return _internal_mutable_time();
+}
+inline const std::string& Clock::_internal_time() const {
+  return time_.Get();
+}
+inline void Clock::_internal_set_time(const std::string& value) {
+  _has_bits_[0] |= 0x00000001u;
+  time_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value, GetArena());
+}
+inline void Clock::set_time(std::string&& value) {
+  _has_bits_[0] |= 0x00000001u;
+  time_.Set(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
+  // @@protoc_insertion_point(field_set_rvalue:msg.Clock.time)
+}
+inline void Clock::set_time(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000001u;
+  time_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
+              GetArena());
+  // @@protoc_insertion_point(field_set_char:msg.Clock.time)
+}
+inline void Clock::set_time(const char* value,
+    size_t size) {
+  _has_bits_[0] |= 0x00000001u;
+  time_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArena());
+  // @@protoc_insertion_point(field_set_pointer:msg.Clock.time)
+}
+inline std::string* Clock::_internal_mutable_time() {
+  _has_bits_[0] |= 0x00000001u;
+  return time_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline std::string* Clock::release_time() {
+  // @@protoc_insertion_point(field_release:msg.Clock.time)
+  if (!_internal_has_time()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000001u;
+  return time_.ReleaseNonDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline void Clock::set_allocated_time(std::string* time) {
+  if (time != nullptr) {
+    _has_bits_[0] |= 0x00000001u;
+  } else {
+    _has_bits_[0] &= ~0x00000001u;
+  }
+  time_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), time,
+      GetArena());
+  // @@protoc_insertion_point(field_set_allocated:msg.Clock.time)
+}
+
+// -------------------------------------------------------------------
+
+// Ais
+
+// required int32 status = 1;
+inline bool Ais::_internal_has_status() const {
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  return value;
+}
+inline bool Ais::has_status() const {
+  return _internal_has_status();
+}
+inline void Ais::clear_status() {
+  status_ = 0;
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 Ais::_internal_status() const {
+  return status_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 Ais::status() const {
+  // @@protoc_insertion_point(field_get:msg.Ais.status)
+  return _internal_status();
+}
+inline void Ais::_internal_set_status(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _has_bits_[0] |= 0x00000004u;
+  status_ = value;
+}
+inline void Ais::set_status(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_status(value);
+  // @@protoc_insertion_point(field_set:msg.Ais.status)
+}
+
+// required string longitude = 2;
+inline bool Ais::_internal_has_longitude() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool Ais::has_longitude() const {
+  return _internal_has_longitude();
+}
+inline void Ais::clear_longitude() {
+  longitude_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline const std::string& Ais::longitude() const {
+  // @@protoc_insertion_point(field_get:msg.Ais.longitude)
+  return _internal_longitude();
+}
+inline void Ais::set_longitude(const std::string& value) {
+  _internal_set_longitude(value);
+  // @@protoc_insertion_point(field_set:msg.Ais.longitude)
+}
+inline std::string* Ais::mutable_longitude() {
+  // @@protoc_insertion_point(field_mutable:msg.Ais.longitude)
+  return _internal_mutable_longitude();
+}
+inline const std::string& Ais::_internal_longitude() const {
+  return longitude_.Get();
+}
+inline void Ais::_internal_set_longitude(const std::string& value) {
+  _has_bits_[0] |= 0x00000001u;
+  longitude_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value, GetArena());
+}
+inline void Ais::set_longitude(std::string&& value) {
+  _has_bits_[0] |= 0x00000001u;
+  longitude_.Set(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
+  // @@protoc_insertion_point(field_set_rvalue:msg.Ais.longitude)
+}
+inline void Ais::set_longitude(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000001u;
+  longitude_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
+              GetArena());
+  // @@protoc_insertion_point(field_set_char:msg.Ais.longitude)
+}
+inline void Ais::set_longitude(const char* value,
+    size_t size) {
+  _has_bits_[0] |= 0x00000001u;
+  longitude_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArena());
+  // @@protoc_insertion_point(field_set_pointer:msg.Ais.longitude)
+}
+inline std::string* Ais::_internal_mutable_longitude() {
+  _has_bits_[0] |= 0x00000001u;
+  return longitude_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline std::string* Ais::release_longitude() {
+  // @@protoc_insertion_point(field_release:msg.Ais.longitude)
+  if (!_internal_has_longitude()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000001u;
+  return longitude_.ReleaseNonDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline void Ais::set_allocated_longitude(std::string* longitude) {
+  if (longitude != nullptr) {
+    _has_bits_[0] |= 0x00000001u;
+  } else {
+    _has_bits_[0] &= ~0x00000001u;
+  }
+  longitude_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), longitude,
+      GetArena());
+  // @@protoc_insertion_point(field_set_allocated:msg.Ais.longitude)
+}
+
+// required string latitude = 3;
+inline bool Ais::_internal_has_latitude() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool Ais::has_latitude() const {
+  return _internal_has_latitude();
+}
+inline void Ais::clear_latitude() {
+  latitude_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline const std::string& Ais::latitude() const {
+  // @@protoc_insertion_point(field_get:msg.Ais.latitude)
+  return _internal_latitude();
+}
+inline void Ais::set_latitude(const std::string& value) {
+  _internal_set_latitude(value);
+  // @@protoc_insertion_point(field_set:msg.Ais.latitude)
+}
+inline std::string* Ais::mutable_latitude() {
+  // @@protoc_insertion_point(field_mutable:msg.Ais.latitude)
+  return _internal_mutable_latitude();
+}
+inline const std::string& Ais::_internal_latitude() const {
+  return latitude_.Get();
+}
+inline void Ais::_internal_set_latitude(const std::string& value) {
+  _has_bits_[0] |= 0x00000002u;
+  latitude_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value, GetArena());
+}
+inline void Ais::set_latitude(std::string&& value) {
+  _has_bits_[0] |= 0x00000002u;
+  latitude_.Set(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
+  // @@protoc_insertion_point(field_set_rvalue:msg.Ais.latitude)
+}
+inline void Ais::set_latitude(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000002u;
+  latitude_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
+              GetArena());
+  // @@protoc_insertion_point(field_set_char:msg.Ais.latitude)
+}
+inline void Ais::set_latitude(const char* value,
+    size_t size) {
+  _has_bits_[0] |= 0x00000002u;
+  latitude_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArena());
+  // @@protoc_insertion_point(field_set_pointer:msg.Ais.latitude)
+}
+inline std::string* Ais::_internal_mutable_latitude() {
+  _has_bits_[0] |= 0x00000002u;
+  return latitude_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline std::string* Ais::release_latitude() {
+  // @@protoc_insertion_point(field_release:msg.Ais.latitude)
+  if (!_internal_has_latitude()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000002u;
+  return latitude_.ReleaseNonDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline void Ais::set_allocated_latitude(std::string* latitude) {
+  if (latitude != nullptr) {
+    _has_bits_[0] |= 0x00000002u;
+  } else {
+    _has_bits_[0] &= ~0x00000002u;
+  }
+  latitude_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), latitude,
+      GetArena());
+  // @@protoc_insertion_point(field_set_allocated:msg.Ais.latitude)
+}
+
+// -------------------------------------------------------------------
+
 // Event
 
 // required .msg.Event.Command command = 1;
 inline bool Event::_internal_has_command() const {
-  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  bool value = (_has_bits_[0] & 0x00000008u) != 0;
   return value;
 }
 inline bool Event::has_command() const {
@@ -782,7 +1444,7 @@ inline bool Event::has_command() const {
 }
 inline void Event::clear_command() {
   command_ = 1;
-  _has_bits_[0] &= ~0x00000002u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline ::msg::Event_Command Event::_internal_command() const {
   return static_cast< ::msg::Event_Command >(command_);
@@ -793,7 +1455,7 @@ inline ::msg::Event_Command Event::command() const {
 }
 inline void Event::_internal_set_command(::msg::Event_Command value) {
   assert(::msg::Event_Command_IsValid(value));
-  _has_bits_[0] |= 0x00000002u;
+  _has_bits_[0] |= 0x00000008u;
   command_ = value;
 }
 inline void Event::set_command(::msg::Event_Command value) {
@@ -884,9 +1546,179 @@ inline void Event::set_allocated_captureinfo(::msg::CaptureInfo* captureinfo) {
   // @@protoc_insertion_point(field_set_allocated:msg.Event.captureinfo)
 }
 
+// optional .msg.Clock clock = 3;
+inline bool Event::_internal_has_clock() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  PROTOBUF_ASSUME(!value || clock_ != nullptr);
+  return value;
+}
+inline bool Event::has_clock() const {
+  return _internal_has_clock();
+}
+inline void Event::clear_clock() {
+  if (clock_ != nullptr) clock_->Clear();
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline const ::msg::Clock& Event::_internal_clock() const {
+  const ::msg::Clock* p = clock_;
+  return p != nullptr ? *p : reinterpret_cast<const ::msg::Clock&>(
+      ::msg::_Clock_default_instance_);
+}
+inline const ::msg::Clock& Event::clock() const {
+  // @@protoc_insertion_point(field_get:msg.Event.clock)
+  return _internal_clock();
+}
+inline void Event::unsafe_arena_set_allocated_clock(
+    ::msg::Clock* clock) {
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(clock_);
+  }
+  clock_ = clock;
+  if (clock) {
+    _has_bits_[0] |= 0x00000002u;
+  } else {
+    _has_bits_[0] &= ~0x00000002u;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:msg.Event.clock)
+}
+inline ::msg::Clock* Event::release_clock() {
+  _has_bits_[0] &= ~0x00000002u;
+  ::msg::Clock* temp = clock_;
+  clock_ = nullptr;
+  if (GetArena() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
+}
+inline ::msg::Clock* Event::unsafe_arena_release_clock() {
+  // @@protoc_insertion_point(field_release:msg.Event.clock)
+  _has_bits_[0] &= ~0x00000002u;
+  ::msg::Clock* temp = clock_;
+  clock_ = nullptr;
+  return temp;
+}
+inline ::msg::Clock* Event::_internal_mutable_clock() {
+  _has_bits_[0] |= 0x00000002u;
+  if (clock_ == nullptr) {
+    auto* p = CreateMaybeMessage<::msg::Clock>(GetArena());
+    clock_ = p;
+  }
+  return clock_;
+}
+inline ::msg::Clock* Event::mutable_clock() {
+  // @@protoc_insertion_point(field_mutable:msg.Event.clock)
+  return _internal_mutable_clock();
+}
+inline void Event::set_allocated_clock(::msg::Clock* clock) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
+  if (message_arena == nullptr) {
+    delete clock_;
+  }
+  if (clock) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(clock);
+    if (message_arena != submessage_arena) {
+      clock = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, clock, submessage_arena);
+    }
+    _has_bits_[0] |= 0x00000002u;
+  } else {
+    _has_bits_[0] &= ~0x00000002u;
+  }
+  clock_ = clock;
+  // @@protoc_insertion_point(field_set_allocated:msg.Event.clock)
+}
+
+// optional .msg.Ais ais = 4;
+inline bool Event::_internal_has_ais() const {
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  PROTOBUF_ASSUME(!value || ais_ != nullptr);
+  return value;
+}
+inline bool Event::has_ais() const {
+  return _internal_has_ais();
+}
+inline void Event::clear_ais() {
+  if (ais_ != nullptr) ais_->Clear();
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline const ::msg::Ais& Event::_internal_ais() const {
+  const ::msg::Ais* p = ais_;
+  return p != nullptr ? *p : reinterpret_cast<const ::msg::Ais&>(
+      ::msg::_Ais_default_instance_);
+}
+inline const ::msg::Ais& Event::ais() const {
+  // @@protoc_insertion_point(field_get:msg.Event.ais)
+  return _internal_ais();
+}
+inline void Event::unsafe_arena_set_allocated_ais(
+    ::msg::Ais* ais) {
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(ais_);
+  }
+  ais_ = ais;
+  if (ais) {
+    _has_bits_[0] |= 0x00000004u;
+  } else {
+    _has_bits_[0] &= ~0x00000004u;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:msg.Event.ais)
+}
+inline ::msg::Ais* Event::release_ais() {
+  _has_bits_[0] &= ~0x00000004u;
+  ::msg::Ais* temp = ais_;
+  ais_ = nullptr;
+  if (GetArena() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
+}
+inline ::msg::Ais* Event::unsafe_arena_release_ais() {
+  // @@protoc_insertion_point(field_release:msg.Event.ais)
+  _has_bits_[0] &= ~0x00000004u;
+  ::msg::Ais* temp = ais_;
+  ais_ = nullptr;
+  return temp;
+}
+inline ::msg::Ais* Event::_internal_mutable_ais() {
+  _has_bits_[0] |= 0x00000004u;
+  if (ais_ == nullptr) {
+    auto* p = CreateMaybeMessage<::msg::Ais>(GetArena());
+    ais_ = p;
+  }
+  return ais_;
+}
+inline ::msg::Ais* Event::mutable_ais() {
+  // @@protoc_insertion_point(field_mutable:msg.Event.ais)
+  return _internal_mutable_ais();
+}
+inline void Event::set_allocated_ais(::msg::Ais* ais) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
+  if (message_arena == nullptr) {
+    delete ais_;
+  }
+  if (ais) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(ais);
+    if (message_arena != submessage_arena) {
+      ais = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, ais, submessage_arena);
+    }
+    _has_bits_[0] |= 0x00000004u;
+  } else {
+    _has_bits_[0] &= ~0x00000004u;
+  }
+  ais_ = ais;
+  // @@protoc_insertion_point(field_set_allocated:msg.Event.ais)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 

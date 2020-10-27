@@ -10,14 +10,30 @@ message CaptureInfo
 	optional string picture = 4;
 }
 
+message Clock
+{
+	required string time = 1;
+}
+
+message Ais
+{
+	required int32 status = 1;
+	required string longitude = 2;
+	required string latitude = 3;
+}
+
 message Event
 {
 	enum Command
 	{
 		CAPTURE_JPEG_REQ = 1;
 		CAPTURE_JPEG_REP = 2;
+		SYNC_CLOCK = 3;
+		SYNC_AIS = 4;
 	}
 	
 	required Command command = 1;
 	optional CaptureInfo captureinfo = 2;
+	optional Clock clock = 3;
+	optional Ais ais = 4;
 }

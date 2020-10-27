@@ -1,4 +1,5 @@
 #include "boost/algorithm/string.hpp"
+#include "boost/bind.hpp"
 #include "boost/make_shared.hpp"
 #include "boost/pointer_cast.hpp"
 #ifdef _WINDOWS
@@ -14,6 +15,7 @@
 using DataParser = base::protocol::DataParser;
 using DataPacker = base::protocol::DataPacker;
 #include "Protocol/ComponentPhrase.h"
+#include "Protocol/EventPhrase.h"
 #include "Xml/XmlCodec.h"
 using XMLParser = base::xml::XMLParser;
 using XMLPacker = base::xml::XMLPacker;
@@ -66,7 +68,7 @@ void AISPusherComponentClient::afterPolledDataFromWorkerCallback(
 	const std::string toID,
 	const std::string data)
 {
-	DataPacketPtr pkt{ DataParser().parseData(msg) };
+	DataPacketPtr pkt{ DataParser().parseData(data) };
 
 	if (pkt)
 	{
@@ -124,8 +126,18 @@ void AISPusherComponentClient::sendQuerySystemServiceMessage()
 		msgpkt->setMessagePacketCommand(
 			static_cast<int>(base::protocol::ComponentCommand::COMPONENT_COMMAND_QUERY_REQ));
 		const std::string data{ DataPacker().packData(pkt) };
-		sendData("worker", "request", AbstractWorker::getUUID(), parentXMQID, data);
+		sendData("worker", "request", getUUID(), parentXMQID, data);
 	}
+}
+
+int AISPusherComponentClient::sendData(
+	const std::string roleID,
+	const std::string flagID,
+	const std::string fromID,
+	const std::string toID,
+	const std::string data)
+{
+	return worker ? worker->sendData(roleID, flagID, fromID, toID, data) : eBadOperate;
 }
 
 const std::string AISPusherComponentClient::getMediaStreamClientInfoByName(const std::string name) const
@@ -150,10 +162,12 @@ void AISPusherComponentClient::processComponentMessage(DataPacketPtr pkt)
 
 	if (base::protocol::ComponentCommand::COMPONENT_COMMAND_SIGNIN_REP == command)
 	{
-		const char* componentID{
-			reinterpret_cast<const char*>(pkt->getPacketData()) };
-		//无论注册还是心跳都保存组件ID标识
-		setMediaStreamClientInfoWithName("Component.AIS.ID", componentID);
+// 		const char* componentID{
+// 			reinterpret_cast<const char*>(pkt->getPacketData()) };
+// 		//无论注册还是心跳都保存组件ID标识
+// 		setMediaStreamClientInfoWithName("Component.AIS.ID", componentID);
+
+		parentXMQID = reinterpret_cast<const char*>(pkt->getPacketData());
 	}
 	else if (base::protocol::ComponentCommand::COMPONENT_COMMAND_QUERY_REP == command)
 	{
@@ -177,6 +191,28 @@ void AISPusherComponentClient::processComponentMessage(DataPacketPtr pkt)
 			{
 				break;
 			}
+		}
+	}
+}
+
+void AISPusherComponentClient::buildAISInfoMessage(const int sailStatus /* = 0 */)
+{
+	if (!webComponentID.empty())
+	{
+		DataPacketPtr pkt{
+		boost::make_shared<MessagePacket>(
+			base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_EVENT) };
+		if (pkt)
+		{
+			MessagePacketPtr mp{ boost::dynamic_pointer_cast<MessagePacket>(pkt) };
+			mp->setMessagePacketCommand(
+				static_cast<int>(base::protocol::EventCommand::EVENT_COMMAND_SYNC_AIS));
+			mp->setPacketData((void*)&sailStatus);
+			mp->setPacketData((void*)"yyyyy.yy,a");
+			mp->setPacketData((void*)"llll.ll");
+			const std::string data{ DataPacker().packData(pkt) };
+			sendData("worker", "notification", getUUID(), webComponentID, data);
+			LOG(INFO) << "Push AIS sail status = " << sailStatus << " to WEB service " << webComponentID << ".";
 		}
 	}
 }

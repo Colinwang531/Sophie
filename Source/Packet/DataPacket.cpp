@@ -19,6 +19,14 @@ namespace base
 			}
 		}
 
+		void DataPacket::setPacketData(const int idx /* = 0 */, void* data /* = nullptr */)
+		{
+			if (idx < packetData.size() && data)
+			{
+				packetData[idx] = data;
+			}
+		}
+
 		void* DataPacket::getPacketData(const int idx /* = 0 */)
 		{
 			void* data{ nullptr };

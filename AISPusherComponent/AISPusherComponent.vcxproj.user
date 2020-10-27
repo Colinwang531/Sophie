@@ -3,7 +3,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <RemoteDebuggerWorkingDirectory>/root/projects/bin/$(Platform)/$(Configuration)</RemoteDebuggerWorkingDirectory>
     <DebuggerFlavor>LinuxDebugger</DebuggerFlavor>
-    <RemoteDebuggerCommandArguments>-a 127.0.0.1 -p 61001 -n Alarm</RemoteDebuggerCommandArguments>
-    <RemoteTarget>-1937057080;127.0.0.1 (username=, port=22, authentication=Password)</RemoteTarget>
+    <RemoteDebuggerCommandArguments>-a 127.0.0.1 -p 61001 -n AIS</RemoteDebuggerCommandArguments>
+    <RemoteTarget>-734772461;127.0.0.1 (username=, port=22, authentication=Password)</RemoteTarget>
   </PropertyGroup>
 </Project>

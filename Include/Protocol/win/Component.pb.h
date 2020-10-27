@@ -84,11 +84,13 @@ enum ComponentInfo_Type : int {
   ComponentInfo_Type_DHD = 4,
   ComponentInfo_Type_ALM = 5,
   ComponentInfo_Type_AI = 6,
-  ComponentInfo_Type_MED = 7
+  ComponentInfo_Type_MED = 7,
+  ComponentInfo_Type_CLK = 8,
+  ComponentInfo_Type_AIS = 9
 };
 bool ComponentInfo_Type_IsValid(int value);
 constexpr ComponentInfo_Type ComponentInfo_Type_Type_MIN = ComponentInfo_Type_XMQ;
-constexpr ComponentInfo_Type ComponentInfo_Type_Type_MAX = ComponentInfo_Type_MED;
+constexpr ComponentInfo_Type ComponentInfo_Type_Type_MAX = ComponentInfo_Type_AIS;
 constexpr int ComponentInfo_Type_Type_ARRAYSIZE = ComponentInfo_Type_Type_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* ComponentInfo_Type_descriptor();
@@ -265,6 +267,10 @@ class ComponentInfo PROTOBUF_FINAL :
     ComponentInfo_Type_AI;
   static constexpr Type MED =
     ComponentInfo_Type_MED;
+  static constexpr Type CLK =
+    ComponentInfo_Type_CLK;
+  static constexpr Type AIS =
+    ComponentInfo_Type_AIS;
   static inline bool Type_IsValid(int value) {
     return ComponentInfo_Type_IsValid(value);
   }

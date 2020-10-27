@@ -26,6 +26,9 @@ public:
 	AISPusherComponentClient(void);
 	virtual ~AISPusherComponentClient(void);
 
+public:
+	void buildAISInfoMessage(const int sailStatus = 0);
+
 protected:
 	int createNewClient(const std::string address) override;
 	int destroyClient(void) override;
