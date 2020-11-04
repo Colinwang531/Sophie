@@ -186,7 +186,8 @@ int FaceRecognizeComponentClient::createNewMediaStreamSession(
 		AbstractAlgorithm algo{ algorithmParamGroup.at() };
 		algorithmParamGroup.removeFront();
 		TCPSessionPtr session{
-			boost::make_shared<FaceRecognizeMediaStreamSession>(*this, AbstractWorker::getUUID(), url, algo, s) };
+			boost::make_shared<FaceRecognizeMediaStreamSession>(
+				*this, sailStatus, AbstractWorker::getUUID(), url, algo, s) };
 
 		if (session)
 		{

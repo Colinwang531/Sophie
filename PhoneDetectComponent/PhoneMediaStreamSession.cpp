@@ -12,11 +12,11 @@
 #include "Error.h"
 #include "Time/XTime.h"
 using Time = base::time::Time;
-#include "Packet/Message/MessagePacket.h"
+#include "Packet/Alarm/AlarmPacket.h"
 using DataPacket = base::packet::DataPacket;
 using DataPacketPtr = boost::shared_ptr<DataPacket>;
-using MessagePacket = base::packet::MessagePacket;
-using MessagePacketPtr = boost::shared_ptr<MessagePacket>;
+using AlarmPacket = base::packet::AlarmPacket;
+using AlarmPacketPtr = boost::shared_ptr<AlarmPacket>;
 #include "Protocol/DataPhrase.h"
 using DataPacker = base::protocol::DataPacker;
 #include "Protocol/AlarmPhrase.h"
@@ -30,11 +30,13 @@ using AbstractFilterPtr = boost::shared_ptr<AbstractFilter>;
 
 PhoneMediaStreamSession::PhoneMediaStreamSession(
 	AbstractClient& parent,
+	const int& status,
 	const std::string uid,
-	const std::string url, 
+	const std::string url,
 	const AbstractAlgorithm algo,
 	boost::asio::ip::tcp::socket* s /* = nullptr */)
-	: TCPStreamTargetSession(s), parentClient{ parent }, streamURL{ url }, algorithmParam{ algo }, frameSequence{ 0 }, uuid{ uid }
+	: TCPStreamTargetSession(s), parentClient{ parent }, sailStatus{ status },
+	streamURL{ url }, algorithmParam{ algo }, frameSequence{ 0 }, uuid{ uid }
 {}
 PhoneMediaStreamSession::~PhoneMediaStreamSession() {}
 
@@ -72,7 +74,7 @@ void PhoneMediaStreamSession::receivedDataNotification(
 	const unsigned char* data /* = nullptr */, 
 	const int bytes /* = 0 */)
 {
-	if (livestreamPhoneGraphPtr)
+	if (livestreamPhoneGraphPtr && 0 == sailStatus)
 	{
 		StreamPacketPtr pkt{
 			boost::make_shared<StreamPacket>(
@@ -156,34 +158,36 @@ void PhoneMediaStreamSession::alarmDataNotificationCallback(StreamPacketPtr pkt)
 {
 	if (pkt && !alarmComponentID.empty())
 	{
-		boost::shared_ptr<DataPacket> datapkt{
-			boost::make_shared<MessagePacket>(
-				base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_ALARM) };
+		DataPacketPtr datapkt{ boost::make_shared<AlarmPacket>() };
 
 		if (datapkt)
 		{
 			int x{ 0 }, y{ 0 }, w{ 0 }, h{ 0 };
 			pkt->getAlarmRange(x, y, w, h);
+			AlarmPacketPtr alarmpkt{
+				boost::dynamic_pointer_cast<AlarmPacket>(datapkt) };
 
-			std::string msg;
- 			MessagePacketPtr msgpkt{ boost::dynamic_pointer_cast<MessagePacket>(datapkt) };
-			msgpkt->setMessagePacketCommand(
+			alarmpkt->setMessagePacketCommand(
 				static_cast<int>(base::protocol::AlarmType::ALARM_TYPE_PHONE));
-			datapkt->setPacketData((void*)pkt->getStreamData());
-			datapkt->setPacketData((void*)streamURL.c_str());
-			//设置一个无效的母钟时间数据便于打包时使用
-			datapkt->setPacketData(nullptr);
-			datapkt->setPacketData((void*)&x);
-			datapkt->setPacketData((void*)&y);
-			datapkt->setPacketData((void*)&w);
-			datapkt->setPacketData((void*)&h);
-			//设置一个无效的用户ID
-			datapkt->setPacketData(nullptr);
+			alarmpkt->setAlarmImage(pkt->getStreamData());
+			alarmpkt->setStreamUrl(streamURL.c_str());
+			alarmpkt->setAlarmClock("1970-01-01,00:00:00,+0");
+			alarmpkt->setFaceID(-1);
+			alarmpkt->setAlarmRange(x, y, w, h);
+// 			datapkt->setPacketData((void*)pkt->getStreamData());
+// 			datapkt->setPacketData((void*)streamURL.c_str());
+// 			//设置一个无效的母钟时间数据便于打包时使用
+// 			datapkt->setPacketData((void*)"2020-10-10 19:00:00");
+// 			datapkt->setPacketData((void*)&x);
+// 			datapkt->setPacketData((void*)&y);
+// 			datapkt->setPacketData((void*)&w);
+// 			datapkt->setPacketData((void*)&h);
+// 			//设置一个无效的用户ID
+// 			datapkt->setPacketData((void*)"");
 			datapkt->setPacketSequence(1);
 			datapkt->setPacketTimestamp(Time().tickcount());
-			msg = DataPacker().packData(datapkt);
 
-			parentClient.sendData("worker", "notification", uuid, alarmComponentID, msg);
+			parentClient.sendData("worker", "notification", uuid, alarmComponentID, DataPacker().packData(datapkt));
 			LOG(INFO) << "Phone alarm x = " << x << ", y = " << y << ", w = " << w << ", h = " << h << ".";
 		}
 	}

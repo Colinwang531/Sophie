@@ -42,8 +42,8 @@ namespace base
 					const std::string did{ info->did() }, cid{ info->cid() };
 					const int cidx{ info->idx() }, didLen{ (int)did.length() }, cidLen{ (int)cid.length() };
 
-					char* deviceID{ new(std::nothrow) char[didLen] };
-					char* cameraID{ new(std::nothrow) char[cidLen] };
+					char* deviceID{ new(std::nothrow) char[didLen] {0} };
+					char* cameraID{ new(std::nothrow) char[cidLen] {0} };
 					int* cameraIdx{ new(std::nothrow) int };
 
 					if (deviceID && cameraID && cameraIdx)

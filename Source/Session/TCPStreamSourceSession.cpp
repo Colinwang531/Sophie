@@ -70,14 +70,14 @@ namespace base
 
 		void TCPStreamSourceSession::receivedExceptionNotification(const boost::system::error_code e)
 		{
-			streamTargetSessionGroup.clear();
 			TCPSession::receivedExceptionNotification(e);
+			streamTargetSessionGroup.clear();
 		}
 
 		void TCPStreamSourceSession::receivedExpiredNotification()
 		{
-			streamTargetSessionGroup.clear();
 			TCPSession::receivedExpiredNotification();
+			streamTargetSessionGroup.clear();
 		}
 	}//namespace network
 }//namespace base

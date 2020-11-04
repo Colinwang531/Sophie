@@ -27,7 +27,7 @@ using MessagePacketPtr = boost::shared_ptr<MessagePacket>;
 #include "MotherClockComponentClient.h"
 
 MotherClockComponentClient::MotherClockComponentClient()
-	: AbstractWorker()
+	: AbstractWorker(), tickcount{ 0 }
 {}
 MotherClockComponentClient::~MotherClockComponentClient() {}
 
@@ -210,7 +210,13 @@ void MotherClockComponentClient::buildMotherClockMessage(const std::string msg)
 			mp->setPacketData((void*)msg.c_str());
 			const std::string data{ DataPacker().packData(pkt) };
 			sendData("worker", "notification", getUUID(), alarmPusherComponentID, data);
-			LOG(INFO) << "Push clock time = " << msg << " to alarm service " << alarmPusherComponentID << ".";
+
+			if (0 == tickcount || 0 == tickcount % 3600)
+			{
+				LOG(INFO) << "Push clock time = " << msg << " to alarm service " << alarmPusherComponentID << ".";
+			}
+			
+			++tickcount;
 		}
 	}
 }

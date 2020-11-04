@@ -57,7 +57,7 @@ private:
 		const std::string name, 
 		const std::string value);
 	void processComponentMessage(DataPacketPtr pkt);
-	void processAlarmMessage(const std::string msg);
+	void processAlarmMessage(DataPacketPtr pkt);
 	void processEventMessage(DataPacketPtr pkt);
 
 private:

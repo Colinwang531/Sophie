@@ -846,6 +846,9 @@
     <ClCompile Include="..\Source\Network\MajordomoUpstreamBroker.cpp">
       <Filter>Network</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\Packet\Alarm\AlarmPacket.cpp">
+      <Filter>Packet\Alarm</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="3rd">
@@ -1708,6 +1711,9 @@
     </Filter>
     <Filter Include="Alarm">
       <UniqueIdentifier>{0c5f18c8-16d6-470d-a361-066333f22994}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Packet\Alarm">
+      <UniqueIdentifier>{7953c836-377f-42cf-a2b8-890abadebc1f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -13500,6 +13506,9 @@
     </ClInclude>
     <ClInclude Include="..\Include\Network\MajordomoUpstreamBroker.h">
       <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Packet\Alarm\AlarmPacket.h">
+      <Filter>Packet\Alarm</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

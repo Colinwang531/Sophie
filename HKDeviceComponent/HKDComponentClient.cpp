@@ -32,10 +32,10 @@ using MessagePacket = base::packet::MessagePacket;
 using MessagePacketPtr = boost::shared_ptr<MessagePacket>;
 #include "HKDComponentClient.h"
 
-HKDComponentClient::HKDComponentClient()
-// 	const std::string address, 
-// 	const unsigned short port /* = 60531 */)
-	: /*AbstractMediaStreamClient(address, port)*/ AbstractWorker()
+HKDComponentClient::HKDComponentClient(
+	const std::string address,
+	const unsigned short port /* = 60531 */)
+	: /*AbstractMediaStreamClient(address, port)*/ AbstractWorker(), mediaIP{ address }, mediaPort{ port }
 {}
 HKDComponentClient::~HKDComponentClient() {}
 
@@ -142,35 +142,6 @@ int HKDComponentClient::sendData(
 	return worker ? worker->sendData(roleID, flagID, fromID, toID, data) : eBadOperate;
 }
 
-int HKDComponentClient::createNewMediaStreamSession(
-	const std::string url, 
-	boost::asio::ip::tcp::socket* s)
-{
-	int e{ eNotSupport };
-	std::vector<std::string> idGroup;
-	boost::split(idGroup, url, boost::is_any_of(":"));
-	AbstractDevicePtr device{ deviceGroup.at(idGroup[0]) };
-
-	if (device)
-	{
-		boost::shared_ptr<HikvisionDevice> hkd{ 
-			boost::dynamic_pointer_cast<HikvisionDevice>(device) };
-		TCPSessionPtr session{ 
-			boost::make_shared<HKDMediaStreamSession>(url, hkd->getUserID(), s) };
-
-		if (session)
-		{
-			e = session->startSession();
-			if (eSuccess == e)
-			{
-				streamSessionGroup.insert(url, session);
-			}
-		}
-	}
-
-	return e;
-}
-
 const std::string HKDComponentClient::getHKDClientInfoByName(const std::string name) const
 {
 	std::string value;
@@ -271,7 +242,12 @@ void HKDComponentClient::processEventMessage(
 		if (base::protocol::EventCommand::EVENT_COMMAND_CAPTURE_JPEG_REQ == command)
 		{
 			jpegRet = sdp->captureRealplayJPEGImage(*cameraIdx, jpegData, jpegBytes);
+			LOG(INFO) << "Capture camera = " << *cameraIdx << " JPEG image size = " << jpegRet << ".";
 		}
+	}
+	else
+	{
+		LOG(WARNING) << "Device ID is invalid.";
 	}
 
 	msgpkt->setMessagePacketCommand(static_cast<int>(command) + 1);
@@ -295,15 +271,12 @@ int HKDComponentClient::processMediaStream(
 	if (base::protocol::DeviceCommand::DEVICE_COMMAND_DELETE_REQ == command_ ||
 		base::protocol::DeviceCommand::DEVICE_COMMAND_MODIFY_REQ == command_)
 	{
-		for (int i = 0; i != cameras.size(); ++i)
-		{
-			disconnectMediaServer(did);
-		}
+		destroySourceStreamSession(did);
 	}
 
 	for (int i = 0; i != cameras.size(); ++i)
 	{
-		connectMediaServer(did, cameras[i].getCameraID(), cameras[i].getCameraIndex());
+		createNewSourceStreamConnection(did, cameras[i].getCameraIndex());
 	}
 
 	return e;
@@ -431,12 +404,11 @@ int HKDComponentClient::replyMessageWithResult(
 	return e;
 }
 
-int HKDComponentClient::connectMediaServer(
+int HKDComponentClient::createNewSourceStreamConnection(
 	const std::string did, 
-	const std::string cid, 
 	const int idx /* = -1 */)
 {
-	int e{ cid.empty() || did.empty() || 0 > idx ? eInvalidParameter : eSuccess };
+	int e{ did.empty() || 0 > idx ? eInvalidParameter : eSuccess };
 
 	if (eSuccess == e)
 	{
@@ -447,7 +419,7 @@ int HKDComponentClient::connectMediaServer(
 		if (connector)
 		{
 			urlGroup.pushBack((boost::format("%s:%d") % did % idx).str());
-			e = connector->setConnect("127.0.0.1", 60531);
+			e = connector->setConnect(mediaIP.c_str(), mediaPort);
 		}
 		else
 		{
@@ -458,27 +430,83 @@ int HKDComponentClient::connectMediaServer(
 	return e;
 }
 
-int HKDComponentClient::disconnectMediaServer(const std::string did)
+int HKDComponentClient::createNewSourceStreamSession(
+	const std::string url,
+	boost::asio::ip::tcp::socket* s)
+{
+	int e{ url.empty() || !s ? eInvalidParameter : eSuccess };
+
+	if (eSuccess == e)
+	{
+		std::vector<std::string> idGroup;
+		boost::split(idGroup, url, boost::is_any_of(":"));
+		AbstractDevicePtr device{ deviceGroup.at(idGroup[0]) };
+
+		if (device)
+		{
+			boost::shared_ptr<HikvisionDevice> hkd{
+				boost::dynamic_pointer_cast<HikvisionDevice>(device) };
+			TCPSessionPtr session{
+				boost::make_shared<HKDMediaStreamSession>(url, hkd->getUserID(), s) };
+
+			if (session)
+			{
+				e = session->startSession();
+				if (eSuccess == e)
+				{
+					streamSessionGroup.insert(url, session);
+				}
+				else
+				{
+					e = eBadOperate;
+				}
+			}
+			else
+			{
+				e = eBadNewObject;
+			}
+		}
+		else
+		{
+			e = eObjectNotExist;
+		}
+	}
+
+	return e;
+}
+
+int HKDComponentClient::destroySourceStreamSession(const std::string did)
 {
 	int e{ did.empty() ? eInvalidParameter : eSuccess };
 
 	if (eSuccess == e)
 	{
+		streamSessionGroup.removeHas(did);
+		LOG(INFO) << "Destroy all of source stream session = " << did << " Successfully.";
 	}
 
 	return e;
 }
 
 void HKDComponentClient::afterRemoteConnectedNotificationCallback(
-	boost::asio::ip::tcp::socket* s, const boost::system::error_code e)
+	boost::asio::ip::tcp::socket* s, 
+	const boost::system::error_code e)
 {
 	if (s && !e)
 	{
-		const std::string url{ urlGroup.at() };
+		const std::string url{ urlGroup.popFront() };
 		if (!url.empty())
 		{
-			urlGroup.removeFront();
-			createNewMediaStreamSession(url, s);
+			int e{ createNewSourceStreamSession(url, s) };
+
+			if (eSuccess == e)
+			{
+				LOG(INFO) << "Create new source stream = " << url << " Successfully.";
+			}
+			else
+			{
+				LOG(WARNING) << "Create new source stream = " << url << " failed, result = " << e << ".";
+			}
 		}
 	}
 }

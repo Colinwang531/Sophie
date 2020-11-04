@@ -26,6 +26,7 @@ class SleepMediaStreamSession : public TCPStreamTargetSession
 public:
 	SleepMediaStreamSession(
 		AbstractClient& parent,
+		const int& status,
 		const std::string uid,
 		const std::string url,
 		const AbstractAlgorithm algo,
@@ -35,7 +36,7 @@ public:
 public:
 	int startSession(void) override;
 	int stopSession(void) override;
-	inline void setAlarmCommunicationID(const std::string id)
+	inline void setAlarmComponentID(const std::string id)
 	{
 		alarmComponentID = id;
 	}
@@ -50,6 +51,7 @@ private:
 
 private:
 	AbstractClient& parentClient;
+	const int& sailStatus;
 	const std::string uuid;
 	const std::string streamURL;
 	std::string alarmComponentID;

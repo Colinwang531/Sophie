@@ -75,7 +75,8 @@ static int createNewAsynchronousClient(void)
 	{
 		if (!gMessageDispatcherCenterIP.empty() && gMinPortNumber < gMessageDispatcherCenterPort && gMaxPortNumber > gMessageDispatcherCenterPort)
 		{
-			HKDComponentClientPtr acp{ boost::make_shared<HKDComponentClient>() };
+			HKDComponentClientPtr acp{ 
+				boost::make_shared<HKDComponentClient>(gMessageDispatcherCenterIP) };
 			if (acp)
 			{
 				e = acp->startClient((boost::format("tcp://%s:%d") % gMessageDispatcherCenterIP % gMessageDispatcherCenterPort).str().c_str());

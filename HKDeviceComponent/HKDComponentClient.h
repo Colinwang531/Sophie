@@ -38,9 +38,9 @@ using AbstractWorker = base::network::AbstractWorker;
 class HKDComponentClient : public AbstractWorker
 {
 public:
-	HKDComponentClient(void);
-// 		const std::string address,
-// 		const unsigned short port = 60531);
+	HKDComponentClient(
+		const std::string address,
+		const unsigned short port = 60531);
 	virtual ~HKDComponentClient(void);
 
 protected:
@@ -66,26 +66,25 @@ protected:
 		const std::string fromID,
 		const std::string toID,
 		const std::string data) override;
-	int createNewMediaStreamSession(
-		const std::string url, 
-		boost::asio::ip::tcp::socket* s);
 
 private:
-	//连接服务端
+	//创建流源会话
 	//@did : 设备ID标识
-	//@cid : 摄像机ID标识
 	//@idx : 摄像机索引
 	//@Return : 错误码
-	int connectMediaServer(
+	int createNewSourceStreamConnection(
 		const std::string did,
-		const std::string cid,
 		const int idx = -1);
 
-	//断开服务端连接
+	int createNewSourceStreamSession(
+		const std::string url,
+		boost::asio::ip::tcp::socket* s);
+
+	//销毁流源会话
 	//@did : 设备ID标识
+	//@idx : 摄像机索引
 	//@Return : 错误码
-	//@Comment : 断开设备上所有的连接
-	int disconnectMediaServer(const std::string did);
+	int destroySourceStreamSession(const std::string did);
 
 private:
 	void afterRemoteConnectedNotificationCallback(
@@ -130,5 +129,7 @@ private:
 	Vector<std::string> urlGroup;
 	MajordomoWorkerPtr worker;
 	std::string parentXMQID;
+	const std::string mediaIP;
+	const unsigned short mediaPort;
 };//class HKDComponentClient
 

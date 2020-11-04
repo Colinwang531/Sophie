@@ -17,14 +17,17 @@ using DataParser = base::protocol::DataParser;
 using DataPacker = base::protocol::DataPacker;
 #include "Protocol/ComponentPhrase.h"
 #include "Protocol/EventPhrase.h"
+#include "Protocol/AlarmPhrase.h"
 #include "Xml/XmlCodec.h"
 using XMLParser = base::xml::XMLParser;
 using XMLPacker = base::xml::XMLPacker;
 #include "Component/AbstractComponent.h"
 using AbstractComponent = base::component::AbstractComponent;
-#include "Packet/Message/MessagePacket.h"
+#include "Packet/Alarm/AlarmPacket.h"
 using MessagePacket = base::packet::MessagePacket;
 using MessagePacketPtr = boost::shared_ptr<MessagePacket>;
+using AlarmPacket = base::packet::AlarmPacket;
+using AlarmPacketPtr = boost::shared_ptr<AlarmPacket>;
 #include "AlarmPusherComponentClient.h"
 
 AlarmPusherComponentClient::AlarmPusherComponentClient()
@@ -82,7 +85,7 @@ void AlarmPusherComponentClient::afterPolledDataFromWorkerCallback(
 		}
 		else if (base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_ALARM == type)
 		{
-			processAlarmMessage(data);
+			processAlarmMessage(pkt);
 		}
 		else if (base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_EVENT == type)
 		{
@@ -204,15 +207,17 @@ void AlarmPusherComponentClient::processComponentMessage(DataPacketPtr pkt)
 	}
 }
 
-void AlarmPusherComponentClient::processAlarmMessage(const std::string msg)
+void AlarmPusherComponentClient::processAlarmMessage(DataPacketPtr pkt)
 {
-	if (!motherClockTime.empty())
-	{
-		//追加母钟时间
-		const std::string combine{ (boost::format("%s#%s") % msg % motherClockTime).str() };
-		sendData("worker", "notification", AbstractWorker::getUUID(), webComponentID, combine);
-		LOG(INFO) << "Push alarm message from " << AbstractWorker::getUUID() << " to WEB service " << webComponentID << ".";
-	}
+	AlarmPacketPtr alarmpkt{ 
+		boost::dynamic_pointer_cast<AlarmPacket>(pkt) };
+	const base::protocol::AlarmType type{
+		static_cast<base::protocol::AlarmType>(alarmpkt->getMessagePacketCommand()) };
+	//追加母钟时间
+//	const std::string combine{ (boost::format("%s#%s") % msg % motherClockTime).str() };
+	alarmpkt->setAlarmClock(motherClockTime.empty() ? "1970-01-01,00:00:00,+0" : motherClockTime.c_str());
+	sendData("worker", "notification", AbstractWorker::getUUID(), webComponentID, DataPacker().packData(alarmpkt));
+	LOG(INFO) << "Push alarm message type = " << (int)type/*AbstractWorker::getUUID()*/ << " [ " << motherClockTime << " ]," << " to WEB service " << webComponentID << ".";
 }
 
 void AlarmPusherComponentClient::processEventMessage(DataPacketPtr pkt)

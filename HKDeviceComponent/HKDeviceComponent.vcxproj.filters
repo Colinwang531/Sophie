@@ -862,6 +862,39 @@
     <ClCompile Include="..\Source\Network\AbstractWorker.cpp">
       <Filter>Network</Filter>
     </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\codecvt_error_category.cpp">
+      <Filter>3rd\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\directory.cpp">
+      <Filter>3rd\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\exception.cpp">
+      <Filter>3rd\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\operations.cpp">
+      <Filter>3rd\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\path.cpp">
+      <Filter>3rd\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\path_traits.cpp">
+      <Filter>3rd\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\portability.cpp">
+      <Filter>3rd\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\unique_path.cpp">
+      <Filter>3rd\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\utf8_codecvt_facet.cpp">
+      <Filter>3rd\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\windows_file_codecvt.cpp">
+      <Filter>3rd\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Packet\Alarm\AlarmPacket.cpp">
+      <Filter>Packet\Alarm</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="3rd">
@@ -1829,6 +1862,9 @@
     </Filter>
     <Filter Include="3rd\boost\filesystem\detail">
       <UniqueIdentifier>{e971a5d9-8ad0-4e0b-bdd4-a165e692b410}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Packet\Alarm">
+      <UniqueIdentifier>{f59a2c2c-3280-4a33-be45-1f8d0029ea72}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -15254,6 +15290,18 @@
     </ClInclude>
     <ClInclude Include="..\3rdPart\boost_1_72_0\boost\filesystem\detail\utf8_codecvt_facet.hpp">
       <Filter>3rd\boost\filesystem\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\error_handling.hpp">
+      <Filter>3rd\boost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\windows_file_codecvt.hpp">
+      <Filter>3rd\boost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\windows_tools.hpp">
+      <Filter>3rd\boost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Packet\Alarm\AlarmPacket.h">
+      <Filter>Packet\Alarm</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

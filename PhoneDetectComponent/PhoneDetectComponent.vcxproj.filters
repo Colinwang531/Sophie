@@ -169,6 +169,9 @@
     <Filter Include="Person">
       <UniqueIdentifier>{d785e3a6-cb8b-466b-a59b-ad14818993ae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Packet\Alarm">
+      <UniqueIdentifier>{475f096e-2d22-4d66-b7ef-8bb8dfa6e3e6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -1128,6 +1131,9 @@
     </ClCompile>
     <ClCompile Include="..\Source\Network\AbstractWorker.cpp">
       <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Packet\Alarm\AlarmPacket.cpp">
+      <Filter>Packet\Alarm</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2288,6 +2294,9 @@
     </ClInclude>
     <ClInclude Include="..\Include\Network\AbstractWorker.h">
       <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Packet\Alarm\AlarmPacket.h">
+      <Filter>Packet\Alarm</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

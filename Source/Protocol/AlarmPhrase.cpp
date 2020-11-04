@@ -1,8 +1,8 @@
 #include "boost/checked_delete.hpp"
 #include "boost/make_shared.hpp"
-#include "Packet/Message/MessagePacket.h"
-using MessagePacket = base::packet::MessagePacket;
-using MessagePacketPtr = boost::shared_ptr<MessagePacket>;
+#include "Packet/Alarm/AlarmPacket.h"
+using AlarmPacket = base::packet::AlarmPacket;
+using AlarmPacketPtr = boost::shared_ptr<AlarmPacket>;
 #include "Alarm/AbstractAlarm.h"
 using AbstractAlarm = base::alarm::AbstractAlarm;
 #ifdef WINDOWS
@@ -23,38 +23,28 @@ namespace base
 
 		DataPacketPtr AlarmParser::parseMessage(void* a /* = nullptr */)
 		{
-			DataPacketPtr pkt{
-				boost::make_shared<MessagePacket>(
-					base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_ALARM) };
+			DataPacketPtr pkt{ boost::make_shared<AlarmPacket>() };
 
 			if (pkt)
 			{
 				msg::Alarm* ma{ reinterpret_cast<msg::Alarm*>(a) };
 				const msg::Alarm_Command command{ ma->command() };
-				MessagePacketPtr msgpkt{ boost::dynamic_pointer_cast<MessagePacket>(pkt) };
-				msgpkt->setMessagePacketCommand(static_cast<int>(command));
 
-// 				if (msg::Alarm_Command::Alarm_Command_NOTIFY == command)
-// 				{
-// 					const msg::AlarmInfo* info{ ma->release_alarminfo() };
-// 					const std::string picture{ info->picture() }, cid{ info->cid() }, time{ info->time() }, uid{ info->uid() };
-// 					const msg::AlarmPosition& pos{ info->alarmposition() };
-// 					const int x{ pos.x() }, y{ pos.y() }, w{ pos.w() }, h{ pos.h() };
-// 
-// 					char* pictureBuffer{ new(std::nothrow) char[picture.length()] };
-// 					char* cidBuffer{ new(std::nothrow) char[cid.length()] };
-// 					char* timeBuffer{ new(std::nothrow) char[time.length()] };
-// 					char* uidBuffer{ new(std::nothrow) char[uid.length()] };
-// 					int* xBuffer{ new(std::nothrow) int };
-// 					int* yBuffer{ new(std::nothrow) int };
-// 					int* wBuffer{ new(std::nothrow) int };
-// 					int* hBuffer{ new(std::nothrow) int };
-// 
-// 					pkt->setPacketData((void*).c_str());
-// 					pkt->setPacketData((void*)info->cid().c_str());
-// 					pkt->setPacketData((void*)info->time().c_str());
-// 					pkt->setPacketData((void*)&pos.x());
-// 				}
+				if (msg::Alarm_Command::Alarm_Command_NOTIFY == command)
+				{
+					AlarmPacketPtr alarmpkt{
+						boost::dynamic_pointer_cast<AlarmPacket>(pkt) };
+					const msg::AlarmInfo* info{ ma->release_alarminfo() };
+					const std::string picture{ info->picture() }, cid{ info->cid() }, time{ info->time() }, uid{ info->uid() };
+					const msg::AlarmPosition& pos{ info->alarmposition()[0] };
+
+					alarmpkt->setMessagePacketCommand(static_cast<int>(info->type()));
+					alarmpkt->setAlarmImage((unsigned char*)info->picture().c_str());
+					alarmpkt->setStreamUrl(info->cid().c_str());
+					alarmpkt->setAlarmClock(info->time().c_str());
+					alarmpkt->setFaceID(atoi(info->uid().c_str()));
+					alarmpkt->setAlarmRange(pos.x(), pos.y(), pos.w(), pos.h());
+				}
 			}
 
 			return pkt;
@@ -74,19 +64,31 @@ namespace base
 
 			if (c)
 			{
-				MessagePacketPtr msgpkt{ boost::dynamic_pointer_cast<MessagePacket>(pkt) };
+				AlarmPacketPtr alarmpkt{ 
+					boost::dynamic_pointer_cast<AlarmPacket>(pkt) };
+
 				c->set_command(msg::Alarm_Command::Alarm_Command_NOTIFY);
 				msg::AlarmInfo* info{ c->mutable_alarminfo() };
-				info->set_type(static_cast<msg::AlarmInfo_Type>(msgpkt->getMessagePacketCommand()));
-				info->set_picture(reinterpret_cast<const char*>(pkt->getPacketData(0)));
-				info->set_cid(reinterpret_cast<const char*>(pkt->getPacketData(1)));
-				info->set_time(reinterpret_cast<const char*>(pkt->getPacketData(2)));
+				info->set_type(static_cast<msg::AlarmInfo_Type>(alarmpkt->getMessagePacketCommand()));
+				info->set_cid(alarmpkt->getStreamUrl());
+				info->set_time(alarmpkt->getAlarmClock());
+				info->set_picture((const char*)alarmpkt->getAlarmImage());
+				int x = 0, y = 0, w = 0, h = 0;
+				alarmpkt->getAlarmRange(x, y, w, h);
 				msg::AlarmPosition* pos{ info->add_alarmposition() };
-				pos->set_x(*(reinterpret_cast<int*>(pkt->getPacketData(3))));
-				pos->set_y(*(reinterpret_cast<int*>(pkt->getPacketData(4))));
-				pos->set_w(*(reinterpret_cast<int*>(pkt->getPacketData(5))));
-				pos->set_h(*(reinterpret_cast<int*>(pkt->getPacketData(6))));
-				info->set_uid(reinterpret_cast<const char*>(pkt->getPacketData(7)));
+				pos->set_x(x);
+				pos->set_y(y);
+				pos->set_w(w);
+				pos->set_h(h);
+
+				const int faceid{ alarmpkt->getFaceID() };
+				char alarmFaceID[128]{ 0 };
+#ifdef WINDOWS
+				sprintf_s(alarmFaceID, 128, "%d", faceid);
+#else
+				sprintf(alarmFaceID, "%d", faceid);
+#endif
+				info->set_uid(alarmFaceID);
 			}
 
 			mm.SerializeToString(&msgstr);

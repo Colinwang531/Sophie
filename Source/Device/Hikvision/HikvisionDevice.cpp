@@ -42,11 +42,11 @@ namespace base
 			{
 				if (1 == SurveillanceDevice::loginDevice())
 				{
-// 					const std::string exePath{ 
-// 						boost::filesystem::initial_path<boost::filesystem::path>().string() };
-// 					NET_DVR_LOCAL_SDK_PATH path{ 0 };
-// 					sprintf(path.sPath, "/root/projects/bin/x64/Debug/");
-// 					e = NET_DVR_SetSDKInitCfg(NET_SDK_INIT_CFG_SDK_PATH, &path);
+					const std::string exePath{ 
+						boost::filesystem::initial_path<boost::filesystem::path>().string() };
+					NET_DVR_LOCAL_SDK_PATH path{ 0 };
+					sprintf(path.sPath, exePath.c_str());
+					e = NET_DVR_SetSDKInitCfg(NET_SDK_INIT_CFG_SDK_PATH, &path);
 					e = NET_DVR_Init() ? eSuccess : eBadInitSDK;
 				}
 

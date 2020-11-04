@@ -191,7 +191,7 @@ void afterGotRemoteConnectedNotificationCallback(boost::asio::ip::tcp::socket* s
 {
 	const std::string remoteIP{ s->remote_endpoint().address().to_string() };
 	const unsigned short remotePort{ s->remote_endpoint().port() };
-	LOG(INFO) << "New connection form " << remoteIP << ":" << remotePort << " is built up result = " << e.value() << ".";
+	LOG(INFO) << "Remote [ " << remoteIP << ":" << remotePort << " ] is connected, result = " << e.value() << ".";
 
 	TCPReceiverPtr receiver{ 
 		boost::make_shared<TCPReceiver>(

@@ -26,6 +26,7 @@ class FaceRecognizeMediaStreamSession : public TCPStreamTargetSession
 public:
 	FaceRecognizeMediaStreamSession(
 		AbstractClient& parent,
+		const int& status,
 		const std::string uid,
 		const std::string url,
 		const AbstractAlgorithm algo,
@@ -51,6 +52,7 @@ private:
 
 private:
 	AbstractClient& parentClient;
+	const int& sailStatus;
 	const std::string uuid;
 	const std::string streamURL;
 	std::string alarmComponentID;

@@ -87,6 +87,16 @@
     <ClCompile Include="..\3rdPart\boost_1_72_0\libs\date_time\src\gregorian\greg_month.cpp" />
     <ClCompile Include="..\3rdPart\boost_1_72_0\libs\date_time\src\gregorian\greg_weekday.cpp" />
     <ClCompile Include="..\3rdPart\boost_1_72_0\libs\date_time\src\posix_time\posix_time_types.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\codecvt_error_category.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\directory.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\exception.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\operations.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\path.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\path_traits.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\portability.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\unique_path.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\utf8_codecvt_facet.cpp" />
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\windows_file_codecvt.cpp" />
     <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\cmdline.cpp" />
     <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\config_file.cpp" />
     <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\convert.cpp" />
@@ -340,6 +350,7 @@
     <ClCompile Include="..\Source\Network\AbstractClient.cpp" />
     <ClCompile Include="..\Source\Network\AbstractWorker.cpp" />
     <ClCompile Include="..\Source\Number\Number.cpp" />
+    <ClCompile Include="..\Source\Packet\Alarm\AlarmPacket.cpp" />
     <ClCompile Include="..\Source\Packet\DataPacket.cpp" />
     <ClCompile Include="..\Source\Packet\Message\MessagePacket.cpp" />
     <ClCompile Include="..\Source\Packet\Stream\StreamPacket.cpp" />
@@ -4479,6 +4490,9 @@
     <ClInclude Include="..\3rdPart\boost_1_72_0\boost\wave.hpp" />
     <ClInclude Include="..\3rdPart\boost_1_72_0\boost\weak_ptr.hpp" />
     <ClInclude Include="..\3rdPart\boost_1_72_0\libs\date_time\src\gregorian\greg_names.hpp" />
+    <ClInclude Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\error_handling.hpp" />
+    <ClInclude Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\windows_file_codecvt.hpp" />
+    <ClInclude Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\windows_tools.hpp" />
     <ClInclude Include="..\3rdPart\glog-master\src\base\commandlineflags.h" />
     <ClInclude Include="..\3rdPart\glog-master\src\base\googleinit.h" />
     <ClInclude Include="..\3rdPart\glog-master\src\base\mutex.h" />
@@ -4816,6 +4830,7 @@
     <ClInclude Include="..\Include\Network\AbstractClient.h" />
     <ClInclude Include="..\Include\Network\AbstractWorker.h" />
     <ClInclude Include="..\Include\Number\Number.h" />
+    <ClInclude Include="..\Include\Packet\Alarm\AlarmPacket.h" />
     <ClInclude Include="..\Include\Packet\DataPacket.h" />
     <ClInclude Include="..\Include\Packet\Message\MessagePacket.h" />
     <ClInclude Include="..\Include\Packet\Stream\StreamPacket.h" />
@@ -4887,6 +4902,7 @@
     <Link>
       <LibraryDependencies>pthread;hcnetsdk;HCCore;SuperRender;AudioRender</LibraryDependencies>
       <AdditionalLibraryDirectories>/root/projects/$(ProjectName)/SDK/CH-HCNetSDKV6.1.4.17_build20200331_Linux64;/root/projects/$(ProjectName)/SDK/CH-HCNetSDKV6.1.4.17_build20200331_Linux64\HCNetSDKCom;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <SharedLibrarySearchPath>/usr/sbin/hkd/;%(Link.SharedLibrarySearchPath)</SharedLibrarySearchPath>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

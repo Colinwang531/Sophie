@@ -65,5 +65,6 @@ private:
 	MajordomoWorkerPtr worker;
 	std::string parentXMQID;
 	std::string alarmPusherComponentID;
+	unsigned long long tickcount;
 };//class MotherClockComponentClient
 

@@ -85,7 +85,7 @@ namespace base
 			TCPReceiverPtr receiverPtr;
 			//为避免底层发送数据缓存被写满导致溢出
 			//会话端使用发送队列保证数据一个接一个发送
-			FIFOQueue<StreamPacket*> streamPacketGroup;
+//			FIFOQueue<StreamPacket*> streamPacketGroup;
 			bool stopped;
 		};//class TCPSession
 	}//namespace network

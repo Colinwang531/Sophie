@@ -172,7 +172,8 @@ int SleepDetectComponentClient::createNewMediaStreamSession(
 		AbstractAlgorithm algo{ algorithmParamGroup.at() };
 		algorithmParamGroup.removeFront();
 		TCPSessionPtr session{
-			boost::make_shared<SleepMediaStreamSession>(*this, AbstractWorker::getUUID(), url, algo, s) };
+			boost::make_shared<SleepMediaStreamSession>(
+				*this, sailStatus, AbstractWorker::getUUID(), url, algo, s) };
 
 		if (session)
 		{
@@ -241,7 +242,7 @@ void SleepDetectComponentClient::processComponentMessage(
 				{
 					//保存报警子服务组件ID标识
 					//通过该ID标识和报警子服务组件进行报警数据发送
-					const std::string id{ ac->getCommunicationID() };
+					const std::string id{ ac->getComponentID() };
 					std::vector<TCPSessionPtr> sessions;
 					streamSessionGroup.values(sessions);
 
@@ -251,7 +252,7 @@ void SleepDetectComponentClient::processComponentMessage(
 						{
 							SleepStreamSessionPtr session{ 
 								boost::dynamic_pointer_cast<SleepMediaStreamSession>(sessions[i]) };
-							session->setAlarmCommunicationID(id);
+							session->setAlarmComponentID(id);
 						}
 					}
 				}

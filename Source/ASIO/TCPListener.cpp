@@ -30,15 +30,12 @@ namespace base
 					boost::factory<boost::asio::ip::tcp::socket*>()(ioservice) };
 				boost::shared_ptr<boost::asio::ip::tcp::acceptor> ap{
 					boost::make_shared<boost::asio::ip::tcp::acceptor>(
-						ioservice, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port)) };
+						ioservice, 
+						boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port), 
+						true) };
 
 				if (s && ap)
 				{
-					//After the acceptor has been initialized, listen() is called to make the acceptor start listening.
-					//Then async_accept() is called to accept the first connection attempt.
-					//A socket has to be passed as a first parameter to async_accept(), which will be used to send and receive data on a new connection.
-					ap->set_option(boost::asio::ip::tcp::acceptor::reuse_address(true));
-					ap->listen();
 					ap->async_accept(*s,
 						boost::bind(
 							&TCPListener::afterRemoteConnectedtNotificationCallback,

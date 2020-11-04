@@ -870,6 +870,9 @@
     <ClCompile Include="..\Source\Network\AbstractWorker.cpp">
       <Filter>Network</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\Packet\Alarm\AlarmPacket.cpp">
+      <Filter>Packet\Alarm</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="3rd">
@@ -1810,6 +1813,9 @@
     </Filter>
     <Filter Include="Alarm">
       <UniqueIdentifier>{85c5b45f-4bee-48c7-a1de-439d19f040cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Packet\Alarm">
+      <UniqueIdentifier>{781ac947-e4ff-4d58-a3df-0d81f6d2eae5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -15147,6 +15153,9 @@
     </ClInclude>
     <ClInclude Include="..\Include\Network\AbstractWorker.h">
       <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Packet\Alarm\AlarmPacket.h">
+      <Filter>Packet\Alarm</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

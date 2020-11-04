@@ -42,6 +42,20 @@ public:
 		}
 	}
 
+	T popFront(void)
+	{
+		T t{};
+
+		WriteLock wl{ mtx };
+		if (0 < queue.size())
+		{
+			t = at(0);
+			queue.erase(queue.begin());
+		}
+
+		return t;
+	}
+
 	void clear(void)
 	{
 		WriteLock wl{ mtx };

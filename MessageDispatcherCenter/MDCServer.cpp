@@ -356,18 +356,6 @@ void MDCServer::processComponentMessage(
 		std::string componentID{ ac->getComponentID() };
 		const std::string componentName{ ac->getComponentName() };
 		const base::component::ComponentType componentType{ ac->getComponentType() };
-// 		int e{ eSuccess };
-// 
-// 		if (componentID.empty())
-// 		{
-// 			componentID = boost::uuids::to_string(boost::uuids::random_generator()());
-// 			//为新注册的组件分配ID标识
-// 			e = addNewRegisterComponent(componentID, componentName, commID, componentType);
-// 		}
-// 		else
-// 		{
-// 			e = updateRegisterCompnent(componentID, componentName, commID, componentType);
-// 		}
 
 		//commID和fromID一样
 		replyMessageWithResultAndExtendID(
@@ -381,11 +369,6 @@ void MDCServer::processComponentMessage(
 	}
 	else if (base::protocol::ComponentCommand::COMPONENT_COMMAND_SIGNIN_REP == command)
 	{
-// 		const char* componentID{
-// 			reinterpret_cast<const char*>(pkt->getPacketData()) };
-// 		//无论注册还是心跳都保存组件ID标识
-// 		setMDCServerInfoWithName("Component.Disptcher.ID", componentID);
-
 		parentXMQID = reinterpret_cast<const char*>(pkt->getPacketData());
 	}
 	else if (base::protocol::ComponentCommand::COMPONENT_COMMAND_SIGNOUT_REQ == command)

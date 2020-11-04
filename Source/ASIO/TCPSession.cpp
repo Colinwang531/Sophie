@@ -50,16 +50,19 @@ namespace base
 			if (eSuccess == e)
 			{
 				stopped = true;
+				//SOCKET句柄是会话实例的属性
+				//它只能在会话实例中被关闭和销毁
+				//发送器和接收器只能是使用它而已
 				so->close();
 				boost::checked_delete(so);
 				so = nullptr;
 
-				while(0 < streamPacketGroup.size())
-				{
-					StreamPacket* sp{ streamPacketGroup.front() };
-					boost::checked_delete(sp);
-					streamPacketGroup.popFront();
-				}
+// 				while(0 < streamPacketGroup.size())
+// 				{
+// 					StreamPacket* sp{ streamPacketGroup.front() };
+// 					boost::checked_delete(sp);
+// 					streamPacketGroup.popFront();
+// 				}
 			}
 
 			return e;

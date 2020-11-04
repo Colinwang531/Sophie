@@ -337,6 +337,7 @@
     <ClCompile Include="..\Source\Network\AbstractServer.cpp" />
     <ClCompile Include="..\Source\Network\MajordomoUpstreamBroker.cpp" />
     <ClCompile Include="..\Source\Number\Number.cpp" />
+    <ClCompile Include="..\Source\Packet\Alarm\AlarmPacket.cpp" />
     <ClCompile Include="..\Source\Packet\DataPacket.cpp" />
     <ClCompile Include="..\Source\Packet\Message\MessagePacket.cpp" />
     <ClCompile Include="..\Source\Packet\Stream\StreamPacket.cpp" />
@@ -4272,6 +4273,7 @@
     <ClInclude Include="..\Include\Network\AbstractServer.h" />
     <ClInclude Include="..\Include\Network\MajordomoUpstreamBroker.h" />
     <ClInclude Include="..\Include\Number\Number.h" />
+    <ClInclude Include="..\Include\Packet\Alarm\AlarmPacket.h" />
     <ClInclude Include="..\Include\Packet\DataPacket.h" />
     <ClInclude Include="..\Include\Packet\Message\MessagePacket.h" />
     <ClInclude Include="..\Include\Packet\Stream\StreamPacket.h" />
