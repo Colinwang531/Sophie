@@ -66,7 +66,7 @@ public:
 	{
 		T e{};
 
-		ReadLock rl{ mtx };
+//		ReadLock rl{ mtx };
 		if (index < queue.size())
 		{
 			e = queue[index];
@@ -77,7 +77,7 @@ public:
 
 	unsigned long long size(void)
 	{
-		ReadLock rl{ mtx };
+//		ReadLock rl{ mtx };
 		return queue.size();
 	}
 

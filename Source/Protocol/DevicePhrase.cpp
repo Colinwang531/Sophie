@@ -156,7 +156,7 @@ namespace base
 					}
 
 					devinfo->set_did(
-						reinterpret_cast<const char*>(pkt->getPacketData(eSuccess == status ? 1 : 0)));
+						reinterpret_cast<const char*>(pkt->getPacketData(1)));
 				}
 
 				mm.SerializeToString(&msgstr);

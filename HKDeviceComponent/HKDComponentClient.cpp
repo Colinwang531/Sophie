@@ -194,10 +194,8 @@ void HKDComponentClient::processDeviceMessage(
 		}
 		else if (base::protocol::DeviceCommand::DEVICE_COMMAND_MODIFY_REQ == command)
 		{
-			if (eSuccess == deleteDeviceByID(sd->getDeviceID()))
-			{
-				e = addNewDevice(sd, cameras);
-			}
+			deleteDeviceByID(sd->getDeviceID());
+			e = addNewDevice(sd, cameras);
 		}
 	}
 
@@ -482,6 +480,7 @@ int HKDComponentClient::destroySourceStreamSession(const std::string did)
 	if (eSuccess == e)
 	{
 		streamSessionGroup.removeHas(did);
+		urlGroup.clear();
 		LOG(INFO) << "Destroy all of source stream session = " << did << " Successfully.";
 	}
 
@@ -508,5 +507,13 @@ void HKDComponentClient::afterRemoteConnectedNotificationCallback(
 				LOG(WARNING) << "Create new source stream = " << url << " failed, result = " << e << ".";
 			}
 		}
+		else
+		{
+			LOG(WARNING) << "Get empty url of stream, count = " << urlGroup.size() << ".";
+		}
+	}
+	else
+	{
+		LOG(WARNING) << "Can not connect to stream, result = " << e.value() << ".";
 	}
 }

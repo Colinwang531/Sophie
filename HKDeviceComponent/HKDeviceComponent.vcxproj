@@ -79,6 +79,7 @@
     <OutDir>/root/projects/bin/$(Platform)/$(Configuration)/</OutDir>
     <RemoteProjectDir>/root/projects/$(ProjectName)</RemoteProjectDir>
     <RemoteDeployDir>/root/projects/$(ProjectName)</RemoteDeployDir>
+    <RemoteCCompileToolExe>gcc</RemoteCCompileToolExe>
   </PropertyGroup>
   <ItemGroup>
     <ClCompile Include="..\3rdPart\boost_1_72_0\libs\atomic\src\lockpool.cpp" />

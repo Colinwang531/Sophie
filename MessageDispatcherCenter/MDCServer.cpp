@@ -92,7 +92,8 @@ void MDCServer::afterPolledDataFromWorkerCallback(
 		else if (base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_ALGORITHM == type ||
 			base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_CREW == type || 
 			base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_DEVICE == type ||
-			base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_STATUS == type)
+			base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_STATUS == type ||
+			base::packet::MessagePacketType::MESSAGE_PACKET_TYPE_ALARM == type)
 		{
 			//去掉toID标识中的第一个路由地址
 			std::vector<std::string> addressGroup;

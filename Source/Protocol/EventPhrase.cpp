@@ -115,7 +115,8 @@ namespace base
 				else if (msg::Event_Command::Event_Command_SYNC_AIS == command)
 				{
 					msg::Ais* info{ e->mutable_ais() };
-					info->set_status(atoi((const char*)pkt->getPacketData()));
+					const int* sailStatus{ (const int*)pkt->getPacketData() };
+					info->set_status(*sailStatus);
 					info->set_longitude((const char*)pkt->getPacketData(1));
 					info->set_latitude((const char*)pkt->getPacketData(2));
 				}

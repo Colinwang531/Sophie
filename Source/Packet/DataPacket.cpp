@@ -13,10 +13,9 @@ namespace base
 
 		void DataPacket::setPacketData(void* data /* = nullptr */)
 		{
-			if (data)
-			{
-				packetData.push_back(data);
-			}
+			//不能判断data是否为空
+			//有的地方需要将数据设置为空
+			packetData.push_back(data);
 		}
 
 		void DataPacket::setPacketData(const int idx /* = 0 */, void* data /* = nullptr */)

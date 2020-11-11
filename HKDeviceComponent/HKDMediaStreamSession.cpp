@@ -17,7 +17,11 @@ HKDMediaStreamSession::HKDMediaStreamSession(
 	: TCPStreamTargetSession(s), streamURL{ url }, userID{ uid },
 	streamID{ -1 }, frameSequence{ 0 }, frameSysHead{ nullptr }, frameSysHeadBytes{ 0 }
 {}
-HKDMediaStreamSession::~HKDMediaStreamSession() {}
+
+HKDMediaStreamSession::~HKDMediaStreamSession() 
+{
+	stopSession();
+}
 
 int HKDMediaStreamSession::startSession()
 {
@@ -56,6 +60,7 @@ int HKDMediaStreamSession::stopSession()
 		NET_DVR_StopRealPlay(streamID);
 		boost::checked_array_delete(frameSysHead);
 		e = TCPSession::stopSession();
+		streamID = -1;
 	}
 
 	return e;

@@ -3,6 +3,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <RemoteDebuggerWorkingDirectory>/root/projects/bin/$(Platform)/$(Configuration)</RemoteDebuggerWorkingDirectory>
     <DebuggerFlavor>LinuxDebugger</DebuggerFlavor>
-    <RemoteDebuggerCommandArguments>-a 192.168.0.212 -p 61001 -n Stream</RemoteDebuggerCommandArguments>
+    <RemoteDebuggerCommandArguments>-a 192.168.0.13 -p 61001 -n Stream</RemoteDebuggerCommandArguments>
   </PropertyGroup>
 </Project>
