@@ -1,0 +1,4 @@
+英文AIS详细解释文档：https://gpsd.gitlab.io/gpsd/AIVDM.html#ITU-MID
+国家码表地址：https://www.itu.int/en/ITU-R/terrestrial/fmd/Pages/mid.aspx
+案例船舶信息：http://www.shipxy.com/
+AIS解码网址：https://www.maritec.co.za/tools/aisvdmvdodecoding/
