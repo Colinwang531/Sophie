@@ -4,49 +4,34 @@
 //		Author :						王科威
 //		E-mail :						wangkw531@icloud.com
 //		Date :							2020-09-23
-//		Description :					图片编码器类
+//		Description :					JPEG图片编码过滤器类
 //
 //		History:						Author									Date										Description
 //										王科威									2020-09-23									创建
 //
 
-#ifndef BASE_STREAM_JPEG_ENCODER_FILTER_H
-#define BASE_STREAM_JPEG_ENCODER_FILTER_H
+#ifndef FRAMEWORK_MULTIMEDIA_JPEG_ENCODER_FILTER_H
+#define FRAMEWORK_MULTIMEDIA_JPEG_ENCODER_FILTER_H
 
-#include "boost/shared_ptr.hpp"
-#include "Filter/AbstractFilter.h"
+#include "Encoder/Encoder.h"
+#include "Filter/Filter.h"
 
-namespace base
+namespace framework
 {
-	namespace stream
+	namespace multimedia
 	{
-		BOOST_STATIC_CONSTANT(std::string, JPEGImageEncoderFilterInputPinName = "JPEGImageEncoderFilterInputPin");
-		BOOST_STATIC_CONSTANT(std::string, JPEGImageEncoderFilterOutputPinName = "JPEGImageEncoderFilterOutputPin");
-
-		class AbstractEncoder;
-		using AbstractEncoderPtr = boost::shared_ptr<AbstractEncoder>;
-
-		class JPEGEncoderFilter : public AbstractFilter
+		class JPEGEncoderFilter 
+			: public Filter, protected Encoder
 		{
 		public:
 			JPEGEncoderFilter(void);
 			virtual ~JPEGEncoderFilter(void);
 
 		protected:
-			int inputData(StreamPacketPtr pkt) override;
-			int createNewPin(void) override;
-			int afterProcessInputDataNotification(StreamPacketPtr pkt) override;
-
-		private:
-			//创建编码器实例
-			//@Return : 错误码
-			//@Comment : 接收到第一个流包数据后再创建转换器实例
-			int createNewEncoder(void);
-
-		private:
-			AbstractEncoderPtr abstractEncoderPtr;
+			int inputData(DataPtr data) override;
+			void afterDataEncodeNotification(DataPtr data) override;
 		};//class JPEGEncoderFilter
-	}//namespace stream
-}//namespace base
+	}//namespace multimedia
+}//namespace framework
 
-#endif//BASE_STREAM_JPEG_ENCODER_FILTER_H
+#endif//FRAMEWORK_MULTIMEDIA_JPEG_ENCODER_FILTER_H

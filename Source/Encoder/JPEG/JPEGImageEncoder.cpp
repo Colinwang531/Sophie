@@ -1,67 +1,88 @@
-#include <string>
-#include <sstream>
-#include "boost/archive/iterators/base64_from_binary.hpp"
-#include "boost/archive/iterators/binary_from_base64.hpp"
-#include "boost/archive/iterators/transform_width.hpp"
 #include "boost/make_shared.hpp"
 extern "C"
 {
+#include "libavformat/avformat.h"
 #include "libavutil/imgutils.h"
 }
+#include "Data/Frame/Frame.h"
+using Frame = framework::data::Frame;
+using FramePtr = boost::shared_ptr<Frame>;
+#include "Data/Base64/Base64.h"
+using Base64 = framework::data::Base64;
 #include "Error.h"
-#include "Filter/AbstractFilter.h"
 #include "Encoder/JPEG/JPEGImageEncoder.h"
 
-namespace base
+namespace framework
 {
-	namespace stream
+	namespace multimedia
 	{
-		JPEGImageEncoder::JPEGImageEncoder(AbstractFilter& filter)
-			: AbstractEncoder(filter), avcodec{ nullptr }, avcodecctx{ nullptr }, srcData{ nullptr }
+		JPEGImageEncoder::JPEGImageEncoder(
+			DataNotificationCallback callback /* = nullptr */)
+			: codec{ nullptr }, ctx{ nullptr }, iframe{ nullptr }, dataNotificationCallback{ callback }
 		{}
-
 		JPEGImageEncoder::~JPEGImageEncoder()
-		{}
-
-		int JPEGImageEncoder::inputData(StreamPacketPtr pkt)
 		{
-			int e{ pkt ? eSuccess : eInvalidParameter };
+			avcodec_close(reinterpret_cast<AVCodecContext*>(ctx));
+			av_free(reinterpret_cast<AVCodec*>(codec));
+			AVFrame* avf{ reinterpret_cast<AVFrame*>(iframe) };
+			av_frame_free(&avf);
+		}
+
+		int JPEGImageEncoder::inputData(DataPtr data)
+		{
+			int e{ data ? eSuccess : eInvalidParameter };
 
 			if (eSuccess == e)
 			{
-				int w{ 0 }, h{ 0 };
-				pkt->getImageWidthAndHeight(w, h);
+				FramePtr fp{ boost::dynamic_pointer_cast<Frame>(data) };
+				int w{ fp->getFrameWidth() }, h{ fp->getFrameHeight() };
 
-				if (!avcodec && !avcodecctx && !srcData)
+				if (!codec && !ctx && !iframe)
 				{
-					e = createNewEncoder(w, h);
+					codec = avcodec_find_encoder(AV_CODEC_ID_MJPEG);
+					iframe = av_frame_alloc();
+					AVFrame* avf{ reinterpret_cast<AVFrame*>(iframe) };
+					avf->format = AV_PIX_FMT_YUV420P;
+					avf->width = w;
+					avf->height = h;
+
+					AVCodec* avc{ reinterpret_cast<AVCodec*>(codec) };
+					ctx = avcodec_alloc_context3(avc);
+					AVCodecContext* avcc{ reinterpret_cast<AVCodecContext*>(ctx) };
+					avcc->pix_fmt = AV_PIX_FMT_YUVJ420P;
+					avcc->codec_type = AVMEDIA_TYPE_VIDEO;
+					avcc->time_base.num = 1;
+					avcc->time_base.den = 11;
+					avcc->width = w;
+					avcc->height = h;
+					avcodec_open2(avcc, avc, NULL) ? eSuccess : eNotSupport;
 				}
 
-				if (eSuccess == e)
+				if (codec && ctx && iframe)
 				{
+					AVCodecContext* avcc{ reinterpret_cast<AVCodecContext*>(ctx) };
+					AVFrame* avf{ reinterpret_cast<AVFrame*>(iframe) };
 					av_image_fill_arrays(
-						srcData->data, srcData->linesize, (const unsigned char*)pkt->getStreamData(), AV_PIX_FMT_YUV420P, w, h, 1);
+						avf->data, avf->linesize, (const unsigned char*)fp->getFrameData(), AV_PIX_FMT_YUV420P, w, h, 1);
 
-					if (!avcodec_send_frame(avcodecctx, srcData))
+					if (!avcodec_send_frame(avcc, avf))
 					{
 						AVPacket avpkt;
 						av_init_packet(&avpkt);
-						if (!avcodec_receive_packet(avcodecctx, &avpkt))
+						if (!avcodec_receive_packet(avcc, &avpkt))
 						{
-							StreamPacketPtr streampkt{
-								boost::make_shared<StreamPacket>(
-									pkt->getStreamPacketType(),
-									base::packet::StreamFrameType::STREAM_FRAME_TYPE_JPEG) };
+							Base64 base64;
+							e = base64.encodeBase64((const char*)avpkt.data, avpkt.size);
 
-							if (streampkt)
+							if (eSuccess == e)
 							{
-								const std::string base64EncodeData{ base64Encode(avpkt.data, avpkt.size) };
-								int x{ 0 }, y{ 0 }, w{ 0 }, h{ 0 };
-								pkt->getAlarmRange(x, y, w, h);
-								streampkt->setAlarmRange(x, y, w, h);
-								streampkt->setImageWithAndHeight(w, h);
-								streampkt->setStreamData((const unsigned char*)base64EncodeData.c_str(), (int)base64EncodeData.length());
-								abstractFilter.afterProcessInputDataNotification(streampkt);
+								data->setData(base64.getData(), base64.getDataBytes());
+								fp->setFrameType(framework::data::FrameType::FRAME_TYPE_JPEG);
+								
+								if (dataNotificationCallback)
+								{
+									dataNotificationCallback(data);
+								}
 							}
 						}
 						av_packet_unref(&avpkt);
@@ -75,68 +96,5 @@ namespace base
 
 			return e;
 		}
-
-		int JPEGImageEncoder::createNewEncoder(const int w /* = 1920 */, const int h /* = 1080 */)
-		{
-			int e{ 0 < w && 0 < h ? eSuccess : eInvalidParameter };
-
-			if (eSuccess == e)
-			{
-				avcodec = avcodec_find_encoder(AV_CODEC_ID_MJPEG);
-				srcData = av_frame_alloc();
-
-				if (avcodec && srcData)
-				{
-					srcData->format = AV_PIX_FMT_YUV420P;
-					srcData->width = w;
-					srcData->height = h;
-
-					avcodecctx = avcodec_alloc_context3(avcodec);
-					avcodecctx->pix_fmt = AV_PIX_FMT_YUVJ420P;
-					avcodecctx->codec_type = AVMEDIA_TYPE_VIDEO;
-					avcodecctx->time_base.num = 1;
-					avcodecctx->time_base.den = 11;
-					avcodecctx->width = w;
-					avcodecctx->height = h;
-
-					e = !avcodec_open2(avcodecctx, avcodec, NULL) ? eSuccess : eNotSupport;
-				}
-				else
-				{
-					destroyEncoder();
-					e = eBadNewObject;
-				}
-			}
-
-			return e;
-		}
-
-		int JPEGImageEncoder::destroyEncoder()
-		{
-			avcodec_close(avcodecctx);
-			av_free(avcodec);
-			av_frame_free(&srcData);
-			return eSuccess;
-		}
-
-		const std::string JPEGImageEncoder::base64Encode(
-			const unsigned char* data /* = nullptr */, 
-			const int bytes /* = 0 */)
-		{
-			typedef boost::archive::iterators::base64_from_binary<
-				boost::archive::iterators::transform_width<std::string::const_iterator, 6, 8>> Base64EncodeIterator;
-			std::string inputData((const char*)data, bytes);
-			std::stringstream result;
-			copy(Base64EncodeIterator(inputData.begin()), Base64EncodeIterator(inputData.end()), std::ostream_iterator<char>(result));
-			size_t equal_count = (3 - inputData.length() % 3) % 3;
-			for (size_t i = 0; i < equal_count; i++)
-			{
-				result.put('=');
-			}
-			//去掉结尾数据乱码
-			result.put('\0');
-
-			return result.str();
-		}
-	}//namespace stream
-}//namespace base
+	}//namespace multimedia
+}//namespace framework

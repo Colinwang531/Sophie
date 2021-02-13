@@ -1,53 +1,62 @@
+#include "boost/asio.hpp"
 #include "boost/bind.hpp"
 #include "boost/make_shared.hpp"
 #include "Error.h"
 #include "Timer/Timer.h"
 
-namespace base
+namespace framework
 {
 	namespace network
 	{
-		Timer::Timer(AfterGotTimeoutNotificationCallback callback /* = nullptr */)
-			: afterGotTimeoutNotificationCallback{ callback }
-		{}
-
-		Timer::~Timer()
-		{}
-
-		int Timer::waitTimeout(
-			boost::asio::ip::tcp::socket* s /* = nullptr */, const int expire /* = 5 */)
+		namespace asio
 		{
-			int e{ s && s->is_open() && 0 < expire ? eSuccess : eInvalidParameter };
+			Timer::Timer(AfterTimerExpireResultCallback callback /* = nullptr */)
+				: afterTimerExpireResultCallback{ callback }
+			{}
+			Timer::~Timer()
+			{}
 
-			if (eSuccess == e)
+			int Timer::setTime(
+				const void* s /* = nullptr */, 
+				const int timeo /* = 5 */)
 			{
-				DeadLineTimerPtr timer{
-					boost::make_shared<boost::asio::deadline_timer>(
-						s->get_executor(), boost::posix_time::seconds(expire)) };
+				int e{ s && 0 < timeo ? eSuccess : eInvalidParameter };
 
-				if (timer)
+				if (eSuccess == e)
 				{
-					timer->async_wait(
-						boost::bind(
-							&Timer::afterWaitTimeoutNotificationCallback,
-							boost::enable_shared_from_this<Timer>::shared_from_this(),
-							boost::asio::placeholders::error));
+					using DeadLineTimerPtr = boost::shared_ptr<boost::asio::deadline_timer>;
+					boost::asio::ip::tcp::socket* so{ 
+						reinterpret_cast<boost::asio::ip::tcp::socket*>(const_cast<void*>(s)) };
+					DeadLineTimerPtr timer{
+						boost::make_shared<boost::asio::deadline_timer>(
+							so->get_executor(), 
+							boost::posix_time::seconds(timeo)) };
+
+					if (timer)
+					{
+						timer->async_wait(
+							boost::bind(
+								&Timer::afterTimerExpireResultNotification,
+								boost::enable_shared_from_this<Timer>::shared_from_this(),
+								boost::asio::placeholders::error));
+					}
+					else
+					{
+						e = eBadNewObject;
+					}
 				}
-				else
-				{
-					e = eBadNewObject;
-				}
+
+				return e;
 			}
 
-			return e;
-		}
-
-		void Timer::afterWaitTimeoutNotificationCallback(boost::system::error_code e)
-		{
-			if (!e && afterGotTimeoutNotificationCallback)
+			void Timer::afterTimerExpireResultNotification(
+				const boost::system::error_code e)
 			{
-				afterGotTimeoutNotificationCallback();
+				if (afterTimerExpireResultCallback)
+				{
+					afterTimerExpireResultCallback();
+				}
 			}
-		}
-	}
-}
+		}//namespace asio
+	}//namespace network
+}//namespace framework

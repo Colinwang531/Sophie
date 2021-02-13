@@ -2,40 +2,42 @@ syntax = "proto2";
 
 package msg;
 
-message ComponentInfo
+message Component
 {
 	enum Type
 	{
 		XMQ = 1;
-		WEB = 2;
-		HKD = 3;
-		DHD = 4;
-		ALM = 5;
-		AI = 6;
-		MED = 7;
-		CLK = 8;
-		AIS = 9;
+		CMS = 2;
+		WEB = 3;
+		DHSLB = 4;
+		DHS = 5;
+		XMSLB = 6;
+		XMS = 7;
+		RTSP = 8;
+		RTMP = 9;
+		HLS = 10;
+		GBS = 11;
+		GBXMS = 12;
+		DSS = 13;
+		DBE = 14;
+		AIS = 15;
+		TSS = 16;
+		ALM = 17;
+		HELMET = 18;
+		PHONE = 19;
+		SLEEP = 20;
+		FACE = 21;
+		FIGHT = 22;
 	}
 	
 	required Type type = 1;
-	optional string componentid = 2;
-	optional string commid = 3;
-	optional string cname = 4;
+	required bytes name = 2;
+	required bytes ipv4 = 3;
+	optional bytes id = 4;
+	optional bytes nickname = 5;
 }
 
-message ComponentRequest
-{
-	required ComponentInfo componentinfo = 1;
-}
-
-message ComponentResponse
-{
-	required int32 result = 1;
-	optional string cid = 2;
-	repeated ComponentInfo componentinfos = 3;
-}
-
-message Component
+message ComponentMessage
 {
 	enum Command
 	{
@@ -48,6 +50,7 @@ message Component
 	}
 	
 	required Command command = 1;
-	optional ComponentRequest componentrequest = 2;
-	optional ComponentResponse componentresponse = 3;
+	repeated Component components = 2;
+	optional int32 status = 3;
+	optional bytes pid = 4;
 }

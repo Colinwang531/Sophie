@@ -5,48 +5,53 @@
 //		E-mail :						wangkw531@icloud.com
 //		Date :							2020-09-15
 //		Description :					定时器类
+//										仅TCP会话实例使用
 //
 //		History:						Author									Date										Description
 //										王科威									2020-09-15									创建
 //
 
-#ifndef BASE_NETWORK_TIMER_H
-#define BASE_NETWORK_TIMER_H
+#ifndef FRAMEWORK_NETWORK_ASIO_TIMER_H
+#define FRAMEWORK_NETWORK_ASIO_TIMER_H
 
-#include "boost/asio.hpp"
+#include "boost/enable_shared_from_this.hpp"
 #include "boost/function.hpp"
-#include "boost/smart_ptr/enable_shared_from_this.hpp"
-using DeadLineTimerPtr = boost::shared_ptr<boost::asio::deadline_timer>;
+#include "boost/system/error_code.hpp"
 
-namespace base
+namespace framework
 {
 	namespace network
 	{
-		typedef boost::function<void(void)> AfterGotTimeoutNotificationCallback;
-
-		class Timer : public boost::enable_shared_from_this<Timer>
+		namespace asio
 		{
-		public:
-			Timer(
-				AfterGotTimeoutNotificationCallback callback = nullptr);
-			virtual ~Timer(void);
+			typedef boost::function<void(void)> AfterTimerExpireResultCallback;
 
-			//打开定时器
-			//@s : Socket句柄
-			//@expire : 超时间隔,以秒为单位
-			//@Return : 错误码值
-			int waitTimeout(
-				boost::asio::ip::tcp::socket* s = nullptr, 
-				const int expire = 5);
+			class Timer 
+				: public boost::enable_shared_from_this<Timer>
+			{
+			public:
+				Timer(AfterTimerExpireResultCallback callback = nullptr);
+				virtual ~Timer(void);
 
-		private:
-			void afterWaitTimeoutNotificationCallback(
-				boost::system::error_code e);
+			public:
+				//设置定时器
+				//@s : socket句柄
+				//@expire : 超时间隔,以秒为单位
+				//@Return : 错误码值
+				int setTime(
+					const void* s = nullptr,
+					const int seconds = 5);
 
-		private:
-			AfterGotTimeoutNotificationCallback afterGotTimeoutNotificationCallback;
-		};//class Timer
+			private:
+				//定时器超时通知
+				//@e : 错误码
+				void afterTimerExpireResultNotification(const boost::system::error_code e);
+
+			private:
+				AfterTimerExpireResultCallback afterTimerExpireResultCallback;
+			};//class Timer
+		}//namespace asio
 	}//namespace network
-}//namespace base
+}//namespace framework
 
-#endif//BASE_NETWORK_TIMER_H
+#endif//FRAMEWORK_NETWORK_ASIO_TIMER_H

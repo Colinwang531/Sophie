@@ -1,126 +1,110 @@
-#include <string.h>
-#include "CH-HCNetSDKV6.1.4.17_build20200331_Linux64/HCNetSDK.h"
+#include "boost/bind.hpp"
+#include "boost/checked_delete.hpp"
+#include "boost/make_shared.hpp"
 #include "Error.h"
-#include "Define.h"
-#include "Device/Hikvision/HikvisionDevice.h"
+#include "Data/Buffer.h"
+#include "Time/XTime.h"
+using Time = framework::time::Time;
+#include "Camera/Hikvision/HikvisionCamera.h"
 
-namespace base
+namespace framework
 {
 	namespace device
 	{
-		HikvisionDevice::HikvisionDevice(
-			const std::string did, 
-			const SurveillanceDeviceType type /* = SurveillanceDeviceType::SURVEILLANCE_DEVICE_TYPE_NONE */)
-			: SurveillanceDevice(did, SurveillanceDeviceFactory::SURVEILLANCE_DEVICE_FACTORY_HK, type)
+		HikvisionCamera::HikvisionCamera(const int idx /* = -1 */)
+			: Camera(idx)
+		{}
+		HikvisionCamera::~HikvisionCamera()
 		{}
 
-		HikvisionDevice::~HikvisionDevice()
-		{}
-
-		int HikvisionDevice::startDevice()
+		int HikvisionCamera::openStream(TCPSessionPtr sp, const int userID /* = -1 */)
 		{
-			return loginDevice();
-		}
-
-		int HikvisionDevice::stopDevice()
-		{
-			return logoutDevice();
-		}
-
-		int HikvisionDevice::loginDevice()
-		{
-			const std::string ip{ getDeviceIPv4Address() }, name{ getLoginUserName() }, password{ getLoginUserPassword() };
-			const unsigned short port{ getDevicePortNumber() };
-			int e{ 
-				name.empty() || password.empty() || ip.empty() || 
-				gMinPortNumber > port || gMaxPortNumber < port || -1 < userID
-				? eBadOperate : eSuccess };
+			int e{ -1 < userID ? eSuccess : eInvalidParameter };
 
 			if (eSuccess == e)
 			{
-				if (0 == SurveillanceDevice::loginDevice())
-				{
-					e = NET_DVR_Init() ? eSuccess : eBadInitSDK;
-				}
-
-				if (eSuccess == e)
-				{
-					NET_DVR_USER_LOGIN_INFO loginInfo{ 0 };
-					loginInfo.bUseAsynLogin = 0;
-					strcpy(loginInfo.sDeviceAddress, ip.c_str());
-					loginInfo.wPort = 8000;
-					strcpy(loginInfo.sUserName, name.c_str());
-					strcpy(loginInfo.sPassword, password.c_str());
-					NET_DVR_DEVICEINFO_V40 deviceInfo{ 0 };
-
-					//Í¬²½µÇÂ¼
-					userID = NET_DVR_Login_V40(&loginInfo, &deviceInfo);
-					e = -1 < userID ? eSuccess : eBadLoginDevice;
-				}
+				NET_DVR_PREVIEWINFO previewInfo{ 0 };
+				previewInfo.lChannel = Camera::getIndex();
+				streamID = NET_DVR_RealPlay_V40(
+					userID, &previewInfo, &HikvisionCamera::livestreamDataCaptureCallback, this);
+				tsp.swap(sp);
 			}
 
 			return e;
 		}
 
-		int HikvisionDevice::logoutDevice()
+		int HikvisionCamera::closeStream()
 		{
-			int e{ -1 < userID ? eSuccess : eBadOperate };
+			int e{ -1 < streamID ? eSuccess : eBadOperate };
 
 			if (eSuccess == e)
 			{
-				e = NET_DVR_Logout(userID) ? eSuccess : eBadLogoutDevice;
+				NET_DVR_StopRealPlay(streamID);
+			}
 
-				if (eSuccess == e)
+			return e;
+		}
+
+		int HikvisionCamera::sendData(
+			BYTE* pBuffer /* = nullptr */, const DWORD dwBufSize /* = 0 */, const bool head /* = false */)
+		{
+			int e{ pBuffer && 0 < dwBufSize ? eSuccess : eInvalidParameter };
+
+			if (eSuccess == e)
+			{
+				const int bytes{ framework::data::FixedHeadSize + dwBufSize };
+				char* buffer{ new(std::nothrow) char[bytes] };
+
+				if (buffer)
 				{
-					if (0 == logoutDevice())
+					int* flag{ (int*)buffer };
+					*flag = framework::data::FixedHeadFlag;
+					int* factoryType{ (int*)(buffer + 4) };
+					*factoryType = static_cast<int>(framework::data::DataFactory::DATA_FACTORY_HK);
+					int* dataType{ (int*)(buffer + 8) };
+					*dataType = static_cast<int>(head ? framework::data::DataType::DATA_TYPE_HEADER : framework::data::DataType::DATA_TYPE_BYTES);
+					int* frameType{ (int*)(buffer + 12) };
+					*frameType = -1;
+					int* frameSize{ (int*)(buffer + 16) };
+					*frameSize = (int)dwBufSize;
+					long long* frameSequence{ (long long*)(buffer + 20) };
+					*frameSequence = -1;
+					long long* frameTimestamp{ (long long*)(buffer + 28) };
+					*frameTimestamp = (long long)(Time().tickcount());
+#ifdef WINDOWS
+					memcpy_s(buffer + framework::data::FixedHeadSize, dwBufSize, pBuffer, dwBufSize);
+#else
+					memcpy(buffer + framework::data::FixedHeadSize, pBuffer, dwBufSize);
+#endif//WINDOWS
+
+					if (tsp)
 					{
-						e = NET_DVR_Cleanup() ? eSuccess : eBadCleanupSDK;
+						tsp->send(buffer, bytes);
 					}
 				}
-			}
 
+				boost::checked_array_delete(buffer);
+			}
+			
 			return e;
 		}
 
-		int HikvisionDevice::getCameraNumber()
+		void HikvisionCamera::livestreamDataCaptureCallback(
+			LONG lPlayHandle, DWORD dwDataType, BYTE* pBuffer, DWORD dwBufSize, void* pUser)
 		{
-			int e{ -1 < userID ? eSuccess : eBadOperate };
+			HikvisionCamera* camera{ reinterpret_cast<HikvisionCamera*>(pUser) };
 
-			if (eSuccess == e)
+			if (lPlayHandle == camera->streamID)
 			{
-				DWORD dwRet{ 0 };
-				NET_DVR_IPPARACFG_V40 IPAccessCfgV40{ 0 };
-				NET_DVR_DEVICEINFO_V40 deviceInfo{ 0 };
-
-				if (NET_DVR_GetDVRConfig(userID, NET_DVR_GET_IPPARACFG_V40, 0, &IPAccessCfgV40, sizeof(NET_DVR_IPPARACFG_V40), &dwRet))
+				if (NET_DVR_SYSHEAD == dwDataType || NET_DVR_STREAMDATA == dwDataType)
 				{
-					for (DWORD i = 0; i < IPAccessCfgV40.dwDChanNum; i++)
-					{
-						switch (IPAccessCfgV40.struStreamMode[i].byGetStreamType)
-						{
-						case 0:
-						{
-							if (IPAccessCfgV40.struStreamMode[i].uGetStream.struChanInfo.byEnable)
-							{
-								// 									BYTE byIPID{ IPAccessCfgV40.struStreamMode[i].uGetStream.struChanInfo.byIPID };
-								// 									BYTE byIPIDHigh{ IPAccessCfgV40.struStreamMode[i].uGetStream.struChanInfo.byIPIDHigh };
-								// 									int iDevInfoIndex{ byIPIDHigh * 256 + byIPID - 1 - groupNo * 64 };
-							}
-
-							break;
-						}
-						default:
-							break;
-						}
-					}
+					camera->sendData(pBuffer, dwBufSize, NET_DVR_SYSHEAD == dwDataType ? true : false);
 				}
-				else
-				{
-					e = eNotSupport;
-				}
+// 				else if (NET_DVR_AUDIOSTREAMDATA == dataBytes)
+// 				{
+// 					livestream->captureAudioStreamProcess(streamData, dataBytes);
+// 				}
 			}
-
-			return e;
 		}
 	}//namespace device
-}//namespace base
+}//namespace framework

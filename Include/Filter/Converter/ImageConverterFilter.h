@@ -10,45 +10,27 @@
 //										王科威									2020-09-23									创建
 //
 
-#ifndef BASE_STREAM_IMAGE_CONVERTER_FILTER_H
-#define BASE_STREAM_IMAGE_CONVERTER_FILTER_H
+#ifndef FRAMEWORK_MULTIMEDIA_IMAGE_CONVERTER_FILTER_H
+#define FRAMEWORK_MULTIMEDIA_IMAGE_CONVERTER_FILTER_H
 
-#include "boost/shared_ptr.hpp"
-#include "Filter/AbstractFilter.h"
+#include "Converter/Converter.h"
+#include "Filter/Filter.h"
 
-namespace base
+namespace framework
 {
-	namespace stream
+	namespace multimedia
 	{
-		BOOST_STATIC_CONSTANT(std::string, ImageConverterFilterInputPinName = "ImageConverterFilterInputPin");
-		BOOST_STATIC_CONSTANT(std::string, ImageConverterFilterOutputPinName = "ImageConverterFilterOutputPin");
-
-		class AbstractImageConverter;
-		using AbstractImageConverterPtr = boost::shared_ptr<AbstractImageConverter>;
-
-		class ImageConverterFilter : public AbstractFilter
+		class ImageConverterFilter 
+			: public Filter, protected Converter
 		{
 		public:
 			ImageConverterFilter(void);
 			virtual ~ImageConverterFilter(void);
 
 		protected:
-			int inputData(StreamPacketPtr pkt) override;
-			int createNewPin(void) override;
-			int afterProcessInputDataNotification(StreamPacketPtr pkt) override;
-
-		private:
-			//创建转换器实例
-			//@type : 数据帧类型
-			//@Return : 错误码
-			//@Comment : 接收到第一个流包数据后再创建转换器实例
-			int createNewConverter(
-				const base::packet::StreamFrameType type = base::packet::StreamFrameType::STREAM_FRAME_TYPE_NONE);
-
-		private:
-			AbstractImageConverterPtr abstractImageConverterPtr;
+			int inputData(DataPtr data) override;
 		};//class ImageConverterFilter
-	}//namespace stream
-}//namespace base
+	}//namespace multimedia
+}//namespace framework
 
-#endif//BASE_STREAM_IMAGE_CONVERTER_FILTER_H
+#endif//FRAMEWORK_MULTIMEDIA_IMAGE_CONVERTER_FILTER_H

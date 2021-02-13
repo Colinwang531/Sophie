@@ -10,10 +10,10 @@
 //										王科威									2020-04-26									创建
 //
 
-#ifndef BASE_HARDWARE_CPU_H
-#define BASE_HARDWARE_CPU_H
+#ifndef FRAMEWORK_HARDWARE_CPU_H
+#define FRAMEWORK_HARDWARE_CPU_H
 
-namespace base
+namespace framework
 {
 	namespace hardware
 	{
@@ -36,6 +36,6 @@ namespace base
 				const int mask = 0);
 		};//class Cpu
 	}//namespace hardware
-}//namespace base
+}//namespace framework
 
-#endif//BASE_HARDWARE_CPU_H
+#endif//FRAMEWORK_HARDWARE_CPU_H

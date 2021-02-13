@@ -10,47 +10,38 @@
 //										王科威									2019-07-31								创建
 //
 
-#ifndef BASE_STREAM_JPEG_IMAGE_ENCODER_H
-#define BASE_STREAM_JPEG_IMAGE_ENCODER_H
+#ifndef FRAMEWORK_MULTIMEDIA_JPEG_IMAGE_ENCODER_H
+#define FRAMEWORK_MULTIMEDIA_JPEG_IMAGE_ENCODER_H
 
-#include <string>
-extern "C"
-{
-#include "libavformat/avformat.h"
-}
-#include "Encoder/AbstractEncoder.h"
+#include "boost/function.hpp"
+#include "boost/shared_ptr.hpp"
+#include "Data/Data.h"
+using Data = framework::data::Data;
+using DataPtr = boost::shared_ptr<Data>;
 
-namespace base
+namespace framework
 {
-	namespace stream
+	namespace multimedia
 	{
-		class JPEGImageEncoder : public AbstractEncoder
+		typedef boost::function<void(DataPtr)> DataNotificationCallback;
+
+		class JPEGImageEncoder
 		{
 		public:
-			JPEGImageEncoder(AbstractFilter& filter);
-			virtual ~JPEGImageEncoder(void);
+			JPEGImageEncoder(
+				DataNotificationCallback callback = nullptr);
+			~JPEGImageEncoder(void);
 
 		public:
-			int inputData(StreamPacketPtr pkt) override;
+			int inputData(DataPtr data);
 
 		private:
-			//创建和销毁编码器
-			//@w : 宽度
-			//@h : 高度
-			//@Return : 错误码
-			int createNewEncoder(const int w = 1920, const int h = 1080);
-			int destroyEncoder(void);
+			void* codec;
+			void* ctx;
+			void* iframe;
+			DataNotificationCallback dataNotificationCallback;
+		};//class JPEGImageEncoder
+	}//namespace multimedia
+}//namespace framework
 
-			const std::string base64Encode(
-				const unsigned char* data = nullptr, 
-				const int bytes = 0);
-
-		private:
-			AVCodec* avcodec;
-			AVCodecContext* avcodecctx;
-			AVFrame* srcData;
-		};//class YUV420PToJPEGEncoder
-	}//namespace stream
-}//namespace base
-
-#endif//BASE_STREAM_JPEG_IMAGE_ENCODER_H
+#endif//FRAMEWORK_MULTIMEDIA_JPEG_IMAGE_ENCODER_H

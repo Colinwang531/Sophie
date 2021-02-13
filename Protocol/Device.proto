@@ -2,27 +2,30 @@ syntax = "proto2";
 
 package msg;
 
-message CameraInfo
+message Camera
 {
-	required string cid = 1;
-	required int32 index = 2;
-	required bool enable = 3;
-	optional string nickname = 4;
-	optional string ip = 5;
+	enum Type
+	{
+		ANALOG = 1;
+		DIGIST = 2;
+	}
+	
+	required Type type = 1;
+	required bytes id = 2;
+	required int32 index = 3;
+	required bool enable = 4;
+	required bytes nickname = 5;
+	required bytes ip = 6;
 }
 
-message DeviceInfo
+message Device
 {
-	required bool enable = 1 [default = false];
-	
 	enum Factory
 	{
 		HIKVISION = 1;
 		DAHUA = 2;
 		EATON = 3;
 	}
-	
-	optional Factory factory = 2;
 	
 	enum Type
 	{
@@ -31,30 +34,19 @@ message DeviceInfo
 		IPC = 3;
 	}
 	
-	optional Type type = 3;
-	optional string name = 4;
-	optional string password = 5;
-	optional string ip = 6;
-	optional int32 port = 7;
-	optional string did = 8;
-	optional string nickname = 9;
-	repeated CameraInfo camerainfos = 10;
+	required bytes did = 1;
+	optional bool enable = 2;
+	optional Factory factory = 3;
+	optional Type type = 4;
+	optional bytes username = 5;
+	optional bytes userpwd = 6;
+	optional bytes ip = 7;
+	optional int32 port = 8;
+	optional bytes nickname = 9;
+	repeated Camera cameras = 10;
 }
 
-message DeviceRequest
-{
-	optional DeviceInfo deviceinfo = 1;
-	optional string did = 2;
-}
-
-message DeviceResponse
-{
-	required int32 result = 1;
-	optional string did = 2;
-	repeated DeviceInfo deviceinfos = 3;
-}
-
-message Device
+message DeviceMessage
 {
 	enum Command
 	{
@@ -62,13 +54,12 @@ message Device
 		NEW_REP = 2;
 		DELETE_REQ = 3;
 		DELETE_REP = 4;
-		MODIFY_REQ = 5;
-		MODIFY_REP = 6;
-		QUERY_REQ = 7;
-		QUERY_REP = 8;
+		QUERY_REQ = 5;
+		QUERY_REP = 6;
 	}
 	
 	required Command command = 1;
-	optional DeviceRequest devicerequest = 2;
-	optional DeviceResponse deviceresponse = 3;
+	repeated Device devices = 2;
+	optional int32 status = 3;
+	optional bytes pid = 4;
 }

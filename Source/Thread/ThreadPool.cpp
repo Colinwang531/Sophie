@@ -1,6 +1,6 @@
 #include "Thread/ThreadPool.h"
 
-namespace base
+namespace framework
 {
 	namespace thread
 	{
@@ -26,5 +26,5 @@ namespace base
 		{
 			tg.join_all();
 		}
-	}//namespace time
-}//namespace base
+	}//namespace thread
+}//namespace framework

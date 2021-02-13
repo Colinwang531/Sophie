@@ -2,7 +2,7 @@ syntax = "proto2";
 
 package msg;
 
-message AlgorithmInfo
+message Algorithm
 {
 	enum Type
 	{
@@ -10,42 +10,36 @@ message AlgorithmInfo
 		PHONE = 2;
 		SLEEP = 3;
 		FIGHT = 4;
-		ATTENDANCE_IN = 5;
-		ATTENDANCE_OUT = 6;
+		FACE = 5;
+		OFFDUTY = 6;
 	}
 	
 	required Type type = 1;
 	required int32 gpu = 2;
-	required string cid = 3;
-	required string aid = 4;
-	required float dectectfirst = 5;
+	required bytes id = 3;
+	required bytes camera = 4;
+	required float dectect = 5;
 	required float track = 6;
-	optional float dectectsecond = 7;
-	optional float similar = 8;
+	optional float seconddetectforphone = 7;
+	optional float similarforface = 8;
+	optional bool inoutforface = 9;
+	optional int32 triggertime = 10;
 }
 
-message AlgorithmRequest
-{
-	required AlgorithmInfo algorithminfo = 1;
-}
-
-message AlgorithmResponse
-{
-	required int32 result = 1;
-	repeated AlgorithmInfo algorithminfos = 2;
-}
-
-message Algorithm
+message AlgorithmMessage
 {
 	enum Command
 	{
-		CONFIGURE_REQ = 1;
-		CONFIGURE_REP = 2;
-		QUERY_REQ = 3;
-		QUERY_REP = 4;
+		NEW_REQ = 1;
+		NEW_REP = 2;
+		DELETE_REQ = 3;
+		DELETE_REP = 4;
+		QUERY_REQ = 5;
+		QUERY_REP = 6;
 	}
 	
 	required Command command = 1;
-	optional AlgorithmRequest algorithmrequest = 2;
-	optional AlgorithmResponse algorithmresponse = 3;
+	repeated Algorithm algorithms = 2;
+	optional int32 status = 3;
+	optional bytes pid = 4;
 }

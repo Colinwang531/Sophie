@@ -2,26 +2,15 @@ syntax = "proto2";
 
 package msg;
 
-message CrewInfo
-{
-	required string uid = 1;
-	optional string name = 2;
-	optional string job = 3;
-	repeated string pictures = 4;
-}
-
-message CrewRequest
-{
-	required CrewInfo crewinfo = 1;
-}
-
-message CrewResponse
-{
-	required int32 result = 1;
-	repeated CrewInfo crewinfos = 2;
-}
-
 message Crew
+{
+	required bytes id = 1;
+	optional bytes name = 2;
+	optional bytes job = 3;
+	repeated bytes pictures = 4;
+}
+
+message CrewMessage
 {
 	enum Command
 	{
@@ -29,13 +18,12 @@ message Crew
 		NEW_REP = 2;
 		DELETE_REQ = 3;
 		DELETE_REP = 4;
-		MODIFY_REQ = 5;
-		MODIFY_REP = 6;
-		QUERY_REQ = 7;
-		QUERY_REP = 8;
+		QUERY_REQ = 5;
+		QUERY_REP = 6;
 	}
 	
 	required Command command = 1;
-	optional CrewRequest crewrequest = 2;
-	optional CrewResponse crewresponse = 3;
+	repeated Crew crews = 2;
+	optional int32 status = 3;
+	optional bytes pid = 4;
 }

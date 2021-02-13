@@ -1,14 +1,15 @@
 #include "boost/date_time/posix_time/posix_time.hpp"
+#include "boost/thread/thread.hpp"
 #include "Time/XTime.h"
 
-namespace base
+namespace framework
 {
 	namespace time
 	{
 		Time::Time(){}
 		Time::~Time(){}
 
-		const long long Time::tickcount()
+		const unsigned long long Time::tickcount()
 		{
 			boost::posix_time::ptime end{ 
 				boost::posix_time::microsec_clock::local_time() };
@@ -18,5 +19,10 @@ namespace base
 
 			return duration.total_milliseconds();
 		}
+
+		void Time::sleep(const unsigned int interval /* = 1 */)
+		{
+			boost::this_thread::sleep(boost::posix_time::seconds(interval));
+		}
 	}//namespace time
-}//namespace base
+}//namespace framework

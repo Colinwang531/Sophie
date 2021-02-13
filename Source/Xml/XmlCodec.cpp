@@ -1,3 +1,6 @@
+#include "boost/filesystem/path.hpp"
+#include "boost/filesystem/operations.hpp"
+#include "boost/format.hpp"
 #include "boost/property_tree/ptree.hpp"
 #include "boost/property_tree/xml_parser.hpp"
 #include "Error.h"
@@ -23,9 +26,16 @@ namespace base
 			{
 				try
 				{
-					boost::property_tree::read_xml(fileName, pt);
+					const std::string filePath{
+						boost::filesystem::initial_path<boost::filesystem::path>().string() };
+#ifdef WINDOWS
+					const std::string fullPath{ (boost::format("%s\\%s") % filePath % fileName).str() };
+#else
+					const std::string fullPath{ (boost::format("%s/%s") % filePath % fileName).str() };
+#endif//WINDOWS
+					boost::property_tree::read_xml(fullPath, pt);
 					valueStr = pt.get<std::string>(fieldName);
-					boost::property_tree::write_xml(fileName, pt);
+					boost::property_tree::write_xml(fullPath, pt);
 				}
 				catch (const std::exception&)
 				{
@@ -53,9 +63,16 @@ namespace base
 			{
 				try
 				{
-					boost::property_tree::read_xml(fileName, pt);
+					const std::string filePath{
+						boost::filesystem::initial_path<boost::filesystem::path>().string() };
+#ifdef WINDOWS
+					const std::string fullPath{ (boost::format("%s\\%s") % filePath % fileName).str() };
+#else
+					const std::string fullPath{ (boost::format("%s/%s") % filePath % fileName).str() };
+#endif//WINDOWS
+					boost::property_tree::read_xml(fullPath, pt);
 					pt.put(fieldName, valueStr);
-					boost::property_tree::write_xml(fileName, pt);
+					boost::property_tree::write_xml(fullPath, pt);
 				}
 				catch (const std::exception&)
 				{

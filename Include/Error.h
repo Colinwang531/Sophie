@@ -20,6 +20,7 @@ static const int eBadOperate = -2;
 static const int eBadNewObject = -3;
 static const int eBadNewThread = -4;
 static const int eOutOfRange = -5;
+static const int eBadNewMemory = -6;
 static const int eNotSupport = -100;
 static const int eObjectExisted = -101;
 static const int eObjectNotExist = -102;
@@ -30,6 +31,7 @@ static const int eBadConnect = -1002;
 static const int eBadClose = -1003;
 static const int eBadSend = -1004;
 static const int eBadRecv = -1005;
+static const int eCannotReach = -1006;
 //SDK调用类
 static const int eBadInitSDK = -2000;
 static const int eBadCleanupSDK = -2001;
@@ -43,5 +45,7 @@ static const int eBadPackProtocol = -3002;
 static const int eBadOpenFile = -4000;
 static const int eBadCloseFile = -4001;
 static const int eBadWriteData = -4002;
+//算法类
+static const int eBadInitAlgo = -5000;
 
 #endif//BASE_ERROR_H

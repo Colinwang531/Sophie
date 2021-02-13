@@ -3,50 +3,49 @@
 //
 //		Author :						王科威
 //		E-mail :						wangkw531@icloud.com
-//		Date :							2020-05-07
-//		Description :					海康设备类
+//		Date :							2021-01-20
+//		Description :					海康摄像机类
 //
 //		History:						Author									Date										Description
 //										王科威									2020-05-07									创建
 //
 
-#ifndef BASE_DEVICE_HIKVISION_DEVICE_H
-#define BASE_DEVICE_HIKVISION_DEVICE_H
+#ifndef FRAMEWORK_DEVICE_HIKVISION_CAMERA_H
+#define FRAMEWORK_DEVICE_HIKVISION_CAMERA_H
 
-#include "Device/SurveillanceDevice.h"
+#include "boost/shared_ptr.hpp"
+#include "CH-HCNetSDKV6.1.4.17_build20200331_Linux64/HCNetSDK.h"
+#include "Network/ASIO/Session/TCPSession.h"
+using TCPSession = framework::network::asio::TCPSession;
+using TCPSessionPtr = boost::shared_ptr<TCPSession>;
+#include "Camera/Camera.h"
 
-namespace base
+namespace framework
 {
 	namespace device
 	{
-		class HikvisionDevice : public SurveillanceDevice
+		class HikvisionCamera : public Camera
 		{
 		public:
-			HikvisionDevice(
-				const std::string did, 
-				const SurveillanceDeviceType type = SurveillanceDeviceType::SURVEILLANCE_DEVICE_TYPE_NONE);
-			virtual ~HikvisionDevice(void);
+			HikvisionCamera(
+				const int idx = -1);
+			virtual ~HikvisionCamera(void);
 
 		public:
-			//获取通道个数
-			//@Return : 通道个数
-			int getCameraNumber(void);
-
-		protected:
-			//启动/停止设备
-			//@Return : 错误码
-			int startDevice(void) override;
-			int stopDevice(void) override;
-
-			//登录/登出设备
-			//@Return : 错误码
-			int loginDevice(void) override;
-			int logoutDevice(void) override;
+			int openStream(
+				TCPSessionPtr sp, const int userID = -1);
+			int closeStream(void);
 
 		private:
-			int userID;
-		};//class HikvisionDevice
-	}//namespace device
-}//namespace base
+			int sendData(BYTE* pBuffer = nullptr, DWORD dwBufSize = 0, bool head = false);
+			static void CALLBACK livestreamDataCaptureCallback(
+				LONG lPlayHandle, DWORD dwDataType, BYTE* pBuffer, DWORD dwBufSize, void* pUser);
 
-#endif//BASE_DEVICE_HIKVISION_DEVICE_H
+		private:
+			int streamID;
+			TCPSessionPtr tsp;
+		};//class HikvisionCamera
+	}//namespace device
+}//namespace framework
+
+#endif//FRAMEWORK_DEVICE_HIKVISION_CAMERA_H

@@ -8,7 +8,7 @@
 #endif//WINDOWS
 #include "Hardware/Cpu.h"
 
-namespace base
+namespace framework
 {
 	namespace hardware
 	{

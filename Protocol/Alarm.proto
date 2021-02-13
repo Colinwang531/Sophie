@@ -2,7 +2,7 @@ syntax = "proto2";
 
 package msg;
 
-message AlarmPosition
+message Range
 {
 	required int32 x = 1;
 	required int32 y = 2;
@@ -10,7 +10,7 @@ message AlarmPosition
 	required int32 h = 4;
 }
 
-message AlarmInfo
+message Alarm
 {
 	enum Type
 	{
@@ -18,25 +18,29 @@ message AlarmInfo
 		PHONE = 2;
 		SLEEP = 3;
 		FIGHT = 4;
-		ATTENDANCE_IN = 5;
-		ATTENDANCE_OUT = 6;
+		FACE = 5;
+		BODY = 6;
 	}
 	
 	required Type type = 1;
-	required string cid = 2;
-	required string time = 3;
+	required bytes camera = 2;
+	required bytes timestamp = 3;
 	required bytes picture = 4;
-	repeated AlarmPosition alarmposition = 5;
-	optional string uid = 6;
+	repeated Range ranges = 5;
+	optional bytes idforface = 6;
+	optional bool inoutforface = 7;
+	optional int32 bodycount = 8;
 }
 
-message Alarm
+message AlarmMessage
 {
 	enum Command
 	{
-		NOTIFY = 1;
+		ALARM_PUSH = 1;
+		ALARM_ACK = 2;
 	}
 	
 	required Command command = 1;
-	required AlarmInfo alarminfo = 2;
+	optional Alarm alarm = 2;
+	optional bytes pid = 3;
 }

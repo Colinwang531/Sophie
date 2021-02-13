@@ -1,89 +1,92 @@
 #include "boost/make_shared.hpp"
 #include "Error.h"
-#include "Pin/AbstractPin.h"
-#include "Filter/Cache/StreamCacheFilter.h"
+#include "Filter/SDK/HKNetSDKFilter.h"
+// #include "Filter/Network/TCPDataReceiverFilter.h"
+// #include "Filter/Cache/DataBufferFilter.h"
 #include "Filter/Decoder/StreamDecoderFilter.h"
 #include "Filter/Converter/ImageConverterFilter.h"
 #include "Graph/LivestreamGraph.h"
 
-namespace base
+namespace framework
 {
-	namespace stream
+	namespace multimedia
 	{
-		LivestreamGraph::LivestreamGraph() : AbstractGraph()
-		{}
-
+		LivestreamGraph::LivestreamGraph() : Graph()
+		{
+			addFilter(HKNetSDKFilterName);
+// 			addFilter(TCPDataReceiverFilterName);
+// 			addFilter(DataBufferFilterName);
+			addFilter(StreamDecoderFilterName);
+			addFilter(Yv12ConvertYuv420pFilterName);
+		}
 		LivestreamGraph::~LivestreamGraph()
 		{}
 
-		int LivestreamGraph::createNewFilter(void* /* = nullptr */)
+		int LivestreamGraph::addFilter(const std::string name)
 		{
-			int e{ eBadNewObject };
-
-			AbstractFilterPtr cacheFilter{ boost::make_shared<StreamCacheFilter>() },
-				decoderFilter{ boost::make_shared<StreamDecoderFilter>() },
-				converterFilter{ boost::make_shared<ImageConverterFilter>() };
-
-			if (cacheFilter && eSuccess == cacheFilter->createNewFilter() && 
-				decoderFilter && eSuccess == decoderFilter->createNewFilter() &&
-				converterFilter && eSuccess == converterFilter->createNewFilter())
-			{
-				AbstractGraph::addFilterByName(StreamCacheFilterName, cacheFilter);
-				AbstractGraph::addFilterByName(StreamDecoderFilterName, decoderFilter);
-				AbstractGraph::addFilterByName(YV12PConvertYUV420PFilterName, converterFilter);
-				e = eSuccess;
-			}
-
-			return e;
-		}
-
-		int LivestreamGraph::buildupGraph()
-		{
-			int e{ 0 < abstractFilterGroup.size() ? eSuccess : eBadOperate };
+			int e{ name.empty() ? eInvalidParameter : eSuccess };
 
 			if (eSuccess == e)
 			{
-				e = eBadOperate;
-				AbstractFilterPtr streamCacheFilter{ getFilterByName(StreamCacheFilterName) },
-					streamDecoderFilter{ getFilterByName(StreamDecoderFilterName) },
-					imageConverterFilter{ getFilterByName(YV12PConvertYUV420PFilterName) };
-
-				if (streamCacheFilter && streamDecoderFilter && imageConverterFilter)
+				if (!name.compare(HKNetSDKFilterName))
 				{
-					AbstractPinPtr streamCacheOutputPin{ streamCacheFilter->getPinByName(StreamCacheFilterOutputPinName) },
-						streamDecoderInputPin{ streamDecoderFilter->getPinByName(StreamDecoderFilterInputPinName) },
-						streamDecoderOutputPin{ streamDecoderFilter->getPinByName(StreamDecoderFilterOutputPinName) },
-						imageConverterInputPin{ imageConverterFilter->getPinByName(ImageConverterFilterInputPinName) };
-
-					if (streamCacheOutputPin && streamDecoderInputPin && streamDecoderOutputPin && imageConverterInputPin)
+					FilterPtr fp{ boost::make_shared<HKNetSDKFilter>() };
+					if (fp)
 					{
-						streamCacheOutputPin->connectPin(streamDecoderInputPin);
-						streamDecoderOutputPin->connectPin(imageConverterInputPin);
-						e = eSuccess;
+						filters.insert(HKNetSDKFilterName, fp);
 					}
 				}
-			}
-
-			return e;
-		}
-
-		int LivestreamGraph::inputData(StreamPacketPtr pkt)
-		{
-			int e{ pkt ? eSuccess : eInvalidParameter };
-
-			if (eSuccess == e)
-			{
-				AbstractFilterPtr sourceFilter{ getFilterByName(StreamCacheFilterName) };
-				if (sourceFilter)
+// 				if (!name.compare(TCPDataReceiverFilterName))
+// 				{
+// 					FilterPtr fp{ boost::make_shared<TCPDataReceiverFilter>() };
+// 					if (fp)
+// 					{
+// 						filters.insert(TCPDataReceiverFilterName, fp);
+// 					}
+// 				}
+// 				else if (!name.compare(DataBufferFilterName))
+// 				{
+// 					FilterPtr fp{ boost::make_shared<DataBufferFilter>() };
+// 					if (fp)
+// 					{
+// 						filters.insert(DataBufferFilterName, fp);
+// 					}
+// 				}
+				else if (!name.compare(StreamDecoderFilterName))
 				{
-					e = sourceFilter->inputData(pkt);
+					FilterPtr fp{ boost::make_shared<StreamDecoderFilter>() };
+					if (fp)
+					{
+						filters.insert(StreamDecoderFilterName, fp);
+					}
+				}
+				else if (!name.compare(Yv12ConvertYuv420pFilterName))
+				{
+					FilterPtr fp{ boost::make_shared<ImageConverterFilter>() };
+					if (fp)
+					{
+						filters.insert(Yv12ConvertYuv420pFilterName, fp);
+					}
 				}
 				else
 				{
-					e = eBadOperate;
+					e = eNotSupport;
 				}
 			}
-			return 0;
+
+			return e;
+		}
+
+		int LivestreamGraph::removeFilter(const std::string name)
+		{
+			int e{ name.empty() ? eInvalidParameter : eSuccess };
+
+			if (eSuccess == e)
+			{
+				filters.remove(name);
+			}
+
+			return e;
 		}
 	}//namespace stream
 }//namespace base

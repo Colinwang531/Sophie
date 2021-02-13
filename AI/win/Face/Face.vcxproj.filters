@@ -1,0 +1,2302 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="3rd">
+      <UniqueIdentifier>{ece20603-eb44-4c30-82f0-cbbbf5934c29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\glog">
+      <UniqueIdentifier>{aa862c05-0217-465c-8498-cfbbcd8960ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Protocol">
+      <UniqueIdentifier>{6b22e91b-a6c9-4dc9-a623-7c81bc62cccf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Xml">
+      <UniqueIdentifier>{bb0ebfff-ce52-471a-9d29-05f786669589}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MessageQueue">
+      <UniqueIdentifier>{fc554d03-17fa-416e-9d9d-63c022f1dc5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CommandLine">
+      <UniqueIdentifier>{422d2fd0-bf28-437a-9c62-b923e0ee34fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Packet">
+      <UniqueIdentifier>{532891b3-0239-42c9-923d-407f40cf6edb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Packet\Message">
+      <UniqueIdentifier>{7e2b4868-0024-424a-b0fb-077233e011b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hardware">
+      <UniqueIdentifier>{70312493-f010-4844-8bc4-ec8097bb2347}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network">
+      <UniqueIdentifier>{d3d02ad1-b328-497b-9eb8-1dbf9d4f3be5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\glog\base">
+      <UniqueIdentifier>{2e7f303f-afd4-470c-8635-a9892d01c389}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\glog\glog">
+      <UniqueIdentifier>{f4dd1bd7-9751-4f11-ac52-11785dd33186}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\protobuf">
+      <UniqueIdentifier>{a38475fb-5b34-44f5-aec8-be2afdbd66cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\protobuf\compiler">
+      <UniqueIdentifier>{f60e494c-307d-4ec1-bdd6-fc78b8927b86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\protobuf\io">
+      <UniqueIdentifier>{c516e0e0-ce3d-4a9c-8786-c9300646ed55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\protobuf\stubs">
+      <UniqueIdentifier>{80ba71b0-cf99-4392-b2c0-ba7bb55c3cc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\protobuf\testing">
+      <UniqueIdentifier>{28ddb4d6-b084-4998-9a91-5addfe638772}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\protobuf\util">
+      <UniqueIdentifier>{9ee90b51-4002-4fc7-8e09-885e988e83cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\protobuf\compiler\cpp">
+      <UniqueIdentifier>{fb68604e-b11f-460b-9d2f-4db44bba359a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\protobuf\util\internal">
+      <UniqueIdentifier>{2ddf119a-4fc8-4808-98ea-a97c6a64cd8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\zmq">
+      <UniqueIdentifier>{ed49dff9-e369-49b8-9228-91305d10b36b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\zmq\external">
+      <UniqueIdentifier>{90272dfd-7871-4c5a-977a-5e5da24fcc2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\zmq\external\sha1">
+      <UniqueIdentifier>{4fb7e6a2-3189-4546-9d14-022d22ba3e2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\boost">
+      <UniqueIdentifier>{46593bde-02b9-4ac5-b1d7-77b8a7d35d94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\boost\program_options">
+      <UniqueIdentifier>{c7f88fa2-8d6d-48bd-8577-f426891423ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\boost\thread">
+      <UniqueIdentifier>{7c8462f6-dac7-4950-ac0c-6e0289892113}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Time">
+      <UniqueIdentifier>{48179133-491a-4be6-97ee-c2da7a240d39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Thread">
+      <UniqueIdentifier>{c60d4a83-da41-4882-9455-63be836b46c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component">
+      <UniqueIdentifier>{055754d0-0e2b-465f-bcd7-b54f80a52b2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Device">
+      <UniqueIdentifier>{35dc44e7-39c3-4009-a70e-f63ff6b77b8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\boost\date_time">
+      <UniqueIdentifier>{3092a0f3-d47e-444a-a24a-27f266ab5884}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\boost\date_time\posix_time">
+      <UniqueIdentifier>{5efcacf6-54b9-4724-b24e-ef6ffbcfda4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\boost\date_time\gregorian">
+      <UniqueIdentifier>{9956bbfe-d572-491b-a7e6-37dc53bec4f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Camera">
+      <UniqueIdentifier>{aa868966-8d74-4889-87fa-a72a98ce695c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ASIO">
+      <UniqueIdentifier>{1a53e867-3cfa-4b4d-8f94-36d18b015d95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DataStruct">
+      <UniqueIdentifier>{38b1e7f2-1f39-4cb0-88fd-835761b58379}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Session">
+      <UniqueIdentifier>{322381e3-56a3-4801-bc1f-97d1978fb6a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Packet\Stream">
+      <UniqueIdentifier>{636ffa6b-ce31-44af-bdc7-a690d5900da8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Timer">
+      <UniqueIdentifier>{87634db0-a419-4d12-bc57-65a794fba898}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graph">
+      <UniqueIdentifier>{c05fa049-c57d-48db-83a6-821cbcaa3a88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Filter">
+      <UniqueIdentifier>{f1edd430-58d4-4802-acb6-3122ec427d7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pin">
+      <UniqueIdentifier>{6ce5bc7c-442c-482e-b1f6-38a3124ee12a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Filter\Cache">
+      <UniqueIdentifier>{f3e4dddd-1a88-4102-9aae-058a23fb19dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Filter\Decoder">
+      <UniqueIdentifier>{1890e261-a8ba-417a-9d78-29743bbae3ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Decoder">
+      <UniqueIdentifier>{7babff5a-258b-4e93-b912-b559d42764ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Decoder\SDK">
+      <UniqueIdentifier>{1016a38a-e201-48c1-bbb0-a777f509632e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Converter">
+      <UniqueIdentifier>{7eb7ed0f-d86e-4830-bf85-bd487fa9a9b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Filter\Converter">
+      <UniqueIdentifier>{83ea2715-7d55-450b-9e51-2e0457b248df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Encoder">
+      <UniqueIdentifier>{1cba9f0e-25cf-4ee5-84fc-412676fc56a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Encoder\JPEG">
+      <UniqueIdentifier>{459c33e4-2523-418c-a754-79c071480ebf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Filter\Encoder">
+      <UniqueIdentifier>{c6cb3a31-09a6-4daa-a671-2b1d2ec5fb23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Filter\AI">
+      <UniqueIdentifier>{79701e68-20fc-48f1-906a-6400bb7d4a6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI">
+      <UniqueIdentifier>{452473bc-3f0f-48ea-bc48-b0a35d9cd238}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\boost\filesystem">
+      <UniqueIdentifier>{593bfd19-73fb-4a95-817b-8d4ab600de8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graph\AI">
+      <UniqueIdentifier>{fb72b4dc-e511-425f-b9cb-d6cf51da5cfb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Person">
+      <UniqueIdentifier>{214bbdd7-391c-4834-b2b3-9d323b8152f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Packet\Alarm">
+      <UniqueIdentifier>{abd852ad-0c6f-4966-810d-da4ee35c229f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="FaceRecognizeComponentClient.cpp" />
+    <ClCompile Include="..\Source\Xml\XmlCodec.cpp">
+      <Filter>Xml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\MessageQueue\MajordomoWorker.cpp">
+      <Filter>MessageQueue</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\MessageQueue\MessageData.cpp">
+      <Filter>MessageQueue</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CommandLine\CommandLine.cpp">
+      <Filter>CommandLine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Packet\DataPacket.cpp">
+      <Filter>Packet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Packet\Message\MessagePacket.cpp">
+      <Filter>Packet\Message</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Hardware\Cpu.cpp">
+      <Filter>Hardware</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Network\AbstractClient.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\glog-master-win\demangle.cc">
+      <Filter>3rd\glog</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\glog-master-win\logging.cc">
+      <Filter>3rd\glog</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\glog-master-win\port.cc">
+      <Filter>3rd\glog</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\glog-master-win\raw_logging.cc">
+      <Filter>3rd\glog</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\glog-master-win\signalhandler.cc">
+      <Filter>3rd\glog</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\glog-master-win\symbolize.cc">
+      <Filter>3rd\glog</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\glog-master-win\utilities.cc">
+      <Filter>3rd\glog</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\glog-master-win\vlog_is_on.cc">
+      <Filter>3rd\glog</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\any.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\any.pb.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\any_lite.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\api.pb.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\arena.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\descriptor.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\descriptor.pb.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\descriptor_database.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\duration.pb.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\dynamic_message.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\empty.pb.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\extension_set.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\extension_set_heavy.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\field_mask.pb.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\generated_enum_util.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\generated_message_reflection.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\generated_message_table_driven.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\generated_message_table_driven_lite.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\generated_message_util.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\implicit_weak_message.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\map.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\map_field.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\message.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\message_lite.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\parse_context.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\reflection_ops.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\repeated_field.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\service.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\source_context.pb.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\struct.pb.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\text_format.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\timestamp.pb.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\type.pb.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\unknown_field_set.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\wire_format.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\wire_format_lite.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\wrappers.pb.cc">
+      <Filter>3rd\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\code_generator.cc">
+      <Filter>3rd\protobuf\compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\command_line_interface.cc">
+      <Filter>3rd\protobuf\compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\importer.cc">
+      <Filter>3rd\protobuf\compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\parser.cc">
+      <Filter>3rd\protobuf\compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\plugin.cc">
+      <Filter>3rd\protobuf\compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\plugin.pb.cc">
+      <Filter>3rd\protobuf\compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\subprocess.cc">
+      <Filter>3rd\protobuf\compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\zip_writer.cc">
+      <Filter>3rd\protobuf\compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_enum.cc">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_enum_field.cc">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_extension.cc">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_field.cc">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_file.cc">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_generator.cc">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_helpers.cc">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_map_field.cc">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_message.cc">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_message_field.cc">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_padding_optimizer.cc">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_primitive_field.cc">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_service.cc">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_string_field.cc">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\io\coded_stream.cc">
+      <Filter>3rd\protobuf\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\io\gzip_stream.cc">
+      <Filter>3rd\protobuf\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\io\io_win32.cc">
+      <Filter>3rd\protobuf\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\io\printer.cc">
+      <Filter>3rd\protobuf\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\io\strtod.cc">
+      <Filter>3rd\protobuf\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\io\tokenizer.cc">
+      <Filter>3rd\protobuf\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\io\zero_copy_stream.cc">
+      <Filter>3rd\protobuf\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\io\zero_copy_stream_impl.cc">
+      <Filter>3rd\protobuf\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\io\zero_copy_stream_impl_lite.cc">
+      <Filter>3rd\protobuf\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\delimited_message_util.cc">
+      <Filter>3rd\protobuf\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\field_comparator.cc">
+      <Filter>3rd\protobuf\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\field_mask_util.cc">
+      <Filter>3rd\protobuf\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\json_util.cc">
+      <Filter>3rd\protobuf\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\message_differencer.cc">
+      <Filter>3rd\protobuf\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\time_util.cc">
+      <Filter>3rd\protobuf\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\type_resolver_util.cc">
+      <Filter>3rd\protobuf\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\datapiece.cc">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\default_value_objectwriter.cc">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\error_listener.cc">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\field_mask_utility.cc">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\json_escaping.cc">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\json_objectwriter.cc">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\json_stream_parser.cc">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\object_writer.cc">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\proto_writer.cc">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\protostream_objectsource.cc">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\protostream_objectwriter.cc">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\type_info.cc">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\type_info_test_helper.cc">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\utility.cc">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\testing\file.cc">
+      <Filter>3rd\protobuf\testing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\bytestream.cc">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\common.cc">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\int128.cc">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\status.cc">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\statusor.cc">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\stringpiece.cc">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\stringprintf.cc">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\structurally_valid.cc">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\strutil.cc">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\substitute.cc">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\time.cc">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\address.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\client.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\clock.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\ctx.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\curve_client.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\curve_mechanism_base.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\curve_server.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\dealer.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\decoder_allocators.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\devpoll.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\dgram.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\dish.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\dist.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\endpoint.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\epoll.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\err.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\fq.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\gather.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\gssapi_client.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\gssapi_mechanism_base.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\gssapi_server.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\io_object.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\io_thread.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\ip.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\ip_resolver.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\ipc_address.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\ipc_connecter.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\ipc_listener.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\kqueue.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\lb.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\mailbox.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\mailbox_safe.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\mechanism.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\mechanism_base.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\metadata.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\msg.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\mtrie.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\norm_engine.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\null_mechanism.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\object.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\options.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\own.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\pair.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\peer.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\pgm_receiver.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\pgm_sender.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\pgm_socket.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\pipe.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\plain_client.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\plain_server.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\poll.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\poller_base.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\polling_util.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\pollset.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\precompiled.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\proxy.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\pub.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\pull.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\push.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\radio.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\radix_tree.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\random.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\raw_decoder.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\raw_encoder.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\raw_engine.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\reaper.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\rep.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\req.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\router.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\scatter.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\select.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\server.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\session_base.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\signaler.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\socket_base.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\socket_poller.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\socks.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\socks_connecter.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\stream.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\stream_connecter_base.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\stream_engine_base.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\stream_listener_base.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\sub.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\tcp.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\tcp_address.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\tcp_connecter.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\tcp_listener.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\thread.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\timers.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\tipc_address.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\tipc_connecter.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\tipc_listener.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\trie.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\tweetnacl.c">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\udp_address.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\udp_engine.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\v1_decoder.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\v1_encoder.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\v2_decoder.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\v2_encoder.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\v3_1_encoder.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\vmci.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\vmci_address.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\vmci_connecter.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\vmci_listener.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\ws_address.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\ws_connecter.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\ws_decoder.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\ws_encoder.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\ws_engine.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\ws_listener.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\xpub.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\xsub.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\zap_client.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\zmq.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\zmq_utils.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\src\zmtp_engine.cpp">
+      <Filter>3rd\zmq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\libzmq-master-win\external\sha1\sha1.c">
+      <Filter>3rd\zmq\external\sha1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\AlarmPhrase.cpp">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\AlgorithmPhrase.cpp">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\ComponentPhrase.cpp">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\CrewPhrase.cpp">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\DataPhrase.cpp">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\DevicePhrase.cpp">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\StatusPhrase.cpp">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\win\Alarm.pb.cc">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\win\Algorithm.pb.cc">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\win\Component.pb.cc">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\win\Crew.pb.cc">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\win\Device.pb.cc">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\win\Message.pb.cc">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\win\Status.pb.cc">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\win\User.pb.cc">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\thread\src\win32\tss_dll.cpp">
+      <Filter>3rd\boost\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\thread\src\win32\tss_pe.cpp">
+      <Filter>3rd\boost\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\thread\src\win32\thread_primitives.cpp">
+      <Filter>3rd\boost\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\thread\src\win32\boost_thread.cpp">
+      <Filter>3rd\boost\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Time\XTime.cpp">
+      <Filter>Time</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Thread\ThreadPool.cpp">
+      <Filter>Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Component\AbstractComponent.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Device\AbstractDevice.cpp">
+      <Filter>Device</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Device\SurveillanceDevice.cpp">
+      <Filter>Device</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\date_time\src\posix_time\posix_time_types.cpp">
+      <Filter>3rd\boost\date_time\posix_time</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\date_time\src\gregorian\date_generators.cpp">
+      <Filter>3rd\boost\date_time\gregorian</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\date_time\src\gregorian\greg_month.cpp">
+      <Filter>3rd\boost\date_time\gregorian</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\date_time\src\gregorian\greg_weekday.cpp">
+      <Filter>3rd\boost\date_time\gregorian</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\date_time\src\gregorian\gregorian_types.cpp">
+      <Filter>3rd\boost\date_time\gregorian</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\AI\AbstractAlgorithm.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\cmdline.cpp">
+      <Filter>3rd\boost\program_options</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\config_file.cpp">
+      <Filter>3rd\boost\program_options</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\convert.cpp">
+      <Filter>3rd\boost\program_options</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\options_description.cpp">
+      <Filter>3rd\boost\program_options</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\parsers.cpp">
+      <Filter>3rd\boost\program_options</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\positional_options.cpp">
+      <Filter>3rd\boost\program_options</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\split.cpp">
+      <Filter>3rd\boost\program_options</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\value_semantic.cpp">
+      <Filter>3rd\boost\program_options</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\variables_map.cpp">
+      <Filter>3rd\boost\program_options</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Camera\AbstractCamera.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\ASIO\ASIOService.cpp">
+      <Filter>ASIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\ASIO\TCPConnector.cpp">
+      <Filter>ASIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Session\TCPStreamTargetSession.cpp">
+      <Filter>Session</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\ASIO\TCPSession.cpp">
+      <Filter>ASIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\ASIO\TCPReceiver.cpp">
+      <Filter>ASIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\ASIO\TCPSender.cpp">
+      <Filter>ASIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Packet\Stream\StreamPacket.cpp">
+      <Filter>Packet\Stream</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Timer\Timer.cpp">
+      <Filter>Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Pin\AbstractPin.cpp">
+      <Filter>Pin</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Filter\AbstractFilter.cpp">
+      <Filter>Filter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graph\AbstractGraph.cpp">
+      <Filter>Graph</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Filter\Cache\StreamCacheFilter.cpp">
+      <Filter>Filter\Cache</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Filter\Decoder\StreamDecoderFilter.cpp">
+      <Filter>Filter\Decoder</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Decoder\SDK\HikvisionSDKDecoder.cpp">
+      <Filter>Decoder\SDK</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Decoder\AbstractDecoder.cpp">
+      <Filter>Decoder</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Converter\YV12ToYUV420PConverter.cpp">
+      <Filter>Converter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Converter\AbstractImageConverter.cpp">
+      <Filter>Converter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Filter\Converter\ImageConverterFilter.cpp">
+      <Filter>Filter\Converter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Converter\ImageX2YConverter.cpp">
+      <Filter>Converter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Encoder\AbstractEncoder.cpp">
+      <Filter>Encoder</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Encoder\JPEG\JPEGImageEncoder.cpp">
+      <Filter>Encoder\JPEG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Filter\Encoder\JPEGEncoderFilter.cpp">
+      <Filter>Filter\Encoder</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Filter\AI\AIFilter.cpp">
+      <Filter>Filter\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\codecvt_error_category.cpp">
+      <Filter>3rd\boost\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\directory.cpp">
+      <Filter>3rd\boost\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\exception.cpp">
+      <Filter>3rd\boost\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\operations.cpp">
+      <Filter>3rd\boost\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\path.cpp">
+      <Filter>3rd\boost\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\path_traits.cpp">
+      <Filter>3rd\boost\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\portability.cpp">
+      <Filter>3rd\boost\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\unique_path.cpp">
+      <Filter>3rd\boost\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\utf8_codecvt_facet.cpp">
+      <Filter>3rd\boost\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\windows_file_codecvt.cpp">
+      <Filter>3rd\boost\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdPart\boost_1_72_0\libs\program_options\src\utf8_codecvt_facet_.cpp">
+      <Filter>3rd\boost\program_options</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graph\LivestreamGraph.cpp">
+      <Filter>Graph</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graph\AI\LivestreamAIGraph.cpp">
+      <Filter>Graph\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\win\Event.pb.cc">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Protocol\EventPhrase.cpp">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\AI\CVFaceRecognizeDetect.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Filter\AI\CVFaceRecognizeDetectFilter.cpp">
+      <Filter>Filter\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="FaceRecognizeMediaStreamSession.cpp" />
+    <ClCompile Include="FaceRecognizeDetectLivestreamGraph.cpp" />
+    <ClCompile Include="..\Source\Person\AbstractPerson.cpp">
+      <Filter>Person</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Person\Crew\Crew.cpp">
+      <Filter>Person</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Network\AbstractWorker.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Packet\Alarm\AlarmPacket.cpp">
+      <Filter>Packet\Alarm</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="FaceRecognizeComponentClient.h" />
+    <ClInclude Include="..\Include\Xml\XmlCodec.h">
+      <Filter>Xml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\MessageQueue\MajordomoWorker.h">
+      <Filter>MessageQueue</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\MessageQueue\MessageData.h">
+      <Filter>MessageQueue</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\CommandLine\CommandLine.h">
+      <Filter>CommandLine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Packet\DataPacket.h">
+      <Filter>Packet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Packet\Message\MessagePacket.h">
+      <Filter>Packet\Message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Hardware\Cpu.h">
+      <Filter>Hardware</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Network\AbstractClient.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\glog-master-win\config.h">
+      <Filter>3rd\glog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\glog-master-win\demangle.h">
+      <Filter>3rd\glog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\glog-master-win\mock-log.h">
+      <Filter>3rd\glog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\glog-master-win\port.h">
+      <Filter>3rd\glog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\glog-master-win\stacktrace.h">
+      <Filter>3rd\glog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\glog-master-win\stacktrace_generic-inl.h">
+      <Filter>3rd\glog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\glog-master-win\stacktrace_libunwind-inl.h">
+      <Filter>3rd\glog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\glog-master-win\stacktrace_powerpc-inl.h">
+      <Filter>3rd\glog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\glog-master-win\stacktrace_windows-inl.h">
+      <Filter>3rd\glog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\glog-master-win\stacktrace_x86_64-inl.h">
+      <Filter>3rd\glog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\glog-master-win\stacktrace_x86-inl.h">
+      <Filter>3rd\glog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\glog-master-win\symbolize.h">
+      <Filter>3rd\glog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\glog-master-win\utilities.h">
+      <Filter>3rd\glog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\glog-master-win\base\commandlineflags.h">
+      <Filter>3rd\glog\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\glog-master-win\base\googleinit.h">
+      <Filter>3rd\glog\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\glog-master-win\base\mutex.h">
+      <Filter>3rd\glog\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\glog-master-win\glog\log_severity.h">
+      <Filter>3rd\glog\glog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\glog-master-win\glog\logging.h">
+      <Filter>3rd\glog\glog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\glog-master-win\glog\raw_logging.h">
+      <Filter>3rd\glog\glog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\glog-master-win\glog\stl_logging.h">
+      <Filter>3rd\glog\glog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\glog-master-win\glog\vlog_is_on.h">
+      <Filter>3rd\glog\glog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\any.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\any.pb.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\api.pb.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\arena.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\arena_impl.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\arenastring.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\descriptor.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\descriptor.pb.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\descriptor_database.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\duration.pb.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\dynamic_message.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\empty.pb.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\extension_set.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\extension_set_inl.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\field_mask.pb.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\generated_enum_reflection.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\generated_enum_util.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\generated_message_reflection.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\generated_message_table_driven.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\generated_message_table_driven_lite.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\generated_message_util.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\has_bits.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\implicit_weak_message.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\inlined_string_field.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\map.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\map_entry.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\map_entry_lite.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\map_field.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\map_field_inl.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\map_field_lite.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\message.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\message_lite.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\metadata.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\metadata_lite.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\package_info.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\parse_context.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\port.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\reflection.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\reflection_internal.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\reflection_ops.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\repeated_field.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\service.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\source_context.pb.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\struct.pb.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\text_format.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\timestamp.pb.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\type.pb.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\unknown_field_set.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\wire_format.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\wire_format_lite.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\wrappers.pb.h">
+      <Filter>3rd\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\code_generator.h">
+      <Filter>3rd\protobuf\compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\command_line_interface.h">
+      <Filter>3rd\protobuf\compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\importer.h">
+      <Filter>3rd\protobuf\compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\package_info.h">
+      <Filter>3rd\protobuf\compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\parser.h">
+      <Filter>3rd\protobuf\compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\plugin.h">
+      <Filter>3rd\protobuf\compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\plugin.pb.h">
+      <Filter>3rd\protobuf\compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\scc.h">
+      <Filter>3rd\protobuf\compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\subprocess.h">
+      <Filter>3rd\protobuf\compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\zip_writer.h">
+      <Filter>3rd\protobuf\compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_enum.h">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_enum_field.h">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_extension.h">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_field.h">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_file.h">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_generator.h">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_helpers.h">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_map_field.h">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_message.h">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_message_field.h">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_message_layout_helper.h">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_options.h">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_padding_optimizer.h">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_primitive_field.h">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_service.h">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\compiler\cpp\cpp_string_field.h">
+      <Filter>3rd\protobuf\compiler\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\io\coded_stream.h">
+      <Filter>3rd\protobuf\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\io\gzip_stream.h">
+      <Filter>3rd\protobuf\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\io\io_win32.h">
+      <Filter>3rd\protobuf\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\io\package_info.h">
+      <Filter>3rd\protobuf\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\io\printer.h">
+      <Filter>3rd\protobuf\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\io\strtod.h">
+      <Filter>3rd\protobuf\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\io\tokenizer.h">
+      <Filter>3rd\protobuf\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\io\zero_copy_stream.h">
+      <Filter>3rd\protobuf\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\io\zero_copy_stream_impl.h">
+      <Filter>3rd\protobuf\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\io\zero_copy_stream_impl_lite.h">
+      <Filter>3rd\protobuf\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\delimited_message_util.h">
+      <Filter>3rd\protobuf\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\field_comparator.h">
+      <Filter>3rd\protobuf\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\field_mask_util.h">
+      <Filter>3rd\protobuf\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\json_util.h">
+      <Filter>3rd\protobuf\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\message_differencer.h">
+      <Filter>3rd\protobuf\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\package_info.h">
+      <Filter>3rd\protobuf\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\time_util.h">
+      <Filter>3rd\protobuf\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\type_resolver.h">
+      <Filter>3rd\protobuf\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\type_resolver_util.h">
+      <Filter>3rd\protobuf\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\constants.h">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\datapiece.h">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\default_value_objectwriter.h">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\error_listener.h">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\expecting_objectwriter.h">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\field_mask_utility.h">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\json_escaping.h">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\json_objectwriter.h">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\json_stream_parser.h">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\location_tracker.h">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\mock_error_listener.h">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\object_location_tracker.h">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\object_source.h">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\object_writer.h">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\proto_writer.h">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\protostream_objectsource.h">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\protostream_objectwriter.h">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\structured_objectwriter.h">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\type_info.h">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\type_info_test_helper.h">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\util\internal\utility.h">
+      <Filter>3rd\protobuf\util\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\testing\file.h">
+      <Filter>3rd\protobuf\testing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\bytestream.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\callback.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\casts.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\common.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\fastmem.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\hash.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\int128.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\logging.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\macros.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\map_util.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\mathutil.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\mutex.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\once.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\platform_macros.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\port.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\status.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\status_macros.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\statusor.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\stl_util.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\stringpiece.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\stringprintf.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\strutil.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\substitute.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\template_util.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\protobuf-master-win\src\google\protobuf\stubs\time.h">
+      <Filter>3rd\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\address.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\array.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\atomic_counter.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\atomic_ptr.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\blob.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\client.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\clock.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\command.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\condition_variable.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\config.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\ctx.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\curve_client.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\curve_client_tools.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\curve_mechanism_base.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\curve_server.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\dbuffer.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\dealer.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\decoder.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\decoder_allocators.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\devpoll.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\dgram.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\dish.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\dist.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\encoder.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\endpoint.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\epoll.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\err.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\fd.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\fq.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\gather.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\generic_mtrie.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\generic_mtrie_impl.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\gssapi_client.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\gssapi_mechanism_base.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\gssapi_server.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\i_decoder.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\i_encoder.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\i_engine.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\i_mailbox.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\i_poll_events.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\io_object.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\io_thread.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\ip.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\ip_resolver.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\ipc_address.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\ipc_connecter.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\ipc_listener.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\kqueue.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\lb.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\likely.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\macros.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\mailbox.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\mailbox_safe.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\mechanism.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\mechanism_base.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\metadata.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\msg.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\mtrie.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\mutex.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\norm_engine.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\null_mechanism.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\object.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\options.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\own.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\pair.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\peer.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\pgm_receiver.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\pgm_sender.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\pgm_socket.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\pipe.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\plain_client.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\plain_common.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\plain_server.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\poll.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\poller.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\poller_base.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\polling_util.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\pollset.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\precompiled.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\proxy.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\pub.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\pull.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\push.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\radio.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\radix_tree.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\random.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\raw_decoder.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\raw_encoder.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\raw_engine.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\reaper.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\rep.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\req.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\router.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\scatter.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\secure_allocator.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\select.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\server.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\session_base.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\signaler.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\socket_base.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\socket_poller.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\socks.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\socks_connecter.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\stdint.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\stream.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\stream_connecter_base.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\stream_engine_base.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\stream_listener_base.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\sub.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\tcp.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\tcp_address.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\tcp_connecter.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\tcp_listener.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\thread.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\timers.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\tipc_address.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\tipc_connecter.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\tipc_listener.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\trie.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\tweetnacl.h">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\udp_address.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\udp_engine.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\v1_decoder.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\v1_encoder.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\v2_decoder.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\v2_encoder.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\v2_protocol.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\v3_1_encoder.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\vmci.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\vmci_address.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\vmci_connecter.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\vmci_listener.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\windows.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\wire.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\ws_address.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\ws_connecter.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\ws_decoder.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\ws_encoder.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\ws_engine.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\ws_listener.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\ws_protocol.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\xpub.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\xsub.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\ypipe.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\ypipe_base.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\ypipe_conflate.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\yqueue.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\zap_client.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\zmq_draft.h">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\zmtp_engine.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\include\zmq.h">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\include\zmq_utils.h">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\external\sha1\sha1.h">
+      <Filter>3rd\zmq\external\sha1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\libzmq-master-win\src\platform.hpp">
+      <Filter>3rd\zmq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\AlarmPhrase.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\AlgorithmPhrase.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\ComponentPhrase.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\CrewPhrase.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\DataPhrase.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\DevicePhrase.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\StatusPhrase.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\win\Alarm.pb.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\win\Algorithm.pb.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\win\Component.pb.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\win\Crew.pb.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\win\Device.pb.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\win\Message.pb.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\win\Status.pb.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\win\User.pb.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Time\XTime.h">
+      <Filter>Time</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Thread\ThreadPool.h">
+      <Filter>Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Component\AbstractComponent.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Device\AbstractDevice.h">
+      <Filter>Device</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Device\SurveillanceDevice.h">
+      <Filter>Device</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\AI\AbstractAlgorithm.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Camera\AbstractCamera.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\ASIO\TCPConnector.h">
+      <Filter>ASIO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\ASIO\ASIOService.h">
+      <Filter>ASIO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\DataStruct\Vector.h">
+      <Filter>DataStruct</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\ASIO\TCPSession.h">
+      <Filter>ASIO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Session\TCPStreamTargetSession.h">
+      <Filter>Session</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\ASIO\TCPReceiver.h">
+      <Filter>ASIO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\ASIO\TCPSender.h">
+      <Filter>ASIO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Packet\Stream\StreamPacket.h">
+      <Filter>Packet\Stream</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Timer\Timer.h">
+      <Filter>Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Pin\AbstractPin.h">
+      <Filter>Pin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Filter\AbstractFilter.h">
+      <Filter>Filter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Graph\AbstractGraph.h">
+      <Filter>Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Filter\Cache\StreamCacheFilter.h">
+      <Filter>Filter\Cache</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Filter\Decoder\StreamDecoderFilter.h">
+      <Filter>Filter\Decoder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Decoder\SDK\HikvisionSDKDecoder.h">
+      <Filter>Decoder\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Decoder\AbstractDecoder.h">
+      <Filter>Decoder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\DataStruct\FIFOQueue.h">
+      <Filter>DataStruct</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Converter\YV12ToYUV420PConverter.h">
+      <Filter>Converter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Converter\AbstractImageConverter.h">
+      <Filter>Converter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Filter\Converter\ImageConverterFilter.h">
+      <Filter>Filter\Converter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Converter\ImageX2YConverter.h">
+      <Filter>Converter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Encoder\AbstractEncoder.h">
+      <Filter>Encoder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Encoder\JPEG\JPEGImageEncoder.h">
+      <Filter>Encoder\JPEG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Filter\Encoder\JPEGEncoderFilter.h">
+      <Filter>Filter\Encoder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Filter\AI\AIFilter.h">
+      <Filter>Filter\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\error_handling.hpp">
+      <Filter>3rd\boost\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\windows_file_codecvt.hpp">
+      <Filter>3rd\boost\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdPart\boost_1_72_0\libs\filesystem\src\windows_tools.hpp">
+      <Filter>3rd\boost\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Graph\LivestreamGraph.h">
+      <Filter>Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Graph\AI\LivestreamAIGraph.h">
+      <Filter>Graph\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\win\Event.pb.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Protocol\EventPhrase.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\AI\CVFaceRecognizeDetect.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Filter\AI\CVFaceRecognizeDetectFilter.h">
+      <Filter>Filter\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="FaceRecognizeMediaStreamSession.h" />
+    <ClInclude Include="FaceRecognizeDetectLivestreamGraph.h" />
+    <ClInclude Include="..\Include\Person\AbstractPerson.h">
+      <Filter>Person</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Person\Crew\Crew.h">
+      <Filter>Person</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Network\AbstractWorker.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\Packet\Alarm\AlarmPacket.h">
+      <Filter>Packet\Alarm</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

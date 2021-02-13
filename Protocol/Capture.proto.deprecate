@@ -1,0 +1,23 @@
+syntax = "proto2";
+
+package msg;
+
+message Image
+{
+	required bytes device = 1;
+	required int32 camera = 2;
+	optional bytes image = 3;
+}
+
+message CaptureMessage
+{
+	enum Command
+	{
+		CAPTURE_REQ = 1;
+		CAPTURE_REP = 2;
+	}
+	
+	required Command command = 1;
+	optional Image image = 2;
+	optional int32 status = 3;
+}

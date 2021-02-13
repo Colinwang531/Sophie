@@ -10,14 +10,14 @@
 //										王科威									2020-06-02									创建
 //
 
-#ifndef THREAD_POOL_H
-#define THREAD_POOL_H
+#ifndef FRAMEWORK_THREAD_THREAD_POOL_H
+#define FRAMEWORK_THREAD_THREAD_POOL_H
 
 #include "boost/function.hpp"
 #include "boost/serialization/singleton.hpp"
 #include "boost/thread.hpp"
 
-namespace base
+namespace framework
 {
 	namespace thread
 	{
@@ -47,6 +47,6 @@ namespace base
 			boost::thread_group tg;
 		};//class ThreadPool
 	}//namespace thread
-}//namespace base
+}//namespace framework
 
-#endif//THREAD_POOL_H
+#endif//FRAMEWORK_THREAD_THREAD_POOL_H
