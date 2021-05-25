@@ -33,7 +33,7 @@ int main(int argc, char* argv[])
 	memset(&local, 0, sizeof(struct sockaddr_in));
 	local.sin_family = AF_INET;
 	local.sin_port = htons(61001);
-	local.sin_addr.s_addr = htonl(INADDR_ANY);  //×Ô¶¯»ñÈ¡IPµØÖ·
+	local.sin_addr.s_addr = htonl(INADDR_ANY);  //ï¿½Ô¶ï¿½ï¿½ï¿½È¡IPï¿½ï¿½Ö·
 	len = sizeof(local);
 
 	if (0 > bind(fd, (struct sockaddr*)&local, sizeof(local)))
