@@ -5,6 +5,11 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
+#include "liblog/log.h"
+using Log = framework::liblog::Log;
+#include "libcommon/path/path.h"
+using ProgramPathParser = framework::libcommon::ProgramPathParser;
+
 static unsigned short gDASUDPListenPortNumber{ 0 };
 
 static void parseCommandLine(int argc, char** argv)
@@ -20,6 +25,16 @@ static void parseCommandLine(int argc, char** argv)
 
 int main(int argc, char* argv[])
 {
+	const std::string dir{ProgramPathParser().parseFileDirectory(argv[0])};
+	const std::string file{ProgramPathParser().parseFileName(argv[0])};
+
+	Log log;
+	log.init(argv[0], (dir + "/log").c_str());
+	log.write(framework::liblog::LogLevel::LOG_LEVEL_INFO, "What is this ?");
+	log.write(framework::liblog::LogLevel::LOG_LEVEL_WARNING, "What is this ?");
+	log.write(framework::liblog::LogLevel::LOG_LEVEL_ERROR, "What is this ?");
+	
+	return -1;
 	parseCommandLine(argc, argv);
 
 	int fd{ socket(AF_INET, SOCK_DGRAM, 0) };
