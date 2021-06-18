@@ -1,3 +1,4 @@
+#include <new>
 #include "boost/checked_delete.hpp"
 #include "zmq.h"
 #include "error.h"
@@ -11,34 +12,34 @@ namespace framework
     {
 		namespace zmq
 		{
-			class Impl
+			class ICtx
 			{
 			public:
-				Impl(void);
-				~Impl(void);
+				ICtx(void);
+				~ICtx(void);
 
 			public:
-				int init(void);
-				int uninit(void);
+				CommonError init(void);
+				CommonError uninit(void);
 				inline const bool valid(void) const
 				{
 					return ctx ? true : false;
 				}
 				void* createNewSocket(const int type = -1);
-				int destroySocket(void* s = nullptr);
+				CommonError destroySocket(void* s = nullptr);
 
 			private:
 				void* ctx;
-			};//class Impl
+			};//class ICtx
 
-			Impl::Impl() : ctx{nullptr}
+			ICtx::ICtx() : ctx{nullptr}
 			{}
-			Impl::~Impl()
+			ICtx::~ICtx()
 			{
 				uninit();
 			}
 
-			int Impl::init()
+			CommonError ICtx::init()
 			{
 				if (!ctx)
 				{
@@ -51,10 +52,10 @@ namespace framework
 					}
 				}
 				
-				return (int)(ctx ? CommonError::COMMON_ERROR_SUCCESS : CommonError::COMMON_ERROR_BAD_NEW_INSTANCE);
+				return ctx ? CommonError::COMMON_ERROR_SUCCESS : CommonError::COMMON_ERROR_BAD_NEW_INSTANCE;
 			}
 
-			int Impl::uninit()
+			CommonError ICtx::uninit()
 			{
 				if (ctx)
 				{
@@ -62,10 +63,10 @@ namespace framework
 					ctx = nullptr;
 				}
 
-				return (int)(ctx ? CommonError::COMMON_ERROR_BAD_OPERATE : CommonError::COMMON_ERROR_SUCCESS);
+				return ctx ? CommonError::COMMON_ERROR_BAD_OPERATE : CommonError::COMMON_ERROR_SUCCESS;
 			}
 
-			void* Impl::createNewSocket(const int type /* = -1 */)
+			void* ICtx::createNewSocket(const int type /* = -1 */)
 			{
 				void* s{ nullptr };
 
@@ -77,7 +78,7 @@ namespace framework
 				return s;
 			}
 
-			int Impl::destroySocket(void* s /* = nullptr */)
+			CommonError ICtx::destroySocket(void* s /* = nullptr */)
 			{
 				CommonError e{ 
 					ctx && s ? CommonError::COMMON_ERROR_SUCCESS : CommonError::COMMON_ERROR_BAD_OPERATE };
@@ -87,34 +88,39 @@ namespace framework
 					zmq_close(s);
 				}
 
-				return (int)e;
+				return e;
 			}
 
-			Ctx::Ctx() : impl{ new(std::nothrow) Impl }
+			Ctx::Ctx() : ctx{ new(std::nothrow) ICtx }
 			{}
 			Ctx::~Ctx()
 			{
-				boost::checked_delete(impl);
+				boost::checked_delete(ctx);
 			}
 
 			int Ctx::init()
 			{
-				return impl ? impl->init() : CommonError::COMMON_ERROR_BAD_NEW_INSTANCE;
+				return static_cast<int>(ctx ? ctx->init() : CommonError::COMMON_ERROR_BAD_NEW_INSTANCE);
 			}
 
 			int Ctx::uninit()
 			{
-				return impl ? impl->uninit() : CommonError::COMMON_ERROR_BAD_NEW_INSTANCE;
+				return static_cast<int>(ctx ? ctx->uninit() : CommonError::COMMON_ERROR_BAD_NEW_INSTANCE);
+			}
+
+			const bool Ctx::valid() const
+			{
+				return ctx ? ctx->valid() : false;
 			}
 
 			void* Ctx::createNewSocket(const int type /* = -1 */)
 			{
-				return impl ? impl->createNewSocket(type) : CommonError::COMMON_ERROR_BAD_NEW_INSTANCE;
+				return ctx ? ctx->createNewSocket(type) : nullptr;
 			}
 
 			int Ctx::destroySocket(void* s /* = nullptr */)
 			{
-				return impl ? impl->destroySocket(s) : CommonError::COMMON_ERROR_BAD_NEW_INSTANCE;
+				return static_cast<int>(ctx ? ctx->destroySocket(s) : CommonError::COMMON_ERROR_BAD_NEW_INSTANCE);
 			}
 		}//namespace zmq
     }//namespace libnetwork

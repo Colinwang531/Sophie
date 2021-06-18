@@ -19,7 +19,7 @@ namespace framework
     {
 		namespace zmq
 		{
-			class Impl;
+			class ICtx;
 
 			class Ctx
 			{
@@ -37,10 +37,8 @@ namespace framework
 				int uninit(void);
 
 				//有效性验证
-				inline const bool valid(void) const
-				{
-					return ctx ? true : false;
-				}
+				//@Return : true表示有效,false表示无效
+				const bool valid(void) const;
 
 				//创建ZMQ Socket实例
 				//@type : Socket类型
@@ -53,7 +51,7 @@ namespace framework
 				int destroySocket(void* s = nullptr);
 
 			private:
-				Impl* impl;
+				ICtx* ctx;
 			};//class Ctx
 		}//namespace zmq
     }//namespace libnetwork

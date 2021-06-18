@@ -35,21 +35,6 @@ namespace framework
 
 				return (int)e;
 			}
-
-			int Pub::send(
-				const std::string data,
-				void* s /* = nullptr */)
-			{
-				CommonError e{
-					!data.empty() && s ? CommonError::COMMON_ERROR_SUCCESS : CommonError::COMMON_ERROR_INVALID_PARAMETER};
-
-				if (CommonError::COMMON_ERROR_SUCCESS == e)
-				{
-
-				}
-
-				return (int)e;
-			}
 		}//namespace zmq
 	}//namespace libnetwork
 }//namespace framework

@@ -13,6 +13,8 @@
 #ifndef FRAMEWORK_LIBCOMMON_THREAD_POOL_H
 #define FRAMEWORK_LIBCOMMON_THREAD_POOL_H
 
+#include <functional>
+
 namespace framework
 {
 	namespace libcommon

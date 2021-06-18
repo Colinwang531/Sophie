@@ -1,4 +1,5 @@
 #include <vector>
+#include <cstring>
 #include "boost/checked_delete.hpp"
 #include "zmq.h"
 #include "error.h"
@@ -10,33 +11,33 @@ namespace framework
     {
 		namespace zmq
 		{
-			class Impl
+			class IMsg
 			{
 			public:
-				Impl(void);
-				~Impl(void);
+				IMsg(void);
+				~IMsg(void);
 
 			public:
 				void add(const std::string msg);
 				const std::string remove(void);
-				int receive(void* s = nullptr);
-				int send(void* s = nullptr);
+				CommonError receive(void* s = nullptr);
+				CommonError send(void* s = nullptr);
 
 			private:
 				std::vector<std::string> datas;
-			};//class Impl
+			};//class IMsg
 
-			Impl::Impl()
+			IMsg::IMsg()
 			{}
-			Impl::~Impl()
+			IMsg::~IMsg()
 			{}
 
-			void Impl::add(const std::string msg)
+			void IMsg::add(const std::string msg)
 			{
 				datas.push_back(msg);
 			}
 
-			const std::string Impl::remove()
+			const std::string IMsg::remove()
 			{
 				std::string msg;
 
@@ -49,7 +50,7 @@ namespace framework
 				return msg;
 			}
 
-			int Impl::receive(void* s /* = nullptr */)
+			CommonError IMsg::receive(void* s /* = nullptr */)
 			{
 				CommonError e{ 
 					s ? CommonError::COMMON_ERROR_SUCCESS : CommonError::COMMON_ERROR_INVALID_PARAMETER };
@@ -59,10 +60,10 @@ namespace framework
 					zmq_msg_t msg_;
 					zmq_msg_init(&msg_);
 
-					while (-1 < zmq_msg_recv(&msg_, ZMQ_DONTWAIT))
+					while (-1 < zmq_msg_recv(&msg_, s, ZMQ_DONTWAIT))
 					{
 						const std::string data{ 
-							static_cast<const char*>(msg_.data()), msg_.size() };
+							static_cast<const char*>(zmq_msg_data(&msg_)), zmq_msg_size(&msg_) };
 						datas.push_back(data);
 
 						if (0 == zmq_msg_more(&msg_))
@@ -72,10 +73,10 @@ namespace framework
 					}
 				}
 
-				return (int)e;
+				return e;
 			}
 
-			int Impl::send(void* s /* = nullptr */)
+			CommonError IMsg::send(void* s /* = nullptr */)
 			{
 				CommonError e{ 
 					s ? CommonError::COMMON_ERROR_SUCCESS : CommonError::COMMON_ERROR_INVALID_PARAMETER };
@@ -88,51 +89,51 @@ namespace framework
 					{
 						const std::string data{ datas[i] };
 						const size_t datalen{ data.length() };
-						zmq::msg_t msg_;
+						zmq_msg_t msg_;
 
 						if (-1 < zmq_msg_init_size(&msg_, datalen))
 						{
 #ifdef WINDOWS
-							memcpy_s(msg_.data(), datalen, data.c_str(), datalen);
+							memcpy_s(zmq_msg_data(&msg_), datalen, data.c_str(), datalen);
 #else
-							memcpy(msg_.data(), data.c_str(), datalen);
+							memcpy(zmq_msg_data(&msg_), data.c_str(), datalen);
 #endif//WINDOWS
 							zmq_msg_send(&msg_, s, i < dataSize - 1 ? ZMQ_DONTWAIT | ZMQ_SNDMORE : ZMQ_DONTWAIT);
 						}
 					}
 				}
 
-				return (int)e;
+				return e;
 			}
 
-			Msg::Msg() : impl{new(std::nothrow) Impl}
+			Msg::Msg() : msg{new(std::nothrow) IMsg}
 			{}
 			Msg::~Msg() 
 			{
-				boost::checked_delete(impl);	
+				boost::checked_delete(msg);	
 			}
 
-			void Msg::add(const std::string msg)
+			void Msg::add(const std::string data)
 			{
-				if (impl)
+				if (msg)
 				{
-					impl->add(msg);
+					msg->add(data);
 				}
 			}
 
 			const std::string Msg::remove()
 			{
-				return impl ? impl->remove() : "";
+				return msg ? msg->remove() : "";
 			}
 
 			int Msg::receive(void* s /* = nullptr */)
 			{
-				return impl ? impl->receive(s) : CommonError::COMMON_ERROR_BAD_NEW_INSTANCE;
+				return static_cast<int>(msg ? msg->receive(s) : CommonError::COMMON_ERROR_BAD_NEW_INSTANCE);
 			}
 
 			int Msg::send(void* s /* = nullptr */)
 			{
-				return impl ? impl->send(s) : CommonError::COMMON_ERROR_BAD_NEW_INSTANCE;
+				return static_cast<int>(msg ? msg->send(s) : CommonError::COMMON_ERROR_BAD_NEW_INSTANCE);
 			}
 		}//namespace zmq
     }//namespace libnetwork

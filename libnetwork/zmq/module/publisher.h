@@ -1,53 +1,56 @@
 //
 //		Copyright :						@2020, ***, All Rights Reserved
 //
-//		Author :						Íõ¿ÆÍş
+//		Author :						ç‹ç§‘å¨
 //		E-mail :						wangkw531@icloud.com
-//		Date :							2021-01-15
-//		Description :					Publisher³éÏóÀà
+//		Date :							2021-06-07
+//		Description :					PUBæ¨¡å‹ç±»
 //
 //		History:						Author									Date										Description
-//										Íõ¿ÆÍş									2021-01-15									´´½¨
+//										ç‹ç§‘å¨									 2021-06-07									 åˆ›å»º
 //
 
-
-#ifndef FRAMEWORK_NETWORK_ZMQ_PUB_H
-#define FRAMEWORK_NETWORK_ZMQ_PUB_H
+#ifndef FRAMEWORK_LIBNETWORK_ZMQ_MODULE_PUBLISHER_H
+#define FRAMEWORK_LIBNETWORK_ZMQ_MODULE_PUBLISHER_H
 
 namespace framework
 {
-	namespace network
+	namespace libnetwork
 	{
-		namespace zeromq
+		namespace zmq
 		{
-			class Msg;
-
-			class Pub
+			namespace module
 			{
-			public:
-				Pub(void);
-				virtual ~Pub(void);
+				class IPublisher;
 
-			public:
-				//Æô¶¯Pub
-				//@port : ¼àÌı¶Ë¿ÚºÅ
-				//@Return : ´íÎóÂë
-				virtual int startPub(const unsigned short port = 0);
+				class Publisher
+				{
+				public:
+					Publisher(void);
+					virtual ~Publisher(void);
 
-				//Í£Ö¹Pub
-				//@Return : ´íÎóÂë
-				virtual int stopPub(void);
+				public:
+					//ç»‘å®šPubç›‘å¬åœ°å€å’Œç«¯å£
+					//@ipv4 : ipv4ç›‘å¬åœ°å€
+					//@port : ç›‘å¬ç«¯å£
+					//@ctx : ä¸Šä¸‹æ–‡å®ä¾‹
+					//@Return : é”™è¯¯ç 
+					int bind(
+						const std::string ipv4,
+						const unsigned short port = 0,
+						void* ctx = nullptr);
 
-				//·¢ËÍÏûÏ¢
-				//@msg : ÏûÏ¢Êı¾İ
-				//@Return : ´íÎóÂë
-				int sendMsg(Msg* msg = nullptr);
+					//å‘é€æ•°æ®
+					//@msg : æ¶ˆæ¯æ•°æ®
+					//@Return : é”™è¯¯ç 
+					int send(void* msg = nullptr);
 
-			protected:
-				void* so;
-			};//class Pub
-		}//namespace zeromq
-	}//namespace network
+				private:
+					IPublisher* publisher;
+				};//class Publisher
+			}//namespace module
+		}//namespace zmq
+	}//namespace libnetwork
 }//namespace framework
 
-#endif//FRAMEWORK_NETWORK_ZMQ_PUB_H
+#endif//FRAMEWORK_LIBNETWORK_ZMQ_MODULE_PUBLISHER_H

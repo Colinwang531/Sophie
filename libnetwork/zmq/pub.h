@@ -37,14 +37,6 @@ namespace framework
 					const unsigned short port = 0,
 					void* s = nullptr,
 					const int hwm = -1);
-
-				//发送数据
-				//@data : 数据内容
-				//@s : socket实例
-				//@Return : 错误码
-				virtual int send(
-					const std::string data,
-					void* s = nullptr);
 			};//class Pub
 		}//namespace zmq
 	}//namespace libnetwork

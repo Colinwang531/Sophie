@@ -7,32 +7,32 @@ namespace framework
 {
 	namespace libcommon
 	{
-		class Impl
+		class ICommandLineParser
 		{
 		public:
-			Impl(void);
-			~Impl(void);
+			ICommandLineParser(void);
+			~ICommandLineParser(void);
 
 		public:
-			int setOption(
+			CommonError setOption(
 				const char* opt = nullptr, 
 				const char* val = nullptr);
 			const char* getValue(const char* opt = nullptr);
-			int parse(
+			CommonError parse(
 				const int argc = 0, 
 				const char** argv = nullptr);
 
 		private:
 			boost::program_options::options_description desc;
 			boost::program_options::variables_map variables;
-		};//class Impl
+		};//class ICommandLineParser
 
-		Impl::Impl()
+		ICommandLineParser::ICommandLineParser()
 		{}
-		Impl::~Impl()
+		ICommandLineParser::~ICommandLineParser()
 		{}
 
-		int Impl::setOption(
+		CommonError ICommandLineParser::setOption(
 			const char* option /* = nullptr */, 
 			const char* param /* = nullptr */)
 		{
@@ -44,15 +44,15 @@ namespace framework
 				desc.add_options()(option, boost::program_options::value<std::string>(), param);
 			}
 
-			return static_cast<int>(e);
+			return e;
 		}
 
-		const char* Impl::getValue(const char* option /* = nullptr */)
+		const char* ICommandLineParser::getValue(const char* option /* = nullptr */)
 		{
-			return 0 < variables.count(option) ? variables[option].as<const char*>() : nullptr;
+			return 0 < variables.count(option) ? variables[option].as<std::string>().c_str() : nullptr;
 		}
 
-		int Impl::parse(
+		CommonError ICommandLineParser::parse(
 			const int argc/* = 0*/, 
 			const char** argv/* = nullptr*/)
 		{
@@ -64,33 +64,33 @@ namespace framework
 				boost::program_options::store(boost::program_options::parse_command_line(argc, argv, desc), variables);
 			}
 
-			return static_cast<int>(e);
+			return e;
 		}
 
-		CommandLineParser::CommandLineParser() : impl{new(std::nothrow) Impl}
+		CommandLineParser::CommandLineParser() : parser{new(std::nothrow) ICommandLineParser}
 		{}
 		CommandLineParser::~CommandLineParser()
 		{
-			boost::checked_delete(impl);		
+			boost::checked_delete(parser);		
 		}
 
 		int CommandLineParser::setOption(
 			const char* option /* = nullptr */, 
 			const char* param /* = nullptr */)
 		{
-			return impl ? impl->setOption(option, param) : CommonError::COMMON_ERROR_BAD_NEW_INSTANCE;
+			return static_cast<int>(parser ? parser->setOption(option, param) : CommonError::COMMON_ERROR_BAD_NEW_INSTANCE);
 		}
 
 		const char* CommandLineParser::getValue(const char* option /* = nullptr */)
 		{
-			return impl ? impl->getValue(option) : nullptr;
+			return parser ? parser->getValue(option) : nullptr;
 		}
 
 		int CommandLineParser::parse(
 			const int argc/* = 0*/, 
 			const char** argv/* = nullptr*/)
 		{
-			return impl ? impl->parse(argc, argv) : CommonError::COMMON_ERROR_BAD_NEW_INSTANCE;
+			return static_cast<int>(parser ? parser->parse(argc, argv) : CommonError::COMMON_ERROR_BAD_NEW_INSTANCE);
 		}
 	}//namespace libcommon
 }//namespace framework

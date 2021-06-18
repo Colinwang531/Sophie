@@ -1,66 +1,54 @@
 //
 //		Copyright :						@2020, ***, All Rights Reserved
 //
-//		Author :						Íõ¿ÆÍş
+//		Author :						ç‹ç§‘å¨
 //		E-mail :						wangkw531@icloud.com
-//		Date :							2020-05-13
-//		Description :					XMQÀà
+//		Date :							2021-06-12
+//		Description :					XMQä»£ç†
 //
 //		History:						Author									Date										Description
-//										Íõ¿ÆÍş									2020-05-13									´´½¨
-//										Íõ¿ÆÍş									2020-11-25									1.ÖØ¹¹ÏûÏ¢·Ö·¢·şÎñ³éÏóÉè¼Æ
-//										     									          									2.ĞŞ¸ÄCMS×é¼şÁ¬½Ó¼ì²âÏß³ÌÎªÒµÎñÂß¼­Ïß³Ì
+//										ç‹ç§‘å¨									 2021-06-12									 åˆ›å»º
 //
 
 #ifndef XMQ_H
 #define XMQ_H
 
-//#include "boost/shared_ptr.hpp"
-// #include "MessageQueue/MQMessagePacket.h"
-// using MQMessagePacket = mq::message::MQMessagePacket;
-// #include "MessageQueue/MajordomoBroker.h"
-// using MajordomoBroker = mq::module::MajordomoBroker;
-// using MajordomoBrokerPtr = boost::shared_ptr<MajordomoBroker>;
-// #include "MessageQueue/MajordomoWorker.h"
-// using MajordomoWorker = mq::module::MajordomoWorker;
-// using MajordomoWorkerPtr = boost::shared_ptr<MajordomoWorker>;
-#include "Network/ZMQ/RD.h"
-using RD = framework::network::zeromq::RD;
-// #include "Network/AbstractServer.h"
-// using AbstractServer = base::network::AbstractServer;
-// #include "Network/AbstractWorker.h"
-// using AbstractWorker = base::network::AbstractWorker;
+#include "libnetwork/zmq/module/dispatcher.h"
+using Dispatcher = framework::network::zmq::module::Dispatcher;
+#include "liblog/log.h"
+using Log = framework::liblog::Log;
 
-class XMQ final : public RD
+class XMQ final : public Dispatcher
 {
 public:
-	XMQ(void);
+	XMQ(Log& log_);
+	XMQ(
+		Log& log_,
+		const std::string localIP,
+		const unsigned short localPort,
+		const std::string uplinkIP,
+		const unsigned short uplinkPort);
 	~XMQ(void);
 
 public:
-	int startRD(
-		const unsigned short rlp = 0,
-		const char* dcip = nullptr,
-		const unsigned short dcp = 0) override;
-	int stopRD(void) override;
+	int start(void) override;
+	int stop(void* = nullptr) override;
 
 protected:
-	void afterParsePolledMessage(
+	void afterRouterPollDataProcess(
 		const std::string sender,
-		const std::string module,
-		const std::string from,
-		const std::string to,
-		const std::vector<std::string> routers,
-		const std::vector<std::string> messages) override;
-	void afterParsePolledMessage(
-		const std::string module,
-		const std::string from,
-		const std::string to,
-		const std::vector<std::string> routers,
-		const std::vector<std::string> messages) override;
+		const std::string data) override;
+	void afterDealerPollDataProcess(
+		const std::string data) override;
 
 private:
-	//´¦ÀíÏûÏ¢
+	//ä¿å­˜æˆ–æ›´æ–°ä¸XMQç›¸åŒ¹é…çš„CMS IDæ ‡è¯†
+	//@id : CMS IDæ ‡è¯†
+	//@Return : é”™è¯¯ç 
+	int updatePairedCMSID(const std::string id);
+/*
+private:
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
 	void processPolledMessage(
 		const std::string sender,
 		const std::string module,
@@ -68,27 +56,13 @@ private:
 		const std::string to, 
 		const std::vector<std::string> messages);
 
-	//´¦ÀíCMSÅä¶ÔÏûÏ¢
-	//@commID : ·¢ËÍÕßID±êÊ¶
-	//@module : ·¢ËÍÕßÄ£ĞÍ±êÊ¶
-	//@from : ·¢ËÍÕßÃû³Æ
-	//@to : ½ÓÊÕÕßÃû³Æ
-	//@Comment : Ó¦´ğÅä¶Ô×´Ì¬
-	void processCMSPairMessage(
-		const std::string sender,
-		const std::string module,
-		const std::string from,
-		const std::string to,
-		const std::string sequence,
-		const std::string timestamp);
-
-	//×ª·¢ÏûÏ¢
-	//@receiver : ½ÓÊÕÕßID±êÊ¶
-	//@receiver : ·¢ËÍÕßID±êÊ¶
-	//@module : Ä£ĞÍ±êÊ¶
-	//@from : ·¢ËÍÕßÃû³Æ
-	//@to : ½ÓÊÕÕßÃû³Æ
-	//@messages : ÏûÏ¢ÄÚÈİ
+	//×ªï¿½ï¿½ï¿½ï¿½Ï¢
+	//@receiver : ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½IDï¿½ï¿½Ê¶
+	//@receiver : ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½IDï¿½ï¿½Ê¶
+	//@module : Ä£ï¿½Í±ï¿½Ê¶
+	//@from : ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	//@to : ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	//@messages : ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½
 	void forwardPolledMessage(
 		const std::string receiver,
 		const std::string sender,
@@ -96,9 +70,15 @@ private:
 		const std::string from,
 		const std::string to,
 		const std::vector<std::string> messages);
-
+*/
 private:
-	std::string cmsCommID;
+	std::string pairedCMSID;
+	const std::string bindIP;
+	const unsigned short bindPort;
+	const std::string connectIP;
+	const unsigned short connectPort;
+	void* ctx;
+	Log& log;
 };//class XMQ
 
 #endif//XMQ_H

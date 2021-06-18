@@ -12,7 +12,9 @@
             "args": ["-l", "61001"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
-            "environment": [],
+            "environment": [
+                {"name": "LD_LIBRARY_PATH", "value": "${workspaceFolder}/bin/x64/Debug"}
+            ],
             "externalConsole": false,
             "MIMode": "gdb",
             "setupCommands": [
@@ -44,6 +46,29 @@
                 }
             ],
             "preLaunchTask": "C/C++: g++ build active file",
+            "miDebuggerPath": "/usr/bin/gdb"
+        },
+        {
+            "name": "XMQ",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/x64/Debug/xmq",
+            "args": ["-a", "127.0.0.1", "-l", "61001", "-u", "127.2.2.1", "-p", "60001", "-n", "XMQ"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [
+                {"name": "LD_LIBRARY_PATH", "value": "${workspaceFolder}/bin/x64/Debug"}
+            ],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "XMQ",
             "miDebuggerPath": "/usr/bin/gdb"
         }
     ]

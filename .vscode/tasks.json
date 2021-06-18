@@ -36,9 +36,14 @@
                 "${workspaceFolder}/libnetwork/zmq/router.cpp",
                 "${workspaceFolder}/libnetwork/zmq/dealer.cpp",
                 "${workspaceFolder}/libnetwork/zmq/pub.cpp",
+                "${workspaceFolder}/libnetwork/zmq/msg.cpp",
+                "${workspaceFolder}/libnetwork/zmq/module/dispatcher.cpp",
+                "${workspaceFolder}/libnetwork/zmq/module/worker.cpp",
+                "${workspaceFolder}/libnetwork/zmq/module/publisher.cpp",
                 "-I${workspaceFolder}/3rdPart/boost_1_75_0",
                 "-I${workspaceFolder}/3rdPart/libzmq-master-4.3.4/include",
                 "-I${workspaceFolder}/libcommon",
+                "-I${workspaceFolder}/libnetwork",
                 "-L${workspaceFolder}/bin/x64/Debug",
                 "-lcommon",
                 "-fPIC",
@@ -68,13 +73,16 @@
                 "${workspaceFolder}/libcommon/path/path.cpp",
                 "${workspaceFolder}/libcommon/hardware/cpu/cpu.cpp",
                 "${workspaceFolder}/libcommon/thread/threadpool.cpp",
+                "${workspaceFolder}/libcommon/command_line/command_line.cpp",
                 "-I${workspaceFolder}/3rdPart/boost_1_75_0",
                 "-I${workspaceFolder}/libcommon",
                 "-fPIC",
                 "-shared",
                 "-o",
                 "${workspaceFolder}/bin/x64/Debug/libcommon.so",
-                "${workspaceFolder}/3rdPart/boost_1_75_0/stage/lib/libboost_filesystem.a"
+                "${workspaceFolder}/3rdPart/boost_1_75_0/stage/lib/libboost_filesystem.a",
+                "${workspaceFolder}/3rdPart/boost_1_75_0/stage/lib/libboost_program_options.a",
+                "${workspaceFolder}/3rdPart/boost_1_75_0/stage/lib/libboost_thread.a"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"
@@ -98,7 +106,7 @@
                 "-I${workspaceFolder}",
                 "-L${workspaceFolder}/bin/x64/Debug",
                 "-llog",
-                "-lcommon",
+//                "-lcommon",
                 "-lpthread",
                 "-o",
                 "${workspaceFolder}/bin/x64/Debug/das"
@@ -153,11 +161,11 @@
             "args": [
                 "-g",
                 "${workspaceFolder}/XMQ/main.cpp",
-//                "-I${workspaceFolder}/liblog",
-                "-I${workspaceFolder}/libcommon",
+                "${workspaceFolder}/XMQ/XMQ.cpp",
+                "-I${workspaceFolder}",
                 "-L${workspaceFolder}/bin/x64/Debug",
-//                "-llog",
                 "-lcommon",
+                "-llog",
                 "-lpthread",
                 "-o",
                 "${workspaceFolder}/bin/x64/Debug/xmq"

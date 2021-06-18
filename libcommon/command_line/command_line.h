@@ -17,8 +17,8 @@ namespace framework
 {
 	namespace libcommon
 	{
-		class Impl;
-
+		class ICommandLineParser;
+		
 		class CommandLineParser
 		{
 		public:
@@ -48,7 +48,7 @@ namespace framework
 				const char** argv = nullptr);
 
 		private:
-			Impl* impl;
+			ICommandLineParser* parser;
 		};//class CommandLineParser
 	}//namespace libcommon
 }//namespace framework

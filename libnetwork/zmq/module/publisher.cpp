@@ -1,63 +1,106 @@
+#include <new>
 #include "boost/format.hpp"
 #include "zmq.h"
-#include "socket_base.hpp"
-#include "Define.h"
-#include "Error.h"
-#include "Network/ZMQ/Core/Ctx_.h"
-#include "Network/ZMQ/Msg_.h"
-#include "Network/ZMQ/Pub_.h"
+#include "const.h"
+#include "error.h"
+#include "zmq/ctx.h"
+using Ctx = framework::libnetwork::zmq::Ctx;
+#include "zmq/pub.h"
+using Pub = framework::libnetwork::zmq::Pub;
+#include "zmq/msg.h"
+using Msg = framework::libnetwork::zmq::Msg;
+#include "publisher.h"
 
 namespace framework
 {
-	namespace network
+	namespace libnetwork
 	{
-		namespace zeromq
+		namespace zmq
 		{
-			Pub::Pub() : so{ nullptr }
-			{}
-			Pub::~Pub()
-			{}
-
-			int Pub::startPub(const unsigned short port /* = 0 */)
+			namespace module
 			{
-				int e{ 
-					gMinPortNumber < port && gMaxPortNumber > port ? eSuccess : eInvalidParameter };
-
-				if (eSuccess == e)
+				class IPublisher
 				{
-					e = Ctx().get_mutable_instance().init();
+				public:
+					IPublisher(void);
+					~IPublisher(void);
 
-					if (eSuccess == e)
+				public:
+					CommonError bind(
+						const std::string ipv4,
+						const unsigned short port = 0,
+						void* ctx = nullptr);
+					CommonError send(void* msg = nullptr);
+
+				protected:
+					void* ps;
+				};//class IPublisher
+
+				IPublisher::IPublisher() : ps{nullptr}
+				{}
+				IPublisher::~IPublisher()
+				{}
+
+				CommonError IPublisher::bind(
+					const std::string ipv4, 
+					const unsigned short port /* = 0 */,
+					void* ctx /* = nullptr */)
+				{
+					Ctx* ctx_{reinterpret_cast<Ctx*>(ctx)};
+					CommonError e{ 
+						ctx_ && ctx_->valid() && !ipv4.empty() && gMinPortNumber <= port && gMaxPortNumber >= port ? CommonError::COMMON_ERROR_SUCCESS : CommonError::COMMON_ERROR_INVALID_PARAMETER };
+
+					if (CommonError::COMMON_ERROR_SUCCESS == e)
 					{
-						so = Ctx().get_mutable_instance().createNewSocket(ZMQ_PUB);
+						ps = ctx_->createNewSocket(ZMQ_PUB);
 
-						if (so)
+						if (ps)
 						{
-							zmq::socket_base_t* s{ reinterpret_cast<zmq::socket_base_t*>(so) };
-							const int hwm{ 10 };
-							s->setsockopt(ZMQ_SNDHWM, &hwm, sizeof(hwm));
-							e = s->bind((boost::format("tcp://*:%d") % port).str().c_str()) ? eBadBind : eSuccess;
-						} 
+							e = static_cast<CommonError>(Pub().bind(ipv4, port, ps, 10));
+						}
 						else
 						{
-							stopPub();
+							e = CommonError::COMMON_ERROR_BAD_NEW_INSTANCE;
 						}
 					}
+
+					return e;
 				}
 
-				return e;
-			}
+				CommonError IPublisher::send(void* msg /*= nullptr*/)
+				{
+					CommonError e{
+						msg ? CommonError::COMMON_ERROR_SUCCESS : CommonError::COMMON_ERROR_INVALID_PARAMETER};
 
-			int Pub::stopPub()
-			{
-				Ctx().get_mutable_instance().destroySocket(so);
-				return Ctx().get_mutable_instance().uninit();
-			}
+					if (CommonError::COMMON_ERROR_SUCCESS == e)
+					{
+						Msg* msg_{reinterpret_cast<Msg*>(msg)};
+						e = static_cast<CommonError>(msg_->send(ps));
+					}
+					
+					return e;
+				}
 
-			int Pub::sendMsg(Msg* msg /* = nullptr */)
-			{
-				return msg ? msg->sendData(so) : eInvalidParameter;
-			}
-		}//namespace zeromq
+				Publisher::Publisher() : publisher{ new(std::nothrow) IPublisher }
+				{}
+				Publisher::~Publisher()
+				{
+					boost::checked_delete(publisher);
+				}
+
+				int Publisher::bind(
+					const std::string ipv4, 
+					const unsigned short port /* = 0 */,
+					void* ctx /* = nullptr */)
+				{
+					return static_cast<int>(publisher ? publisher->bind(ipv4, port, ctx) : CommonError::COMMON_ERROR_BAD_NEW_INSTANCE);
+				}
+
+				int Publisher::send(void* msg /* = nullptr */)
+				{
+					return static_cast<int>(publisher ? publisher->send(msg) : CommonError::COMMON_ERROR_BAD_NEW_INSTANCE);
+				}
+			}//namespace module
+		}//namespace zmq
 	}//namespace network
 }//namespace framework

@@ -1,84 +1,114 @@
-#include "boost/format.hpp"
-#ifdef WINDOWS
-#include "glog/log_severity.h"
-#include "glog/logging.h"
-#else
-#include "glog/log_severity.h"
-#include "glog/logging.h"
-#endif//WINDOWS
-#include "Error.h"
-#include "Define.h"
-#include "Network/ZMQ/Core/Router_.h"
-#include "Network/ZMQ/Core/Dealer_.h"
-#include "Network/ZMQ/Msg_.h"
-using Msg = framework::network::zeromq::Msg;
+#include <new>
+#include "libcommon/const.h"
+#include "libcommon/error.h"
+#include "libnetwork/zmq/ctx.h"
+using Ctx = framework::libnetwork::zmq::Ctx;
 #include "XMQ.h"
 
-XMQ::XMQ() : RD()
+XMQ::XMQ(Log& log_) : Dispatcher(), bindPort{0}, connectPort{0}, ctx{new(std::nothrow) Ctx}, log{log_}
+{}
+XMQ::XMQ(
+	const std::string localIP,
+	const unsigned short localPort,
+	const std::string uplinkIP,
+	const unsigned short uplinkPort) 
+	: Dispatcher(), bindIP{localIP}, bindPort{localPort}, 
+	connectIP{uplinkIP}, connectPort{uplinkPort}, ctx{new(std::nothrow) Ctx}, log{log_}
 {}
 XMQ::~XMQ()
-{}
-
-int XMQ::startRD(
-	const unsigned short rlp /* = 0 */, 
-	const char* dcip /* = nullptr */, 
-	const unsigned short dcp /* = 0 */)
 {
-	LOG(INFO) << "Starting XMQ with parameters of command line [ Listen port = " << rlp <<
-		", remote XMQ IPv4 = " << dcip <<
-		", remote XMQ port = " << dcp << " ].";
-
-	int e{ RD::startRD(rlp, dcip, dcp) };
-
-	if (eSuccess == e)
+	Ctx* c{reinterpret_cast<Ctx*>(ctx)};
+	if (c)
 	{
-		LOG(INFO) << "Starting XMQ service successfully.";
+		delete c;
+	}
+}
+
+int XMQ::start()
+{
+	CommonError e{
+		ctx ? COMMON_ERROR_SUCCESS : COMMON_ERROR_BAD_NEW_INSTANCE};
+
+	if (CommonError::COMMON_ERROR_SUCCESS == e)
+	{
+		//ç»‘å®šRouterç«¯ç›‘å¬
+		if (!bindIP.empty() && gMinPortNumber <= bindPort && gMaxPortNumber >= bindPort)
+		{
+			e = static_cast<CommonError>(Dispatcher::bind(bindIP, bindPort, ctx));
+			log.write(
+				framework::liblog::LogLevel::LOG_LEVEL_INFO, 
+				"XMQ bind local IP [ %s ] and PORT [ %d ] result = [ %d ].", 
+				bindIP.c_str(), bindPort, static_cast<int>(e));
+		}
+
+		//è¿æ¥Dealerç«¯è¿æ¥
+		if (!connectIP.empty() && gMinPortNumber <= connectPort && gMaxPortNumber >= connectPort)
+		{
+			e = static_cast<CommonError>(Dispatcher::connect(connectIP, connectPort, ctx));
+			log.write(
+				framework::liblog::LogLevel::LOG_LEVEL_INFO, 
+				"XMQ connect remote IP [ %s ] and PORT [ %d ] result = [ %d ].", 
+				connectIP.c_str(), connectPort, static_cast<int>(e));
+		}
+
+		//å¤„ç†å®ŒRouterå’ŒDealeråæ‰èƒ½å¯åŠ¨DispatcheræœåŠ¡
+		//DispatcheræœåŠ¡åˆ›å»ºçº¿ç¨‹æ¥æ”¶Routerå’ŒDealerçš„æ•°æ®
+		e = static_cast<CommonError>(Dispatcher::start());
+		log.write(
+			framework::liblog::LogLevel::LOG_LEVEL_INFO, 
+			"XMQ start service result = [ %d ].",
+			static_cast<int>(e));
 	}
 	else
 	{
-		LOG(WARNING) << "Starting XMQ service failed, result = " << e << ".";
+		log.write(
+			framework::liblog::LogLevel::LOG_LEVEL_ERROR, 
+			"XMQ start service failed with invalid object of context.");
 	}
 
-	return e;
+	return static_cast<int>(e);
 }
 
-int XMQ::stopRD()
+int XMQ::stop(void* /* = nullptr*/)
 {
-	int e{ RD::stopRD() };
+	CommonError e{
+		ctx ? COMMON_ERROR_SUCCESS : COMMON_ERROR_BAD_NEW_INSTANCE};
 
-	if (eSuccess == e)
+	if (CommonError::COMMON_ERROR_SUCCESS == e)
 	{
-		LOG(INFO) << "Stopping XMQ service successfully.";
+		e = static_cast<CommonError>(Dispatcher::stop(ctx));
+		log.write(
+			framework::liblog::LogLevel::LOG_LEVEL_INFO, 
+			"XMQ stop service result = [ %d ].",
+			static_cast<int>(e));
 	}
 	else
 	{
-		LOG(WARNING) << "Stopping XMQ service failed, result = " << e << ".";
+		log.write(
+			framework::liblog::LogLevel::LOG_LEVEL_ERROR, 
+			"XMQ stop service failed with invalid object of context.");
 	}
 
-	return e;
+	return static_cast<int>(e);
 }
 
-void XMQ::afterParsePolledMessage(
+void XMQ::afterRouterPollDataProcess(
 	const std::string sender,
-	const std::string module,
-	const std::string from,
-	const std::string to,
-	const std::vector<std::string> routers,
-	const std::vector<std::string> messages)
+	const std::string data)
 {
-	//Step1:²é¿´Â·ÓÉ±íÊÇ·ñÎª¿Õ?
-	//      ¡°·ñ¡±ÔòÈ¡³öÂ·ÓÉ±íÖĞÊ×¸öÂ·ÓÉID×ª·¢Êı¾İ²¢´ÓÂ·ÓÉ±íÖĞÉ¾³ı¸ÃID;
-	//		¡±ÊÇ¡°ÔòStep2;
-	//Step2:²é¿´toÊÇ·ñÊÇ"xmq"?
-	//		"·ñ"ÔòStep3;
-	//		"ÊÇ"Ôò´¦Àí;
-	//Step3:²é¿´toÊÇ·ñÊÇ"cms"?
-	//		"·ñ"ÔòStep4;
-	//		"ÊÇ"Ôò×ª·¢;
-	//Step4:²é¿´toÊÇ·ñÊÇ"uplink"?
-	//		"·ñ"ÔòStep5;
-	//		"ÊÇ"ÔòÍ¨¹ıMDCÄ£ĞÍ×ª·¢;
-	//Step5:»Ø¸´ÏûÏ¢²»¿É´ï,Ö±½Ó¶ªÆú
+	//Step1:ï¿½é¿´Â·ï¿½É±ï¿½ï¿½Ç·ï¿½Îªï¿½ï¿½?
+	//      ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½Â·ï¿½É±ï¿½ï¿½ï¿½ï¿½×¸ï¿½Â·ï¿½ï¿½ID×ªï¿½ï¿½ï¿½ï¿½ï¿½İ²ï¿½ï¿½ï¿½Â·ï¿½É±ï¿½ï¿½ï¿½É¾ï¿½ï¿½ï¿½ï¿½ID;
+	//		ï¿½ï¿½ï¿½Ç¡ï¿½ï¿½ï¿½Step2;
+	//Step2:ï¿½é¿´toï¿½Ç·ï¿½ï¿½ï¿½"xmq"?
+	//		"ï¿½ï¿½"ï¿½ï¿½Step3;
+	//		"ï¿½ï¿½"ï¿½ï¿½ï¿½ï¿½;
+	//Step3:ï¿½é¿´toï¿½Ç·ï¿½ï¿½ï¿½"cms"?
+	//		"ï¿½ï¿½"ï¿½ï¿½Step4;
+	//		"ï¿½ï¿½"ï¿½ï¿½×ªï¿½ï¿½;
+	//Step4:ï¿½é¿´toï¿½Ç·ï¿½ï¿½ï¿½"uplink"?
+	//		"ï¿½ï¿½"ï¿½ï¿½Step5;
+	//		"ï¿½ï¿½"ï¿½ï¿½Í¨ï¿½ï¿½MDCÄ£ï¿½ï¿½×ªï¿½ï¿½;
+	//Step5:ï¿½Ø¸ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½É´ï¿½,Ö±ï¿½Ó¶ï¿½ï¿½ï¿½
 
 	if (0 < routers.size())
 	{
@@ -109,34 +139,9 @@ void XMQ::afterParsePolledMessage(
 	}
 }
 
-void XMQ::afterParsePolledMessage(
-	const std::string module,
-	const std::string from,
-	const std::string to,
-	const std::vector<std::string> routers,
-	const std::vector<std::string> messages)
+void XMQ::afterDealerPollDataProcess(
+	const std::string data)
 {
-}
-
-void XMQ::processPolledMessage(
-	const std::string sender,
-	const std::string module,
-	const std::string from,
-	const std::string to,
-	const std::vector<std::string> messages)
-{
-	//ÏûÏ¢ÄÚÈİµÄ×îºó2¸ö²¿·ÖÒ»¶¨ÊÇcommandºÍmessage
-	const std::size_t msgDataNumber{ messages.size() };
-	const std::string sequence{ messages[msgDataNumber - 4] };
-	const std::string timestamp{ messages[msgDataNumber - 3] };
-	const std::string command{ messages[msgDataNumber - 2] };
-	const std::string message{ messages[msgDataNumber - 1] };
-
-	//´¦ÀíCMSÅä¶ÔÏûÏ¢
-	if (!command.compare(gPairCommandName))
-	{
-		processCMSPairMessage(sender, module, from, to, sequence, timestamp);
-	}
 }
 
 void XMQ::forwardPolledMessage(
@@ -178,34 +183,25 @@ void XMQ::forwardPolledMessage(
 	}
 }
 
-void XMQ::processCMSPairMessage(
-	const std::string sender, 
-	const std::string module, 
-	const std::string from, 
-	const std::string to,
-	const std::string sequence,
-	const std::string timestamp)
+int XMQ::updatePairedCMSID(const std::string id)
 {
-	int e{ 
-		!sender.empty() && !module.empty() && !from.empty() && !to.empty() ? eSuccess : eInvalidParameter };
+	CommonError e{ 
+		id.empty() ? CommonError::COMMON_ERROR_INVALID_PARAMETER : CommonError::COMMON_ERROR_SUCCESS };
 
-	if (eSuccess == e && !from.compare(gCMSComponentName) && !to.compare(gXMQComponentName))
+	if (CommonError::COMMON_ERROR_SUCCESS == e)
 	{
-		//Ã¿´ÎÅä¶Ô¶¼±£´æCMSµÄÍ¨ĞÅID±êÊ¶
-		cmsCommID = sender;
-		LOG(INFO) << "XMQ process pair command from [ " << from <<
-			" ] as ID = " << sender << 
-			", sequence = " << sequence << 
-			", timestamp = " << timestamp << ".";
+		pairedCMSID = id;
+		log.write(
+			framework::liblog::LogLevel::LOG_LEVEL_INFO, 
+			"Update CMS component identity [ %s ] successfully.",
+			pairedCMSID.c_str());
 	} 
 	else
 	{
-		e = eInvalidParameter;
-		LOG(WARNING) << "XMQ process invalid pair command from [ " << from <<
-			" ] to [ " << to <<
-			" ] as ID = " << sender <<
-			", sequence = " << sequence <<
-			", timestamp = " << timestamp << ".";
+		log.write(
+			framework::liblog::LogLevel::LOG_LEVEL_INFO, 
+			"Update CMS component identity [ %s ] failed, result = [ %d ].",
+			id.c_str(), static_cast<int>(e));
 	}
 
 	//----------------------------------------------------------------------------------
@@ -244,9 +240,9 @@ void XMQ::processCMSPairMessage(
 // {
 // 	const bool isFromCMS{ !fromID.compare(gCMSComponentName) ? true : false };
 // 
-// 	//Í¨¹ıfromIDÇø·Ö×¢²áÏûÏ¢À´Ô´
-// 	//CMS×é¼ş×¢²áÓÉWorkerÄ£ĞÍ´¦Àí,ÆäËû×é¼ş×é²âÓÉBrokerÄ£ĞÍ´¦Àí
-// 	//ÏûÏ¢¸ñÊ½ÈçÏÂ
+// 	//Í¨ï¿½ï¿½fromIDï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½Ô´
+// 	//CMSï¿½ï¿½ï¿½×¢ï¿½ï¿½ï¿½ï¿½WorkerÄ£ï¿½Í´ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½BrokerÄ£ï¿½Í´ï¿½ï¿½ï¿½
+// 	//ï¿½ï¿½Ï¢ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½
 // 	//-----------------------------------------------------------------------------
 // 	//| CommID | Empty | "worker" | "..." | "cms" | "register" | Name:UUID:CommID |
 // 	//-----------------------------------------------------------------------------
@@ -254,7 +250,7 @@ void XMQ::processCMSPairMessage(
 // 	msg.addMessage((boost::format("%s:%s") % data % commID).str());
 // 	msg.addMessage(gRegisterCommandName);
 // 	msg.addMessage(viaID);
-// 	//Èç¹ûÏò¸¸XMQ×ª·¢ÏûÏ¢¾ÍÒªĞŞ¸ÄfromID±êÊ¶Îª"xmq"
+// 	//ï¿½ï¿½ï¿½ï¿½ï¿½XMQ×ªï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½Òªï¿½Ş¸ï¿½fromIDï¿½ï¿½Ê¶Îª"xmq"
 // 	msg.addMessage(isFromCMS ? gXMQComponentName : fromID);
 // 	msg.addMessage(gWorkerModuleName);
 // 	msg.addMessage(gEmptyCommandName);
@@ -262,7 +258,7 @@ void XMQ::processCMSPairMessage(
 // 	int e{ eCannotReach };
 // 	if (isFromCMS)
 // 	{
-// 		//Ïò¸¸XMQ×ª·¢
+// 		//ï¿½ï¿½XMQ×ªï¿½ï¿½
 // 		if (worker)
 // 		{
 // 			e = worker->sendData(msg);
@@ -270,15 +266,15 @@ void XMQ::processCMSPairMessage(
 // 	} 
 // 	else
 // 	{
-// 		//ÏòCMS×ª·¢
+// 		//ï¿½ï¿½CMS×ªï¿½ï¿½
 // 		msg.addMessage(commIDOfCMS);
 // 		e = broker->sendData(msg);
 // 	}
 // 
-// 	//´¦ÀíÊ§°ÜÔòÁ¢¼´Ó¦´ğ
+// 	//ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½
 // 	if (eSuccess != e)
 // 	{
-// 		//ÏûÏ¢¸ñÊ½ÈçÏÂ
+// 		//ï¿½ï¿½Ï¢ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½
 // 		//-------------------------------------------------------------------
 // 		//| CommID | Empty | "worker" | "..." | "cms" | "register" | Status |
 // 		//-------------------------------------------------------------------

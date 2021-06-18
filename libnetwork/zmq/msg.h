@@ -13,13 +13,15 @@
 #ifndef FRAMEWORK_LIBNETWORK_ZMQ_MSG_H
 #define FRAMEWORK_LIBNETWORK_ZMQ_MSG_H
 
+#include <string>
+
 namespace framework
 {
     namespace libnetwork
     {
 		namespace zmq
 		{
-			class Impl;
+			class IMsg;
 
 			class Msg
 			{
@@ -29,9 +31,9 @@ namespace framework
 
 			public:
 				//添加消息数据
-				//@msg : 消息数据
+				//@data : 消息数据
 				//@Comment : 尾部添加
-				void add(const std::string msg);
+				void add(const std::string data);
 
 				//删除消息数据
 				//@Return : 消息数据
@@ -49,7 +51,7 @@ namespace framework
 				int send(void* s = nullptr);
 
 			private:
-				Impl* impl;
+				IMsg* msg;
 			};//class Msg
 		}//namespace zeromq
     }//namespace network

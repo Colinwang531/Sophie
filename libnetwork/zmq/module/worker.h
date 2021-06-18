@@ -13,6 +13,8 @@
 #ifndef FRAMEWORK_LIBNETWORK_ZMQ_MODULE_WORKER_H
 #define FRAMEWORK_LIBNETWORK_ZMQ_MODULE_WORKER_H
 
+#include <string>
+
 namespace framework
 {
 	namespace libnetwork
@@ -21,7 +23,7 @@ namespace framework
 		{
 			namespace module
 			{
-				class Impl;
+				class IWorker;
 
 				class Worker
 				{
@@ -30,56 +32,38 @@ namespace framework
 					virtual ~Worker(void);
 
 				public:
-					//����OD
-					//@address : IPv4��ַ
-					//@listenPort : �����˿ں�
-					//@Return : ������
-					virtual int startOD(
-						const char* ipv4 = nullptr,
-						const unsigned short port = 0);
+					//启动
+					//@interval : 定时器任务执行时间间隔，以秒为单位
+					//@Return : 错误码
+					virtual int start(const unsigned long long interval = 30);
 
-					//ֹͣOD
-					//@Return : ������
-					virtual int stopOD(void);
-
-					//������Ϣ
-					//@msg : ��Ϣ����
-					//@Return : ������
-					int sendMsg(Msg* msg = nullptr);
-
-					//��ȡOD����״̬
-					//Return : OD����״̬
-					inline const bool isStopped(void) const
-					{
-						return stopped;
-					}
+					//停止
+					//@ctx : 上下文实例
+					//@Return : 错误码
+					virtual int stop(void* ctx = nullptr);
 
 				protected:
-					//Dealer����Ϣ���մ���
-					//@module : ������ģ�ͱ�ʶ
-					//@from : ����������
-					//@to : ����������
-					//@routers : ��Ϣ·�ɱ�
-					//@messages : ��Ϣ����
-					virtual void afterParsePolledMessage(
-						const std::string module,
-						const std::string from,
-						const std::string to,
-						const std::vector<std::string> routers,
-						const std::vector<std::string> messages) = 0;
+					//设置Dealer连接地址和端口
+					//@ipv4 : ipv4地址
+					//@port : 端口
+					//@ctx : 上下文实例
+					//@Return : 错误码
+					int connect(
+						const std::string ipv4,
+						const unsigned short port = 0,
+						void* ctx = nullptr);
+
+					//Dealer端数据接收处理
+					//@data : 消息数据
+					virtual void afterDealerPollDataProcess(
+						const std::string data) = 0;
+
+					//定时任务处理
+					virtual void afterTimerExpiredProcess(void) = 0;
 
 				private:
-					//���ݶ�ȡ�߳�
-					void pollMessageWorkerThread(void);
-
-					//��Ϣ���մ���
-					//Comment : ������Ϣ��ʽ����Ϣ���������ٽ����ϲ㴦��
-					void parsePolledMessage(Msg& msg);
-
-				private:
-					void* so;
-					bool stopped;
-				};//class OD
+					IWorker* worker;
+				};//class Worker
 			}//namespace module
 		}//namespace zmq
 	}//namespace libnetwork

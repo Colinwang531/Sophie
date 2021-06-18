@@ -33,32 +33,32 @@ namespace framework
 
         class Log
         {
-            public:
-                Log(void);
-                virtual ~Log(void);
+        public:
+            Log(void);
+            virtual ~Log(void);
 
-            public:
-                //初始化
-				//@name : 调用该接口应用程序的执行路径，例如:/usr/sbin/xxx
-                //        注意一定没有后缀名
-                //@dir : 日志文件存储目录
-                //@Return : 错误码
-                virtual int init(
-                    const char* name = nullptr,
-                    const char* dir = nullptr);
+        public:
+            //初始化
+			//@name : 调用该接口应用程序的执行路径，例如:/usr/sbin/xxx
+            //        注意一定没有后缀名
+            //@dir : 日志文件存储目录
+            //@Return : 错误码
+            virtual int init(
+                const char* name = nullptr,
+                const char* dir = nullptr);
 
-                //释放
-                virtual void uninit(void);
+            //释放
+            virtual void uninit(void);
 
-                //写日志
-                //@level : 等级值
-                //@format : 日志格式
-                //@... : 参数列表
-                //@Return : 错误码
-                virtual int write(
-                    const LogLevel level = LogLevel::LOG_LEVEL_INFO,
-                    const char* format = nullptr,
-                    ...);
+            //写日志
+            //@level : 等级值
+            //@format : 日志格式
+            //@... : 参数列表
+            //@Return : 错误码
+            virtual int write(
+                const LogLevel level = LogLevel::LOG_LEVEL_INFO,
+                const char* format = nullptr,
+                ...);
         };//class Log
     }//namespace liblog
 }//namespace framework

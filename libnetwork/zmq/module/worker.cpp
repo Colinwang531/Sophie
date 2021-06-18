@@ -1,126 +1,219 @@
+#include <new>
+#include "boost/bind.hpp"
+#include "boost/function.hpp"
 #include "zmq.h"
-#include "socket_base.hpp"
-#include "Error.h"
-#include "Thread/ThreadPool.h"
-using ThreadPool = framework::thread::ThreadPool;
-#include "Network/ZMQ/Core/Ctx_.h"
-#include "Network/ZMQ/Core/Dealer_.h"
-#include "Network/ZMQ/Msg_.h"
-#include "Network/ZMQ/OD.h"
+#include "libcommon/const.h"
+#include "libcommon/error.h"
+#include "time/time.h"
+using Time = framework::libcommon::Time;
+#include "thread/threadpool.h"
+using ThreadPool = framework::libcommon::ThreadPool;
+#include "zmq/ctx.h"
+using Ctx = framework::libnetwork::zmq::Ctx;
+#include "zmq/dealer.h"
+using Dealer = framework::libnetwork::zmq::Dealer;
+#include "zmq/msg.h"
+using Msg = framework::libnetwork::zmq::Msg;
+#include "worker.h"
 
 namespace framework
 {
-	namespace network
+	namespace libnetwork
 	{
-		namespace zeromq
+		namespace zmq
 		{
-			OD::OD() : stopped{ false }
-			{}
-			OD::~OD()
-			{}
-
-			int OD::startOD(
-				const char* ipv4 /* = nullptr */, 
-				const unsigned short port /* = 0 */)
+			namespace module
 			{
-				int e{ Ctx().get_mutable_instance().init() };
+				typedef boost::function<void(const std::string)> DealerPollDataHandler;
+				typedef boost::function<void(void)> ProcessTimerTaskHandler;
 
-				if (eSuccess == e)
+				class IWorker
 				{
-					so = Ctx().get_mutable_instance().createNewSocket(ZMQ_DEALER);
+				public:
+					IWorker(void);
+					~IWorker(void);
 
-					if (so)
-					{
-						e = Dealer().connect(so, ipv4, port);
-						e = ThreadPool::get_mutable_instance().createNewThread(
-							boost::bind(&OD::pollMessageWorkerThread, this)) ? eSuccess : eBadNewThread;
-					}
-					else
-					{
-						stopOD();
-					}
+				public:
+					CommonError connect(
+						const std::string ipv4,
+						const unsigned short port = 0,
+						void* ctx = nullptr);
+					//ÂêØÂä®
+					//@dpoll : DealerÁ´ØÊï∞ÊçÆÊé•Êî∂ÂõûË∞É
+					//@task : Ê®°ÂûãÂÆöÊó∂Âô®‰ªªÂä°ÂõûË∞É
+					//@interval : ÂÆöÊó∂Âô®‰ªªÂä°ÊâßË°åÊó∂Èó¥Èó¥ÈöîÔºå‰ª•Áßí‰∏∫Âçï‰Ωç
+					//@Return : ÈîôËØØÁ†Å
+					CommonError start(
+						DealerPollDataHandler dpoll = nullptr,
+						ProcessTimerTaskHandler task = nullptr,
+						const unsigned long long interval = 30);
+					CommonError stop(void* ctx = nullptr);
+
+				private:
+					//ÁΩëÁªúÊï∞ÊçÆËØªÂèñÁ∫øÁ®ã
+					void pollDataThread(void);
+					//ÂÆöÊó∂‰ªªÂä°ÊâßË°åÁ∫øÁ®ã
+					void processTimerTaskThread(void);
+
+				private:
+					void* ds;
+					void* poll_tid;
+					void* task_tid;
+					bool stopped;
+					unsigned long long timerTaskInterval;
+					DealerPollDataHandler dealerPollDataHandler;
+					ProcessTimerTaskHandler processTimerTaskHandler;
+				};//class IWorker
+
+				IWorker::IWorker() 
+					: ds{nullptr}, poll_tid{nullptr}, task_tid{nullptr},stopped{ false }, timerTaskInterval{0}
+				{}
+				IWorker::~IWorker()
+				{
+					stop();
 				}
 
-				return e;
-			}
-
-			int OD::stopOD()
-			{
-				stopped = true;
-				Ctx().get_mutable_instance().destroySocket(so);
-				return Ctx().get_mutable_instance().uninit();
-			}
-
-			int OD::sendMsg(Msg* msg /* = nullptr */)
-			{
-				return msg ? Dealer().send(so, msg) : eInvalidParameter;
-			}
-
-			void OD::pollMessageWorkerThread()
-			{
-				zmq::socket_base_t* ds{ reinterpret_cast<zmq::socket_base_t*>(so) };
-				zmq_pollitem_t pollitems[] = { { ds, 0, ZMQ_POLLIN, 0} };
-
-				while (!stopped)
+				CommonError IWorker::connect(
+					const std::string ipv4, 
+					const unsigned short port /* = 0 */,
+					void* ctx /* = nullptr */)
 				{
-					Msg msg;
-					zmq_poll(pollitems, 1, 1);
-					if (pollitems[0].revents & ZMQ_POLLIN)
+					Ctx* ctx_{reinterpret_cast<Ctx*>(ctx)};
+					CommonError e{ 
+						ctx_ && ctx_->valid() && !ipv4.empty() && gMinPortNumber <= port && gMaxPortNumber >= port ? CommonError::COMMON_ERROR_SUCCESS : CommonError::COMMON_ERROR_INVALID_PARAMETER };
+
+					if (CommonError::COMMON_ERROR_SUCCESS == e)
 					{
-						if (eSuccess == msg.recvData(so))
+						ds = ctx_->createNewSocket(ZMQ_DEALER);
+
+						if (ds)
 						{
-							parsePolledMessage(msg);
+							e = static_cast<CommonError>(Dealer().connect(ipv4, port, ds));
+						}
+						else
+						{
+							e = CommonError::COMMON_ERROR_BAD_NEW_INSTANCE;
+						}
+					}
+
+					return e;
+				}
+
+				CommonError IWorker::start(
+					DealerPollDataHandler dpoll /*= nullptr*/,
+					ProcessTimerTaskHandler task /*= nullptr*/,
+					const unsigned long long interval /*= 30*/)
+				{
+					CommonError e{
+						 ds ? CommonError::COMMON_ERROR_SUCCESS : CommonError::COMMON_ERROR_BAD_OPERATE};
+
+					if(CommonError::COMMON_ERROR_SUCCESS == e)
+					{
+						dealerPollDataHandler = dpoll;
+						processTimerTaskHandler = task;
+						timerTaskInterval = interval;
+
+						poll_tid = ThreadPool().create(boost::bind(&IWorker::pollDataThread, this));
+						if (0 < timerTaskInterval)
+						{
+							task_tid = ThreadPool().create(boost::bind(&IWorker::processTimerTaskThread, this));
+						}
+					}
+
+					return e;
+				}
+
+				CommonError IWorker::stop(void* ctx/* = nullptr*/)
+				{
+					Ctx* ctx_{reinterpret_cast<Ctx*>(ctx)};
+					CommonError e{
+						ctx_ && ctx_->valid() && false == stopped ? CommonError::COMMON_ERROR_SUCCESS : CommonError::COMMON_ERROR_BAD_OPERATE};
+
+					if(CommonError::COMMON_ERROR_SUCCESS == e)
+					{
+						stopped = true;
+						ctx_->destroySocket(ds);
+						ThreadPool().destroy(poll_tid);
+						ThreadPool().destroy(task_tid);
+					}
+
+					return e;
+				}
+
+				void IWorker::pollDataThread()
+				{
+					zmq_pollitem_t pollitems[1]{ { ds, 0, ZMQ_POLLIN, 0} };
+
+					while (!stopped)
+					{
+						Msg msg;
+						zmq_poll(pollitems, 1, 1);
+						if (pollitems[0].revents & ZMQ_POLLIN)
+						{
+							if (CommonError::COMMON_ERROR_SUCCESS == static_cast<CommonError>(msg.receive(ds)))
+							{
+								const std::string data{msg.remove()};
+
+								if(dealerPollDataHandler)
+								{
+									dealerPollDataHandler(data);
+								}
+							}
 						}
 					}
 				}
-			}
 
-			void OD::parsePolledMessage(Msg& msg)
-			{
-				//---------------------------------------------------------------------------------------------------------------------------------------
-				//| "" | module | from | to | router(1) | ... | router(n) | "" | extend(1) | ... | extend(n) | sequence | timestamp | command | message |
-				//---------------------------------------------------------------------------------------------------------------------------------------
-
-				//Ω‚ŒˆπÃ∂®¥Û–°∂Œ ˝æ›
-				msg.removeMessage();
-				const std::string module{ msg.removeMessage() };
-				const std::string from{ msg.removeMessage() };
-				const std::string to{ msg.removeMessage() };
-
-				//Ω‚Œˆ¬∑”…±Ì ˝æ›
-				std::vector<std::string> routers;
-				while (1)
+				void IWorker::processTimerTaskThread()
 				{
-					std::string item{ msg.removeMessage() };
+					const unsigned long long interval{timerTaskInterval * 1000};
+					unsigned long long last{0};
 
-					if (item.empty())
+					while (!stopped)
 					{
-						break;
-					}
-					else
-					{
-						routers.push_back(item);
+						unsigned long long now{Time().tickcount()};
+
+						if (0 == last || now - last >= interval)
+						{
+							if(processTimerTaskHandler)
+							{
+								processTimerTaskHandler();
+							}
+
+							last = now;
+						}
+						
 					}
 				}
 
-				//Ω‚Œˆœ˚œ¢ ˝æ›
-				std::vector<std::string> messages;
-				while (1)
-				{
-					std::string item{ msg.removeMessage() };
+				Worker::Worker() : worker{ new(std::nothrow) IWorker }
+				{}
+				Worker::~Worker()
+				{}
 
-					if (item.empty())
-					{
-						break;
-					}
-					else
-					{
-						messages.push_back(item);
-					}
+				int Worker::connect(
+					const std::string ipv4, 
+					const unsigned short port /* = 0 */,
+					void* ctx /* = nullptr */)
+				{
+					return static_cast<int>(worker ? worker->connect(ipv4, port, ctx) : CommonError::COMMON_ERROR_BAD_NEW_INSTANCE);
 				}
 
-				afterParsePolledMessage(module, from, to, routers, messages);
-			}
-		}//namespace zeromq
-	}//namespace network
+				int Worker::start(const unsigned long long interval/* = 30*/)
+				{
+					return static_cast<int>(
+						worker ? 
+						worker->start(
+							boost::bind(&Worker::afterDealerPollDataProcess, this, _1), 
+							boost::bind(&Worker::afterTimerExpiredProcess, this), 
+							interval) : 
+						CommonError::COMMON_ERROR_BAD_NEW_INSTANCE);
+				}
+
+				int Worker::stop(void* ctx/* = nullptr*/)
+				{
+					return static_cast<int>(worker ? worker->stop(ctx) : CommonError::COMMON_ERROR_BAD_NEW_INSTANCE);
+				}
+			}//namespace module
+		}//namespace zmq
+	}//namespace libnetwork
 }//namespace framework

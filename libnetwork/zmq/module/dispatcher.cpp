@@ -1,11 +1,18 @@
+#include <new>
 #include "boost/bind.hpp"
+#include "boost/checked_delete.hpp"
+#include "boost/function.hpp"
 #include "zmq.h"
-#include "const.h"
-#include "error.h"
-#include "libcommon/thread/threadpool.h"
+#include "libcommon/const.h"
+#include "libcommon/error.h"
+#include "thread/threadpool.h"
 using ThreadPool = framework::libcommon::ThreadPool;
 #include "zmq/ctx.h"
 using Ctx = framework::libnetwork::zmq::Ctx;
+#include "zmq/router.h"
+using Router = framework::libnetwork::zmq::Router;
+#include "zmq/dealer.h"
+using Dealer = framework::libnetwork::zmq::Dealer;
 #include "zmq/msg.h"
 using Msg = framework::libnetwork::zmq::Msg;
 #include "dispatcher.h"
@@ -18,32 +25,32 @@ namespace framework
 		{
 			namespace module
 			{
-				typedef boost::function<void<const std::string, const std::string>> RouterPollDataHandler;
-				typedef boost::function<void<const std::string>> DealerPollDataHandler;
+				typedef boost::function<void(const std::string, const std::string)> RouterPollDataHandler;
+				typedef boost::function<void(const std::string)> DealerPollDataHandler;
 
-				class Impl
+				class IDispatcher
 				{
 				public:
-					Impl(void);
-					~Impl(void);
+					IDispatcher(void);
+					~IDispatcher(void);
 
 				public:
-					int bind(
+					CommonError bind(
 						const std::string ipv4,
 						const unsigned short port = 0,
 						void* ctx = nullptr);
-					int connect(
+					CommonError connect(
 						const std::string ipv4,
 						const unsigned short port = 0,
 						void* ctx = nullptr);
 					//启动
-					//@r : Router端数据接收回调
-					//@d : Dealer端数据接收回调
+					//@rpoll : Router端数据接收回调
+					//@dpoll : Dealer端数据接收回调
 					//@Return : 错误码
-					int start(
-						RouterPollDataHandler r = nullptr, 
-						DealerPollDataHandler d = nullptr);
-					int stop(void* ctx = nullptr);
+					CommonError start(
+						RouterPollDataHandler rpoll = nullptr, 
+						DealerPollDataHandler dpoll = nullptr);
+					CommonError stop(void* ctx = nullptr);
 
 				private:
 					//网络数据读取线程
@@ -56,33 +63,32 @@ namespace framework
 					bool stopped;
 					RouterPollDataHandler routerPollDataHandler;
 					DealerPollDataHandler dealerPollDataHandler;
-				};//class Impl
+				};//class IDispatcher
 
-				Impl::Impl() 
-					: rs{nullptr}, ds{nullptr}, tid{nullptr}, stopped{ false }, 
-					routerPollDataHandler{nullptr}, dealerPollDataHandler{nullptr}
+				IDispatcher::IDispatcher() 
+					: rs{nullptr}, ds{nullptr}, tid{nullptr}, stopped{ false }
 				{}
-				Impl::~Impl()
+				IDispatcher::~IDispatcher()
 				{
 					stop();
 				}
 
-				int Impl::bind(
+				CommonError IDispatcher::bind(
 					const std::string ipv4, 
 					const unsigned short port /* = 0 */,
 					void* ctx /* = nullptr */)
 				{
 					Ctx* ctx_{reinterpret_cast<Ctx*>(ctx)};
 					CommonError e{ 
-						ctx_ && ctx_.invalid() && !ipv4.empty() && gMinPortNumber <= port && gMaxPortNumber >= port ? CommonError::COMMON_ERROR_SUCCESS : CommonError::COMMON_ERROR_INVALID_PARAMETER };
+						ctx_ && ctx_->valid() && !ipv4.empty() && gMinPortNumber <= port && gMaxPortNumber >= port ? CommonError::COMMON_ERROR_SUCCESS : CommonError::COMMON_ERROR_INVALID_PARAMETER };
 
 					if (CommonError::COMMON_ERROR_SUCCESS == e)
 					{
-						rs = ctx_.createNewSocket(ZMQ_ROUTER);
+						rs = ctx_->createNewSocket(ZMQ_ROUTER);
 
 						if (rs)
 						{
-							e = Router().bind(ipv4, port, rs);
+							e = static_cast<CommonError>(Router().bind(ipv4, port, rs));
 						}
 						else
 						{
@@ -90,25 +96,25 @@ namespace framework
 						}
 					}
 
-					return (int)e;
+					return e;
 				}
 
-				int Impl::connect(
+				CommonError IDispatcher::connect(
 					const std::string ipv4, 
 					const unsigned short port /* = 0 */,
 					void* ctx /* = nullptr */)
 				{
 					Ctx* ctx_{reinterpret_cast<Ctx*>(ctx)};
 					CommonError e{ 
-						ctx_ && ctx_.valid() && !ipv4.empty() && gMinPortNumber <= port && gMaxPortNumber >= port ? CommonError::COMMON_ERROR_SUCCESS : CommonError::COMMON_ERROR_INVALID_PARAMETER };
+						ctx_ && ctx_->valid() && !ipv4.empty() && gMinPortNumber <= port && gMaxPortNumber >= port ? CommonError::COMMON_ERROR_SUCCESS : CommonError::COMMON_ERROR_INVALID_PARAMETER };
 
 					if (CommonError::COMMON_ERROR_SUCCESS == e)
 					{
-						ds = ctx_.createNewSocket(ZMQ_DEALER);
+						ds = ctx_->createNewSocket(ZMQ_DEALER);
 
 						if (ds)
 						{
-							e = Dealer().bind(ipv4, port, ds);
+							e = static_cast<CommonError>(Dealer().connect(ipv4, port, ds));
 						}
 						else
 						{
@@ -116,46 +122,46 @@ namespace framework
 						}
 					}
 
-					return (int)e;
+					return e;
 				}
 
-				int Impl::start(
-					RouterPollDataHandler r /*= nullptr*/, 
-					DealerPollDataHandler d /*= nullptr*/)
+				CommonError IDispatcher::start(
+					RouterPollDataHandler rpoll /*= nullptr*/, 
+					DealerPollDataHandler dpoll /*= nullptr*/)
 				{
 					CommonError e{
 						rs || ds ? CommonError::COMMON_ERROR_SUCCESS : CommonError::COMMON_ERROR_BAD_OPERATE};
 
 					if(CommonError::COMMON_ERROR_SUCCESS == e)
 					{
-						routerPollDataHandler = r;
-						dealerPollDataHandler = d;
-						tid = ThreadPool().create(boost::bind(&Impl::pollDataThread, this));
+						routerPollDataHandler = rpoll;
+						dealerPollDataHandler = dpoll;
+						tid = ThreadPool().create(boost::bind(&IDispatcher::pollDataThread, this));
 						e = tid ? CommonError::COMMON_ERROR_SUCCESS : CommonError::COMMON_ERROR_BAD_NEW_THREAD;
 					}
 
-					return (int)e;
+					return e;
 				}
 
-				int Impl::stop(void* ctx = nullptr)
+				CommonError IDispatcher::stop(void* ctx /*= nullptr*/)
 				{
 					Ctx* ctx_{reinterpret_cast<Ctx*>(ctx)};
 					CommonError e{
-						ctx_ && ctx_.valid() && fasle == stopped ? CommonError::COMMON_ERROR_SUCCESS : CommonError::COMMON_ERROR_BAD_OPERATE};
+						ctx_ && ctx_->valid() && false == stopped ? CommonError::COMMON_ERROR_SUCCESS : CommonError::COMMON_ERROR_BAD_OPERATE};
 
 					if(CommonError::COMMON_ERROR_SUCCESS == e)
 					{
 						stopped = true;
-						ctx.destroySocket(rs);
-						ctx.destroySocket(ds);
+						ctx_->destroySocket(rs);
+						ctx_->destroySocket(ds);
 						ThreadPool().destroy(tid);
 						tid = nullptr;
 					}
 
-					return (int)e;
+					return e;
 				}
 
-				void Impl::pollDataThread()
+				void IDispatcher::pollDataThread()
 				{
 					zmq_pollitem_t pollitems[2]{ 
 						{ rs, 0, ZMQ_POLLIN, 0}, { ds, 0, ZMQ_POLLIN, 0} };
@@ -166,7 +172,7 @@ namespace framework
 						zmq_poll(pollitems, 2, 1);
 						if (pollitems[0].revents & ZMQ_POLLIN)
 						{
-							if (CommonError::COMMON_ERROR_SUCCESS == msg.receive(rs))
+							if (CommonError::COMMON_ERROR_SUCCESS == static_cast<CommonError>(msg.receive(rs)))
 							{
 								const std::string sender{msg.remove()};
 								msg.remove();
@@ -181,7 +187,7 @@ namespace framework
 						}
 						else if (pollitems[1].revents & ZMQ_POLLIN)
 						{
-							if (CommonError::COMMON_ERROR_SUCCESS == msg.receive(ds))
+							if (CommonError::COMMON_ERROR_SUCCESS == static_cast<CommonError>(msg.receive(ds)))
 							{
 								const std::string data{msg.remove()};
 
@@ -194,11 +200,11 @@ namespace framework
 					}
 				}
 
-				Dispatcher::Dispatcher() : impl{new(std::nothrow) Impl}
+				Dispatcher::Dispatcher() : dispatcher{new(std::nothrow) IDispatcher}
 				{}
 				Dispatcher::~Dispatcher()
 				{
-					boost::checked_delete(impl);					
+					boost::checked_delete(dispatcher);					
 				}
 
 				int Dispatcher::bind(
@@ -206,7 +212,7 @@ namespace framework
 					const unsigned short port /* = 0 */,
 					void* ctx /* = nullptr */)
 				{
-					return impl ? impl->bind(ipv4, port, ctx) : CommonError::COMMON_ERROR_BAD_NEW_INSTANCE;
+					return static_cast<int>(dispatcher ? dispatcher->bind(ipv4, port, ctx) : CommonError::COMMON_ERROR_BAD_NEW_INSTANCE);
 				}
 
 				int Dispatcher::connect(
@@ -214,19 +220,19 @@ namespace framework
 					const unsigned short port /* = 0 */,
 					void* ctx /* = nullptr */)
 				{
-					return impl ? impl->connect(ipv4, port, ctx) : CommonError::COMMON_ERROR_BAD_NEW_INSTANCE;
+					return static_cast<int>(dispatcher ? dispatcher->connect(ipv4, port, ctx) : CommonError::COMMON_ERROR_BAD_NEW_INSTANCE);
 				}
 
 				int Dispatcher::start()
 				{
-					return impl ? impl->start(
+					return static_cast<int>(dispatcher ? dispatcher->start(
 						boost::bind(&Dispatcher::afterRouterPollDataProcess, this, _1, _2),
-						boost::bind(&Dispatcher::afterDealerPollDataProcess, this, _1)) : CommonError::COMMON_ERROR_BAD_NEW_INSTANCE;
+						boost::bind(&Dispatcher::afterDealerPollDataProcess, this, _1)) : CommonError::COMMON_ERROR_BAD_NEW_INSTANCE);
 				}
 
-				int Dispatcher::stop(void* ctx = nullptr)
+				int Dispatcher::stop(void* ctx/* = nullptr*/)
 				{
-					return impl ? impl->stop(ctx) : CommonError::COMMON_ERROR_BAD_NEW_INSTANCE;
+					return static_cast<int>(dispatcher ? dispatcher->stop(ctx) : CommonError::COMMON_ERROR_BAD_NEW_INSTANCE);
 				}
 			}//namespace module
 		}//namespace zeromq
