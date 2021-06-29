@@ -1,32 +1,36 @@
 #include <cstdarg>
 #include <stdio.h>
 #include "glog/logging.h"
+#include "libcommon/error.h"
+#include "libcommon/path/path.h"
+using ProgramPathParser = framework::libcommon::ProgramPathParser;
 #include "log.h"
 
 namespace framework
 {
     namespace liblog
     {
-        static bool initSuccess{false};
-
         Log::Log()
         {}
         Log::~Log()
         {}
 
         int Log::init(
-            const char* name/* = nullptr*/,
-            const char* dir/* = nullptr*/)
+            const char* name/* = nullptr*/)
         {
-            LogError e{name && dir ? LogError::LOG_ERROR_SUCCESS : LogError::LOG_ERROR_INVALID_PARAMETER};
+            CommonError e{
+                name ? 
+                CommonError::COMMON_ERROR_SUCCESS : 
+                CommonError::COMMON_ERROR_INVALID_PARAMETER};
+            ProgramPathParser parser;
+            const std::string dir{parser.parseFileDirectory(name) + "/log"}, file{parser.parseFileName(name)};
 
-            if (LogError::LOG_ERROR_SUCCESS == e)
+            if (CommonError::COMMON_ERROR_SUCCESS == e)
             {
                 FLAGS_stderrthreshold = google::INFO;
                 FLAGS_colorlogtostderr = 1;
-                google::SetLogDestination(google::INFO, dir);
-                google::InitGoogleLogging(name);
-                initSuccess = true;
+                google::SetLogDestination(google::INFO, dir.c_str());
+                google::InitGoogleLogging(file.c_str());
             }
 
             return static_cast<int>(e);
@@ -35,7 +39,6 @@ namespace framework
         void Log::uninit()
         {
             google::ShutdownGoogleLogging();
-            initSuccess = false;
         }
 
         int Log::write(
@@ -43,34 +46,26 @@ namespace framework
             const char* format/* = nullptr*/,
             ...)
         {
-            LogError e{LogError::LOG_ERROR_INIT_FAILED};
+            char text[4096]{0};
+            va_list list;
+            va_start(list, format);
+            vsnprintf(text, 4096, format, list);
+            va_end(list);
 
-            if (initSuccess)
+            if (LogLevel::LOG_LEVEL_INFO == level)
             {
-                char text[4096]{0};
-
-	            va_list list;
-	            va_start(list, format);
-	            vsnprintf(text, 4096, format, list);
-                va_end(list);
-
-                if (LogLevel::LOG_LEVEL_INFO == level)
-                {
-                    LOG(INFO) << text;
-                }
-                else if (LogLevel::LOG_LEVEL_WARNING == level)
-                {
-                    LOG(WARNING) << text;
-                }
-                else if (LogLevel::LOG_LEVEL_ERROR == level)
-                {
-                    LOG(ERROR) << text;
-                }
-                
-                e = LogError::LOG_ERROR_SUCCESS;
+                LOG(INFO) << text;
+            }
+            else if (LogLevel::LOG_LEVEL_WARNING == level)
+            {
+                LOG(WARNING) << text;
+            }
+            else if (LogLevel::LOG_LEVEL_ERROR == level)
+            {
+                LOG(ERROR) << text;
             }
 
-            return static_cast<int>(e);
+            return static_cast<int>(CommonError::COMMON_ERROR_SUCCESS);
         }
     }//namespace liblog
 }//namespace framework

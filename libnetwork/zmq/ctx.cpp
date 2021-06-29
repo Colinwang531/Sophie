@@ -1,8 +1,8 @@
-#include <new>
+#include "boost/functional/factory.hpp"
 #include "boost/checked_delete.hpp"
 #include "zmq.h"
-#include "error.h"
-#include "hardware/cpu/cpu.h"
+#include "libcommon/error.h"
+#include "libcommon/hardware/cpu/cpu.h"
 using Cpu = framework::libcommon::hardware::Cpu;
 #include "ctx.h"
 
@@ -91,7 +91,7 @@ namespace framework
 				return e;
 			}
 
-			Ctx::Ctx() : ctx{ new(std::nothrow) ICtx }
+			Ctx::Ctx() : ctx{boost::factory<ICtx*>()()}
 			{}
 			Ctx::~Ctx()
 			{

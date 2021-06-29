@@ -7,7 +7,7 @@
 //		Description :					命令行解析类
 //
 //		History:						Author									Date										Description
-//										王科威									2020-05-06									创建
+//										王科威									 2020-05-06									 创建
 //
 
 #ifndef FRAMEWORK_LIBCOMMON_COMMAND_LINE_PARSER_H

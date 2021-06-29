@@ -4,7 +4,7 @@
 //		Author :						王科威
 //		E-mail :						wangkw531@icloud.com
 //		Date :							2021-06-01
-//		Description :					ZMQ上下文类
+//		Description :					上下文类
 //
 //		History:						Author									Date										Description
 //										王科威									2021-06-01									创建

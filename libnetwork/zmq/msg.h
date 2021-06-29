@@ -4,7 +4,7 @@
 //		Author :						王科威
 //		E-mail :						wangkw531@icloud.com
 //		Date :							2021-06-07
-//		Description :					ZMQ消息类
+//		Description :					消息类
 //
 //		History:						Author									Date										Description
 //										王科威									2021-06-07									创建
@@ -33,7 +33,7 @@ namespace framework
 				//添加消息数据
 				//@data : 消息数据
 				//@Comment : 尾部添加
-				void add(const std::string data);
+				int add(const std::string data);
 
 				//删除消息数据
 				//@Return : 消息数据

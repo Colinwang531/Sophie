@@ -13,6 +13,8 @@
 #ifndef FRAMEWORK_LIBNETWORK_ZMQ_MODULE_PUBLISHER_H
 #define FRAMEWORK_LIBNETWORK_ZMQ_MODULE_PUBLISHER_H
 
+#include <string>
+
 namespace framework
 {
 	namespace libnetwork
@@ -26,24 +28,23 @@ namespace framework
 				class Publisher
 				{
 				public:
-					Publisher(void);
+					//@c : 上下文实例
+					Publisher(void* c = nullptr);
 					virtual ~Publisher(void);
 
 				public:
-					//绑定Pub监听地址和端口
-					//@ipv4 : ipv4监听地址
-					//@port : 监听端口
-					//@ctx : 上下文实例
+					//绑定监听
+					//@ipv4 : ipv4地址
+					//@port : 端口号
 					//@Return : 错误码
 					int bind(
 						const std::string ipv4,
-						const unsigned short port = 0,
-						void* ctx = nullptr);
+						const unsigned short port = 0);
 
 					//发送数据
-					//@msg : 消息数据
+					//@data : 数据内容
 					//@Return : 错误码
-					int send(void* msg = nullptr);
+					int send(const std::string data);
 
 				private:
 					IPublisher* publisher;

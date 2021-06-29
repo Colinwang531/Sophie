@@ -53,9 +53,9 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/bin/x64/Debug/xmq",
-            "args": ["-a", "127.0.0.1", "-l", "61001", "-u", "127.2.2.1", "-p", "60001", "-n", "XMQ"],
+            "args": ["-local_ip", "127.0.0.1", "-local_port", "61001"],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/bin/x64/Debug/",
             "environment": [
                 {"name": "LD_LIBRARY_PATH", "value": "${workspaceFolder}/bin/x64/Debug"}
             ],
@@ -69,6 +69,29 @@
                 }
             ],
             "preLaunchTask": "XMQ",
+            "miDebuggerPath": "/usr/bin/gdb"
+        },
+        {
+            "name": "CMS",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/x64/Debug/cms",
+            "args": ["-x", "127.0.0.1", "-p", "61101"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/bin/x64/Debug/",
+            "environment": [
+                {"name": "LD_LIBRARY_PATH", "value": "${workspaceFolder}/bin/x64/Debug"}
+            ],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "CMS",
             "miDebuggerPath": "/usr/bin/gdb"
         }
     ]

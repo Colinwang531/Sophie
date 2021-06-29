@@ -1,301 +1,399 @@
-#include <new>
+#include "libcommon/uuid/uuid.h"
+using Uuid = framework::libcommon::Uuid;
+#include "liburl/url.h"
+using UrlParser = framework::liburl::UrlParser;
+using ParamItem = framework::liburl::ParamItem;
 #include "libcommon/const.h"
 #include "libcommon/error.h"
-#include "libnetwork/zmq/ctx.h"
-using Ctx = framework::libnetwork::zmq::Ctx;
 #include "XMQ.h"
 
-XMQ::XMQ(Log& log_) : Dispatcher(), bindPort{0}, connectPort{0}, ctx{new(std::nothrow) Ctx}, log{log_}
-{}
 XMQ::XMQ(
-	const std::string localIP,
-	const unsigned short localPort,
-	const std::string uplinkIP,
-	const unsigned short uplinkPort) 
-	: Dispatcher(), bindIP{localIP}, bindPort{localPort}, 
-	connectIP{uplinkIP}, connectPort{uplinkPort}, ctx{new(std::nothrow) Ctx}, log{log_}
+	Log& log, 
+	const std::string appID, 
+	void* ctx /*= nullptr*/) 
+	: Switcher(ctx), Worker(ctx), logObj{log}, applicationID{appID}
 {}
 XMQ::~XMQ()
-{
-	Ctx* c{reinterpret_cast<Ctx*>(ctx)};
-	if (c)
-	{
-		delete c;
-	}
-}
+{}
 
-int XMQ::start()
+int XMQ::bind(
+	const std::string localIP, 
+	const unsigned short localPort /*= 0*/)
 {
 	CommonError e{
-		ctx ? COMMON_ERROR_SUCCESS : COMMON_ERROR_BAD_NEW_INSTANCE};
+		static_cast<CommonError>(
+			Switcher::bind(localIP, localPort))};
 
 	if (CommonError::COMMON_ERROR_SUCCESS == e)
 	{
-		//绑定Router端监听
-		if (!bindIP.empty() && gMinPortNumber <= bindPort && gMaxPortNumber >= bindPort)
-		{
-			e = static_cast<CommonError>(Dispatcher::bind(bindIP, bindPort, ctx));
-			log.write(
-				framework::liblog::LogLevel::LOG_LEVEL_INFO, 
-				"XMQ bind local IP [ %s ] and PORT [ %d ] result = [ %d ].", 
-				bindIP.c_str(), bindPort, static_cast<int>(e));
-		}
-
-		//连接Dealer端连接
-		if (!connectIP.empty() && gMinPortNumber <= connectPort && gMaxPortNumber >= connectPort)
-		{
-			e = static_cast<CommonError>(Dispatcher::connect(connectIP, connectPort, ctx));
-			log.write(
-				framework::liblog::LogLevel::LOG_LEVEL_INFO, 
-				"XMQ connect remote IP [ %s ] and PORT [ %d ] result = [ %d ].", 
-				connectIP.c_str(), connectPort, static_cast<int>(e));
-		}
-
-		//处理完Router和Dealer后才能启动Dispatcher服务
-		//Dispatcher服务创建线程接收Router和Dealer的数据
-		e = static_cast<CommonError>(Dispatcher::start());
-		log.write(
+		logObj.write(
 			framework::liblog::LogLevel::LOG_LEVEL_INFO, 
-			"XMQ start service result = [ %d ].",
-			static_cast<int>(e));
+			"Bind local IP [ %s ] and Port [ %d ] for listening successfully.", 
+			localIP.c_str(), 
+			localPort);
 	}
 	else
 	{
-		log.write(
+		logObj.write(
 			framework::liblog::LogLevel::LOG_LEVEL_ERROR, 
-			"XMQ start service failed with invalid object of context.");
+			"Bind local IP [ %s ] and Port [ %d ] for listening failed, reuslt = [ %d ].", 
+			localIP.c_str(), 
+			localPort, 
+			static_cast<int>(e));
 	}
 
 	return static_cast<int>(e);
 }
 
-int XMQ::stop(void* /* = nullptr*/)
+int XMQ::connect(
+	const std::string remoteIP,
+	const unsigned short remotePort /*= 0*/)
 {
 	CommonError e{
-		ctx ? COMMON_ERROR_SUCCESS : COMMON_ERROR_BAD_NEW_INSTANCE};
+		static_cast<CommonError>(Worker::connect(sourceID, remoteIP, remotePort))};
 
 	if (CommonError::COMMON_ERROR_SUCCESS == e)
 	{
-		e = static_cast<CommonError>(Dispatcher::stop(ctx));
-		log.write(
+		logObj.write(
 			framework::liblog::LogLevel::LOG_LEVEL_INFO, 
-			"XMQ stop service result = [ %d ].",
-			static_cast<int>(e));
+			"Connect remote IP [ %s ] and Port [ %d ] with ID [ %s ] successfully.", 
+			remoteIP.c_str(), 
+			remotePort,
+			sourceID.c_str());
 	}
 	else
 	{
-		log.write(
+		logObj.write(
 			framework::liblog::LogLevel::LOG_LEVEL_ERROR, 
-			"XMQ stop service failed with invalid object of context.");
+			"Connect remote IP [ %s ] and Port [ %d ] with ID [ %s ] failed, reuslt = [ %d ].", 
+			remoteIP.c_str(), 
+			remotePort, 
+			sourceID.c_str(), 
+			static_cast<int>(e));
 	}
 
 	return static_cast<int>(e);
 }
 
-void XMQ::afterRouterPollDataProcess(
-	const std::string sender,
+void XMQ::afterSwitcherPollDataProcess(
+	const std::string sourceID,
 	const std::string data)
 {
-	//Step1:�鿴·�ɱ��Ƿ�Ϊ��?
-	//      ������ȡ��·�ɱ����׸�·��IDת�����ݲ���·�ɱ���ɾ����ID;
-	//		���ǡ���Step2;
-	//Step2:�鿴to�Ƿ���"xmq"?
-	//		"��"��Step3;
-	//		"��"����;
-	//Step3:�鿴to�Ƿ���"cms"?
-	//		"��"��Step4;
-	//		"��"��ת��;
-	//Step4:�鿴to�Ƿ���"uplink"?
-	//		"��"��Step5;
-	//		"��"��ͨ��MDCģ��ת��;
-	//Step5:�ظ���Ϣ���ɴ�,ֱ�Ӷ���
+	if (!sourceID.empty() && !data.empty())
+	{
+		UrlParser parser;
+		int e{parser.parse(data)};
 
-	if (0 < routers.size())
-	{
-		//Step1
-//		std::vector<const std::string> routers{ routers };
-		forwardPolledMessage(routers[0], 1 < routers.size() ? routers[1] : "", module, from, to, messages);
-	} 
-	else
-	{
-		if (!to.compare(gXMQComponentName))
+		if (CommonError::COMMON_ERROR_SUCCESS == static_cast<CommonError>(e))
 		{
-			//Step2
-			processPolledMessage(sender, module, from, to, messages);
-		} 
-		else if (!to.compare(gCMSComponentName))
-		{
-			//Step3
-			forwardPolledMessage(cmsCommID, sender, module, from, to, messages);
-		}
-		else if (!to.compare(gUplinkComponentName))
-		{
-			//Step4
+			const std::string command{parser.getCommand()};
+
+			if (0 == command.compare("pair"))
+			{
+				processPairMessage(sourceID, &parser);
+			}
+			else if (0 == command.compare("setup"))
+			{
+				processSetupMessage(&parser);
+			}
+			else if (0 == command.compare("register") || 
+					 0 == command.compare("query") || 
+					 0 == command.compare("config") || 
+					 0 == command.compare("notify") || 
+					 0 == command.compare("alarm"))
+			{
+				//参数处理流程via -> upload -> receiver -> friend
+				if (!forwardVia(&parser))
+				{
+					if (!forwardUpload(&parser))
+					{
+						if (!forwardReceiver(&parser))
+						{
+							forwardFriend(data);
+						}
+					}
+				}
+			}
+			else
+			{
+				logObj.write(
+					framework::liblog::LogLevel::LOG_LEVEL_WARNING, 
+					"Not support command type [ %s ].", 
+					command.c_str());
+			}
 		}
 		else
 		{
-			//Step5
+			logObj.write(
+				framework::liblog::LogLevel::LOG_LEVEL_ERROR, 
+				"Parse poll data failed, result = [ %d ].", 
+				e);
 		}
 	}
 }
 
-void XMQ::afterDealerPollDataProcess(
+void XMQ::afterWorkerPollDataProcess(
 	const std::string data)
 {
+	//参数处理流程via -> receiver -> upload
 }
 
-void XMQ::forwardPolledMessage(
-	const std::string receiver,
-	const std::string sender,
-	const std::string module,
-	const std::string from,
-	const std::string to,
-	const std::vector<std::string> messages)
+bool XMQ::forwardVia(void* parser /*= nullptr*/)
 {
-	//--------------------------------------------------------------------------------------------------------------------
-	//| receiver | "" | module | from | to | "" | extend(1) | ... | extend(n) | sequence | timestamp | command | message |
-	//--------------------------------------------------------------------------------------------------------------------
-	Msg msg;
-	int msgNum{ static_cast<int>(messages.size()) };
-	for (int i = msgNum; i != 0; --i)
-	{
-		msg.addMessage(messages[i - 1]);
-	}
-	msg.addMessage(gEmptyData);
-	if (!sender.empty())
-	{
-		msg.addMessage(sender);
-	}
-	msg.addMessage(to);
-	msg.addMessage(from);
-	msg.addMessage(module);
-	msg.addMessage(gEmptyData);
-	msg.addMessage(receiver);
-	int e{ RD::sendMsg(0, &msg) };
+	bool result{false};
+	UrlParser* urlparser{reinterpret_cast<UrlParser*>(parser)};
+	std::vector<ParamItem> userParameters{urlparser->getUserParameters()};
 
-	if (eSuccess == e)
+	//遍历用户参数段
+	//找出第一个出现的via参数
+	//删除第一个出现的via参数
+	//在用户参数段尾部添加upload=true参数
+	//重构url并转发到via参数值的目标
+
+	for (std::vector<ParamItem>::iterator it = userParameters.begin();
+		 it != userParameters.end();)
 	{
-		LOG(INFO) << "XMQ forward message from " << from << " to " << to << " successfully.";
+		if (0 == it->key.compare("via"))
+		{
+			result = true;
+			const std::string receiver{it->value};
+			userParameters.erase(it);
+
+			UrlParser newUrlParser;
+			newUrlParser.setCommand(urlparser->getCommand());
+			const std::vector<ParamItem> commandParameters{urlparser->getCommandParameters()};
+			for (int j = 0; j != commandParameters.size(); ++j)
+			{
+				newUrlParser.setCommandParameter(commandParameters[j].key, commandParameters[j].value);
+			}
+			for (int k = 0; k != userParameters.size(); ++k)
+			{
+				newUrlParser.setUserParameter(userParameters[k].key, userParameters[k].value);
+			}
+			newUrlParser.setUserParameter("upload", "true");
+
+			const std::string data{newUrlParser.compose()};
+			int e{Switcher::send(receiver, data)};
+
+			if (CommonError::COMMON_ERROR_SUCCESS == static_cast<CommonError>(e))
+			{
+				logObj.write(
+					framework::liblog::LogLevel::LOG_LEVEL_INFO, 
+					"Forward message [ %s ] to target [ %s ] successfully.", 
+					data.c_str(),
+					receiver.c_str());
+			}
+			else
+			{
+				logObj.write(
+					framework::liblog::LogLevel::LOG_LEVEL_ERROR, 
+					"Forward message [ %s ] to target [ %s ] failed, result = [ %d ].", 
+					data.c_str(),
+					receiver.c_str(),
+					e);
+			}
+
+			break;
+		}
+
+		++it;
+	}
+	
+
+	return result;
+}
+
+bool XMQ::forwardUpload(void* parser /*= nullptr*/)
+{
+	bool result{false};
+	UrlParser* urlparser{reinterpret_cast<UrlParser*>(parser)};
+	std::vector<ParamItem> userParameters{urlparser->getUserParameters()};
+
+	//遍历用户参数段
+	//找出第一个出现的upload参数
+	//删除第一个出现的upload参数
+	//重构url并转发到upload参数值的目标
+
+	for (std::vector<ParamItem>::iterator it = userParameters.begin();
+		 it != userParameters.end();)
+	{
+		if (0 == it->key.compare("upload"))
+		{
+			result = true;
+			userParameters.erase(it);
+
+			UrlParser newUrlParser;
+			newUrlParser.setCommand(urlparser->getCommand());
+			const std::vector<ParamItem> commandParameters{urlparser->getCommandParameters()};
+			for (int j = 0; j != commandParameters.size(); ++j)
+			{
+				newUrlParser.setCommandParameter(commandParameters[j].key, commandParameters[j].value);
+			}
+			for (int k = 0; k != userParameters.size(); ++k)
+			{
+				newUrlParser.setUserParameter(userParameters[k].key, userParameters[k].value);
+			}
+
+			const std::string data{newUrlParser.compose()};
+			int e{Worker::send(data)};
+
+			if (CommonError::COMMON_ERROR_SUCCESS == static_cast<CommonError>(e))
+			{
+				logObj.write(
+					framework::liblog::LogLevel::LOG_LEVEL_INFO, 
+					"Forward message [ %s ] to upload successfully.", 
+					data.c_str());
+			}
+			else
+			{
+				logObj.write(
+					framework::liblog::LogLevel::LOG_LEVEL_ERROR, 
+					"Forward message [ %s ] to upload failed, result = [ %d ].", 
+					data.c_str(),
+					e);
+			}
+
+			break;
+		}
+
+		++it;
+	}
+
+	return result;
+}
+
+bool XMQ::forwardReceiver(void* parser /*= nullptr*/)
+{
+	bool result{false};
+	UrlParser* urlparser{reinterpret_cast<UrlParser*>(parser)};
+	const std::vector<ParamItem> commandParameters{urlparser->getCommandParameters()};
+
+	//遍历命令参数段
+	//找出receiver参数
+	//重构url并转发到receiver参数值的目标
+
+	for (int i = 0; i != commandParameters.size(); ++i)
+	{
+		if (0 == commandParameters[i].key.compare("receiver"))
+		{
+			result = true;
+			const std::string data{urlparser->compose()};
+			int e{Switcher::send(commandParameters[i].value, data)};
+
+			if (CommonError::COMMON_ERROR_SUCCESS == static_cast<CommonError>(e))
+			{
+				logObj.write(
+					framework::liblog::LogLevel::LOG_LEVEL_INFO, 
+					"Forward message [ %s ] to target [ %s ] successfully.", 
+					data.c_str(),
+					commandParameters[i].value.c_str());
+			}
+			else
+			{
+				logObj.write(
+					framework::liblog::LogLevel::LOG_LEVEL_ERROR, 
+					"Forward message [ %s ] to target [ %s ] failed, result = [ %d ].", 
+					data.c_str(),
+					commandParameters[i].value.c_str(),
+					e);
+			}
+
+			break;
+		}
+	}
+
+	return result;
+}
+
+void XMQ::forwardFriend(const std::string data)
+{
+	if (!friendID.empty())
+	{
+		CommonError e{
+			static_cast<CommonError>(Switcher::send(friendID, data))};
+
+		if (CommonError::COMMON_ERROR_SUCCESS == e)
+		{
+			logObj.write(
+				framework::liblog::LogLevel::LOG_LEVEL_INFO, 
+				"Forward message to friend [ %s ] successfully.", 
+				friendID.c_str());
+		}
+		else
+		{
+			logObj.write(
+				framework::liblog::LogLevel::LOG_LEVEL_ERROR, 
+				"Forward message to friend [ %s ] failed, result = [ %d ].", 
+				friendID.c_str(),
+				e);
+		}
 	}
 	else
 	{
-		LOG(WARNING) << "XMQ forward message from " << from << " to " << to << " failed, result = " << e << ".";
+		logObj.write(
+			framework::liblog::LogLevel::LOG_LEVEL_WARNING, 
+			"Can not forward message to friend [ %s ].", 
+			friendID.c_str());
 	}
 }
 
-int XMQ::updatePairedCMSID(const std::string id)
+void XMQ::processPairMessage(
+	const std::string sourceID, 
+	void* parser /*= nullptr*/)
 {
-	CommonError e{ 
-		id.empty() ? CommonError::COMMON_ERROR_INVALID_PARAMETER : CommonError::COMMON_ERROR_SUCCESS };
+	friendID = sourceID;
+	logObj.write(
+		framework::liblog::LogLevel::LOG_LEVEL_INFO, 
+		"Update ID = [ %s ] of friend is successfully.", 
+		friendID.c_str());
+
+	//发送"pair://sender=sourceID"
+	UrlParser* urlparser{reinterpret_cast<UrlParser*>(parser)};
+	urlparser->setCommandParameter("sender", this->sourceID);
+	const std::string data{urlparser->compose()};
+	CommonError e{
+		static_cast<CommonError>(Switcher::send(sourceID, data))};
 
 	if (CommonError::COMMON_ERROR_SUCCESS == e)
 	{
-		pairedCMSID = id;
-		log.write(
+		logObj.write(
 			framework::liblog::LogLevel::LOG_LEVEL_INFO, 
-			"Update CMS component identity [ %s ] successfully.",
-			pairedCMSID.c_str());
-	} 
-	else
-	{
-		log.write(
-			framework::liblog::LogLevel::LOG_LEVEL_INFO, 
-			"Update CMS component identity [ %s ] failed, result = [ %d ].",
-			id.c_str(), static_cast<int>(e));
-	}
-
-	//----------------------------------------------------------------------------------
-	//| sender | "" | module | to | from | "" | sequence | timestamp | "pair" | Status |
-	//----------------------------------------------------------------------------------
-	Msg msg;
-	msg.addMessage((boost::format("%d") % e).str());
-	msg.addMessage(gPairCommandName);
-	msg.addMessage(timestamp);
-	msg.addMessage(sequence);
-	msg.addMessage(gEmptyData);
-	msg.addMessage(from);
-	msg.addMessage(to);
-	msg.addMessage(module);
-	msg.addMessage(gEmptyData);
-	msg.addMessage(sender);
-	e = RD::sendMsg(0, &msg);
-
-	if (eSuccess == e)
-	{
-		LOG(INFO) << "XMQ send status message of pairing successfully.";
+			"Reply pair message [ %s ] to friend [ %s ] successfully.",
+			data.c_str(),  
+			friendID.c_str());
 	}
 	else
 	{
-		LOG(WARNING) << "XMQ send status message of pairing failed, result = " << e << ".";
+		logObj.write(
+			framework::liblog::LogLevel::LOG_LEVEL_ERROR, 
+			"Reply pair message [ %s ] to friend [ %s ], result = [ %d ].", 
+			data.c_str(), 
+			friendID.c_str(),
+			e);
 	}
 }
 
-// void XMQ::transferParsedMessageFromMDS(
-// 	const std::string sender, 
-// 	const std::string module, 
-// 	const std::string from, 
-// 	const std::string to, 
-// 	const std::vector<const std::string> routers, 
-// 	const std::vector<const std::string> messages)
-// {
-// 	const bool isFromCMS{ !fromID.compare(gCMSComponentName) ? true : false };
-// 
-// 	//ͨ��fromID����ע����Ϣ��Դ
-// 	//CMS���ע����Workerģ�ʹ���,������������Brokerģ�ʹ���
-// 	//��Ϣ��ʽ����
-// 	//-----------------------------------------------------------------------------
-// 	//| CommID | Empty | "worker" | "..." | "cms" | "register" | Name:UUID:CommID |
-// 	//-----------------------------------------------------------------------------
-// 	MQMessagePacket msg;
-// 	msg.addMessage((boost::format("%s:%s") % data % commID).str());
-// 	msg.addMessage(gRegisterCommandName);
-// 	msg.addMessage(viaID);
-// 	//�����XMQת����Ϣ��Ҫ�޸�fromID��ʶΪ"xmq"
-// 	msg.addMessage(isFromCMS ? gXMQComponentName : fromID);
-// 	msg.addMessage(gWorkerModuleName);
-// 	msg.addMessage(gEmptyCommandName);
-// 
-// 	int e{ eCannotReach };
-// 	if (isFromCMS)
-// 	{
-// 		//��XMQת��
-// 		if (worker)
-// 		{
-// 			e = worker->sendData(msg);
-// 		}
-// 	} 
-// 	else
-// 	{
-// 		//��CMSת��
-// 		msg.addMessage(commIDOfCMS);
-// 		e = broker->sendData(msg);
-// 	}
-// 
-// 	//����ʧ��������Ӧ��
-// 	if (eSuccess != e)
-// 	{
-// 		//��Ϣ��ʽ����
-// 		//-------------------------------------------------------------------
-// 		//| CommID | Empty | "worker" | "..." | "cms" | "register" | Status |
-// 		//-------------------------------------------------------------------
-// 		MQMessagePacket msg;
-// 		msg.addMessage((boost::format("%d") % e).str());
-// 		msg.addMessage(gRegisterCommandName);
-// 		msg.addMessage(viaID);
-// 		msg.addMessage(fromID);
-// 		msg.addMessage(moduleID);
-// 		msg.addMessage(gEmptyCommandName);
-// 		msg.addMessage(commID);
-// 
-// 		int e{ broker->sendData(msg) };
-// 
-// 		if (eSuccess == e)
-// 		{
-// 			LOG(INFO) << "XMQ send status of register message successfully.";
-// 		}
-// 		else
-// 		{
-// 			LOG(WARNING) << "XMQ send status of register message failed, result = " << e << ".";
-// 		}
-// 	}
-// }
+void XMQ::processSetupMessage(void* parser /*= nullptr*/)
+{
+	if (sourceID.empty())
+	{
+		sourceID = Uuid().generateRandomUuid();
+		UrlParser* urlparser{reinterpret_cast<UrlParser*>(parser)};
+		const std::vector<ParamItem> commandParameters{urlparser->getCommandParameters()};
+		std::string address, port;
+
+		for (int i = 0; i != commandParameters.size(); ++i)
+		{
+			if (0 == commandParameters[i].key.compare("address"))
+			{
+				address = commandParameters[i].value;
+			}
+			else if (0 == commandParameters[i].key.compare("port"))
+			{
+				port = commandParameters[i].value;
+			}
+		}
+		
+		XMQ::connect(address, atoi(port.c_str()));
+	}
+}

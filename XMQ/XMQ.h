@@ -4,7 +4,7 @@
 //		Author :						王科威
 //		E-mail :						wangkw531@icloud.com
 //		Date :							2021-06-12
-//		Description :					XMQ代理
+//		Description :					消息交换应用类
 //
 //		History:						Author									Date										Description
 //										王科威									 2021-06-12									 创建
@@ -13,72 +13,80 @@
 #ifndef XMQ_H
 #define XMQ_H
 
-#include "libnetwork/zmq/module/dispatcher.h"
-using Dispatcher = framework::network::zmq::module::Dispatcher;
+#include "libnetwork/zmq/module/switcher.h"
+using Switcher = framework::libnetwork::zmq::module::Switcher;
+#include "libnetwork/zmq/module/worker.h"
+using Worker = framework::libnetwork::zmq::module::Worker;
 #include "liblog/log.h"
 using Log = framework::liblog::Log;
 
-class XMQ final : public Dispatcher
+class XMQ final : protected Switcher, protected Worker
 {
 public:
-	XMQ(Log& log_);
 	XMQ(
-		Log& log_,
-		const std::string localIP,
-		const unsigned short localPort,
-		const std::string uplinkIP,
-		const unsigned short uplinkPort);
+		Log& log, 
+		const std::string appID, 
+		void* ctx = nullptr);
 	~XMQ(void);
 
-public:
-	int start(void) override;
-	int stop(void* = nullptr) override;
+public:	
+	//监听
+	//@localIP : 监听IP
+	//@localPort : 监听端口
+	//@Return : 错误码
+	int bind(
+		const std::string localIP,
+		const unsigned short localPort = 0);
+
+	//连接
+	//@remoteIP : 远程服务IP
+	//@remotePort : 远程服务端口
+	//@Return : 错误码
+	int connect(
+		const std::string remoteIP,
+		const unsigned short remotePort = 0);
 
 protected:
-	void afterRouterPollDataProcess(
-		const std::string sender,
+	void afterSwitcherPollDataProcess(
+		const std::string sourceID, 
 		const std::string data) override;
-	void afterDealerPollDataProcess(
+	void afterWorkerPollDataProcess(
 		const std::string data) override;
 
 private:
-	//保存或更新与XMQ相匹配的CMS ID标识
-	//@id : CMS ID标识
-	//@Return : 错误码
-	int updatePairedCMSID(const std::string id);
-/*
-private:
-	//������Ϣ
-	void processPolledMessage(
-		const std::string sender,
-		const std::string module,
-		const std::string from,
-		const std::string to, 
-		const std::vector<std::string> messages);
+	//转发消息给Via
+	//@parser : 解析实例
+	//@Return : true表示处理成功,否则失败
+	bool forwardVia(void* parser = nullptr);
 
-	//ת����Ϣ
-	//@receiver : ������ID��ʶ
-	//@receiver : ������ID��ʶ
-	//@module : ģ�ͱ�ʶ
-	//@from : ����������
-	//@to : ����������
-	//@messages : ��Ϣ����
-	void forwardPolledMessage(
-		const std::string receiver,
-		const std::string sender,
-		const std::string module,
-		const std::string from,
-		const std::string to,
-		const std::vector<std::string> messages);
-*/
+	//转发消息给Upload
+	//@parser : 解析实例
+	//@Return : true表示处理成功,否则失败
+	bool forwardUpload(void* parser = nullptr);
+
+	//转发消息给Receiver
+	//@parser : 解析实例
+	//@Return : true表示处理成功,否则失败
+	bool forwardReceiver(void* parser = nullptr);
+
+	//转发消息给Friend
+	//@parser : 解析实例
+	//@Return : true表示处理成功,否则失败
+	void forwardFriend(const std::string data);
+
+	//处理pair消息
+	void processPairMessage(
+		const std::string sourceID, 
+		void* parser = nullptr);
+
+	//处理setup消息
+	void processSetupMessage(void* parser = nullptr);
+
 private:
-	std::string pairedCMSID;
-	const std::string bindIP;
-	const unsigned short bindPort;
-	const std::string connectIP;
-	const unsigned short connectPort;
-	void* ctx;
-	Log& log;
+	Log& logObj;
+	const std::string applicationID;
+	std::string sourceID;
+	std::string friendID;
 };//class XMQ
 
 #endif//XMQ_H

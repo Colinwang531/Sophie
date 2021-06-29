@@ -1,117 +1,66 @@
 //
 //		Copyright :						@2020, ***, All Rights Reserved
 //
-//		Author :						Íõ¿ÆÍş
+//		Author :						ç‹ç§‘å¨
 //		E-mail :						wangkw531@icloud.com
 //		Date :							2020-12-18
-//		Description :					×ÊÔ´¹ÜÀí×é¼şÀà
+//		Description :					èµ„æºç®¡ç†åº”ç”¨ç±»
 //
 //		History:						Author									Date										Description
-//										Íõ¿ÆÍş									2020-12-18									´´½¨
+//										ç‹ç§‘å¨									 2020-12-18									 åˆ›å»º
 //
 
-#ifndef DHS_H
-#define DHS_H
+#ifndef CMS_H
+#define CMS_H
 
-#include "DataStruct/UnorderedMap.h"
-#include "Data/Protocol/ProtocolComponent.h"
-using ProtocolComponent = framework::data::ProtocolComponent;
-using ComponentMsg = framework::data::ComponentMsg;
-#include "Network/ZMQ/OD.h"
-using OD = framework::network::zeromq::OD;
+#include "libnetwork/zmq/module/worker.h"
+using Worker = framework::libnetwork::zmq::module::Worker;
+#include "liblog/log.h"
+using Log = framework::liblog::Log;
 
-class CMS final : public OD
+class CMS final : protected Worker
 {
 public:
 	CMS(
-		const std::string name, 
-		const std::string id);
+		Log& log, 
+		const std::string appID,
+		void* ctx = nullptr);
 	~CMS(void);
 
 public:
-	int startOD(
-		const char* ipv4 = nullptr,
-		const unsigned short port = 0);
-	int stopOD(void);
+	//è¿æ¥
+	//@remoteIP : è¿œç¨‹æœåŠ¡IP
+	//@remotePort : è¿œç¨‹æœåŠ¡ç«¯å£
+	//@Return : é”™è¯¯ç 
+	int connect(
+		const std::string remoteIP,
+		const unsigned short remotePort);
+
+	//å»ºç«‹
+	//@uploadIP : æ³¨å†ŒæœåŠ¡IP
+	//@uploadPort : æ³¨å†ŒæœåŠ¡ç«¯å£
+	//@Return : é”™è¯¯ç 
+	int setup(
+		const std::string uploadIP,
+		const unsigned short uploadPort);
 
 protected:
-	void afterParsePolledMessage(
-		const std::string module,
-		const std::string from,
-		const std::string to,
-		const std::vector<std::string> routers,
-		const std::vector<std::string> messages) override;
+	void afterWorkerPollDataProcess(
+		const std::string data) override;
 
 private:
-	void sendPairMessageThread(void);
-	void checkRegisterComponentTimeoutThread(void);
-	void processXMQPairMessage(
-		const std::string module,
-		const std::string from,
-		const std::string to,
-		const std::string sequence,
-		const std::string timestamp,
-		const std::string msg);
-	void processComponentMessage(
-		const std::string module,
-		const std::string from,
-		const std::string to,
-		const std::vector<std::string> routers,
-		const std::string sequence,
-		const std::string timestamp,
-		const std::string msg);
-	void processDeviceMessage(
-		const std::string module,
-		const std::string from,
-		const std::string to,
-		const std::vector<std::string> routers,
-		const std::vector<std::string> messages);
-	void processClockMessage(
-		const std::string module,
-		const std::string from,
-		const std::string to,
-		const std::vector<std::string> routers,
-		const std::vector<std::string> messages);
-	void processAlgorithmMessage(
-		const std::string module,
-		const std::string from,
-		const std::string to,
-		const std::vector<std::string> routers,
-		const std::vector<std::string> messages);
-	void processStatusMessage(
-		const std::string module,
-		const std::string from,
-		const std::string to,
-		const std::vector<std::string> routers,
-		const std::vector<std::string> messages);
-	void processCrewMessage(
-		const std::string module,
-		const std::string from,
-		const std::string to,
-		const std::vector<std::string> routers,
-		const std::vector<std::string> messages);
-	void processAlarmMessage(
-		const std::string module,
-		const std::string from,
-		const std::string to,
-		const std::vector<std::string> routers,
-		const std::vector<std::string> messages);
+	void timerTaskHandler(void);
+	void processPairMessage(void* parser = nullptr);
+	void processRegisterMessage(void* parser = nullptr);
+	void sendPairMessage(void);
+	void sendRegisterMessage(const std::string viaID);
 
 private:
-	const std::string cmsName;
-	const std::string cmsID;
-	int pairSequenceNumber;
-
-	typedef struct tagRegisterComponent_t
-	{
-		unsigned long long timestamp;//×¢²áÊ±¼ä
-		std::vector<std::string> routers;
-		ComponentMsg component;
-	}RegisterComponent;
-	//×¢²á×é¼ş¼¯ºÏ
-	//KEYÊÇ×é¼şID±êÊ¶
-	using RegisterComponentGroup = UnorderedMap<const std::string, RegisterComponent>;
-	RegisterComponentGroup registerComponentGroup;
+	Log& logObj;
+	const std::string applicationID;
+	const std::string sourceID;
+	void* tid;
+	bool stopped;
 };//class CMS
 
 #endif//CMS_H

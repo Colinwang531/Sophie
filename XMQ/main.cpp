@@ -1,97 +1,77 @@
-#include <string>
 #include "liblog/log.h"
 using Log = framework::liblog::Log;
 #include "libcommon/command_line/command_line.h"
 using CommandLineParser = framework::libcommon::CommandLineParser;
-#include "libcommon/path/path.h"
-using Path = framework::libcommon::ProgramPathParser;
+#include "libcommon/xml/xml.h"
+using XmlParser = framework::libcommon::XmlParser;
+#include "libcommon/uuid/uuid.h"
+using Uuid = framework::libcommon::Uuid;
+#include "libnetwork/zmq/ctx.h"
+using Ctx = framework::libnetwork::zmq::Ctx;
+#include "libcommon/const.h"
+#include "libcommon/error.h"
 #include "XMQ.h"
 
-static std::string gProgramName;
-static std::string gUplinkAddress;
-static unsigned short gUplinkPort{ 0 };
-static std::string gLocalListenAddress;
-static unsigned short gLocalListenPort{ 0 };
+static std::string gApplicationID;
+static std::string gLocalIP;
+static unsigned short gLocalPort{ 0 };
 
-static void parseCommandLine(int argc, const char** argv)
+static void parseCommandLine(Log& log, int argc, char** argv)
 {
-	CommandLineParser clp;
-	clp.setOption("address,a", "127.0.0.1");
-	clp.setOption("listen,l", "61001");
-	clp.setOption("uplink_address,u", "");
-	clp.setOption("uplink_port,p", "0");
-	clp.setOption("name,n", "unknown");
+	CommandLineParser parser;
+	parser.setOption("local_ip", "127.0.0.1");
+	parser.setOption("local_port", "61001");
+	CommonError e{
+		static_cast<CommonError>(
+			parser.parse(argc, const_cast<const char**>(argv)))};
 
-	if (0 == clp.parse(argc, argv))
+	if (CommonError::COMMON_ERROR_SUCCESS == e)
 	{
-		const char* uplinkAddr{ clp.getValue("uplink_address") };
-		if (uplinkAddr)
-		{
-			gUplinkAddress.append(uplinkAddr);
-		}
-
-		const char* uplinkPort{ clp.getValue("uplink_port") };
-		if (uplinkPort)
-		{
-			gUplinkPort = atoi(uplinkPort);
-		}
-
-		const char* localAddr{ clp.getValue("address") };
-		if (localAddr)
-		{
-			gLocalListenAddress.append(localAddr);
-		}
-		
-		const char* listenPort{ clp.getValue("listen") };
-		if (listenPort)
-		{
-			gLocalListenPort = atoi(listenPort);
-		}
-
-		const char* name{ clp.getValue("name") };
-		if (name)
-		{
-			gProgramName.append(name);
-		}
+		gLocalIP.append(parser.getValue("local_ip"));
+		gLocalPort = static_cast<unsigned short>(atoi(parser.getValue("local_port")));
 	}
+
+	log.write(
+		framework::liblog::LogLevel::LOG_LEVEL_INFO, 
+		"Parse command line parameters with local_ip = [ %s ] and local_port = [ %d ].",
+		gLocalIP.c_str(), 
+		gLocalPort);
+}
+
+static void generateApplicationID(Log& log)
+{
+	gApplicationID.append(XmlParser().getValue("config.xml", "Component.XMQ.ID"));
+
+	if (gApplicationID.empty())
+	{
+		gApplicationID.append(Uuid().generateRandomUuid());
+		XmlParser().setValue("config.xml", "Component.XMQ.ID", gApplicationID);
+	}
+
+	log.write(
+		framework::liblog::LogLevel::LOG_LEVEL_INFO, 
+		"Generate application ID = [ %s ].",
+		gApplicationID.c_str());
 }
 
 int main(int argc, char* argv[])
 {
-	Path path;
-	const std::string dirName{path.parseFileDirectory(argv[0])};
-	const std::string logDirName{dirName + "/log"};
-	parseCommandLine(argc, (const char**)argv);
-
 	Log log;
-	log.init(argv[0], logDirName.c_str());
-	log.write(
-		framework::liblog::LogLevel::LOG_LEVEL_INFO, 
-		"The direction of process is [ %s ]", 
-		dirName.c_str());
-	log.write(
-		framework::liblog::LogLevel::LOG_LEVEL_INFO, 
-		"The parameters of local network for listening is [ %s : %d ]", 
-		gLocalListenAddress.c_str(), gLocalListenPort);
-	log.write(
-		framework::liblog::LogLevel::LOG_LEVEL_INFO, 
-		"The parameters of uplink network for connecting is [ %s : %d ]", 
-		gUplinkAddress.c_str(), gUplinkPort);
+	int logErr{log.init(argv[0])};
+	parseCommandLine(log, argc, argv);
+	generateApplicationID(log);
 
-	Dispatcher* dispatcher{
-		new(std::nothrow) XMQ(log, gLocalListenAddress, gLocalListenPort, gUplinkAddress, gUplinkPort)};
-	if (dispatcher)
+	Ctx ctx;
+
+	if (CommonError::COMMON_ERROR_SUCCESS == static_cast<CommonError>(ctx.init()))
 	{
-		dispatcher->start();
+		XMQ xmq{log, gApplicationID, &ctx};
+		xmq.bind(gLocalIP, gLocalPort);
 		getchar();
-		dispatcher->stop();
 	}
-	else
-	{
-		log.write(
-			framework::liblog::LogLevel::LOG_LEVEL_ERROR, 
-			"Bad new object of XMQ for running.");
-	}
+
+	ctx.uninit();
+	log.uninit();
 	
     return 0;
 }

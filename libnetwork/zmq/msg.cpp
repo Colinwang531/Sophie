@@ -1,8 +1,12 @@
 #include <vector>
+#ifdef WINDOWS
+#else
 #include <cstring>
+#endif//WINDOWS
 #include "boost/checked_delete.hpp"
+#include "boost/functional/factory.hpp"
 #include "zmq.h"
-#include "error.h"
+#include "libcommon/error.h"
 #include "msg.h"
 
 namespace framework
@@ -18,13 +22,13 @@ namespace framework
 				~IMsg(void);
 
 			public:
-				void add(const std::string msg);
+				CommonError add(const std::string msg);
 				const std::string remove(void);
 				CommonError receive(void* s = nullptr);
 				CommonError send(void* s = nullptr);
 
 			private:
-				std::vector<std::string> datas;
+				std::vector<std::string> msgs;
 			};//class IMsg
 
 			IMsg::IMsg()
@@ -32,19 +36,20 @@ namespace framework
 			IMsg::~IMsg()
 			{}
 
-			void IMsg::add(const std::string msg)
+			CommonError IMsg::add(const std::string msg)
 			{
-				datas.push_back(msg);
+				msgs.push_back(msg);
+				return CommonError::COMMON_ERROR_SUCCESS;
 			}
 
 			const std::string IMsg::remove()
 			{
 				std::string msg;
 
-				if (!datas.empty())
+				if (!msgs.empty())
 				{
-					msg = datas[0];
-					datas.erase(datas.begin());
+					msg = msgs[0];
+					msgs.erase(msgs.begin());
 				}
 
 				return msg;
@@ -57,16 +62,16 @@ namespace framework
 
 				if (CommonError::COMMON_ERROR_SUCCESS == e)
 				{
-					zmq_msg_t msg_;
-					zmq_msg_init(&msg_);
+					zmq_msg_t msg;
+					zmq_msg_init(&msg);
 
-					while (-1 < zmq_msg_recv(&msg_, s, ZMQ_DONTWAIT))
+					while (-1 < zmq_msg_recv(&msg, s, ZMQ_DONTWAIT))
 					{
 						const std::string data{ 
-							static_cast<const char*>(zmq_msg_data(&msg_)), zmq_msg_size(&msg_) };
-						datas.push_back(data);
+							static_cast<const char*>(zmq_msg_data(&msg)), zmq_msg_size(&msg) };
+						msgs.push_back(data);
 
-						if (0 == zmq_msg_more(&msg_))
+						if (0 == zmq_msg_more(&msg))
 						{
 							break;
 						}
@@ -83,22 +88,22 @@ namespace framework
 
 				if (CommonError::COMMON_ERROR_SUCCESS == e)
 				{
-					const int dataSize{ (const int)datas.size() };
+					const int dataSize{ static_cast<const int>(msgs.size()) };
 
 					for (int i = 0; i != dataSize; ++i)
 					{
-						const std::string data{ datas[i] };
+						const std::string data{ msgs[i] };
 						const size_t datalen{ data.length() };
-						zmq_msg_t msg_;
+						zmq_msg_t msg;
 
-						if (-1 < zmq_msg_init_size(&msg_, datalen))
+						if (-1 < zmq_msg_init_size(&msg, datalen))
 						{
 #ifdef WINDOWS
-							memcpy_s(zmq_msg_data(&msg_), datalen, data.c_str(), datalen);
+							memcpy_s(zmq_msg_data(&msg), datalen, data.c_str(), datalen);
 #else
-							memcpy(zmq_msg_data(&msg_), data.c_str(), datalen);
+							memcpy(zmq_msg_data(&msg), data.c_str(), datalen);
 #endif//WINDOWS
-							zmq_msg_send(&msg_, s, i < dataSize - 1 ? ZMQ_DONTWAIT | ZMQ_SNDMORE : ZMQ_DONTWAIT);
+							zmq_msg_send(&msg, s, i < dataSize - 1 ? ZMQ_DONTWAIT | ZMQ_SNDMORE : ZMQ_DONTWAIT);
 						}
 					}
 				}
@@ -106,19 +111,16 @@ namespace framework
 				return e;
 			}
 
-			Msg::Msg() : msg{new(std::nothrow) IMsg}
+			Msg::Msg() : msg{boost::factory<IMsg*>()()}
 			{}
 			Msg::~Msg() 
 			{
 				boost::checked_delete(msg);	
 			}
 
-			void Msg::add(const std::string data)
+			int Msg::add(const std::string data)
 			{
-				if (msg)
-				{
-					msg->add(data);
-				}
+				return static_cast<int>(msg ? msg->add(data) : CommonError::COMMON_ERROR_BAD_NEW_INSTANCE);
 			}
 
 			const std::string Msg::remove()
@@ -128,12 +130,32 @@ namespace framework
 
 			int Msg::receive(void* s /* = nullptr */)
 			{
-				return static_cast<int>(msg ? msg->receive(s) : CommonError::COMMON_ERROR_BAD_NEW_INSTANCE);
+				CommonError e{ 
+					s ? 
+					CommonError::COMMON_ERROR_SUCCESS : 
+					CommonError::COMMON_ERROR_INVALID_PARAMETER };
+
+				if (CommonError::COMMON_ERROR_SUCCESS == e)
+				{
+					e = (msg ? msg->receive(s) : CommonError::COMMON_ERROR_BAD_NEW_INSTANCE);
+				}
+
+				return static_cast<int>(e);
 			}
 
 			int Msg::send(void* s /* = nullptr */)
 			{
-				return static_cast<int>(msg ? msg->send(s) : CommonError::COMMON_ERROR_BAD_NEW_INSTANCE);
+				CommonError e{ 
+					s ? 
+					CommonError::COMMON_ERROR_SUCCESS : 
+					CommonError::COMMON_ERROR_INVALID_PARAMETER };
+
+				if (CommonError::COMMON_ERROR_SUCCESS == e)
+				{
+					e = (msg ? msg->send(s) : CommonError::COMMON_ERROR_BAD_NEW_INSTANCE);
+				}
+
+				return static_cast<int>(e);
 			}
 		}//namespace zmq
     }//namespace libnetwork

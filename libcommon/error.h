@@ -27,6 +27,7 @@ typedef enum class tagCommonError_t : int
     COMMON_ERROR_SET_FAILED = -9,
     COMMON_ERROR_EMPTY = -10,
     COMMON_ERROR_BAD_OPERATE = -11,
+    COMMON_ERROR_BAD_FILE_OPEN = -12
 }CommonError;
 
 #endif//FRAMEWORK_LIBCOMMON_ERROR_DEFINE_H

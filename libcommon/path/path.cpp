@@ -1,6 +1,6 @@
 #include "boost/filesystem/path.hpp" 
 #include "boost/filesystem/operations.hpp"
-#include "path/path.h"
+#include "path.h"
 
 namespace framework
 {

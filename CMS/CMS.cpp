@@ -1,626 +1,263 @@
 #include "boost/bind.hpp"
 #include "boost/format.hpp"
-#ifdef WINDOWS
-#include "glog/log_severity.h"
-#include "glog/logging.h"
-#else
-#include "glog/log_severity.h"
-#include "glog/logging.h"
-#endif//WINDOWS
-#include "Error.h"
-#include "Define.h"
-#include "Time/XTime.h"
-using Time = framework::time::Time;
-#include "Thread/ThreadPool.h"
-using ThreadPool = framework::thread::ThreadPool;
-#include "Network/ZMQ/Msg_.h"
-using Msg = framework::network::zeromq::Msg;
+#include "liburl/url.h"
+using UrlParser = framework::liburl::UrlParser;
+using ParamItem = framework::liburl::ParamItem;
+#include "libcommon/uuid/uuid.h"
+using Uuid = framework::libcommon::Uuid;
+#include "libcommon/thread/threadpool.h"
+using ThreadPool = framework::libcommon::ThreadPool;
+#include "libcommon/time/time.h"
+using Time = framework::libcommon::Time;
+#include "libcommon/const.h"
+#include "libcommon/error.h"
 #include "CMS.h"
 
 CMS::CMS(
-	const std::string name, 
-	const std::string id) 
-	: OD(), cmsName{ name }, cmsID{ id }, pairSequenceNumber{ 0 }
+	Log& log, 
+	const std::string id, 
+	void* ctx /*= nullptr*/) 
+	: Worker(ctx), logObj{log}, applicationID{id}, 
+	sourceID{Uuid().generateRandomUuid()}, tid{nullptr}, stopped{false}
 {}
 CMS::~CMS()
-{}
-
-int CMS::startOD(
-	const char* ipv4 /* = nullptr */,
-	const unsigned short port /* = 61001 */)
 {
-	LOG(INFO) << "Starting CMS with parameters of command line [ name = " << cmsName <<
-		", remote XMQ IPv4 = " << ipv4 <<
-		", remote XMQ port = " << port << " ].";
+	stopped = true;
+	ThreadPool().destroy(tid);
+	tid = nullptr;	
+}
 
-	int e{ OD::startOD(ipv4, port) };
+int CMS::connect(
+	const std::string remoteIP,
+	const unsigned short remotePort)
+{
+	CommonError e{
+		static_cast<CommonError>(Worker::connect(sourceID, remoteIP, remotePort))};
 
-	if (eSuccess == e)
+	if (CommonError::COMMON_ERROR_SUCCESS == e)
 	{
-		LOG(INFO) << "Starting CMS service successfully.";
-		ThreadPool::get_mutable_instance().createNewThread(
-			boost::bind(&CMS::sendPairMessageThread, this));
-		ThreadPool::get_mutable_instance().createNewThread(
-			boost::bind(&CMS::checkRegisterComponentTimeoutThread, this));
+		logObj.write(
+			framework::liblog::LogLevel::LOG_LEVEL_INFO, 
+			"Connect remote IP [ %s ] and Port [ %d ] with ID [ %s ] successfully.", 
+			remoteIP.c_str(), 
+			remotePort,
+			sourceID.c_str());
+
+		tid = ThreadPool().create(
+			boost::bind(&CMS::timerTaskHandler, this));
 	}
 	else
 	{
-		LOG(WARNING) << "Starting CMS service failed, result = " << e << ".";
+		logObj.write(
+			framework::liblog::LogLevel::LOG_LEVEL_ERROR, 
+			"Connect remote IP [ %s ] and Port [ %d ] with ID [ %s ] failed, reuslt = [ %d ].", 
+			remoteIP.c_str(), 
+			remotePort, 
+			sourceID.c_str(), 
+			static_cast<int>(e));
 	}
 
-	return e;
+	return static_cast<int>(e);
 }
 
-int CMS::stopOD()
+int CMS::setup(
+	const std::string uploadIP,
+	const unsigned short uploadPort)
 {
-	int e{ OD::stopOD() };
+	//å‘é€"setup://address=uploadIP&port=uploadPort"
+	UrlParser parser;
+	parser.setCommand("setup");
+	parser.setCommandParameter("address", uploadIP);
+	parser.setCommandParameter("port", (boost::format("%d") % uploadPort).str());
+	const std::string data{parser.compose()};
+	int e{Worker::send(data)};
 
-	if (eSuccess == e)
+	if (CommonError::COMMON_ERROR_SUCCESS == static_cast<CommonError>(e))
 	{
-		LOG(INFO) << "Stopping CMS service successfully.";
+		logObj.write(
+			framework::liblog::LogLevel::LOG_LEVEL_INFO, 
+			"Send setup message [ %s ] successfully.", 
+			data.c_str());
 	}
 	else
 	{
-		LOG(WARNING) << "Stopping CMS service failed, result = " << e << ".";
+		logObj.write(
+			framework::liblog::LogLevel::LOG_LEVEL_ERROR, 
+			"Send setup message [ %s ] failed, result = [ %d ].", 
+			data.c_str(),
+			e);
 	}
 
-	return e;
+	return static_cast<int>(e);
 }
 
-void CMS::afterParsePolledMessage(
-	const std::string module,
-	const std::string from,
-	const std::string to,
-	const std::vector<std::string> routers,
-	const std::vector<std::string> messages)
+void CMS::afterWorkerPollDataProcess(
+	const std::string data)
 {
-	//ÏûÏ¢ÄÚÈİµÄ×îºó2¸ö²¿·ÖÒ»¶¨ÊÇcommandºÍmessage
-	const std::size_t msgDataNumber{ messages.size() };
-	const std::string sequence{ messages[msgDataNumber - 4] };
-	const std::string timestamp{ messages[msgDataNumber - 3] };
-	const std::string command{ messages[msgDataNumber - 2] };
-	const std::string message{ messages[msgDataNumber - 1] };
+	if (!data.empty())
+	{
+		UrlParser parser;
+		int e{parser.parse(data)};
 
-	//´¦ÀíCMSÅä¶ÔÓ¦´ğÏûÏ¢
-	if (!command.compare(gPairCommandName))
-	{
-		processXMQPairMessage(
-			module, from, to, sequence, timestamp, message);
-	}
-	//´¦Àí×é¼ş×¢²áÇëÇóÏûÏ¢
-	else if(!command.compare(gComponentCommandName))
-	{ 
-		processComponentMessage(
-			module, from, to, routers, sequence, timestamp, message);
-	}
-	//´¦ÀíÉè±¸ÅäÖÃÇëÇóÏûÏ¢
-	else if (!command.compare(gDeviceCommandName))
-	{
-		processDeviceMessage(module, from, to, routers, messages);
-	}
-	//´¦ÀíËã·¨ÅäÖÃÇëÇóÏûÏ¢
-	else if (!command.compare(gAlgorithmCommandName))
-	{
-		processAlgorithmMessage(module, from, to, routers, messages);
-	}
-	//´¦ÀíÈËÁ³µ×¿âÅäÖÃÇëÇóÏûÏ¢
-	else if (!command.compare(gCrewCommandName))
-	{
-		processCrewMessage(module, from, to, routers, messages);
-	}
-	//´¦Àí×´Ì¬ÅäÖÃÇëÇóÏûÏ¢
-	else if (!command.compare(gStatusCommandName))
-	{
-		processStatusMessage(module, from, to, routers, messages);
-	}
-	//´¦ÀíÉè±¸×¥Í¼ÇëÇóÏûÏ¢
-// 	else if (!command.compare(gCaptureCommandName))
-// 	{
-// 	}
-	//´¦ÀíAISÊı¾İÍÆËÍÏûÏ¢
-// 	else if (!command.compare(gAISCommandName))
-// 	{
-// 	}
-	//´¦ÀíClockÊı¾İÍÆËÍÏûÏ¢
-	else if (!command.compare(gClockCommandName))
-	{
-		processClockMessage(module, from, to, routers, messages);
-	}
-	//´¦Àí±¨¾¯Êı¾İÍÆËÍÏûÏ¢
-	else if (!command.compare(gAlarmCommandName))
-	{
-		processAlarmMessage(module, from, to, routers, messages);
-	}
-	//´¦ÀíÊı¾İÍ¬²½ÍÆËÍÏûÏ¢
-// 	else if (!command.compare(gUplinkCommandName))
-// 	{
-// 	}
-	else
-	{
-		LOG(WARNING) << "CMS polled unknown command type of message with from [ " << from <<
-			" ] to [ " << to <<
-			" ] command [ " << command << " ].";
-	}
-}
-
-void CMS::sendPairMessageThread()
-{
-	unsigned long long lastTickcount{ 0 };
-
-	while (!OD::isStopped())
-	{
-		const unsigned long long currentTickcount{ Time().tickcount() };
-
-		if (30000 < currentTickcount - lastTickcount)
+		if (CommonError::COMMON_ERROR_SUCCESS == static_cast<CommonError>(e))
 		{
-			//-------------------------------------------------------------------------------
-			//| "" | "worker" | "cms" | "xmq" | "" | sequence | timestamp | "pair" | "name" |
-			//-------------------------------------------------------------------------------
-			Msg msg;
-			msg.addMessage(cmsName);
-			msg.addMessage(gPairCommandName);
-			msg.addMessage((boost::format("%d") % (int)Time().tickcount()).str());
-			msg.addMessage((boost::format("%d") % ++pairSequenceNumber).str());
-			msg.addMessage(gEmptyData);
-			msg.addMessage(gXMQComponentName);
-			msg.addMessage(gCMSComponentName);
-			msg.addMessage(gWorkerModuleName);
-			msg.addMessage(gEmptyData);
+			const std::string command{parser.getCommand()};
 
-			int e{ OD::sendMsg(&msg) };
-			if (eSuccess == e)
+			if (0 == command.compare("pair"))
 			{
-				LOG(INFO) << "CMS send message for pairing successfully.";
+				processPairMessage(&parser);
+			}
+			else if (0 == command.compare("register"))
+			{
+				processRegisterMessage(&parser);
 			}
 			else
 			{
-				LOG(WARNING) << "CMS send message for pairing failed, result = " << e << ".";
+				logObj.write(
+					framework::liblog::LogLevel::LOG_LEVEL_WARNING, 
+					"Not support command type [ %s ].", 
+					command.c_str());
 			}
-
-			lastTickcount = currentTickcount;
 		}
-
-		Time().sleep(1);
+		else
+		{
+			logObj.write(
+				framework::liblog::LogLevel::LOG_LEVEL_ERROR, 
+				"Parse poll data failed, result = [ %d ].", 
+				e);
+		}
 	}
 }
 
-void CMS::checkRegisterComponentTimeoutThread()
+void CMS::timerTaskHandler()
 {
-	while (!OD::isStopped())
+	unsigned long long lastTick{0};
+
+	while (!stopped)
 	{
-		std::vector<RegisterComponent> components;
-		registerComponentGroup.values(components);
+		unsigned long long nowTick{Time().tickcount()};
 
-		for (int i = 0; i != components.size(); ++i)
+		if (30000 < nowTick - lastTick)
 		{
-			const unsigned long long expireTickcount{ Time().tickcount() - components[i].timestamp };
-
-			if (90000 < expireTickcount)
-			{
-				registerComponentGroup.remove(components[i].component.cds[0].id);
-				LOG(WARNING) << "Remove component [ " << components[i].component.cds[0].name << 
-					" : " << components[i].component.cds[0].ipv4 << 
-					" : " << components[i].component.cds[0].type <<
-					" ] while expiring " << expireTickcount / 1000 << 
-					" seconds.";
-			}
+			sendPairMessage();
+			lastTick = nowTick;
 		}
-
-		Time().sleep(1);
 	}
 }
 
-void CMS::processXMQPairMessage(
-	const std::string module,
-	const std::string from,
-	const std::string to,
-	const std::string sequence,
-	const std::string timestamp,
-	const std::string msg)
+void CMS::processPairMessage(void* parser /*= nullptr*/)
 {
-	LOG(INFO) << "CMS process status message of pairing with module [  " << module <<
-		" ] from [ " << from <<
-		" ] to [ " << to <<
-		" ] as status = " << msg << 
-		", sequence = " << sequence <<
-		", timestamp = " << timestamp << ".";
+	UrlParser* urlparser{reinterpret_cast<UrlParser*>(parser)};
+	const std::vector<ParamItem> commandParameters{urlparser->getCommandParameters()};
+
+	//éå†å‘½ä»¤å‚æ•°æ®µ
+	//æ‰¾å‡ºsenderå‚æ•°
+	//é‡æ„url
+
+	for (int i = 0; i != commandParameters.size(); ++i)
+	{
+		if (0 == commandParameters[i].key.compare("sender"))
+		{
+			sendRegisterMessage(commandParameters[i].value);
+			break;
+		}
+	}
 }
 
-void CMS::processComponentMessage(
-	const std::string module, 
-	const std::string from, 
-	const std::string to, 
-	const std::vector<std::string> routers, 
-	const std::string sequence, 
-	const std::string timestamp, 
-	const std::string msg)
+void CMS::processRegisterMessage(void* parser /*= nullptr*/)
 {
-	RegisterComponent rc;
-	int e{ ProtocolComponent().unpack(msg, rc.component) };
+	UrlParser* urlparser{reinterpret_cast<UrlParser*>(parser)};
+	const std::vector<ParamItem> commandParamItems{urlparser->getCommandParameters()};
+	std::string sender, via;
 
-	if (eSuccess == e)
+	for (int i = 0; i != commandParamItems.size(); ++i)
 	{
-		if (1 == rc.component.command)
+		if (0 == commandParamItems[i].key.compare("sender"))
 		{
-			//SIGNIN_REQ
-
-			rc.timestamp = Time().tickcount();
-			rc.routers = routers;
-			//×é¼ş×¢²áÊ±0#ÊµÀıÒ»¶¨´æÔÚ
-			//ÏÈÉ¾³ıÔÙÌí¼ÓÒÔÊ¾¸üĞÂ
-			registerComponentGroup.remove(rc.component.cds[0].id);
-			registerComponentGroup.insert(rc.component.cds[0].id, rc);
-			rc.component.status = e;
-			++rc.component.command;
-
-			LOG(INFO) << "CMS process component register message with module [  " << module <<
-				" ] from [ " << from <<
-				" ] to [ " << to <<
-				" ] ID [ " << rc.component.cds[0].id <<
-				" ] Count [ " << registerComponentGroup.size() <<
-				" ], sequence = " << sequence <<
-				", timestamp = " << timestamp << ".";
+			sender = commandParamItems[i].value;
 		}
-		else if (2 == rc.component.command)
+		else if (0 == commandParamItems[i].key.compare("via"))
 		{
-			//SIGNIN_REP
-			//²»ÄÜÓ¦´ğ
-//			parentXMQID = reinterpret_cast<const char*>(pkt->getPacketData());
-			return;
+			via = commandParamItems[i].value;
 		}
-		else if (3 == rc.component.command)
-		{
-			////SIGNOUT_REQ
-//			removeComponentByID(ac->getComponentID());
-		}
-		else if (5 == rc.component.command)
-		{
-			//QUERY_REQ
+	}
 
-			std::vector<RegisterComponent> components;
-			registerComponentGroup.values(components);
-			for (int i = 0; i != components.size(); ++i)
-			{
-				//×é¼ş×¢²áÊ±0#ÊµÀıÒ»¶¨´æÔÚ
-				rc.component.cds.push_back(components[i].component.cds[0]);
-			}
-			++rc.component.command;
-			rc.component.status = e;
+	//æ³¨å†Œåº”ç­”"register:\\sender=sourceID&receiver=sender"
+	//æˆ–"register:\\sender=sourceID&receiver=sender?via=X"
+	UrlParser newUrlParser;
+	newUrlParser.setCommand("register");
+	newUrlParser.setCommandParameter("sender", sourceID);
+	newUrlParser.setCommandParameter("receiver", sender);
+	if (!via.empty())
+	{
+		newUrlParser.setUserParameter("via", via);
+	}
+	const std::string data{newUrlParser.compose()};
+	int e{Worker::send(data)};
 
-			LOG(INFO) << "CMS process component query message with module [  " << module <<
-				" ] from [ " << from <<
-				" ] to [ " << to <<
-				" ] Count [ " << rc.component.cds.size() <<
-				" ], sequence = " << sequence <<
-				", timestamp = " << timestamp << ".";
-		}
+	if (CommonError::COMMON_ERROR_SUCCESS == static_cast<CommonError>(e))
+	{
+		logObj.write(
+			framework::liblog::LogLevel::LOG_LEVEL_INFO, 
+			"Send register message [ %s ] successfully.", 
+			data.c_str());
 	}
 	else
 	{
-		LOG(WARNING) << "CMS process component message with module [  " << module <<
-			" ] from [ " << from <<
-			" ] to [ " << to <<
-			" ], sequence = " << sequence <<
-			", timestamp = " << timestamp << 
-			" failed, result = " << e << ".";
+		logObj.write(
+			framework::liblog::LogLevel::LOG_LEVEL_ERROR, 
+			"Send register message [ %s ] failed, result = [ %d ].", 
+			data.c_str(),
+			e);
 	}
-	
-	//-------------------------------------------------------------------------------------
-	//| "" | "worker" | "cms" | "xmq" | "" | sequence | timestamp | "component" | message |
-	//-------------------------------------------------------------------------------------
-	Msg msg_;
-	msg_.addMessage(ProtocolComponent().pack(rc.component));
-	msg_.addMessage(gComponentCommandName);
-	msg_.addMessage(timestamp);
-	msg_.addMessage(sequence);
-	msg_.addMessage(gEmptyData);
-	//·¢ËÍ¶ËID±êÊ¶
-	msg_.addMessage(routers[0]);
-	msg_.addMessage(from);
-	msg_.addMessage(to);
-	msg_.addMessage(module);
-	msg_.addMessage(gEmptyData);
+}
 
-	if (eSuccess == OD::sendMsg(&msg_))
+void CMS::sendPairMessage()
+{
+	//å‘é€"pair://"
+	UrlParser parser;
+	parser.setCommand("pair");
+	const std::string data{parser.compose()};
+	int e{Worker::send(data)};
+
+	if (CommonError::COMMON_ERROR_SUCCESS == static_cast<CommonError>(e))
 	{
-		LOG(INFO) << "CMS send message of component successfully.";
+		logObj.write(
+			framework::liblog::LogLevel::LOG_LEVEL_INFO, 
+			"Send message [ %s ] successfully.", 
+			data.c_str());
 	}
 	else
 	{
-		LOG(WARNING) << "CMS send message of component failed, result = " << e << ".";
+		logObj.write(
+			framework::liblog::LogLevel::LOG_LEVEL_ERROR, 
+			"Send message [ %s ] failed, result = [ %d ].", 
+			data.c_str(),
+			e);
 	}
 }
 
-void CMS::processDeviceMessage(
-	const std::string module, 
-	const std::string from, 
-	const std::string to, 
-	const std::vector<std::string> routers, 
-	const std::vector<std::string> messages)
+void CMS::sendRegisterMessage(const std::string viaID)
 {
-	//²éÕÒDHS×é¼ş²¢×ª·¢
-	std::vector<RegisterComponent> rc;
-	registerComponentGroup.values(rc);
+	//å‘é€"register://sender=sourceID&via=viaID?upload=true"
+	UrlParser parser;
+	parser.setCommand("pair");
+	const std::string data{parser.compose()};
+	int e{Worker::send(data)};
 
-	for (int i = 0; i != rc.size(); ++i)
+	if (CommonError::COMMON_ERROR_SUCCESS == static_cast<CommonError>(e))
 	{
-		if (5 == rc[i].component.cds[0].type)
-		{
-			//--------------------------------------------------------------------------------------------------------
-			//| "" | "worker" | "web" | "cms" | DHS CommID | sender | "" | sequence | timestamp | "device" | message |
-			//--------------------------------------------------------------------------------------------------------
-			Msg msg;
-			int msgNum{ static_cast<int>(messages.size()) };
-			for (int i = msgNum; i != 0; --i)
-			{
-				msg.addMessage(messages[i - 1]);
-			}
-			msg.addMessage(gEmptyData);
-			if (0 < routers.size())
-			{
-				msg.addMessage(routers[0]);
-			}
-			msg.addMessage(rc[i].routers[0]);
-			msg.addMessage(to);
-			msg.addMessage(from);
-			msg.addMessage(module);
-			msg.addMessage(gEmptyData);
-
-			if (eSuccess == OD::sendMsg(&msg))
-			{
-				LOG(INFO) << "CMS forward message of device successfully.";
-			}
-			else
-			{
-				LOG(WARNING) << "CMS forward message of device failed.";
-			}
-		}
+		logObj.write(
+			framework::liblog::LogLevel::LOG_LEVEL_INFO, 
+			"Send message [ %s ] successfully.", 
+			data.c_str());
 	}
-}
-
-void CMS::processClockMessage(
-	const std::string module,
-	const std::string from,
-	const std::string to,
-	const std::vector<std::string> routers,
-	const std::vector<std::string> messages)
-{
-	//²éÕÒALM×é¼ş²¢×ª·¢
-	std::vector<RegisterComponent> rc;
-	registerComponentGroup.values(rc);
-
-	for (int i = 0; i != rc.size(); ++i)
+	else
 	{
-		if (17 == rc[i].component.cds[0].type)
-		{
-			//-------------------------------------------------------------------------------------------------------
-			//| "" | "worker" | "web" | "cms" | ALM CommID | sender | "" | sequence | timestamp | "clock" | message |
-			//-------------------------------------------------------------------------------------------------------
-			Msg msg;
-			int msgNum{ static_cast<int>(messages.size()) };
-			for (int i = msgNum; i != 0; --i)
-			{
-				msg.addMessage(messages[i - 1]);
-			}
-			msg.addMessage(gEmptyData);
-			if (0 < routers.size())
-			{
-				msg.addMessage(routers[0]);
-			}
-			msg.addMessage(rc[i].routers[0]);
-			msg.addMessage(to);
-			msg.addMessage(from);
-			msg.addMessage(module);
-			msg.addMessage(gEmptyData);
-			int e{ OD::sendMsg(&msg) };
-
-			if (eSuccess == e)
-			{
-				LOG(INFO) << "CMS send clock message successfully.";
-			}
-			else
-			{
-				LOG(WARNING) << "CMS send clock message failed, result = " << e << ".";
-			}
-		}
-	}
-}
-
-void CMS::processAlgorithmMessage(
-	const std::string module,
-	const std::string from,
-	const std::string to,
-	const std::vector<std::string> routers,
-	const std::vector<std::string> messages)
-{
-	//²éÕÒËã·¨×é¼ş²¢×ª·¢
-	std::vector<RegisterComponent> rc;
-	registerComponentGroup.values(rc);
-
-	for (int i = 0; i != rc.size(); ++i)
-	{
-		if (18 == rc[i].component.cds[0].type || 
-			19 == rc[i].component.cds[0].type || 
-			20 == rc[i].component.cds[0].type || 
-			21 == rc[i].component.cds[0].type || 
-			22 == rc[i].component.cds[0].type)
-		{
-			//------------------------------------------------------------------------------------------------------------
-			//| "" | "worker" | "web" | "cms" | Algo CommID | sender | "" | sequence | timestamp | "algorithm" | message |
-			//------------------------------------------------------------------------------------------------------------
-			Msg msg;
-			int msgNum{ static_cast<int>(messages.size()) };
-			for (int i = msgNum; i != 0; --i)
-			{
-				msg.addMessage(messages[i - 1]);
-			}
-			msg.addMessage(gEmptyData);
-			if (0 < routers.size())
-			{
-				msg.addMessage(routers[0]);
-			}
-			msg.addMessage(rc[i].routers[0]);
-			msg.addMessage(to);
-			msg.addMessage(from);
-			msg.addMessage(module);
-			msg.addMessage(gEmptyData);
-			int e{ OD::sendMsg(&msg) };
-
-			if (eSuccess == e)
-			{
-				LOG(INFO) << "CMS forward message of algorithm successfully.";
-			}
-			else
-			{
-				LOG(WARNING) << "CMS forward message of algorithm failed, result = " << e << ".";
-			}
-		}
-	}
-}
-
-void CMS::processStatusMessage(
-	const std::string module,
-	const std::string from,
-	const std::string to,
-	const std::vector<std::string> routers,
-	const std::vector<std::string> messages)
-{
-	//²éÕÒËã·¨×é¼ş²¢×ª·¢
-	std::vector<RegisterComponent> rc;
-	registerComponentGroup.values(rc);
-
-	for (int i = 0; i != rc.size(); ++i)
-	{
-		if (18 == rc[i].component.cds[0].type ||
-			19 == rc[i].component.cds[0].type ||
-			20 == rc[i].component.cds[0].type ||
-			21 == rc[i].component.cds[0].type ||
-			22 == rc[i].component.cds[0].type)
-		{
-			//---------------------------------------------------------------------------------------------------------
-			//| "" | "worker" | "web" | "cms" | Algo CommID | sender | "" | sequence | timestamp | "status" | message |
-			//---------------------------------------------------------------------------------------------------------
-			Msg msg;
-			int msgNum{ static_cast<int>(messages.size()) };
-			for (int i = msgNum; i != 0; --i)
-			{
-				msg.addMessage(messages[i - 1]);
-			}
-			msg.addMessage(gEmptyData);
-			if (0 < routers.size())
-			{
-				msg.addMessage(routers[0]);
-			}
-			msg.addMessage(rc[i].routers[0]);
-			msg.addMessage(to);
-			msg.addMessage(from);
-			msg.addMessage(module);
-			msg.addMessage(gEmptyData);
-			int e{ OD::sendMsg(&msg) };
-
-			if (eSuccess == e)
-			{
-				LOG(INFO) << "CMS forward message of status successfully.";
-			}
-			else
-			{
-				LOG(WARNING) << "CMS forward message of status failed, result = " << e << ".";
-			}
-		}
-	}
-}
-
-void CMS::processCrewMessage(
-	const std::string module,
-	const std::string from,
-	const std::string to,
-	const std::vector<std::string> routers,
-	const std::vector<std::string> messages)
-{
-	//²éÕÒËã·¨×é¼ş²¢×ª·¢
-	std::vector<RegisterComponent> rc;
-	registerComponentGroup.values(rc);
-
-	for (int i = 0; i != rc.size(); ++i)
-	{
-		if (21 == rc[i].component.cds[0].type)
-		{
-			//-------------------------------------------------------------------------------------------------------
-			//| "" | "worker" | "web" | "cms" | Algo CommID | sender | "" | sequence | timestamp | "crew" | message |
-			//-------------------------------------------------------------------------------------------------------
-			Msg msg;
-			int msgNum{ static_cast<int>(messages.size()) };
-			for (int i = msgNum; i != 0; --i)
-			{
-				msg.addMessage(messages[i - 1]);
-			}
-			msg.addMessage(gEmptyData);
-			if (0 < routers.size())
-			{
-				msg.addMessage(routers[0]);
-			}
-			msg.addMessage(rc[i].routers[0]);
-			msg.addMessage(to);
-			msg.addMessage(from);
-			msg.addMessage(module);
-			msg.addMessage(gEmptyData);
-			int e{ OD::sendMsg(&msg) };
-
-			if (eSuccess == e)
-			{
-				LOG(INFO) << "CMS forward message of crew successfully.";
-			}
-			else
-			{
-				LOG(WARNING) << "CMS forward message of crew failed, result = " << e << ".";
-			}
-		}
-	}
-}
-
-void CMS::processAlarmMessage(
-	const std::string module,
-	const std::string from,
-	const std::string to,
-	const std::vector<std::string> routers,
-	const std::vector<std::string> messages)
-{
-	//²éÕÒAlarm×é¼ş²¢×ª·¢
-	std::vector<RegisterComponent> rc;
-	registerComponentGroup.values(rc);
-
-	for (int i = 0; i != rc.size(); ++i)
-	{
-		if (17 == rc[i].component.cds[0].type)
-		{
-			//--------------------------------------------------------------------------------------------------------
-			//| "" | "worker" | "web" | "cms" | DHS CommID | sender | "" | sequence | timestamp | "device" | message |
-			//--------------------------------------------------------------------------------------------------------
-			Msg msg;
-			int msgNum{ static_cast<int>(messages.size()) };
-			for (int i = msgNum; i != 0; --i)
-			{
-				msg.addMessage(messages[i - 1]);
-			}
-			msg.addMessage(gEmptyData);
-			if (0 < routers.size())
-			{
-				msg.addMessage(routers[0]);
-			}
-			msg.addMessage(rc[i].routers[0]);
-			msg.addMessage(to);
-			msg.addMessage(from);
-			msg.addMessage(module);
-			msg.addMessage(gEmptyData);
-
-			if (eSuccess == OD::sendMsg(&msg))
-			{
-				LOG(INFO) << "CMS forward message of alarm successfully.";
-			}
-			else
-			{
-				LOG(WARNING) << "CMS forward message of alarm failed.";
-			}
-		}
+		logObj.write(
+			framework::liblog::LogLevel::LOG_LEVEL_ERROR, 
+			"Send message [ %s ] failed, result = [ %d ].", 
+			data.c_str(),
+			e);
 	}
 }

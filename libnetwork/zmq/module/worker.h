@@ -4,7 +4,7 @@
 //		Author :						王科威
 //		E-mail :						wangkw531@icloud.com
 //		Date :							2021-06-07
-//		Description :					Dealer模型类
+//		Description :					工作者模型类
 //
 //		History:						Author									Date										Description
 //										王科威									 2021-06-07									 创建
@@ -28,38 +28,30 @@ namespace framework
 				class Worker
 				{
 				public:
-					Worker(void);
+					Worker(void* c = nullptr);
 					virtual ~Worker(void);
 
 				public:
-					//启动
-					//@interval : 定时器任务执行时间间隔，以秒为单位
-					//@Return : 错误码
-					virtual int start(const unsigned long long interval = 30);
-
-					//停止
-					//@ctx : 上下文实例
-					//@Return : 错误码
-					virtual int stop(void* ctx = nullptr);
-
-				protected:
-					//设置Dealer连接地址和端口
-					//@ipv4 : ipv4地址
-					//@port : 端口
-					//@ctx : 上下文实例
+					//连接
+					//@sourceID : 源ID标识
+					//@remoteIP : 远程服务IP
+					//@remotePort : 远程服务端口
 					//@Return : 错误码
 					int connect(
-						const std::string ipv4,
-						const unsigned short port = 0,
-						void* ctx = nullptr);
+						const std::string sourceID,
+						const std::string remoteIP, 
+						const unsigned short remotePort = 0);
 
-					//Dealer端数据接收处理
+					//发送数据
+					//@data : 数据内容
+					//@Return : 错误码
+					int send(const std::string data);
+
+				protected:
+					//数据接收处理
 					//@data : 消息数据
-					virtual void afterDealerPollDataProcess(
+					virtual void afterWorkerPollDataProcess(
 						const std::string data) = 0;
-
-					//定时任务处理
-					virtual void afterTimerExpiredProcess(void) = 0;
 
 				private:
 					IWorker* worker;

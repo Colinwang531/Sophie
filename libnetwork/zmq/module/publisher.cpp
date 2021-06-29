@@ -1,13 +1,13 @@
-#include <new>
-#include "boost/format.hpp"
+#include "boost/checked_delete.hpp"
+#include "boost/functional/factory.hpp"
 #include "zmq.h"
-#include "const.h"
-#include "error.h"
-#include "zmq/ctx.h"
+#include "libcommon/const.h"
+#include "libcommon/error.h"
+#include "libnetwork/zmq/ctx.h"
 using Ctx = framework::libnetwork::zmq::Ctx;
-#include "zmq/pub.h"
+#include "libnetwork/zmq/pub.h"
 using Pub = framework::libnetwork::zmq::Pub;
-#include "zmq/msg.h"
+#include "libnetwork/zmq/msg.h"
 using Msg = framework::libnetwork::zmq::Msg;
 #include "publisher.h"
 
@@ -22,66 +22,65 @@ namespace framework
 				class IPublisher
 				{
 				public:
-					IPublisher(void);
+					IPublisher(void* c = nullptr);
 					~IPublisher(void);
 
 				public:
 					CommonError bind(
 						const std::string ipv4,
-						const unsigned short port = 0,
-						void* ctx = nullptr);
-					CommonError send(void* msg = nullptr);
+						const unsigned short port = 0);
+					CommonError send(const std::string data);
 
 				protected:
-					void* ps;
+					void* ctx;
+					Pub* pub;
 				};//class IPublisher
 
-				IPublisher::IPublisher() : ps{nullptr}
+				IPublisher::IPublisher(void* c /*= nullptr*/) : ctx{c}, pub{nullptr}
 				{}
 				IPublisher::~IPublisher()
-				{}
+				{
+					boost::checked_delete(pub);
+				}
 
 				CommonError IPublisher::bind(
 					const std::string ipv4, 
-					const unsigned short port /* = 0 */,
-					void* ctx /* = nullptr */)
+					const unsigned short port /* = 0 */)
 				{
-					Ctx* ctx_{reinterpret_cast<Ctx*>(ctx)};
 					CommonError e{ 
-						ctx_ && ctx_->valid() && !ipv4.empty() && gMinPortNumber <= port && gMaxPortNumber >= port ? CommonError::COMMON_ERROR_SUCCESS : CommonError::COMMON_ERROR_INVALID_PARAMETER };
-
+						pub ? CommonError::COMMON_ERROR_EXISTED : CommonError::COMMON_ERROR_SUCCESS };
+						
 					if (CommonError::COMMON_ERROR_SUCCESS == e)
 					{
-						ps = ctx_->createNewSocket(ZMQ_PUB);
+						pub = boost::factory<Pub*>()(ctx);
 
-						if (ps)
+						if (pub)
 						{
-							e = static_cast<CommonError>(Pub().bind(ipv4, port, ps, 10));
+							e = static_cast<CommonError>(pub->start(ipv4, port, 10));
 						}
 						else
 						{
-							e = CommonError::COMMON_ERROR_BAD_NEW_INSTANCE;
+							e = CommonError::COMMON_ERROR_BAD_OPERATE;
 						}
 					}
 
 					return e;
 				}
 
-				CommonError IPublisher::send(void* msg /*= nullptr*/)
+				CommonError IPublisher::send(const std::string data)
 				{
-					CommonError e{
-						msg ? CommonError::COMMON_ERROR_SUCCESS : CommonError::COMMON_ERROR_INVALID_PARAMETER};
+					CommonError e{ 
+						pub ? CommonError::COMMON_ERROR_EXISTED : CommonError::COMMON_ERROR_SUCCESS };
 
 					if (CommonError::COMMON_ERROR_SUCCESS == e)
 					{
-						Msg* msg_{reinterpret_cast<Msg*>(msg)};
-						e = static_cast<CommonError>(msg_->send(ps));
+						e = static_cast<CommonError>(pub->send(data));
 					}
-					
+
 					return e;
 				}
 
-				Publisher::Publisher() : publisher{ new(std::nothrow) IPublisher }
+				Publisher::Publisher(void* c /*= nullptr*/) : publisher{ boost::factory<IPublisher*>()(c) }
 				{}
 				Publisher::~Publisher()
 				{
@@ -90,15 +89,38 @@ namespace framework
 
 				int Publisher::bind(
 					const std::string ipv4, 
-					const unsigned short port /* = 0 */,
-					void* ctx /* = nullptr */)
+					const unsigned short port /* = 0 */)
 				{
-					return static_cast<int>(publisher ? publisher->bind(ipv4, port, ctx) : CommonError::COMMON_ERROR_BAD_NEW_INSTANCE);
+					CommonError e{ 
+						!ipv4.empty() && gMinPortNumber <= port && gMaxPortNumber >= port ? 
+						CommonError::COMMON_ERROR_SUCCESS : 
+						CommonError::COMMON_ERROR_INVALID_PARAMETER };
+
+					if (CommonError::COMMON_ERROR_SUCCESS == e)
+					{
+						e = (publisher ? 
+							publisher->bind(ipv4, port) : 
+							CommonError::COMMON_ERROR_BAD_NEW_INSTANCE);
+					}
+					
+					return static_cast<int>(e);
 				}
 
-				int Publisher::send(void* msg /* = nullptr */)
+				int Publisher::send(const std::string data)
 				{
-					return static_cast<int>(publisher ? publisher->send(msg) : CommonError::COMMON_ERROR_BAD_NEW_INSTANCE);
+					CommonError e{ 
+						!data.empty() ? 
+						CommonError::COMMON_ERROR_SUCCESS : 
+						CommonError::COMMON_ERROR_INVALID_PARAMETER };
+						
+					if (CommonError::COMMON_ERROR_SUCCESS == e)
+					{
+						e = (publisher ? 
+							publisher->send(data) : 
+							CommonError::COMMON_ERROR_BAD_NEW_INSTANCE);
+					}
+					
+					return static_cast<int>(e);
 				}
 			}//namespace module
 		}//namespace zmq
