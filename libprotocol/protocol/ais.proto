@@ -1,0 +1,129 @@
+syntax = "proto2";
+
+package msg;
+
+message PositionA
+{
+	required int32 repeatindicator = 1;
+	required bytes mmsi = 2;
+	required int32 navigationalstatus = 3;
+	required float rot = 4;
+	required float sog = 5;
+	required int32 positionaccuracy = 6;
+	required bytes longitude = 7;
+	required bytes latitude = 8;
+	required float cog = 9;
+	required int32 trueheading = 10;
+	required int32 timestamp = 11;
+	required int32 specialindicator = 12;
+	required int32 spare = 13;
+}
+
+message ShipStatic
+{
+	required int32 repeatindicator = 1;
+	required bytes mmsi = 2;
+	required int32 aisversion = 3;
+	required int32 imo = 4;
+	required bytes callsign = 5;
+	required bytes name = 6;
+	required int32 typeofshipcargo = 7;
+	required bytes dimensions = 8;
+	required int32 epfd = 9;
+	required int32 month = 10;
+	required int32 day = 11;
+	required int32 hour = 12;
+	required int32 minute = 13;
+	required float draught = 14;
+	required bytes destination = 15;
+	required int32 dte = 16;
+	required int32 spare = 17;
+}
+
+message StandardSAR
+{
+	required int32 repeatindicator = 1;
+	required bytes mmsi = 2;
+	required int32 altitude = 3;
+	required float sog = 4;
+	required int32 positionaccuracy = 5;
+	required bytes longitude = 6;
+	required bytes latitude = 7;
+	required float cog = 8;
+	required int32 timestamp = 9;
+	required int32 altitudesensor = 10;
+	required int32 spare = 11;
+	required int32 assignmodeflag = 12;
+	required int32 raimflag = 13;
+	required int32 commstateselectorflag = 14;
+	required int32 communicationstate = 15;
+}
+
+message PositionB
+{
+	required int32 repeatindicator = 1;
+	required bytes mmsi = 2;
+	required int32 spare1 = 3;
+	required float sog = 4;
+	required int32 positionaccuracy = 5;
+	required bytes longitude = 6;
+	required bytes latitude = 7;
+	required float cog = 8;
+	required int32 trueheading = 9;
+	required int32 timestamp = 10;
+	required int32 spare2 = 11;
+	required int32 bunitflag = 12;
+	required int32 bdisplayflag = 13;
+	required int32 bdscflag = 14;
+	required int32 bbandflag = 15;
+	required int32 bmessage22flag = 16;
+	required int32 modeflag = 17;
+	required int32 raimflag = 18;
+	required int32 commstateselectorflag = 19;
+	required int32 syncstate = 20;
+	required int32 slotincrement = 21;
+	required int32 numberofslots = 22;
+	required int32 keepflag = 23;
+}
+
+message AidsToNavigation
+{
+	required int32 repeatindicator = 1;
+	required bytes mmsi = 2;
+	required int32 navigationtype = 3;
+	required bytes name = 4;
+	required int32 positionaccuracy = 5;
+	required bytes longitude = 6;
+	required bytes latitude = 7;
+	required bytes dimensions = 8;
+	required int32 epfd = 9;
+	required int32 utctimestamp = 10;
+	required int32 onoffpositionindicator = 11;
+	required int32 atonflag = 12;
+	required int32 raimflag = 13;
+	required int32 virtualflag = 14;
+	required int32 modeindicator = 15;
+	required int32 spare = 16;
+	required bytes extendname = 17;
+	required int32 stufbits = 18;
+}
+
+message AISMessage
+{
+	enum Type
+	{
+		POSITION_A = 1;
+		POSITION_B = 2;
+		SHIP_STATIC = 3;
+		STANDARD_SAR = 4;
+		AIDS_TO_NAVIGATION = 5;
+	}
+	
+	required Type type = 1;
+	required bytes pid = 2;
+	optional PositionA positiona = 3;
+	optional ShipStatic shipstatic = 4;
+	optional StandardSAR standardsar = 5;
+	optional PositionB positionb = 6;
+	optional AidsToNavigation aidstonavigation = 7;
+}

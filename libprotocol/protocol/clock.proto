@@ -1,0 +1,8 @@
+syntax = "proto2";
+
+package msg;
+
+message ClockMessage
+{
+	required bytes clock = 1;
+}

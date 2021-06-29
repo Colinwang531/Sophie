@@ -1,0 +1,56 @@
+syntax = "proto2";
+
+package msg;
+
+message Component
+{
+	enum Type
+	{
+		XMQ = 1;
+		CMS = 2;
+		WEB = 3;
+		DHSLB = 4;
+		DHS = 5;
+		XMSLB = 6;
+		XMS = 7;
+		RTSP = 8;
+		RTMP = 9;
+		HLS = 10;
+		GBS = 11;
+		GBXMS = 12;
+		DSS = 13;
+		DBE = 14;
+		AIS = 15;
+		TSS = 16;
+		ALM = 17;
+		HELMET = 18;
+		PHONE = 19;
+		SLEEP = 20;
+		FACE = 21;
+		FIGHT = 22;
+	}
+	
+	required Type type = 1;
+	required bytes name = 2;
+	required bytes ipv4 = 3;
+	optional bytes id = 4;
+	optional bytes nickname = 5;
+}
+
+message ComponentMessage
+{
+	enum Command
+	{
+		SIGNIN_REQ = 1;
+		SIGNIN_REP = 2;
+		SIGNOUT_REQ = 3;
+		SIGNOUT_REP = 4;
+		QUERY_REQ = 5;
+		QUERY_REP = 6;
+	}
+	
+	required Command command = 1;
+	repeated Component components = 2;
+	optional int32 status = 3;
+	optional bytes pid = 4;
+}
