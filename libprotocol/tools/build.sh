@@ -1,0 +1,1 @@
+./protoc -I=/mnt/libprotocol/protocol --cpp_out=/mnt/libprotocol/detail /mnt/libprotocol/protocol/*.proto
