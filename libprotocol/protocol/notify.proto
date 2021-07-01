@@ -108,19 +108,25 @@ message AidsToNavigation
 	required int32 stufbits = 18;
 }
 
-message AISMessage
+message ClockSyc
 {
-	enum Type
+	required bytes clock = 1;
+}
+
+message NotificationMessage
+{
+	enum CommandType
 	{
-		POSITION_A = 1;
-		POSITION_B = 2;
-		SHIP_STATIC = 3;
-		STANDARD_SAR = 4;
-		AIDS_TO_NAVIGATION = 5;
+		COMMAND_TYPE_AIS_POSITION_A = 1;
+		COMMAND_TYPE_AIS_POSITION_B = 2;
+		COMMAND_TYPE_AIS_SHIP_STATIC = 3;
+		COMMAND_TYPE_AIS_STANDARD_SAR = 4;
+		COMMAND_TYPE_AIS_AIDS_TO_NAVIGATION = 5;
+		COMMAND_TYPE_CLOCK_SYC = 6;
 	}
 	
-	required Type type = 1;
-	required bytes pid = 2;
+	required CommandType type = 1;
+	optional ClockSyc clocksyc = 2;
 	optional PositionA positiona = 3;
 	optional ShipStatic shipstatic = 4;
 	optional StandardSAR standardsar = 5;

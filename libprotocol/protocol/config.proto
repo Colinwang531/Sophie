@@ -1,0 +1,104 @@
+syntax = "proto2";
+
+package msg;
+
+message AlgorithmInfo
+{
+	enum AlgorithmType
+	{
+		HELMET = 1;
+		PHONE = 2;
+		SLEEP = 3;
+		FIGHT = 4;
+		FACE = 5;
+		OFFDUTY = 6;
+		FIRE = 7;
+	}
+	
+	required AlgorithmType type = 1;
+	required int32 gpu = 2;
+	required bytes id = 3;
+	required bytes camera = 4;
+	required float dectect = 5;
+	required float track = 6;
+	optional float seconddetectforphone = 7;
+	optional float similarforface = 8;
+	optional bool inoutforface = 9;
+	optional int32 triggertime = 10;
+}
+
+message CameraInfo
+{
+	enum CameraType
+	{
+		CAMERA_TYPE_ANALOG = 1;
+		CAMERA_TYPE_DIGIST = 2;
+	}
+	
+	required CameraType type = 1;
+	required bytes cid = 2;
+	required int32 index = 3;
+	required bool enable = 4;
+	required bytes nickname = 5;
+	required bytes ipv4 = 6;
+}
+
+message DeviceInfo
+{
+	enum FactoryType
+	{
+		FACTORY_TYPE_HIKVISION = 1;
+		FACTORY_TYPE_DAHUA = 2;
+		FACTORY_TYPE_EATON = 3;
+	}
+	
+	enum DeviceMode
+	{
+		DEVICE_MODE_DVR = 1;
+		DEVICE_MODE_NVR = 2;
+		DEVICE_MODE_IPC = 3;
+	}
+	
+	required bytes did = 1;
+	optional bool enable = 2;
+	optional FactoryType type = 3;
+	optional DeviceMode mode = 4;
+	optional bytes username = 5;
+	optional bytes userpwd = 6;
+	optional bytes ipv4 = 7;
+	optional int32 port = 8;
+	optional bytes nickname = 9;
+	repeated CameraInfo infos = 10;
+}
+
+message CrewInfo
+{
+	required bytes id = 1;
+	optional bytes name = 2;
+	optional bytes job = 3;
+	repeated bytes pictures = 4;
+}
+
+message ConfigureMessage
+{
+	enum CommandType
+	{
+		COMMAND_TYPE_ALGO_NEW_REQ = 1;
+		COMMAND_TYPE_ALGO_NEW_REP = 2;
+		COMMAND_TYPE_DEVICE_NEW_REQ = 3;
+		COMMAND_TYPE_DEVICE_NEW_REP = 4;
+		COMMAND_TYPE_DEVICE_DELETE_REQ = 5;
+		COMMAND_TYPE_DEVICE_DELETE_REP = 6;
+		COMMAND_TYPE_SAIL_STATUS_SET_REQ = 7;
+		COMMAND_TYPE_SAIL_STATUS_SET_REP = 8;
+		COMMAND_TYPE_CREW_NEW_REQ = 9;
+		COMMAND_TYPE_CREW_NEW_REP = 10;
+	}
+	
+	required CommandType type = 1;
+	optional AlgorithmInfo algorithm = 2;
+	optional DeviceInfo device = 3;
+	optional CrewInfo crew = 4;
+	optional int32 status = 5;
+	optional bool sail = 6;
+}

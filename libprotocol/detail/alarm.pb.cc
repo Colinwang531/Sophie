@@ -17,24 +17,24 @@
 
 PROTOBUF_PRAGMA_INIT_SEG
 namespace msg {
-constexpr Range::Range(
+constexpr PositionInfo::PositionInfo(
   ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
   : x_(0)
   , y_(0)
   , w_(0)
   , h_(0){}
-struct RangeDefaultTypeInternal {
-  constexpr RangeDefaultTypeInternal()
+struct PositionInfoDefaultTypeInternal {
+  constexpr PositionInfoDefaultTypeInternal()
     : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
-  ~RangeDefaultTypeInternal() {}
+  ~PositionInfoDefaultTypeInternal() {}
   union {
-    Range _instance;
+    PositionInfo _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT RangeDefaultTypeInternal _Range_default_instance_;
-constexpr Alarm::Alarm(
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PositionInfoDefaultTypeInternal _PositionInfo_default_instance_;
+constexpr AlarmInfo::AlarmInfo(
   ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
-  : ranges_()
+  : positioninfo_()
   , camera_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
   , timestamp_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
   , picture_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
@@ -43,21 +43,18 @@ constexpr Alarm::Alarm(
   , bodycount_(0)
   , type_(1)
 {}
-struct AlarmDefaultTypeInternal {
-  constexpr AlarmDefaultTypeInternal()
+struct AlarmInfoDefaultTypeInternal {
+  constexpr AlarmInfoDefaultTypeInternal()
     : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
-  ~AlarmDefaultTypeInternal() {}
+  ~AlarmInfoDefaultTypeInternal() {}
   union {
-    Alarm _instance;
+    AlarmInfo _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT AlarmDefaultTypeInternal _Alarm_default_instance_;
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT AlarmInfoDefaultTypeInternal _AlarmInfo_default_instance_;
 constexpr AlarmMessage::AlarmMessage(
   ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
-  : pid_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
-  , alarm_(nullptr)
-  , command_(1)
-{}
+  : info_(nullptr){}
 struct AlarmMessageDefaultTypeInternal {
   constexpr AlarmMessageDefaultTypeInternal()
     : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
@@ -69,36 +66,36 @@ struct AlarmMessageDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT AlarmMessageDefaultTypeInternal _AlarmMessage_default_instance_;
 }  // namespace msg
 static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_alarm_2eproto[3];
-static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_alarm_2eproto[2];
+static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_alarm_2eproto[1];
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_alarm_2eproto = nullptr;
 
 const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_alarm_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
-  PROTOBUF_FIELD_OFFSET(::msg::Range, _has_bits_),
-  PROTOBUF_FIELD_OFFSET(::msg::Range, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::msg::PositionInfo, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::msg::PositionInfo, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::msg::Range, x_),
-  PROTOBUF_FIELD_OFFSET(::msg::Range, y_),
-  PROTOBUF_FIELD_OFFSET(::msg::Range, w_),
-  PROTOBUF_FIELD_OFFSET(::msg::Range, h_),
+  PROTOBUF_FIELD_OFFSET(::msg::PositionInfo, x_),
+  PROTOBUF_FIELD_OFFSET(::msg::PositionInfo, y_),
+  PROTOBUF_FIELD_OFFSET(::msg::PositionInfo, w_),
+  PROTOBUF_FIELD_OFFSET(::msg::PositionInfo, h_),
   0,
   1,
   2,
   3,
-  PROTOBUF_FIELD_OFFSET(::msg::Alarm, _has_bits_),
-  PROTOBUF_FIELD_OFFSET(::msg::Alarm, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::msg::AlarmInfo, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::msg::AlarmInfo, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::msg::Alarm, type_),
-  PROTOBUF_FIELD_OFFSET(::msg::Alarm, camera_),
-  PROTOBUF_FIELD_OFFSET(::msg::Alarm, timestamp_),
-  PROTOBUF_FIELD_OFFSET(::msg::Alarm, picture_),
-  PROTOBUF_FIELD_OFFSET(::msg::Alarm, ranges_),
-  PROTOBUF_FIELD_OFFSET(::msg::Alarm, idforface_),
-  PROTOBUF_FIELD_OFFSET(::msg::Alarm, inoutforface_),
-  PROTOBUF_FIELD_OFFSET(::msg::Alarm, bodycount_),
+  PROTOBUF_FIELD_OFFSET(::msg::AlarmInfo, type_),
+  PROTOBUF_FIELD_OFFSET(::msg::AlarmInfo, camera_),
+  PROTOBUF_FIELD_OFFSET(::msg::AlarmInfo, timestamp_),
+  PROTOBUF_FIELD_OFFSET(::msg::AlarmInfo, picture_),
+  PROTOBUF_FIELD_OFFSET(::msg::AlarmInfo, positioninfo_),
+  PROTOBUF_FIELD_OFFSET(::msg::AlarmInfo, idforface_),
+  PROTOBUF_FIELD_OFFSET(::msg::AlarmInfo, inoutforface_),
+  PROTOBUF_FIELD_OFFSET(::msg::AlarmInfo, bodycount_),
   6,
   0,
   1,
@@ -112,42 +109,38 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_alarm_2eproto::offsets[] PROTO
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::msg::AlarmMessage, command_),
-  PROTOBUF_FIELD_OFFSET(::msg::AlarmMessage, alarm_),
-  PROTOBUF_FIELD_OFFSET(::msg::AlarmMessage, pid_),
-  2,
-  1,
+  PROTOBUF_FIELD_OFFSET(::msg::AlarmMessage, info_),
   0,
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
-  { 0, 9, sizeof(::msg::Range)},
-  { 13, 26, sizeof(::msg::Alarm)},
-  { 34, 42, sizeof(::msg::AlarmMessage)},
+  { 0, 9, sizeof(::msg::PositionInfo)},
+  { 13, 26, sizeof(::msg::AlarmInfo)},
+  { 34, 40, sizeof(::msg::AlarmMessage)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::msg::_Range_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::msg::_Alarm_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::msg::_PositionInfo_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::msg::_AlarmInfo_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::msg::_AlarmMessage_default_instance_),
 };
 
 const char descriptor_table_protodef_alarm_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\013alarm.proto\022\003msg\"3\n\005Range\022\t\n\001x\030\001 \002(\005\022\t"
-  "\n\001y\030\002 \002(\005\022\t\n\001w\030\003 \002(\005\022\t\n\001h\030\004 \002(\005\"\373\001\n\005Alar"
-  "m\022\035\n\004type\030\001 \002(\0162\017.msg.Alarm.Type\022\016\n\006came"
-  "ra\030\002 \002(\014\022\021\n\ttimestamp\030\003 \002(\014\022\017\n\007picture\030\004"
-  " \002(\014\022\032\n\006ranges\030\005 \003(\0132\n.msg.Range\022\021\n\tidfo"
-  "rface\030\006 \001(\014\022\024\n\014inoutforface\030\007 \001(\010\022\021\n\tbod"
-  "ycount\030\010 \001(\005\"G\n\004Type\022\n\n\006HELMET\020\001\022\t\n\005PHON"
-  "E\020\002\022\t\n\005SLEEP\020\003\022\t\n\005FIGHT\020\004\022\010\n\004FACE\020\005\022\010\n\004B"
-  "ODY\020\006\"\214\001\n\014AlarmMessage\022*\n\007command\030\001 \002(\0162"
-  "\031.msg.AlarmMessage.Command\022\031\n\005alarm\030\002 \001("
-  "\0132\n.msg.Alarm\022\013\n\003pid\030\003 \001(\014\"(\n\007Command\022\016\n"
-  "\nALARM_PUSH\020\001\022\r\n\tALARM_ACK\020\002"
+  "\n\013alarm.proto\022\003msg\":\n\014PositionInfo\022\t\n\001x\030"
+  "\001 \002(\005\022\t\n\001y\030\002 \002(\005\022\t\n\001w\030\003 \002(\005\022\t\n\001h\030\004 \002(\005\"\335"
+  "\002\n\tAlarmInfo\022&\n\004type\030\001 \002(\0162\030.msg.AlarmIn"
+  "fo.AlarmType\022\016\n\006camera\030\002 \002(\014\022\021\n\ttimestam"
+  "p\030\003 \002(\014\022\017\n\007picture\030\004 \002(\014\022\'\n\014positioninfo"
+  "\030\005 \003(\0132\021.msg.PositionInfo\022\021\n\tidforface\030\006"
+  " \001(\014\022\024\n\014inoutforface\030\007 \001(\010\022\021\n\tbodycount\030"
+  "\010 \001(\005\"\216\001\n\tAlarmType\022\025\n\021ALARM_TYPE_HELMET"
+  "\020\001\022\024\n\020ALARM_TYPE_PHONE\020\002\022\024\n\020ALARM_TYPE_S"
+  "LEEP\020\003\022\024\n\020ALARM_TYPE_FIGHT\020\004\022\023\n\017ALARM_TY"
+  "PE_FACE\020\005\022\023\n\017ALARM_TYPE_BODY\020\006\",\n\014AlarmM"
+  "essage\022\034\n\004info\030\001 \002(\0132\016.msg.AlarmInfo"
   ;
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_alarm_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_alarm_2eproto = {
-  false, false, 468, descriptor_table_protodef_alarm_2eproto, "alarm.proto", 
+  false, false, 476, descriptor_table_protodef_alarm_2eproto, "alarm.proto", 
   &descriptor_table_alarm_2eproto_once, nullptr, 0, 3,
   schemas, file_default_instances, TableStruct_alarm_2eproto::offsets,
   file_level_metadata_alarm_2eproto, file_level_enum_descriptors_alarm_2eproto, file_level_service_descriptors_alarm_2eproto,
@@ -161,11 +154,11 @@ descriptor_table_alarm_2eproto_metadata_getter(int index) {
 // Force running AddDescriptors() at dynamic initialization time.
 PROTOBUF_ATTRIBUTE_INIT_PRIORITY static ::PROTOBUF_NAMESPACE_ID::internal::AddDescriptorsRunner dynamic_init_dummy_alarm_2eproto(&descriptor_table_alarm_2eproto);
 namespace msg {
-const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* Alarm_Type_descriptor() {
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* AlarmInfo_AlarmType_descriptor() {
   ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_alarm_2eproto);
   return file_level_enum_descriptors_alarm_2eproto[0];
 }
-bool Alarm_Type_IsValid(int value) {
+bool AlarmInfo_AlarmType_IsValid(int value) {
   switch (value) {
     case 1:
     case 2:
@@ -180,43 +173,22 @@ bool Alarm_Type_IsValid(int value) {
 }
 
 #if (__cplusplus < 201703) && (!defined(_MSC_VER) || _MSC_VER >= 1900)
-constexpr Alarm_Type Alarm::HELMET;
-constexpr Alarm_Type Alarm::PHONE;
-constexpr Alarm_Type Alarm::SLEEP;
-constexpr Alarm_Type Alarm::FIGHT;
-constexpr Alarm_Type Alarm::FACE;
-constexpr Alarm_Type Alarm::BODY;
-constexpr Alarm_Type Alarm::Type_MIN;
-constexpr Alarm_Type Alarm::Type_MAX;
-constexpr int Alarm::Type_ARRAYSIZE;
-#endif  // (__cplusplus < 201703) && (!defined(_MSC_VER) || _MSC_VER >= 1900)
-const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* AlarmMessage_Command_descriptor() {
-  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_alarm_2eproto);
-  return file_level_enum_descriptors_alarm_2eproto[1];
-}
-bool AlarmMessage_Command_IsValid(int value) {
-  switch (value) {
-    case 1:
-    case 2:
-      return true;
-    default:
-      return false;
-  }
-}
-
-#if (__cplusplus < 201703) && (!defined(_MSC_VER) || _MSC_VER >= 1900)
-constexpr AlarmMessage_Command AlarmMessage::ALARM_PUSH;
-constexpr AlarmMessage_Command AlarmMessage::ALARM_ACK;
-constexpr AlarmMessage_Command AlarmMessage::Command_MIN;
-constexpr AlarmMessage_Command AlarmMessage::Command_MAX;
-constexpr int AlarmMessage::Command_ARRAYSIZE;
+constexpr AlarmInfo_AlarmType AlarmInfo::ALARM_TYPE_HELMET;
+constexpr AlarmInfo_AlarmType AlarmInfo::ALARM_TYPE_PHONE;
+constexpr AlarmInfo_AlarmType AlarmInfo::ALARM_TYPE_SLEEP;
+constexpr AlarmInfo_AlarmType AlarmInfo::ALARM_TYPE_FIGHT;
+constexpr AlarmInfo_AlarmType AlarmInfo::ALARM_TYPE_FACE;
+constexpr AlarmInfo_AlarmType AlarmInfo::ALARM_TYPE_BODY;
+constexpr AlarmInfo_AlarmType AlarmInfo::AlarmType_MIN;
+constexpr AlarmInfo_AlarmType AlarmInfo::AlarmType_MAX;
+constexpr int AlarmInfo::AlarmType_ARRAYSIZE;
 #endif  // (__cplusplus < 201703) && (!defined(_MSC_VER) || _MSC_VER >= 1900)
 
 // ===================================================================
 
-class Range::_Internal {
+class PositionInfo::_Internal {
  public:
-  using HasBits = decltype(std::declval<Range>()._has_bits_);
+  using HasBits = decltype(std::declval<PositionInfo>()._has_bits_);
   static void set_has_x(HasBits* has_bits) {
     (*has_bits)[0] |= 1u;
   }
@@ -234,51 +206,51 @@ class Range::_Internal {
   }
 };
 
-Range::Range(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+PositionInfo::PositionInfo(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
   SharedCtor();
   RegisterArenaDtor(arena);
-  // @@protoc_insertion_point(arena_constructor:msg.Range)
+  // @@protoc_insertion_point(arena_constructor:msg.PositionInfo)
 }
-Range::Range(const Range& from)
+PositionInfo::PositionInfo(const PositionInfo& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
       _has_bits_(from._has_bits_) {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   ::memcpy(&x_, &from.x_,
     static_cast<size_t>(reinterpret_cast<char*>(&h_) -
     reinterpret_cast<char*>(&x_)) + sizeof(h_));
-  // @@protoc_insertion_point(copy_constructor:msg.Range)
+  // @@protoc_insertion_point(copy_constructor:msg.PositionInfo)
 }
 
-void Range::SharedCtor() {
+void PositionInfo::SharedCtor() {
 ::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
     reinterpret_cast<char*>(&x_) - reinterpret_cast<char*>(this)),
     0, static_cast<size_t>(reinterpret_cast<char*>(&h_) -
     reinterpret_cast<char*>(&x_)) + sizeof(h_));
 }
 
-Range::~Range() {
-  // @@protoc_insertion_point(destructor:msg.Range)
+PositionInfo::~PositionInfo() {
+  // @@protoc_insertion_point(destructor:msg.PositionInfo)
   SharedDtor();
   _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-void Range::SharedDtor() {
+void PositionInfo::SharedDtor() {
   GOOGLE_DCHECK(GetArena() == nullptr);
 }
 
-void Range::ArenaDtor(void* object) {
-  Range* _this = reinterpret_cast< Range* >(object);
+void PositionInfo::ArenaDtor(void* object) {
+  PositionInfo* _this = reinterpret_cast< PositionInfo* >(object);
   (void)_this;
 }
-void Range::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+void PositionInfo::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
 }
-void Range::SetCachedSize(int size) const {
+void PositionInfo::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
 
-void Range::Clear() {
-// @@protoc_insertion_point(message_clear_start:msg.Range)
+void PositionInfo::Clear() {
+// @@protoc_insertion_point(message_clear_start:msg.PositionInfo)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -293,7 +265,7 @@ void Range::Clear() {
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* Range::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+const char* PositionInfo::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   _Internal::HasBits has_bits{};
   while (!ctx->Done(&ptr)) {
@@ -356,9 +328,9 @@ failure:
 #undef CHK_
 }
 
-::PROTOBUF_NAMESPACE_ID::uint8* Range::_InternalSerialize(
+::PROTOBUF_NAMESPACE_ID::uint8* PositionInfo::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:msg.Range)
+  // @@protoc_insertion_point(serialize_to_array_start:msg.PositionInfo)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -391,12 +363,12 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:msg.Range)
+  // @@protoc_insertion_point(serialize_to_array_end:msg.PositionInfo)
   return target;
 }
 
-size_t Range::RequiredFieldsByteSizeFallback() const {
-// @@protoc_insertion_point(required_fields_byte_size_fallback_start:msg.Range)
+size_t PositionInfo::RequiredFieldsByteSizeFallback() const {
+// @@protoc_insertion_point(required_fields_byte_size_fallback_start:msg.PositionInfo)
   size_t total_size = 0;
 
   if (_internal_has_x()) {
@@ -429,8 +401,8 @@ size_t Range::RequiredFieldsByteSizeFallback() const {
 
   return total_size;
 }
-size_t Range::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:msg.Range)
+size_t PositionInfo::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:msg.PositionInfo)
   size_t total_size = 0;
 
   if (((_has_bits_[0] & 0x0000000f) ^ 0x0000000f) == 0) {  // All required fields are present.
@@ -470,23 +442,23 @@ size_t Range::ByteSizeLong() const {
   return total_size;
 }
 
-void Range::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:msg.Range)
+void PositionInfo::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:msg.PositionInfo)
   GOOGLE_DCHECK_NE(&from, this);
-  const Range* source =
-      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<Range>(
+  const PositionInfo* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<PositionInfo>(
           &from);
   if (source == nullptr) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:msg.Range)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:msg.PositionInfo)
     ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:msg.Range)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:msg.PositionInfo)
     MergeFrom(*source);
   }
 }
 
-void Range::MergeFrom(const Range& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:msg.Range)
+void PositionInfo::MergeFrom(const PositionInfo& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:msg.PositionInfo)
   GOOGLE_DCHECK_NE(&from, this);
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
@@ -510,47 +482,47 @@ void Range::MergeFrom(const Range& from) {
   }
 }
 
-void Range::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:msg.Range)
+void PositionInfo::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:msg.PositionInfo)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void Range::CopyFrom(const Range& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:msg.Range)
+void PositionInfo::CopyFrom(const PositionInfo& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:msg.PositionInfo)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool Range::IsInitialized() const {
+bool PositionInfo::IsInitialized() const {
   if (_Internal::MissingRequiredFields(_has_bits_)) return false;
   return true;
 }
 
-void Range::InternalSwap(Range* other) {
+void PositionInfo::InternalSwap(PositionInfo* other) {
   using std::swap;
   _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
   swap(_has_bits_[0], other->_has_bits_[0]);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(Range, h_)
-      + sizeof(Range::h_)
-      - PROTOBUF_FIELD_OFFSET(Range, x_)>(
+      PROTOBUF_FIELD_OFFSET(PositionInfo, h_)
+      + sizeof(PositionInfo::h_)
+      - PROTOBUF_FIELD_OFFSET(PositionInfo, x_)>(
           reinterpret_cast<char*>(&x_),
           reinterpret_cast<char*>(&other->x_));
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata Range::GetMetadata() const {
+::PROTOBUF_NAMESPACE_ID::Metadata PositionInfo::GetMetadata() const {
   return GetMetadataStatic();
 }
 
 
 // ===================================================================
 
-class Alarm::_Internal {
+class AlarmInfo::_Internal {
  public:
-  using HasBits = decltype(std::declval<Alarm>()._has_bits_);
+  using HasBits = decltype(std::declval<AlarmInfo>()._has_bits_);
   static void set_has_type(HasBits* has_bits) {
     (*has_bits)[0] |= 64u;
   }
@@ -577,17 +549,17 @@ class Alarm::_Internal {
   }
 };
 
-Alarm::Alarm(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+AlarmInfo::AlarmInfo(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena),
-  ranges_(arena) {
+  positioninfo_(arena) {
   SharedCtor();
   RegisterArenaDtor(arena);
-  // @@protoc_insertion_point(arena_constructor:msg.Alarm)
+  // @@protoc_insertion_point(arena_constructor:msg.AlarmInfo)
 }
-Alarm::Alarm(const Alarm& from)
+AlarmInfo::AlarmInfo(const AlarmInfo& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
       _has_bits_(from._has_bits_),
-      ranges_(from.ranges_) {
+      positioninfo_(from.positioninfo_) {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   camera_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   if (from._internal_has_camera()) {
@@ -612,10 +584,10 @@ Alarm::Alarm(const Alarm& from)
   ::memcpy(&inoutforface_, &from.inoutforface_,
     static_cast<size_t>(reinterpret_cast<char*>(&type_) -
     reinterpret_cast<char*>(&inoutforface_)) + sizeof(type_));
-  // @@protoc_insertion_point(copy_constructor:msg.Alarm)
+  // @@protoc_insertion_point(copy_constructor:msg.AlarmInfo)
 }
 
-void Alarm::SharedCtor() {
+void AlarmInfo::SharedCtor() {
 camera_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 timestamp_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 picture_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
@@ -627,13 +599,13 @@ idforface_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAl
 type_ = 1;
 }
 
-Alarm::~Alarm() {
-  // @@protoc_insertion_point(destructor:msg.Alarm)
+AlarmInfo::~AlarmInfo() {
+  // @@protoc_insertion_point(destructor:msg.AlarmInfo)
   SharedDtor();
   _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-void Alarm::SharedDtor() {
+void AlarmInfo::SharedDtor() {
   GOOGLE_DCHECK(GetArena() == nullptr);
   camera_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   timestamp_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
@@ -641,23 +613,23 @@ void Alarm::SharedDtor() {
   idforface_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
-void Alarm::ArenaDtor(void* object) {
-  Alarm* _this = reinterpret_cast< Alarm* >(object);
+void AlarmInfo::ArenaDtor(void* object) {
+  AlarmInfo* _this = reinterpret_cast< AlarmInfo* >(object);
   (void)_this;
 }
-void Alarm::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+void AlarmInfo::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
 }
-void Alarm::SetCachedSize(int size) const {
+void AlarmInfo::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
 
-void Alarm::Clear() {
-// @@protoc_insertion_point(message_clear_start:msg.Alarm)
+void AlarmInfo::Clear() {
+// @@protoc_insertion_point(message_clear_start:msg.AlarmInfo)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  ranges_.Clear();
+  positioninfo_.Clear();
   cached_has_bits = _has_bits_[0];
   if (cached_has_bits & 0x0000000fu) {
     if (cached_has_bits & 0x00000001u) {
@@ -683,7 +655,7 @@ void Alarm::Clear() {
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* Alarm::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+const char* AlarmInfo::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   _Internal::HasBits has_bits{};
   while (!ctx->Done(&ptr)) {
@@ -691,13 +663,13 @@ const char* Alarm::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::inte
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     CHK_(ptr);
     switch (tag >> 3) {
-      // required .msg.Alarm.Type type = 1;
+      // required .msg.AlarmInfo.AlarmType type = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
           ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
-          if (PROTOBUF_PREDICT_TRUE(::msg::Alarm_Type_IsValid(val))) {
-            _internal_set_type(static_cast<::msg::Alarm_Type>(val));
+          if (PROTOBUF_PREDICT_TRUE(::msg::AlarmInfo_AlarmType_IsValid(val))) {
+            _internal_set_type(static_cast<::msg::AlarmInfo_AlarmType>(val));
           } else {
             ::PROTOBUF_NAMESPACE_ID::internal::WriteVarint(1, val, mutable_unknown_fields());
           }
@@ -727,13 +699,13 @@ const char* Alarm::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::inte
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // repeated .msg.Range ranges = 5;
+      // repeated .msg.PositionInfo positioninfo = 5;
       case 5:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 42)) {
           ptr -= 1;
           do {
             ptr += 1;
-            ptr = ctx->ParseMessage(_internal_add_ranges(), ptr);
+            ptr = ctx->ParseMessage(_internal_add_positioninfo(), ptr);
             CHK_(ptr);
             if (!ctx->DataAvailable(ptr)) break;
           } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<42>(ptr));
@@ -786,14 +758,14 @@ failure:
 #undef CHK_
 }
 
-::PROTOBUF_NAMESPACE_ID::uint8* Alarm::_InternalSerialize(
+::PROTOBUF_NAMESPACE_ID::uint8* AlarmInfo::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:msg.Alarm)
+  // @@protoc_insertion_point(serialize_to_array_start:msg.AlarmInfo)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  // required .msg.Alarm.Type type = 1;
+  // required .msg.AlarmInfo.AlarmType type = 1;
   if (cached_has_bits & 0x00000040u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
@@ -818,12 +790,12 @@ failure:
         4, this->_internal_picture(), target);
   }
 
-  // repeated .msg.Range ranges = 5;
+  // repeated .msg.PositionInfo positioninfo = 5;
   for (unsigned int i = 0,
-      n = static_cast<unsigned int>(this->_internal_ranges_size()); i < n; i++) {
+      n = static_cast<unsigned int>(this->_internal_positioninfo_size()); i < n; i++) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(5, this->_internal_ranges(i), target, stream);
+      InternalWriteMessage(5, this->_internal_positioninfo(i), target, stream);
   }
 
   // optional bytes idforface = 6;
@@ -848,12 +820,12 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:msg.Alarm)
+  // @@protoc_insertion_point(serialize_to_array_end:msg.AlarmInfo)
   return target;
 }
 
-size_t Alarm::RequiredFieldsByteSizeFallback() const {
-// @@protoc_insertion_point(required_fields_byte_size_fallback_start:msg.Alarm)
+size_t AlarmInfo::RequiredFieldsByteSizeFallback() const {
+// @@protoc_insertion_point(required_fields_byte_size_fallback_start:msg.AlarmInfo)
   size_t total_size = 0;
 
   if (_internal_has_camera()) {
@@ -878,15 +850,15 @@ size_t Alarm::RequiredFieldsByteSizeFallback() const {
   }
 
   if (_internal_has_type()) {
-    // required .msg.Alarm.Type type = 1;
+    // required .msg.AlarmInfo.AlarmType type = 1;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_type());
   }
 
   return total_size;
 }
-size_t Alarm::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:msg.Alarm)
+size_t AlarmInfo::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:msg.AlarmInfo)
   size_t total_size = 0;
 
   if (((_has_bits_[0] & 0x00000047) ^ 0x00000047) == 0) {  // All required fields are present.
@@ -905,7 +877,7 @@ size_t Alarm::ByteSizeLong() const {
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
         this->_internal_picture());
 
-    // required .msg.Alarm.Type type = 1;
+    // required .msg.AlarmInfo.AlarmType type = 1;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_type());
 
@@ -916,9 +888,9 @@ size_t Alarm::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // repeated .msg.Range ranges = 5;
-  total_size += 1UL * this->_internal_ranges_size();
-  for (const auto& msg : this->ranges_) {
+  // repeated .msg.PositionInfo positioninfo = 5;
+  total_size += 1UL * this->_internal_positioninfo_size();
+  for (const auto& msg : this->positioninfo_) {
     total_size +=
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
   }
@@ -954,29 +926,29 @@ size_t Alarm::ByteSizeLong() const {
   return total_size;
 }
 
-void Alarm::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:msg.Alarm)
+void AlarmInfo::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:msg.AlarmInfo)
   GOOGLE_DCHECK_NE(&from, this);
-  const Alarm* source =
-      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<Alarm>(
+  const AlarmInfo* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<AlarmInfo>(
           &from);
   if (source == nullptr) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:msg.Alarm)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:msg.AlarmInfo)
     ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:msg.Alarm)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:msg.AlarmInfo)
     MergeFrom(*source);
   }
 }
 
-void Alarm::MergeFrom(const Alarm& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:msg.Alarm)
+void AlarmInfo::MergeFrom(const AlarmInfo& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:msg.AlarmInfo)
   GOOGLE_DCHECK_NE(&from, this);
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  ranges_.MergeFrom(from.ranges_);
+  positioninfo_.MergeFrom(from.positioninfo_);
   cached_has_bits = from._has_bits_[0];
   if (cached_has_bits & 0x0000007fu) {
     if (cached_has_bits & 0x00000001u) {
@@ -1004,45 +976,45 @@ void Alarm::MergeFrom(const Alarm& from) {
   }
 }
 
-void Alarm::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:msg.Alarm)
+void AlarmInfo::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:msg.AlarmInfo)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void Alarm::CopyFrom(const Alarm& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:msg.Alarm)
+void AlarmInfo::CopyFrom(const AlarmInfo& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:msg.AlarmInfo)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool Alarm::IsInitialized() const {
+bool AlarmInfo::IsInitialized() const {
   if (_Internal::MissingRequiredFields(_has_bits_)) return false;
-  if (!::PROTOBUF_NAMESPACE_ID::internal::AllAreInitialized(ranges_)) return false;
+  if (!::PROTOBUF_NAMESPACE_ID::internal::AllAreInitialized(positioninfo_)) return false;
   return true;
 }
 
-void Alarm::InternalSwap(Alarm* other) {
+void AlarmInfo::InternalSwap(AlarmInfo* other) {
   using std::swap;
   _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
   swap(_has_bits_[0], other->_has_bits_[0]);
-  ranges_.InternalSwap(&other->ranges_);
+  positioninfo_.InternalSwap(&other->positioninfo_);
   camera_.Swap(&other->camera_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   timestamp_.Swap(&other->timestamp_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   picture_.Swap(&other->picture_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   idforface_.Swap(&other->idforface_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(Alarm, bodycount_)
-      + sizeof(Alarm::bodycount_)
-      - PROTOBUF_FIELD_OFFSET(Alarm, inoutforface_)>(
+      PROTOBUF_FIELD_OFFSET(AlarmInfo, bodycount_)
+      + sizeof(AlarmInfo::bodycount_)
+      - PROTOBUF_FIELD_OFFSET(AlarmInfo, inoutforface_)>(
           reinterpret_cast<char*>(&inoutforface_),
           reinterpret_cast<char*>(&other->inoutforface_));
   swap(type_, other->type_);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata Alarm::GetMetadata() const {
+::PROTOBUF_NAMESPACE_ID::Metadata AlarmInfo::GetMetadata() const {
   return GetMetadataStatic();
 }
 
@@ -1052,24 +1024,18 @@ void Alarm::InternalSwap(Alarm* other) {
 class AlarmMessage::_Internal {
  public:
   using HasBits = decltype(std::declval<AlarmMessage>()._has_bits_);
-  static void set_has_command(HasBits* has_bits) {
-    (*has_bits)[0] |= 4u;
-  }
-  static const ::msg::Alarm& alarm(const AlarmMessage* msg);
-  static void set_has_alarm(HasBits* has_bits) {
-    (*has_bits)[0] |= 2u;
-  }
-  static void set_has_pid(HasBits* has_bits) {
+  static const ::msg::AlarmInfo& info(const AlarmMessage* msg);
+  static void set_has_info(HasBits* has_bits) {
     (*has_bits)[0] |= 1u;
   }
   static bool MissingRequiredFields(const HasBits& has_bits) {
-    return ((has_bits[0] & 0x00000004) ^ 0x00000004) != 0;
+    return ((has_bits[0] & 0x00000001) ^ 0x00000001) != 0;
   }
 };
 
-const ::msg::Alarm&
-AlarmMessage::_Internal::alarm(const AlarmMessage* msg) {
-  return *msg->alarm_;
+const ::msg::AlarmInfo&
+AlarmMessage::_Internal::info(const AlarmMessage* msg) {
+  return *msg->info_;
 }
 AlarmMessage::AlarmMessage(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
@@ -1081,24 +1047,16 @@ AlarmMessage::AlarmMessage(const AlarmMessage& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
       _has_bits_(from._has_bits_) {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  pid_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  if (from._internal_has_pid()) {
-    pid_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_pid(), 
-      GetArena());
-  }
-  if (from._internal_has_alarm()) {
-    alarm_ = new ::msg::Alarm(*from.alarm_);
+  if (from._internal_has_info()) {
+    info_ = new ::msg::AlarmInfo(*from.info_);
   } else {
-    alarm_ = nullptr;
+    info_ = nullptr;
   }
-  command_ = from.command_;
   // @@protoc_insertion_point(copy_constructor:msg.AlarmMessage)
 }
 
 void AlarmMessage::SharedCtor() {
-pid_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-alarm_ = nullptr;
-command_ = 1;
+info_ = nullptr;
 }
 
 AlarmMessage::~AlarmMessage() {
@@ -1109,8 +1067,7 @@ AlarmMessage::~AlarmMessage() {
 
 void AlarmMessage::SharedDtor() {
   GOOGLE_DCHECK(GetArena() == nullptr);
-  pid_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  if (this != internal_default_instance()) delete alarm_;
+  if (this != internal_default_instance()) delete info_;
 }
 
 void AlarmMessage::ArenaDtor(void* object) {
@@ -1130,15 +1087,9 @@ void AlarmMessage::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000007u) {
-    if (cached_has_bits & 0x00000001u) {
-      pid_.ClearNonDefaultToEmpty();
-    }
-    if (cached_has_bits & 0x00000002u) {
-      GOOGLE_DCHECK(alarm_ != nullptr);
-      alarm_->Clear();
-    }
-    command_ = 1;
+  if (cached_has_bits & 0x00000001u) {
+    GOOGLE_DCHECK(info_ != nullptr);
+    info_->Clear();
   }
   _has_bits_.Clear();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
@@ -1152,30 +1103,10 @@ const char* AlarmMessage::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_I
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     CHK_(ptr);
     switch (tag >> 3) {
-      // required .msg.AlarmMessage.Command command = 1;
+      // required .msg.AlarmInfo info = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
-          ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
-          CHK_(ptr);
-          if (PROTOBUF_PREDICT_TRUE(::msg::AlarmMessage_Command_IsValid(val))) {
-            _internal_set_command(static_cast<::msg::AlarmMessage_Command>(val));
-          } else {
-            ::PROTOBUF_NAMESPACE_ID::internal::WriteVarint(1, val, mutable_unknown_fields());
-          }
-        } else goto handle_unusual;
-        continue;
-      // optional .msg.Alarm alarm = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
-          ptr = ctx->ParseMessage(_internal_mutable_alarm(), ptr);
-          CHK_(ptr);
-        } else goto handle_unusual;
-        continue;
-      // optional bytes pid = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
-          auto str = _internal_mutable_pid();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
+          ptr = ctx->ParseMessage(_internal_mutable_info(), ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -1209,25 +1140,12 @@ failure:
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  // required .msg.AlarmMessage.Command command = 1;
-  if (cached_has_bits & 0x00000004u) {
-    target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
-      1, this->_internal_command(), target);
-  }
-
-  // optional .msg.Alarm alarm = 2;
-  if (cached_has_bits & 0x00000002u) {
+  // required .msg.AlarmInfo info = 1;
+  if (cached_has_bits & 0x00000001u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(
-        2, _Internal::alarm(this), target, stream);
-  }
-
-  // optional bytes pid = 3;
-  if (cached_has_bits & 0x00000001u) {
-    target = stream->WriteBytesMaybeAliased(
-        3, this->_internal_pid(), target);
+        1, _Internal::info(this), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -1242,32 +1160,16 @@ size_t AlarmMessage::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:msg.AlarmMessage)
   size_t total_size = 0;
 
-  // required .msg.AlarmMessage.Command command = 1;
-  if (_internal_has_command()) {
+  // required .msg.AlarmInfo info = 1;
+  if (_internal_has_info()) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_command());
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *info_);
   }
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000003u) {
-    // optional bytes pid = 3;
-    if (cached_has_bits & 0x00000001u) {
-      total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
-          this->_internal_pid());
-    }
-
-    // optional .msg.Alarm alarm = 2;
-    if (cached_has_bits & 0x00000002u) {
-      total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-          *alarm_);
-    }
-
-  }
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
         _internal_metadata_, total_size, &_cached_size_);
@@ -1299,18 +1201,8 @@ void AlarmMessage::MergeFrom(const AlarmMessage& from) {
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x00000007u) {
-    if (cached_has_bits & 0x00000001u) {
-      _internal_set_pid(from._internal_pid());
-    }
-    if (cached_has_bits & 0x00000002u) {
-      _internal_mutable_alarm()->::msg::Alarm::MergeFrom(from._internal_alarm());
-    }
-    if (cached_has_bits & 0x00000004u) {
-      command_ = from.command_;
-    }
-    _has_bits_[0] |= cached_has_bits;
+  if (from._internal_has_info()) {
+    _internal_mutable_info()->::msg::AlarmInfo::MergeFrom(from._internal_info());
   }
 }
 
@@ -1330,8 +1222,8 @@ void AlarmMessage::CopyFrom(const AlarmMessage& from) {
 
 bool AlarmMessage::IsInitialized() const {
   if (_Internal::MissingRequiredFields(_has_bits_)) return false;
-  if (_internal_has_alarm()) {
-    if (!alarm_->IsInitialized()) return false;
+  if (_internal_has_info()) {
+    if (!info_->IsInitialized()) return false;
   }
   return true;
 }
@@ -1340,9 +1232,7 @@ void AlarmMessage::InternalSwap(AlarmMessage* other) {
   using std::swap;
   _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
   swap(_has_bits_[0], other->_has_bits_[0]);
-  pid_.Swap(&other->pid_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
-  swap(alarm_, other->alarm_);
-  swap(command_, other->command_);
+  swap(info_, other->info_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata AlarmMessage::GetMetadata() const {
@@ -1353,11 +1243,11 @@ void AlarmMessage::InternalSwap(AlarmMessage* other) {
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace msg
 PROTOBUF_NAMESPACE_OPEN
-template<> PROTOBUF_NOINLINE ::msg::Range* Arena::CreateMaybeMessage< ::msg::Range >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::msg::Range >(arena);
+template<> PROTOBUF_NOINLINE ::msg::PositionInfo* Arena::CreateMaybeMessage< ::msg::PositionInfo >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::msg::PositionInfo >(arena);
 }
-template<> PROTOBUF_NOINLINE ::msg::Alarm* Arena::CreateMaybeMessage< ::msg::Alarm >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::msg::Alarm >(arena);
+template<> PROTOBUF_NOINLINE ::msg::AlarmInfo* Arena::CreateMaybeMessage< ::msg::AlarmInfo >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::msg::AlarmInfo >(arena);
 }
 template<> PROTOBUF_NOINLINE ::msg::AlarmMessage* Arena::CreateMaybeMessage< ::msg::AlarmMessage >(Arena* arena) {
   return Arena::CreateMessageInternal< ::msg::AlarmMessage >(arena);

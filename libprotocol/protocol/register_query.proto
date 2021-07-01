@@ -1,0 +1,53 @@
+syntax = "proto2";
+
+package msg;
+
+message ApplicationInfo
+{
+	enum ApplicationType
+	{
+		APPLICATION_TYPE_XMQ = 1;
+		APPLICATION_TYPE_CMS = 2;
+		APPLICATION_TYPE_WEB = 3;
+		APPLICATION_TYPE_DHSLB = 4;
+		APPLICATION_TYPE_DHS = 5;
+		APPLICATION_TYPE_XMSLB = 6;
+		APPLICATION_TYPE_XMS = 7;
+		APPLICATION_TYPE_RTSP = 8;
+		APPLICATION_TYPE_RTMP = 9;
+		APPLICATION_TYPE_HLS = 10;
+		APPLICATION_TYPE_GBS = 11;
+		APPLICATION_TYPE_GBXMS = 12;
+		APPLICATION_TYPE_DSS = 13;
+		APPLICATION_TYPE_DBE = 14;
+		APPLICATION_TYPE_AIS = 15;
+		APPLICATION_TYPE_TSS = 16;
+		APPLICATION_TYPE_ALARM = 17;
+		APPLICATION_TYPE_HELMET = 18;
+		APPLICATION_TYPE_PHONE = 19;
+		APPLICATION_TYPE_SLEEP = 20;
+		APPLICATION_TYPE_FACE = 21;
+		APPLICATION_TYPE_FIGHT = 22;
+	}
+	
+	required ApplicationType type = 1;
+	required bytes name = 2;
+	required bytes ipv4 = 3;
+	optional bytes id = 4;
+	optional bytes nickname = 5;
+}
+
+message ApplicationMessage
+{
+	enum CommandType
+	{
+		COMMAND_TYPE_REGISTER_REQ = 1;
+		COMMAND_TYPE_REGISTER_REP = 2;
+		COMMAND_TYPE_QUERY_REQ = 3;
+		COMMAND_TYPE_QUERY_REP = 4;
+	}
+	
+	required CommandType type = 1;
+	repeated ApplicationInfo infos = 2;
+	optional int32 status = 3;
+}
