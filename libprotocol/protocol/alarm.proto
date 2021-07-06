@@ -20,13 +20,14 @@ message AlarmInfo
 		ALARM_TYPE_FIGHT = 4;
 		ALARM_TYPE_FACE = 5;
 		ALARM_TYPE_BODY = 6;
+		ALARM_TYPE_FIRE = 7;
 	}
 	
 	required AlarmType type = 1;
 	required bytes camera = 2;
 	required bytes timestamp = 3;
 	required bytes picture = 4;
-	repeated PositionInfo positioninfo = 5;
+	repeated PositionInfo positioninfos = 5;
 	optional bytes idforface = 6;
 	optional bool inoutforface = 7;
 	optional int32 bodycount = 8;

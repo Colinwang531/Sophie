@@ -164,17 +164,17 @@ namespace framework
 			}
 
 			int Router::start(
-				const std::string ipv4,
-				const unsigned short port /* = 0 */)
+				const std::string localIP,
+				const unsigned short localPort /* = 0 */)
 			{
 				CommonError e{ 
-					!ipv4.empty() && gMinPortNumber <= port && gMaxPortNumber >= port ? 
+					!localIP.empty() && gMinPortNumber <= localPort && gMaxPortNumber >= localPort ? 
 					CommonError::COMMON_ERROR_SUCCESS : 
 					CommonError::COMMON_ERROR_INVALID_PARAMETER };
 
 				if (CommonError::COMMON_ERROR_SUCCESS == e)
 				{
-					e = router ? router->start(ipv4, port) : CommonError::COMMON_ERROR_BAD_NEW_INSTANCE;
+					e = router ? router->start(localIP, localPort) : CommonError::COMMON_ERROR_BAD_NEW_INSTANCE;
 				}
 
 				return static_cast<int>(e);

@@ -1,6 +1,6 @@
-#include "boost/algorithm/string.hpp"
 #include "boost/checked_delete.hpp"
 #include "boost/functional/factory.hpp"
+#include "detail/register_query.pb.h"
 #include "libcommon/error.h"
 #include "register_query_parser.h"
 
@@ -18,93 +18,81 @@ namespace framework
             CommonError parse(const std::string data);
             const std::string compose(void);
             const RegisterQueryType getCommandType(void) const;
-            int setCommandType(
+            CommonError setCommandType(
                 const RegisterQueryType type = RegisterQueryType::REGISTER_QUERY_TYPE_NONE);
             const ApplicationInfo getRegisterApplicationInfo(void) const;
-            int setRegisterApplicationInfo(const ApplicationInfo info);
-            const int getQueryStatusCode(void) const;
-            int setQueryStatusCode(const int status = -1);
+            CommonError setRegisterApplicationInfo(const ApplicationInfo info);
             const std::vector<ApplicationInfo> getQueryApplicationInfos(void) const;
-            int setQueryApplicationInfos(const std::vector<ApplicationInfo> infos);
+            CommonError setQueryApplicationInfos(const std::vector<ApplicationInfo> infos);
+            const int getStatusCode(void) const;
+            CommonError setStatusCode(const int status = -1);
 
         private:
             RegisterQueryType registerQueryType;
+            std::vector<ApplicationInfo> applicationInfos;
+            int statusCode;
         };//class IRegisterQueryParser
 
         IRegisterQueryParser::IRegisterQueryParser() 
-            : registerQueryType{RegisterQueryType::REGISTER_QUERY_TYPE_NONE}
+            : registerQueryType{RegisterQueryType::REGISTER_QUERY_TYPE_NONE}, statusCode{-1}
         {}
         IRegisterQueryParser::~IRegisterQueryParser()
         {}
 
-        CommonError IUrlParser::parse(const std::string url)
+        CommonError IRegisterQueryParser::parse(const std::string data)
         {
-            const int colonPos{
-                static_cast<const int>(url.find_first_of(':'))};
-            const int questionPos{
-                static_cast<const int>(url.find_first_of('?'))};
-            const int totalLength{
-                static_cast<const int>(url.length())};
+            CommonError e{CommonError::COMMON_ERROR_BAD_OPERATE};
+            msg::ApplicationMessage msg;
 
-            //命令名称
-            command = url.substr(0, colonPos);
-            //命令参数段
-	        const std::string commandParam{ 
-                url.substr(colonPos + 3, -1 < questionPos ? questionPos - colonPos - 3 : totalLength - colonPos - 2) };
-            if (!commandParam.empty())
+            if (msg.ParseFromArray(data.c_str(), static_cast<int>(data.length())))
             {
-                parseCommandParameters(commandParam);
-            }
-            //自定义参数段
-	        const std::string userParam{ 
-                -1 < questionPos ? url.substr(questionPos + 1, totalLength - questionPos) : "" };
-            if (!userParam.empty())
-            {
-                parseUserParameters(userParam);
+                registerQueryType = static_cast<RegisterQueryType>(msg.type());
+                for (int i = 0; i != msg.infos_size(); ++i)
+                {
+                    msg::ApplicationInfo info{msg.infos(i)};
+                    ApplicationInfo newApplicationInfo;
+                    newApplicationInfo.type = static_cast<ApplicationType>(info.type());
+                    newApplicationInfo.name = info.name();
+                    newApplicationInfo.IPv4 = info.ipv4();
+                    newApplicationInfo.ID = info.id();
+                    newApplicationInfo.nickName = info.nickname();
+                    applicationInfos.push_back(newApplicationInfo);
+                }
+                if(msg.has_status())
+                {
+                    statusCode = msg.status();
+                }
+
+                e = CommonError::COMMON_ERROR_SUCCESS;
             }
             
-            return CommonError::COMMON_ERROR_SUCCESS;
+            return e;
         }
 
-        const std::string IUrlParser::compose()
+        const std::string IRegisterQueryParser::compose()
         {
-            std::string url;
-            const int cmdParaCount{
-                static_cast<const int>(commandParameters.size())};
-            const int userParaCount{
-                static_cast<const int>(userParameters.size())};
+            std::string data;
+            msg::ApplicationMessage msg;
 
-            url.append(command);
-            url.append("://");
-            for (int i = 0; i != cmdParaCount; ++i)
+            msg.set_type(
+                static_cast<msg::ApplicationMessage_CommandType>(registerQueryType));
+            for (int i = 0; i != applicationInfos.size(); ++i)
             {
-                url.append(commandParameters[i].key);
-                url.append("=");
-                url.append(commandParameters[i].value);
-
-                if (i < cmdParaCount - 1)
-                {
-                    url.append("&");
-                } 
+                msg::ApplicationInfo* info{msg.add_infos()};
+                info->set_type(
+                    static_cast<msg::ApplicationInfo_ApplicationType>(applicationInfos[i].type));
+                info->set_name(applicationInfos[i].name);
+                info->set_ipv4(applicationInfos[i].IPv4);
+                info->set_id(applicationInfos[i].ID);
+                info->set_nickname(applicationInfos[i].nickName);
             }
-            for (int i = 0; i != userParaCount; ++i)
+            if (-1 < statusCode)
             {
-                if (0 == i)
-                {
-                    url.append("?");
-                }
-                
-                url.append(userParameters[i].key);
-                url.append("=");
-                url.append(userParameters[i].value);
-
-                if (i < userParaCount - 1)
-                {
-                    url.append("&");
-                } 
+                msg.set_status(statusCode);
             }
+            msg.SerializeToString(&data);
 
-            return url;
+            return data;
         }
 
         const RegisterQueryType IRegisterQueryParser::getCommandType() const
@@ -112,71 +100,62 @@ namespace framework
             return registerQueryType;
         }
 
-        CommonError RegisterQueryType::setCommandType(
+        CommonError IRegisterQueryParser::setCommandType(
             const RegisterQueryType type /*= RegisterQueryType::REGISTER_QUERY_TYPE_NONE*/)
         {
             registerQueryType = type;
             return CommonError::COMMON_ERROR_SUCCESS;
         }
 
-        const ApplicationInfo RegisterQueryType::getRegisterApplicationInfo()
+        const ApplicationInfo IRegisterQueryParser::getRegisterApplicationInfo() const
         {
-            return commandParameters;
+            ApplicationInfo info{
+                ApplicationType::APPLICATION_TYPE_NONE};
+
+            if ((RegisterQueryType::REGISTER_QUERY_TYPE_REGISTER_REQ == registerQueryType ||
+                RegisterQueryType::REGISTER_QUERY_TYPE_REGISTER_REP == registerQueryType) &&
+                0 < applicationInfos.size())
+            {
+                info = applicationInfos[0];
+            }
+            
+            return info;
         }
 
-        CommonError IUrlParser::setCommandParameter(const std::string key, const std::string value)
+        CommonError IRegisterQueryParser::setRegisterApplicationInfo(const ApplicationInfo info)
         {
-            ParamItem pi{key, value};
-            commandParameters.push_back(pi);
+            if (0 < applicationInfos.size())
+            {
+                applicationInfos[0] = info;
+            }
+            else
+            {
+                applicationInfos.push_back(info);
+            }
+            
             return CommonError::COMMON_ERROR_SUCCESS;
         }
 
-        const std::vector<ParamItem> IUrlParser::getUserParameters()
+        const std::vector<ApplicationInfo> IRegisterQueryParser::getQueryApplicationInfos() const
         {
-            return userParameters;
+            return applicationInfos;
         }
 
-        CommonError IUrlParser::setUserParameter(const std::string key, const std::string value)
+        CommonError IRegisterQueryParser::setQueryApplicationInfos(const std::vector<ApplicationInfo> infos)
         {
-            ParamItem pi{key, value};
-            userParameters.push_back(pi);
+            applicationInfos = infos;
             return CommonError::COMMON_ERROR_SUCCESS;
         }
 
-        void IUrlParser::parseCommandParameters(const std::string str)
+        const int IRegisterQueryParser::getStatusCode() const
         {
-            if (!str.empty())
-            {
-                std::vector<std::string> items;
-                boost::split(items, str, boost::is_any_of("&"));
-
-                for(int i = 0; i !=items.size(); ++i)
-                {
-                    std::vector<std::string> subitems;
-                    boost::split(subitems, items[i], boost::is_any_of("="));
-
-                    ParamItem pi{subitems[0], subitems[1]};
-                    commandParameters.push_back(pi);
-                }
-            }
+            return statusCode;
         }
 
-        void IUrlParser::parseUserParameters(const std::string str)
+        CommonError IRegisterQueryParser::setStatusCode(const int status /*= -1*/)
         {
-            if (!str.empty())
-            {
-                std::vector<std::string> items;
-                boost::split(items, str, boost::is_any_of("&"));
-
-                for(int i = 0; i !=items.size(); ++i)
-                {
-                    std::vector<std::string> subitems;
-                    boost::split(subitems, items[i], boost::is_any_of("="));
-
-                    ParamItem pi{subitems[0], subitems[1]};
-                    userParameters.push_back(pi);
-                }
-            }
+            statusCode = status;
+            return CommonError::COMMON_ERROR_SUCCESS;
         }
 
         RegisterQueryParser::RegisterQueryParser() 
@@ -207,14 +186,14 @@ namespace framework
 
         const RegisterQueryType RegisterQueryParser::getCommandType() const
         {
-            return parser ? parser->getCommandType() : "";
+            return parser ? parser->getCommandType() : RegisterQueryType::REGISTER_QUERY_TYPE_NONE;
         }
 
         int RegisterQueryParser::setCommandType(
             const RegisterQueryType type /*= RegisterQueryType::REGISTER_QUERY_TYPE_NONE*/)
         {
             CommonError e{
-                REGISTER_QUERY_TYPE_NONE < type ? 
+                RegisterQueryType::REGISTER_QUERY_TYPE_NONE < type ? 
                 CommonError::COMMON_ERROR_SUCCESS : 
                 CommonError::COMMON_ERROR_INVALID_PARAMETER};
 
@@ -248,16 +227,6 @@ namespace framework
             return static_cast<int>(e);
         }
 
-        const int RegisterQueryParser::getQueryStatusCode()
-        {
-            return parser ? parser->getQueryStatusCode() : CommonError::COMMON_ERROR_BAD_NEW_INSTANCE;
-        }
-
-        int RegisterQueryParser::setQueryStatusCode(const int status /*= -1*/)
-        {
-            return static_cast<int>(parser ? parser->setQueryStatusCode(status) : CommonError::COMMON_ERROR_BAD_NEW_INSTANCE);
-        }
-
         const std::vector<ApplicationInfo> RegisterQueryParser::getQueryApplicationInfos(void) const
         {
             std::vector<ApplicationInfo> nullApplicationInfos;
@@ -277,6 +246,16 @@ namespace framework
             }
 
             return static_cast<int>(e);
+        }
+
+        const int RegisterQueryParser::getStatusCode() const
+        {
+            return parser ? parser->getStatusCode() : -1;
+        }
+
+        int RegisterQueryParser::setStatusCode(const int status /*= -1*/)
+        {
+            return static_cast<int>(parser ? parser->setStatusCode(status) : CommonError::COMMON_ERROR_BAD_NEW_INSTANCE);
         }
     }//namespace libprotocol
 }//namespace framework

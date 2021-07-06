@@ -11,7 +11,8 @@ XMQ::XMQ(
 	Log& log, 
 	const std::string appID, 
 	void* ctx /*= nullptr*/) 
-	: Switcher(ctx), Worker(ctx), logObj{log}, applicationID{appID}
+	: Switcher(ctx), Worker(ctx), logObj{log}, 
+	sourceID{Uuid().generateRandomUuid()}, applicationID{appID}, isUpload{false}
 {}
 XMQ::~XMQ()
 {}
@@ -88,24 +89,16 @@ void XMQ::afterSwitcherPollDataProcess(
 		{
 			const std::string command{parser.getCommand()};
 
-			if (0 == command.compare("pair"))
-			{
-				processPairMessage(sourceID, &parser);
-			}
-			else if (0 == command.compare("setup"))
-			{
-				processSetupMessage(&parser);
-			}
-			else if (0 == command.compare("register") || 
-					 0 == command.compare("query") || 
-					 0 == command.compare("config") || 
-					 0 == command.compare("notify") || 
-					 0 == command.compare("alarm"))
+			if (0 == command.compare("register") || 
+				0 == command.compare("query") || 
+				0 == command.compare("config") || 
+				0 == command.compare("notify") || 
+				0 == command.compare("alarm"))
 			{
 				//参数处理流程via -> upload -> receiver -> friend
 				if (!forwardVia(&parser))
 				{
-					if (!forwardUpload(&parser))
+					if (!forwardUpload(sourceID, &parser))
 					{
 						if (!forwardReceiver(&parser))
 						{
@@ -203,63 +196,85 @@ bool XMQ::forwardVia(void* parser /*= nullptr*/)
 	return result;
 }
 
-bool XMQ::forwardUpload(void* parser /*= nullptr*/)
+bool XMQ::forwardUpload(
+	const std::string sourceID, 
+	void* parser /*= nullptr*/)
 {
-	bool result{false};
+	friendID = sourceID;
+	bool status{false};
 	UrlParser* urlparser{reinterpret_cast<UrlParser*>(parser)};
-	std::vector<ParamItem> userParameters{urlparser->getUserParameters()};
 
-	//遍历用户参数段
-	//找出第一个出现的upload参数
-	//删除第一个出现的upload参数
-	//重构url并转发到upload参数值的目标
+	//遍历查找address、port、data和upload字段
+	//连接upload
+	//发送"register://sender=sourceID & data=X & via=this->sourceID"
 
-	for (std::vector<ParamItem>::iterator it = userParameters.begin();
-		 it != userParameters.end();)
+	std::string address, port, data;
+	std::vector<ParamItem> commandParameters{urlparser->getCommandParameters()};
+	for (int i = 0; i != commandParameters.size(); ++i)
 	{
-		if (0 == it->key.compare("upload"))
+		if (0 == commandParameters[i].key.compare("address"))
 		{
-			result = true;
-			userParameters.erase(it);
+			address = commandParameters[i].value;
+		}
+		else if (0 == commandParameters[i].key.compare("port"))
+		{
+			port = commandParameters[i].value;
+		}
+		else if (0 == commandParameters[i].key.compare("data"))
+		{
+			data = commandParameters[i].value;
+		}
+	}
 
+	std::vector<ParamItem> userParameters{urlparser->getUserParameters()};
+	for (int i = 0; i != userParameters.size(); ++i)
+	{
+		if (0 == userParameters[i].key.compare("upload"))
+		{
+			status = true;
+			break;
+		}
+	}
+
+	if (status)
+	{
+		if (!isUpload && !address.empty() && !port.empty())
+		{
+			isUpload = (
+				CommonError::COMMON_ERROR_SUCCESS == static_cast<CommonError>(XMQ::connect(address, atoi(port.c_str()))) ? 
+				true : 
+				false);
+		}
+
+		if (isUpload)
+		{
 			UrlParser newUrlParser;
 			newUrlParser.setCommand(urlparser->getCommand());
-			const std::vector<ParamItem> commandParameters{urlparser->getCommandParameters()};
-			for (int j = 0; j != commandParameters.size(); ++j)
-			{
-				newUrlParser.setCommandParameter(commandParameters[j].key, commandParameters[j].value);
-			}
-			for (int k = 0; k != userParameters.size(); ++k)
-			{
-				newUrlParser.setUserParameter(userParameters[k].key, userParameters[k].value);
-			}
-
-			const std::string data{newUrlParser.compose()};
-			int e{Worker::send(data)};
+			newUrlParser.setCommandParameter("sender", sourceID);
+			newUrlParser.setCommandParameter("data", data);
+			newUrlParser.setCommandParameter("via", this->sourceID);
+			const std::string urlData{newUrlParser.compose()};
+			int e{Worker::send(urlData)};
 
 			if (CommonError::COMMON_ERROR_SUCCESS == static_cast<CommonError>(e))
 			{
 				logObj.write(
 					framework::liblog::LogLevel::LOG_LEVEL_INFO, 
-					"Forward message [ %s ] to upload successfully.", 
+					"Forward message [ %s ] successfully.", 
 					data.c_str());
 			}
 			else
 			{
 				logObj.write(
 					framework::liblog::LogLevel::LOG_LEVEL_ERROR, 
-					"Forward message [ %s ] to upload failed, result = [ %d ].", 
-					data.c_str(),
+					"Forward message [ %s ] failed, result = [ %d ].", 
+					data.c_str(), 
 					e);
 			}
-
-			break;
 		}
-
-		++it;
 	}
-
-	return result;
+	
+	return status;
 }
 
 bool XMQ::forwardReceiver(void* parser /*= nullptr*/)
@@ -334,66 +349,5 @@ void XMQ::forwardFriend(const std::string data)
 			framework::liblog::LogLevel::LOG_LEVEL_WARNING, 
 			"Can not forward message to friend [ %s ].", 
 			friendID.c_str());
-	}
-}
-
-void XMQ::processPairMessage(
-	const std::string sourceID, 
-	void* parser /*= nullptr*/)
-{
-	friendID = sourceID;
-	logObj.write(
-		framework::liblog::LogLevel::LOG_LEVEL_INFO, 
-		"Update ID = [ %s ] of friend is successfully.", 
-		friendID.c_str());
-
-	//发送"pair://sender=sourceID"
-	UrlParser* urlparser{reinterpret_cast<UrlParser*>(parser)};
-	urlparser->setCommandParameter("sender", this->sourceID);
-	const std::string data{urlparser->compose()};
-	CommonError e{
-		static_cast<CommonError>(Switcher::send(sourceID, data))};
-
-	if (CommonError::COMMON_ERROR_SUCCESS == e)
-	{
-		logObj.write(
-			framework::liblog::LogLevel::LOG_LEVEL_INFO, 
-			"Reply pair message [ %s ] to friend [ %s ] successfully.",
-			data.c_str(),  
-			friendID.c_str());
-	}
-	else
-	{
-		logObj.write(
-			framework::liblog::LogLevel::LOG_LEVEL_ERROR, 
-			"Reply pair message [ %s ] to friend [ %s ], result = [ %d ].", 
-			data.c_str(), 
-			friendID.c_str(),
-			e);
-	}
-}
-
-void XMQ::processSetupMessage(void* parser /*= nullptr*/)
-{
-	if (sourceID.empty())
-	{
-		sourceID = Uuid().generateRandomUuid();
-		UrlParser* urlparser{reinterpret_cast<UrlParser*>(parser)};
-		const std::vector<ParamItem> commandParameters{urlparser->getCommandParameters()};
-		std::string address, port;
-
-		for (int i = 0; i != commandParameters.size(); ++i)
-		{
-			if (0 == commandParameters[i].key.compare("address"))
-			{
-				address = commandParameters[i].value;
-			}
-			else if (0 == commandParameters[i].key.compare("port"))
-			{
-				port = commandParameters[i].value;
-			}
-		}
-		
-		XMQ::connect(address, atoi(port.c_str()));
 	}
 }

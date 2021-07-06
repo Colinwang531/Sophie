@@ -1,5 +1,3 @@
-#include "liblog/log.h"
-using Log = framework::liblog::Log;
 #include "libcommon/command_line/command_line.h"
 using CommandLineParser = framework::libcommon::CommandLineParser;
 #include "libcommon/xml/xml.h"
@@ -73,12 +71,9 @@ int main(int argc, char* argv[])
 	if (CommonError::COMMON_ERROR_SUCCESS == static_cast<CommonError>(ctx.init()))
 	{
 		CMS cms{log, gApplicationID, &ctx};
-		if (CommonError::COMMON_ERROR_SUCCESS == 
-			static_cast<CommonError>(cms.connect(gRemoteIP, gRemotePort)))
-		{
-			cms.setup(gUploadIP, gUploadPort);
-		}
+		cms.start(gRemoteIP, gRemotePort, gUploadIP, gUploadPort);
 		getchar();
+		cms.stop();
 	}
 
 	ctx.uninit();

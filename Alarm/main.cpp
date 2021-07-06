@@ -1,117 +1,83 @@
-#include "boost/make_shared.hpp"
-#include "boost/uuid/uuid_generators.hpp"
-#include "boost/uuid/uuid_io.hpp"
-#ifdef _WINDOWS
-#include "glog/log_severity.h"
-#include "glog/logging.h"
-#else
-#include "glog/log_severity.h"
-#include "glog/logging.h"
-#endif//_WINDOWS
-#include "Error.h"
-#include "CommandLine/CommandLine.h"
-using CommandLine = base::commandline::CommandLine;
-#include "Xml/XmlCodec.h"
-using XMLParser = base::xml::XMLParser;
-using XMLPacker = base::xml::XMLPacker;
-#include "ALM.h"
-using ALMPtr = boost::shared_ptr<ALM>;
+#include "libcommon/command_line/command_line.h"
+using CommandLineParser = framework::libcommon::CommandLineParser;
+#include "libcommon/xml/xml.h"
+using XmlParser = framework::libcommon::XmlParser;
+#include "libcommon/uuid/uuid.h"
+using Uuid = framework::libcommon::Uuid;
+#include "libnetwork/zmq/ctx.h"
+using Ctx = framework::libnetwork::zmq::Ctx;
+#include "libcommon/error.h"
+#include "Alarm.h"
 
-static std::string gALMID;
-static std::string gALMName;
-static std::string gXMQIP;
-static unsigned short gXMQPort{ 0 };
-static unsigned short gPubPort{ 0 };
+static std::string gApplicationID;
+static std::string gRemoteIP;
+static unsigned short gRemotePort{ 0 };
+static std::string gPublisherIP;
+static unsigned short gPublisherPort{ 0 };
 
-static void parseCommandLine(int argc, char** argv)
+static void parseCommandLine(Log& log, int argc, char** argv)
 {
-	CommandLine cl;
-	cl.setCommandOptions("xmq,x", "127.0.0.1");
-	cl.setCommandOptions("port,p", "61101");
-	cl.setCommandOptions("pub,b", "60820");
-	cl.setCommandOptions("name,n", "Alarm");
+	CommandLineParser parser;
+	parser.setOption("remote_ip", "127.0.0.1");
+	parser.setOption("remote_port,p", "61001");
+	parser.setOption("publisher_ip", "127.0.0.1");
+	parser.setOption("publisher_port", "60820");
+	CommonError e{
+		static_cast<CommonError>(
+			parser.parse(argc, const_cast<const char**>(argv)))};
 
-	if (eSuccess == cl.parseCommandLine(argc, argv))
+	if (CommonError::COMMON_ERROR_SUCCESS == e)
 	{
-		const char* ipv4{ cl.getParameterByOption("xmq") };
-		if (ipv4)
-		{
-			gXMQIP.append(ipv4);
-		}
-
-		const char* port{ cl.getParameterByOption("port") };
-		if (port)
-		{
-			gXMQPort = static_cast<unsigned short>(atoi(port));
-		}
-
-		const char* pub{ cl.getParameterByOption("pub") };
-		if (port)
-		{
-			gPubPort = static_cast<unsigned short>(atoi(pub));
-		}
-
-		//优先使用配置文件中的名称,如果配置文件中的名称空再使用参数列表中的名称
-		//名称在第一次启动设置后就不能再修改
-		std::string configName;
-		XMLParser().getValueByName("Config.xml", "Component.ALM.Name", configName);
-		const char* name{ cl.getParameterByOption("name") };
-		if (configName.empty())
-		{
-			if (name)
-			{
-				configName.append(name);
-				//名字直接写入配置文件,需要再去读
-				XMLPacker().setValueWithName("Config.xml", "Component.ALM.Name", configName);
-			}
-		}
-		gALMName = configName;
+		gRemoteIP.append(parser.getValue("remote_ip"));
+		gRemotePort = static_cast<unsigned short>(atoi(parser.getValue("remote_port")));
+		gPublisherIP.append(parser.getValue("publisher_ip"));
+		gPublisherPort = static_cast<unsigned short>(atoi(parser.getValue("publisher_port")));
 	}
+
+	log.write(
+		framework::liblog::LogLevel::LOG_LEVEL_INFO, 
+		"Parse command line parameters with remote = [ %s : %d ] and publisher = [ %s : %d ].",
+		gRemoteIP.c_str(),
+		gRemotePort,
+		gPublisherIP.c_str(),
+		gPublisherPort);
 }
 
-static void parseID()
+static void generateApplicationID(Log& log)
 {
-	//优先使用配置文件中的名称,如果配置文件中的名称空再使用参数列表中的名称
-		//名称在第一次启动设置后就不能再修改
-	XMLParser().getValueByName("Config.xml", "Component.ALM.ID", gALMID);
-	if (gALMID.empty())
+	gApplicationID.append(XmlParser().getValue("config.xml", "Component.Alarm.ID"));
+
+	if (gApplicationID.empty())
 	{
-		gALMID = boost::uuids::to_string(boost::uuids::random_generator()());
-		XMLPacker().setValueWithName("Config.xml", "Component.ALM.ID", gALMID);
+		gApplicationID.append(Uuid().generateRandomUuid());
+		XmlParser().setValue("config.xml", "Component.Alarm.ID", gApplicationID);
 	}
+
+	log.write(
+		framework::liblog::LogLevel::LOG_LEVEL_INFO, 
+		"Generate application ID = [ %s ].",
+		gApplicationID.c_str());
 }
 
 int main(int argc, char* argv[])
 {
-	FLAGS_stderrthreshold = INFO;
-	FLAGS_colorlogtostderr = 1;
-	google::InitGoogleLogging(argv[0]);
-	google::SetLogDestination(INFO,
-#ifdef _WINDOWS
-		".\\"
-#else
-		"./"
-#endif
-	);
+	Log log;
+	int logErr{log.init(argv[0])};
+	parseCommandLine(log, argc, argv);
+	generateApplicationID(log);
+	
+	Ctx ctx;
 
-	parseCommandLine(argc, argv);
-	parseID();
-
-	using ALMPtr = boost::shared_ptr<framework::network::zeromq::OD>;
-	ALMPtr alarm{ boost::make_shared<ALM>(gALMName, gALMID, gPubPort) };
-
-	if (alarm)
+	if (CommonError::COMMON_ERROR_SUCCESS == static_cast<CommonError>(ctx.init()))
 	{
-		alarm->startOD(gXMQIP.c_str(), gXMQPort);
+		Alarm alarm{log, gApplicationID, &ctx};
+		alarm.start(gRemoteIP, gRemotePort, gPublisherIP, gPublisherPort);
+		getchar();
+		alarm.stop();
 	}
 
-	getchar();
-
-	if (alarm)
-	{
-		alarm->stopOD();
-	}
-	google::ShutdownGoogleLogging();
+	ctx.uninit();
+	log.uninit();
     
     return 0;
 }

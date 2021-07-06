@@ -4,7 +4,7 @@
 //		Author :						王科威
 //		E-mail :						wangkw531@icloud.com
 //		Date :							2021-06-12
-//		Description :					消息交换应用类
+//		Description :					消息交换类
 //
 //		History:						Author									Date										Description
 //										王科威									 2021-06-12									 创建
@@ -60,9 +60,12 @@ private:
 	bool forwardVia(void* parser = nullptr);
 
 	//转发消息给Upload
+	//@sourceID : 发送端ID标识
 	//@parser : 解析实例
 	//@Return : true表示处理成功,否则失败
-	bool forwardUpload(void* parser = nullptr);
+	bool forwardUpload(
+		const std::string sourceID,
+		void* parser = nullptr);
 
 	//转发消息给Receiver
 	//@parser : 解析实例
@@ -74,19 +77,12 @@ private:
 	//@Return : true表示处理成功,否则失败
 	void forwardFriend(const std::string data);
 
-	//处理pair消息
-	void processPairMessage(
-		const std::string sourceID, 
-		void* parser = nullptr);
-
-	//处理setup消息
-	void processSetupMessage(void* parser = nullptr);
-
 private:
 	Log& logObj;
 	const std::string applicationID;
 	std::string sourceID;
 	std::string friendID;
+	bool isUpload;
 };//class XMQ
 
 #endif//XMQ_H

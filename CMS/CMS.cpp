@@ -11,28 +11,32 @@ using ThreadPool = framework::libcommon::ThreadPool;
 using Time = framework::libcommon::Time;
 #include "libcommon/const.h"
 #include "libcommon/error.h"
+#include "libprotocol/register_query_parser.h"
+using RegisterQueryParser = framework::libprotocol::RegisterQueryParser;
+using RegisterQueryType = framework::libprotocol::RegisterQueryType;
+using ApplicationInfo = framework::libprotocol::ApplicationInfo;
+using ApplicationType = framework::libprotocol::ApplicationType;
 #include "CMS.h"
 
 CMS::CMS(
 	Log& log, 
-	const std::string id, 
+	const std::string appID, 
 	void* ctx /*= nullptr*/) 
-	: Worker(ctx), logObj{log}, applicationID{id}, 
-	sourceID{Uuid().generateRandomUuid()}, tid{nullptr}, stopped{false}
+	: Worker(ctx), logObj{log}, applicationID{appID}, 
+	sourceID{Uuid().generateRandomUuid()}, tid{nullptr}, stopped{false}, uploadPort{0}
 {}
 CMS::~CMS()
-{
-	stopped = true;
-	ThreadPool().destroy(tid);
-	tid = nullptr;	
-}
+{}
 
-int CMS::connect(
+int CMS::start(
 	const std::string remoteIP,
-	const unsigned short remotePort)
+	const unsigned short remotePort,
+	const std::string uploadIP,
+	const unsigned short uploadPort)
 {
 	CommonError e{
-		static_cast<CommonError>(Worker::connect(sourceID, remoteIP, remotePort))};
+		static_cast<CommonError>(
+			Worker::connect(sourceID, remoteIP, remotePort))};
 
 	if (CommonError::COMMON_ERROR_SUCCESS == e)
 	{
@@ -43,8 +47,10 @@ int CMS::connect(
 			remotePort,
 			sourceID.c_str());
 
+		this->uploadIP = uploadIP;
+		this->uploadPort = uploadPort;
 		tid = ThreadPool().create(
-			boost::bind(&CMS::timerTaskHandler, this));
+			boost::bind(&CMS::timerTaskThreadHandler, this));
 	}
 	else
 	{
@@ -60,39 +66,15 @@ int CMS::connect(
 	return static_cast<int>(e);
 }
 
-int CMS::setup(
-	const std::string uploadIP,
-	const unsigned short uploadPort)
+int CMS::stop()
 {
-	//发送"setup://address=uploadIP&port=uploadPort"
-	UrlParser parser;
-	parser.setCommand("setup");
-	parser.setCommandParameter("address", uploadIP);
-	parser.setCommandParameter("port", (boost::format("%d") % uploadPort).str());
-	const std::string data{parser.compose()};
-	int e{Worker::send(data)};
-
-	if (CommonError::COMMON_ERROR_SUCCESS == static_cast<CommonError>(e))
-	{
-		logObj.write(
-			framework::liblog::LogLevel::LOG_LEVEL_INFO, 
-			"Send setup message [ %s ] successfully.", 
-			data.c_str());
-	}
-	else
-	{
-		logObj.write(
-			framework::liblog::LogLevel::LOG_LEVEL_ERROR, 
-			"Send setup message [ %s ] failed, result = [ %d ].", 
-			data.c_str(),
-			e);
-	}
-
-	return static_cast<int>(e);
+	stopped = true;
+	ThreadPool().destroy(tid);
+	tid = nullptr;
+	return static_cast<int>(CommonError::COMMON_ERROR_SUCCESS);
 }
 
-void CMS::afterWorkerPollDataProcess(
-	const std::string data)
+void CMS::afterWorkerPollDataProcess(const std::string data)
 {
 	if (!data.empty())
 	{
@@ -103,13 +85,11 @@ void CMS::afterWorkerPollDataProcess(
 		{
 			const std::string command{parser.getCommand()};
 
-			if (0 == command.compare("pair"))
+			//CMS组件只处理register和query命令
+			//其他命令由组件自行交互处理
+			if (0 == command.compare("register") || 0 == command.compare("query"))
 			{
-				processPairMessage(&parser);
-			}
-			else if (0 == command.compare("register"))
-			{
-				processRegisterMessage(&parser);
+				processRegisterQueryMessage(&parser);
 			}
 			else
 			{
@@ -129,7 +109,7 @@ void CMS::afterWorkerPollDataProcess(
 	}
 }
 
-void CMS::timerTaskHandler()
+void CMS::timerTaskThreadHandler()
 {
 	unsigned long long lastTick{0};
 
@@ -139,36 +119,22 @@ void CMS::timerTaskHandler()
 
 		if (30000 < nowTick - lastTick)
 		{
-			sendPairMessage();
+			sendRegisterMessage();
+			removeExpiredApplicationInfo();
 			lastTick = nowTick;
 		}
 	}
 }
 
-void CMS::processPairMessage(void* parser /*= nullptr*/)
-{
-	UrlParser* urlparser{reinterpret_cast<UrlParser*>(parser)};
-	const std::vector<ParamItem> commandParameters{urlparser->getCommandParameters()};
-
-	//遍历命令参数段
-	//找出sender参数
-	//重构url
-
-	for (int i = 0; i != commandParameters.size(); ++i)
-	{
-		if (0 == commandParameters[i].key.compare("sender"))
-		{
-			sendRegisterMessage(commandParameters[i].value);
-			break;
-		}
-	}
-}
-
-void CMS::processRegisterMessage(void* parser /*= nullptr*/)
+void CMS::processRegisterQueryMessage(void* parser /*= nullptr*/)
 {
 	UrlParser* urlparser{reinterpret_cast<UrlParser*>(parser)};
 	const std::vector<ParamItem> commandParamItems{urlparser->getCommandParameters()};
-	std::string sender, via;
+	//如果命令参数中包含via字段则表示该消息是跨域交互
+	//否则表示本域交互，且必须包含receiver字段
+	//无论是跨域还是本域交互，sender和data字段是必须包含的
+	std::string sender, data, target;
+	bool hasVia{false};
 
 	for (int i = 0; i != commandParamItems.size(); ++i)
 	{
@@ -176,88 +142,285 @@ void CMS::processRegisterMessage(void* parser /*= nullptr*/)
 		{
 			sender = commandParamItems[i].value;
 		}
+		else if (0 == commandParamItems[i].key.compare("data"))
+		{
+			data = commandParamItems[i].value;
+		}
 		else if (0 == commandParamItems[i].key.compare("via"))
 		{
-			via = commandParamItems[i].value;
+			hasVia = true;
+			target = commandParamItems[i].value;
+		}
+		else if (0 == commandParamItems[i].key.compare("receiver"))
+		{
+			target = commandParamItems[i].value;
 		}
 	}
 
-	//注册应答"register:\\sender=sourceID&receiver=sender"
-	//或"register:\\sender=sourceID&receiver=sender?via=X"
+	processRegisterQueryMessage(sender, data, target, hasVia);
+}
+
+void CMS::processRegisterQueryMessage(
+	const std::string sender, 
+	const std::string data, 
+	const std::string target, 
+	const bool isVia /*= false*/)
+{
+	RegisterQueryParser parser;
+	CommonError e{
+		static_cast<CommonError>(parser.parse(data))};
+	RegisterQueryType type{parser.getCommandType()};
+
+	if (CommonError::COMMON_ERROR_SUCCESS == e)
+	{
+		if (RegisterQueryType::REGISTER_QUERY_TYPE_REGISTER_REQ == type)
+		{
+			updateRegisterApplicationInfo(target, isVia, &parser);
+			sendRegisterReplyMessage(sender, target, isVia);
+		}
+		else if (RegisterQueryType::REGISTER_QUERY_TYPE_REGISTER_REP == type)
+		{
+			const int statusCode{parser.getStatusCode()};
+			if (CommonError::COMMON_ERROR_SUCCESS == static_cast<CommonError>(statusCode))
+			{
+				logObj.write(
+					framework::liblog::LogLevel::LOG_LEVEL_INFO, 
+					"Receive message of registration successfully.");
+			}
+			else
+			{
+				logObj.write(
+					framework::liblog::LogLevel::LOG_LEVEL_WARNING, 
+					"Receive message of registration failed, result = [ %d ].",
+					statusCode);
+			}
+		}
+		else if (RegisterQueryType::REGISTER_QUERY_TYPE_QUERY_REQ == type)
+		{
+			sendQueryReplyMessage(sender, target, isVia);
+		}
+		else
+		{
+			logObj.write(
+				framework::liblog::LogLevel::LOG_LEVEL_WARNING, 
+				"Add unknown registration type = [ %d ] failed.", 
+				static_cast<int>(type));
+		}
+	}
+	else
+	{
+		logObj.write(
+			framework::liblog::LogLevel::LOG_LEVEL_ERROR, 
+			"Parse register message [ %s ] failed, result = [ %d ].", 
+			data.c_str(),
+			static_cast<int>(e));
+	}
+}
+
+void CMS::sendRegisterMessage()
+{
+	//构建注册消息
+	RegisterQueryParser registerParser;
+	registerParser.setCommandType(RegisterQueryType::REGISTER_QUERY_TYPE_REGISTER_REQ);
+	ApplicationInfo info;
+	info.type = ApplicationType::APPLICATION_TYPE_CMS;
+	info.name = "CMS";
+	info.ID = applicationID;
+	registerParser.setRegisterApplicationInfo(info);
+	const std::string registerData{registerParser.compose()};
+
+	//发送"register://address=uploadIP & port=uploadPort & data=X ? upload=true"
+	UrlParser parser;
+	parser.setCommand("register");
+	parser.setCommandParameter("address", uploadIP);
+	parser.setCommandParameter("port", (boost::format("%d") % uploadPort).str());
+	parser.setCommandParameter("data", registerData);
+	parser.setUserParameter("upload", "true");
+	const std::string data{parser.compose()};
+	int e{Worker::send(data)};
+
+	if (CommonError::COMMON_ERROR_SUCCESS == static_cast<CommonError>(e))
+	{
+		logObj.write(
+			framework::liblog::LogLevel::LOG_LEVEL_INFO, 
+			"Send message [ %s ] successfully.", 
+			data.c_str());
+	}
+	else
+	{
+		logObj.write(
+			framework::liblog::LogLevel::LOG_LEVEL_ERROR, 
+			"Send message [ %s ] failed, result = [ %d ].", 
+			data.c_str(),
+			e);
+	}
+}
+
+void CMS::sendRegisterReplyMessage(
+	const std::string receiver, 
+	const std::string via, 
+	const bool isVia /*= false*/)
+{
+	using RegisterQueryType = framework::libprotocol::RegisterQueryType;
+	RegisterQueryParser registerParser;
+	registerParser.setCommandType(RegisterQueryType::REGISTER_QUERY_TYPE_REGISTER_REP);
+	registerParser.setStatusCode(static_cast<int>(CommonError::COMMON_ERROR_SUCCESS));
+	const std::string registerData{registerParser.compose()};
+
+	//注册应答"register://sender=sourceID & receiver=sender & data=X"
+	//或"register://sender=sourceID & receiver=sender & data=X ? via=Y"
 	UrlParser newUrlParser;
 	newUrlParser.setCommand("register");
 	newUrlParser.setCommandParameter("sender", sourceID);
-	newUrlParser.setCommandParameter("receiver", sender);
+	newUrlParser.setCommandParameter("receiver", receiver);
+	newUrlParser.setCommandParameter("data", registerData);
 	if (!via.empty())
 	{
 		newUrlParser.setUserParameter("via", via);
 	}
-	const std::string data{newUrlParser.compose()};
-	int e{Worker::send(data)};
+	const std::string urlData{newUrlParser.compose()};
+	int e{Worker::send(urlData)};
 
 	if (CommonError::COMMON_ERROR_SUCCESS == static_cast<CommonError>(e))
 	{
 		logObj.write(
 			framework::liblog::LogLevel::LOG_LEVEL_INFO, 
-			"Send register message [ %s ] successfully.", 
-			data.c_str());
+			"Send register reply message [ %s ] successfully.", 
+			urlData.c_str());
 	}
 	else
 	{
 		logObj.write(
 			framework::liblog::LogLevel::LOG_LEVEL_ERROR, 
-			"Send register message [ %s ] failed, result = [ %d ].", 
-			data.c_str(),
+			"Send register reply message [ %s ] failed, result = [ %d ].", 
+			urlData.c_str(),
 			e);
 	}
 }
 
-void CMS::sendPairMessage()
+void CMS::sendQueryReplyMessage(
+	const std::string receiver, 
+	const std::string via, 
+	const bool isVia /*= false*/)
 {
-	//发送"pair://"
-	UrlParser parser;
-	parser.setCommand("pair");
-	const std::string data{parser.compose()};
-	int e{Worker::send(data)};
+	using RegisterQueryType = framework::libprotocol::RegisterQueryType;
+	RegisterQueryParser registerParser;
+	registerParser.setCommandType(RegisterQueryType::REGISTER_QUERY_TYPE_QUERY_REP);
+	registerParser.setStatusCode(static_cast<int>(CommonError::COMMON_ERROR_SUCCESS));
+	std::vector<ApplicationInfo> infos;
+	for (int i = 0; i != applicationInfos.size(); ++i)
+	{
+		infos.push_back(applicationInfos.item(i));
+	}
+	registerParser.setQueryApplicationInfos(infos);
+	
+	const std::string registerData{registerParser.compose()};
+
+	//查询应答"query://sender=sourceID & receiver=sender & data=X"
+	//或"query://sender=sourceID & receiver=sender & data=X ? via=Y"
+	UrlParser newUrlParser;
+	newUrlParser.setCommand("query");
+	newUrlParser.setCommandParameter("sender", sourceID);
+	newUrlParser.setCommandParameter("receiver", receiver);
+	newUrlParser.setCommandParameter("data", registerData);
+	if (!via.empty())
+	{
+		newUrlParser.setUserParameter("via", via);
+	}
+	const std::string urlData{newUrlParser.compose()};
+	int e{Worker::send(urlData)};
 
 	if (CommonError::COMMON_ERROR_SUCCESS == static_cast<CommonError>(e))
 	{
 		logObj.write(
 			framework::liblog::LogLevel::LOG_LEVEL_INFO, 
-			"Send message [ %s ] successfully.", 
-			data.c_str());
+			"Send query reply message [ %s ] successfully.", 
+			urlData.c_str());
 	}
 	else
 	{
 		logObj.write(
 			framework::liblog::LogLevel::LOG_LEVEL_ERROR, 
-			"Send message [ %s ] failed, result = [ %d ].", 
-			data.c_str(),
+			"Send query reply message [ %s ] failed, result = [ %d ].", 
+			urlData.c_str(),
 			e);
 	}
 }
 
-void CMS::sendRegisterMessage(const std::string viaID)
+void CMS::removeExpiredApplicationInfo()
 {
-	//发送"register://sender=sourceID&via=viaID?upload=true"
-	UrlParser parser;
-	parser.setCommand("pair");
-	const std::string data{parser.compose()};
-	int e{Worker::send(data)};
+	const unsigned long long applicationInfosNumber{applicationInfos.size()};
+	const unsigned long long now{Time().tickcount()};
 
-	if (CommonError::COMMON_ERROR_SUCCESS == static_cast<CommonError>(e))
+	for(int i = 0; i != applicationInfosNumber; ++i)
 	{
-		logObj.write(
-			framework::liblog::LogLevel::LOG_LEVEL_INFO, 
-			"Send message [ %s ] successfully.", 
-			data.c_str());
+		ApplicationInfo info{applicationInfos.item(i)};
+		const unsigned long long registerTimestamp{info.timestamp};
+
+		if(30000 < now - registerTimestamp)
+		{
+			applicationInfos.removeItem(i);
+			break;
+		}
+	}
+}
+
+int CMS::updateRegisterApplicationInfo(
+	const std::string via, 
+	const bool isVia /*= false*/,
+	void* parser /*= nullptr*/)
+{
+	CommonError e{CommonError::COMMON_ERROR_SUCCESS};
+	RegisterQueryParser* registerQueryParser{
+		reinterpret_cast<RegisterQueryParser*>(parser)};
+	ApplicationInfo info{
+		registerQueryParser->getRegisterApplicationInfo()};
+
+	if (ApplicationType::APPLICATION_TYPE_NONE < info.type)
+	{
+		//已存在的更新时间戳
+		//不存在就添加
+		info.timestamp = Time().tickcount();
+		bool exist{false};
+
+		for (int i = 0; i != applicationInfos.size(); ++i)
+		{
+			ApplicationInfo* infoRef{applicationInfos.itemRef(i)};
+			if (infoRef->ID.compare(info.ID))
+			{
+				infoRef->timestamp = Time().tickcount();
+				exist = true;
+			}
+		}
+
+		if(!exist)
+		{
+			if (isVia)
+			{
+				info.parentID = via;
+			}
+			
+			applicationInfos.addItem(info);
+			logObj.write(
+				framework::liblog::LogLevel::LOG_LEVEL_INFO, 
+				"Add new registration type = [ %d ], name = [ %s ], ID = [ %s], IPv4 = [ %s ] successfully.", 
+				static_cast<int>(info.type),
+				info.name.c_str(),
+				info.ID.c_str(),
+				info.IPv4.c_str());
+		}
 	}
 	else
 	{
+		e = CommonError::COMMON_ERROR_SET_FAILED;
 		logObj.write(
-			framework::liblog::LogLevel::LOG_LEVEL_ERROR, 
-			"Send message [ %s ] failed, result = [ %d ].", 
-			data.c_str(),
-			e);
+			framework::liblog::LogLevel::LOG_LEVEL_WARNING, 
+			"Add unknown registration type = [ %d ], name = [ %s ], ID = [ %s], IPv4 = [ %s ] failed.", 
+			static_cast<int>(info.type),
+			info.name.c_str(),
+			info.ID.c_str(),
+			info.IPv4.c_str());
 	}
+
+	return static_cast<int>(e);
 }

@@ -91,11 +91,12 @@ enum ApplicationInfo_ApplicationType : int {
   ApplicationInfo_ApplicationType_APPLICATION_TYPE_PHONE = 19,
   ApplicationInfo_ApplicationType_APPLICATION_TYPE_SLEEP = 20,
   ApplicationInfo_ApplicationType_APPLICATION_TYPE_FACE = 21,
-  ApplicationInfo_ApplicationType_APPLICATION_TYPE_FIGHT = 22
+  ApplicationInfo_ApplicationType_APPLICATION_TYPE_FIGHT = 22,
+  ApplicationInfo_ApplicationType_APPLICATION_TYPE_FIRE = 23
 };
 bool ApplicationInfo_ApplicationType_IsValid(int value);
 constexpr ApplicationInfo_ApplicationType ApplicationInfo_ApplicationType_ApplicationType_MIN = ApplicationInfo_ApplicationType_APPLICATION_TYPE_XMQ;
-constexpr ApplicationInfo_ApplicationType ApplicationInfo_ApplicationType_ApplicationType_MAX = ApplicationInfo_ApplicationType_APPLICATION_TYPE_FIGHT;
+constexpr ApplicationInfo_ApplicationType ApplicationInfo_ApplicationType_ApplicationType_MAX = ApplicationInfo_ApplicationType_APPLICATION_TYPE_FIRE;
 constexpr int ApplicationInfo_ApplicationType_ApplicationType_ARRAYSIZE = ApplicationInfo_ApplicationType_ApplicationType_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* ApplicationInfo_ApplicationType_descriptor();
@@ -301,6 +302,8 @@ class ApplicationInfo PROTOBUF_FINAL :
     ApplicationInfo_ApplicationType_APPLICATION_TYPE_FACE;
   static constexpr ApplicationType APPLICATION_TYPE_FIGHT =
     ApplicationInfo_ApplicationType_APPLICATION_TYPE_FIGHT;
+  static constexpr ApplicationType APPLICATION_TYPE_FIRE =
+    ApplicationInfo_ApplicationType_APPLICATION_TYPE_FIRE;
   static inline bool ApplicationType_IsValid(int value) {
     return ApplicationInfo_ApplicationType_IsValid(value);
   }
@@ -332,7 +335,8 @@ class ApplicationInfo PROTOBUF_FINAL :
     kNameFieldNumber = 2,
     kIpv4FieldNumber = 3,
     kIdFieldNumber = 4,
-    kNicknameFieldNumber = 5,
+    kParentidFieldNumber = 5,
+    kNicknameFieldNumber = 6,
     kTypeFieldNumber = 1,
   };
   // required bytes name = 2;
@@ -395,7 +399,27 @@ class ApplicationInfo PROTOBUF_FINAL :
   std::string* _internal_mutable_id();
   public:
 
-  // optional bytes nickname = 5;
+  // optional bytes parentid = 5;
+  bool has_parentid() const;
+  private:
+  bool _internal_has_parentid() const;
+  public:
+  void clear_parentid();
+  const std::string& parentid() const;
+  void set_parentid(const std::string& value);
+  void set_parentid(std::string&& value);
+  void set_parentid(const char* value);
+  void set_parentid(const void* value, size_t size);
+  std::string* mutable_parentid();
+  std::string* release_parentid();
+  void set_allocated_parentid(std::string* parentid);
+  private:
+  const std::string& _internal_parentid() const;
+  void _internal_set_parentid(const std::string& value);
+  std::string* _internal_mutable_parentid();
+  public:
+
+  // optional bytes nickname = 6;
   bool has_nickname() const;
   private:
   bool _internal_has_nickname() const;
@@ -443,6 +467,7 @@ class ApplicationInfo PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr ipv4_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr id_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr parentid_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr nickname_;
   int type_;
   friend struct ::TableStruct_register_5fquery_2eproto;
@@ -678,7 +703,7 @@ class ApplicationMessage PROTOBUF_FINAL :
 
 // required .msg.ApplicationInfo.ApplicationType type = 1;
 inline bool ApplicationInfo::_internal_has_type() const {
-  bool value = (_has_bits_[0] & 0x00000010u) != 0;
+  bool value = (_has_bits_[0] & 0x00000020u) != 0;
   return value;
 }
 inline bool ApplicationInfo::has_type() const {
@@ -686,7 +711,7 @@ inline bool ApplicationInfo::has_type() const {
 }
 inline void ApplicationInfo::clear_type() {
   type_ = 1;
-  _has_bits_[0] &= ~0x00000010u;
+  _has_bits_[0] &= ~0x00000020u;
 }
 inline ::msg::ApplicationInfo_ApplicationType ApplicationInfo::_internal_type() const {
   return static_cast< ::msg::ApplicationInfo_ApplicationType >(type_);
@@ -697,7 +722,7 @@ inline ::msg::ApplicationInfo_ApplicationType ApplicationInfo::type() const {
 }
 inline void ApplicationInfo::_internal_set_type(::msg::ApplicationInfo_ApplicationType value) {
   assert(::msg::ApplicationInfo_ApplicationType_IsValid(value));
-  _has_bits_[0] |= 0x00000010u;
+  _has_bits_[0] |= 0x00000020u;
   type_ = value;
 }
 inline void ApplicationInfo::set_type(::msg::ApplicationInfo_ApplicationType value) {
@@ -924,9 +949,82 @@ inline void ApplicationInfo::set_allocated_id(std::string* id) {
   // @@protoc_insertion_point(field_set_allocated:msg.ApplicationInfo.id)
 }
 
-// optional bytes nickname = 5;
-inline bool ApplicationInfo::_internal_has_nickname() const {
+// optional bytes parentid = 5;
+inline bool ApplicationInfo::_internal_has_parentid() const {
   bool value = (_has_bits_[0] & 0x00000008u) != 0;
+  return value;
+}
+inline bool ApplicationInfo::has_parentid() const {
+  return _internal_has_parentid();
+}
+inline void ApplicationInfo::clear_parentid() {
+  parentid_.ClearToEmpty();
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline const std::string& ApplicationInfo::parentid() const {
+  // @@protoc_insertion_point(field_get:msg.ApplicationInfo.parentid)
+  return _internal_parentid();
+}
+inline void ApplicationInfo::set_parentid(const std::string& value) {
+  _internal_set_parentid(value);
+  // @@protoc_insertion_point(field_set:msg.ApplicationInfo.parentid)
+}
+inline std::string* ApplicationInfo::mutable_parentid() {
+  // @@protoc_insertion_point(field_mutable:msg.ApplicationInfo.parentid)
+  return _internal_mutable_parentid();
+}
+inline const std::string& ApplicationInfo::_internal_parentid() const {
+  return parentid_.Get();
+}
+inline void ApplicationInfo::_internal_set_parentid(const std::string& value) {
+  _has_bits_[0] |= 0x00000008u;
+  parentid_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArena());
+}
+inline void ApplicationInfo::set_parentid(std::string&& value) {
+  _has_bits_[0] |= 0x00000008u;
+  parentid_.Set(
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::move(value), GetArena());
+  // @@protoc_insertion_point(field_set_rvalue:msg.ApplicationInfo.parentid)
+}
+inline void ApplicationInfo::set_parentid(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000008u;
+  parentid_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(value), GetArena());
+  // @@protoc_insertion_point(field_set_char:msg.ApplicationInfo.parentid)
+}
+inline void ApplicationInfo::set_parentid(const void* value,
+    size_t size) {
+  _has_bits_[0] |= 0x00000008u;
+  parentid_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArena());
+  // @@protoc_insertion_point(field_set_pointer:msg.ApplicationInfo.parentid)
+}
+inline std::string* ApplicationInfo::_internal_mutable_parentid() {
+  _has_bits_[0] |= 0x00000008u;
+  return parentid_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArena());
+}
+inline std::string* ApplicationInfo::release_parentid() {
+  // @@protoc_insertion_point(field_release:msg.ApplicationInfo.parentid)
+  if (!_internal_has_parentid()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000008u;
+  return parentid_.ReleaseNonDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline void ApplicationInfo::set_allocated_parentid(std::string* parentid) {
+  if (parentid != nullptr) {
+    _has_bits_[0] |= 0x00000008u;
+  } else {
+    _has_bits_[0] &= ~0x00000008u;
+  }
+  parentid_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), parentid,
+      GetArena());
+  // @@protoc_insertion_point(field_set_allocated:msg.ApplicationInfo.parentid)
+}
+
+// optional bytes nickname = 6;
+inline bool ApplicationInfo::_internal_has_nickname() const {
+  bool value = (_has_bits_[0] & 0x00000010u) != 0;
   return value;
 }
 inline bool ApplicationInfo::has_nickname() const {
@@ -934,7 +1032,7 @@ inline bool ApplicationInfo::has_nickname() const {
 }
 inline void ApplicationInfo::clear_nickname() {
   nickname_.ClearToEmpty();
-  _has_bits_[0] &= ~0x00000008u;
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline const std::string& ApplicationInfo::nickname() const {
   // @@protoc_insertion_point(field_get:msg.ApplicationInfo.nickname)
@@ -952,30 +1050,30 @@ inline const std::string& ApplicationInfo::_internal_nickname() const {
   return nickname_.Get();
 }
 inline void ApplicationInfo::_internal_set_nickname(const std::string& value) {
-  _has_bits_[0] |= 0x00000008u;
+  _has_bits_[0] |= 0x00000010u;
   nickname_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArena());
 }
 inline void ApplicationInfo::set_nickname(std::string&& value) {
-  _has_bits_[0] |= 0x00000008u;
+  _has_bits_[0] |= 0x00000010u;
   nickname_.Set(
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::move(value), GetArena());
   // @@protoc_insertion_point(field_set_rvalue:msg.ApplicationInfo.nickname)
 }
 inline void ApplicationInfo::set_nickname(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
-  _has_bits_[0] |= 0x00000008u;
+  _has_bits_[0] |= 0x00000010u;
   nickname_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(value), GetArena());
   // @@protoc_insertion_point(field_set_char:msg.ApplicationInfo.nickname)
 }
 inline void ApplicationInfo::set_nickname(const void* value,
     size_t size) {
-  _has_bits_[0] |= 0x00000008u;
+  _has_bits_[0] |= 0x00000010u;
   nickname_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(
       reinterpret_cast<const char*>(value), size), GetArena());
   // @@protoc_insertion_point(field_set_pointer:msg.ApplicationInfo.nickname)
 }
 inline std::string* ApplicationInfo::_internal_mutable_nickname() {
-  _has_bits_[0] |= 0x00000008u;
+  _has_bits_[0] |= 0x00000010u;
   return nickname_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArena());
 }
 inline std::string* ApplicationInfo::release_nickname() {
@@ -983,14 +1081,14 @@ inline std::string* ApplicationInfo::release_nickname() {
   if (!_internal_has_nickname()) {
     return nullptr;
   }
-  _has_bits_[0] &= ~0x00000008u;
+  _has_bits_[0] &= ~0x00000010u;
   return nickname_.ReleaseNonDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
 }
 inline void ApplicationInfo::set_allocated_nickname(std::string* nickname) {
   if (nickname != nullptr) {
-    _has_bits_[0] |= 0x00000008u;
+    _has_bits_[0] |= 0x00000010u;
   } else {
-    _has_bits_[0] &= ~0x00000008u;
+    _has_bits_[0] &= ~0x00000010u;
   }
   nickname_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), nickname,
       GetArena());

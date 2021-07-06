@@ -4,7 +4,7 @@
 //		Author :						王科威
 //		E-mail :						wangkw531@icloud.com
 //		Date :							2020-07-07
-//		Description :					FIFO数据结构
+//		Description :					FIFO队列
 //
 //		History:						Author									Date										Description
 //										王科威									 2020-07-07									 创建

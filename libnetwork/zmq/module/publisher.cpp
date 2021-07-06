@@ -3,8 +3,6 @@
 #include "zmq.h"
 #include "libcommon/const.h"
 #include "libcommon/error.h"
-#include "libnetwork/zmq/ctx.h"
-using Ctx = framework::libnetwork::zmq::Ctx;
 #include "libnetwork/zmq/pub.h"
 using Pub = framework::libnetwork::zmq::Pub;
 #include "libnetwork/zmq/msg.h"
@@ -27,8 +25,8 @@ namespace framework
 
 				public:
 					CommonError bind(
-						const std::string ipv4,
-						const unsigned short port = 0);
+						const std::string localIP,
+						const unsigned short localPort = 0);
 					CommonError send(const std::string data);
 
 				protected:
@@ -44,8 +42,8 @@ namespace framework
 				}
 
 				CommonError IPublisher::bind(
-					const std::string ipv4, 
-					const unsigned short port /* = 0 */)
+					const std::string localIP, 
+					const unsigned short localPort /* = 0 */)
 				{
 					CommonError e{ 
 						pub ? CommonError::COMMON_ERROR_EXISTED : CommonError::COMMON_ERROR_SUCCESS };
@@ -56,7 +54,7 @@ namespace framework
 
 						if (pub)
 						{
-							e = static_cast<CommonError>(pub->start(ipv4, port, 10));
+							e = static_cast<CommonError>(pub->start(localIP, localPort, 10));
 						}
 						else
 						{
@@ -88,18 +86,18 @@ namespace framework
 				}
 
 				int Publisher::bind(
-					const std::string ipv4, 
-					const unsigned short port /* = 0 */)
+					const std::string localIP, 
+					const unsigned short localPort /* = 0 */)
 				{
 					CommonError e{ 
-						!ipv4.empty() && gMinPortNumber <= port && gMaxPortNumber >= port ? 
+						!localIP.empty() && gMinPortNumber <= localPort && gMaxPortNumber >= localPort ? 
 						CommonError::COMMON_ERROR_SUCCESS : 
 						CommonError::COMMON_ERROR_INVALID_PARAMETER };
 
 					if (CommonError::COMMON_ERROR_SUCCESS == e)
 					{
 						e = (publisher ? 
-							publisher->bind(ipv4, port) : 
+							publisher->bind(localIP, localPort) : 
 							CommonError::COMMON_ERROR_BAD_NEW_INSTANCE);
 					}
 					

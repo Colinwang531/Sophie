@@ -79,11 +79,12 @@ enum AlarmInfo_AlarmType : int {
   AlarmInfo_AlarmType_ALARM_TYPE_SLEEP = 3,
   AlarmInfo_AlarmType_ALARM_TYPE_FIGHT = 4,
   AlarmInfo_AlarmType_ALARM_TYPE_FACE = 5,
-  AlarmInfo_AlarmType_ALARM_TYPE_BODY = 6
+  AlarmInfo_AlarmType_ALARM_TYPE_BODY = 6,
+  AlarmInfo_AlarmType_ALARM_TYPE_FIRE = 7
 };
 bool AlarmInfo_AlarmType_IsValid(int value);
 constexpr AlarmInfo_AlarmType AlarmInfo_AlarmType_AlarmType_MIN = AlarmInfo_AlarmType_ALARM_TYPE_HELMET;
-constexpr AlarmInfo_AlarmType AlarmInfo_AlarmType_AlarmType_MAX = AlarmInfo_AlarmType_ALARM_TYPE_BODY;
+constexpr AlarmInfo_AlarmType AlarmInfo_AlarmType_AlarmType_MAX = AlarmInfo_AlarmType_ALARM_TYPE_FIRE;
 constexpr int AlarmInfo_AlarmType_AlarmType_ARRAYSIZE = AlarmInfo_AlarmType_AlarmType_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* AlarmInfo_AlarmType_descriptor();
@@ -429,6 +430,8 @@ class AlarmInfo PROTOBUF_FINAL :
     AlarmInfo_AlarmType_ALARM_TYPE_FACE;
   static constexpr AlarmType ALARM_TYPE_BODY =
     AlarmInfo_AlarmType_ALARM_TYPE_BODY;
+  static constexpr AlarmType ALARM_TYPE_FIRE =
+    AlarmInfo_AlarmType_ALARM_TYPE_FIRE;
   static inline bool AlarmType_IsValid(int value) {
     return AlarmInfo_AlarmType_IsValid(value);
   }
@@ -457,7 +460,7 @@ class AlarmInfo PROTOBUF_FINAL :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kPositioninfoFieldNumber = 5,
+    kPositioninfosFieldNumber = 5,
     kCameraFieldNumber = 2,
     kTimestampFieldNumber = 3,
     kPictureFieldNumber = 4,
@@ -466,23 +469,23 @@ class AlarmInfo PROTOBUF_FINAL :
     kBodycountFieldNumber = 8,
     kTypeFieldNumber = 1,
   };
-  // repeated .msg.PositionInfo positioninfo = 5;
-  int positioninfo_size() const;
+  // repeated .msg.PositionInfo positioninfos = 5;
+  int positioninfos_size() const;
   private:
-  int _internal_positioninfo_size() const;
+  int _internal_positioninfos_size() const;
   public:
-  void clear_positioninfo();
-  ::msg::PositionInfo* mutable_positioninfo(int index);
+  void clear_positioninfos();
+  ::msg::PositionInfo* mutable_positioninfos(int index);
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::PositionInfo >*
-      mutable_positioninfo();
+      mutable_positioninfos();
   private:
-  const ::msg::PositionInfo& _internal_positioninfo(int index) const;
-  ::msg::PositionInfo* _internal_add_positioninfo();
+  const ::msg::PositionInfo& _internal_positioninfos(int index) const;
+  ::msg::PositionInfo* _internal_add_positioninfos();
   public:
-  const ::msg::PositionInfo& positioninfo(int index) const;
-  ::msg::PositionInfo* add_positioninfo();
+  const ::msg::PositionInfo& positioninfos(int index) const;
+  ::msg::PositionInfo* add_positioninfos();
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::PositionInfo >&
-      positioninfo() const;
+      positioninfos() const;
 
   // required bytes camera = 2;
   bool has_camera() const;
@@ -615,7 +618,7 @@ class AlarmInfo PROTOBUF_FINAL :
   typedef void DestructorSkippable_;
   ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::PositionInfo > positioninfo_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::PositionInfo > positioninfos_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr camera_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr timestamp_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr picture_;
@@ -1154,43 +1157,43 @@ inline void AlarmInfo::set_allocated_picture(std::string* picture) {
   // @@protoc_insertion_point(field_set_allocated:msg.AlarmInfo.picture)
 }
 
-// repeated .msg.PositionInfo positioninfo = 5;
-inline int AlarmInfo::_internal_positioninfo_size() const {
-  return positioninfo_.size();
+// repeated .msg.PositionInfo positioninfos = 5;
+inline int AlarmInfo::_internal_positioninfos_size() const {
+  return positioninfos_.size();
 }
-inline int AlarmInfo::positioninfo_size() const {
-  return _internal_positioninfo_size();
+inline int AlarmInfo::positioninfos_size() const {
+  return _internal_positioninfos_size();
 }
-inline void AlarmInfo::clear_positioninfo() {
-  positioninfo_.Clear();
+inline void AlarmInfo::clear_positioninfos() {
+  positioninfos_.Clear();
 }
-inline ::msg::PositionInfo* AlarmInfo::mutable_positioninfo(int index) {
-  // @@protoc_insertion_point(field_mutable:msg.AlarmInfo.positioninfo)
-  return positioninfo_.Mutable(index);
+inline ::msg::PositionInfo* AlarmInfo::mutable_positioninfos(int index) {
+  // @@protoc_insertion_point(field_mutable:msg.AlarmInfo.positioninfos)
+  return positioninfos_.Mutable(index);
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::PositionInfo >*
-AlarmInfo::mutable_positioninfo() {
-  // @@protoc_insertion_point(field_mutable_list:msg.AlarmInfo.positioninfo)
-  return &positioninfo_;
+AlarmInfo::mutable_positioninfos() {
+  // @@protoc_insertion_point(field_mutable_list:msg.AlarmInfo.positioninfos)
+  return &positioninfos_;
 }
-inline const ::msg::PositionInfo& AlarmInfo::_internal_positioninfo(int index) const {
-  return positioninfo_.Get(index);
+inline const ::msg::PositionInfo& AlarmInfo::_internal_positioninfos(int index) const {
+  return positioninfos_.Get(index);
 }
-inline const ::msg::PositionInfo& AlarmInfo::positioninfo(int index) const {
-  // @@protoc_insertion_point(field_get:msg.AlarmInfo.positioninfo)
-  return _internal_positioninfo(index);
+inline const ::msg::PositionInfo& AlarmInfo::positioninfos(int index) const {
+  // @@protoc_insertion_point(field_get:msg.AlarmInfo.positioninfos)
+  return _internal_positioninfos(index);
 }
-inline ::msg::PositionInfo* AlarmInfo::_internal_add_positioninfo() {
-  return positioninfo_.Add();
+inline ::msg::PositionInfo* AlarmInfo::_internal_add_positioninfos() {
+  return positioninfos_.Add();
 }
-inline ::msg::PositionInfo* AlarmInfo::add_positioninfo() {
-  // @@protoc_insertion_point(field_add:msg.AlarmInfo.positioninfo)
-  return _internal_add_positioninfo();
+inline ::msg::PositionInfo* AlarmInfo::add_positioninfos() {
+  // @@protoc_insertion_point(field_add:msg.AlarmInfo.positioninfos)
+  return _internal_add_positioninfos();
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::msg::PositionInfo >&
-AlarmInfo::positioninfo() const {
-  // @@protoc_insertion_point(field_list:msg.AlarmInfo.positioninfo)
-  return positioninfo_;
+AlarmInfo::positioninfos() const {
+  // @@protoc_insertion_point(field_list:msg.AlarmInfo.positioninfos)
+  return positioninfos_;
 }
 
 // optional bytes idforface = 6;

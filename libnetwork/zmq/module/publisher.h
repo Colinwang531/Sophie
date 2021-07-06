@@ -33,13 +33,13 @@ namespace framework
 					virtual ~Publisher(void);
 
 				public:
-					//绑定监听
-					//@ipv4 : ipv4地址
-					//@port : 端口号
+					//监听
+					//@localIP : 监听IP
+					//@localPort : 监听端口
 					//@Return : 错误码
 					int bind(
-						const std::string ipv4,
-						const unsigned short port = 0);
+						const std::string localIP,
+						const unsigned short localPort = 0);
 
 					//发送数据
 					//@data : 数据内容

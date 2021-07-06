@@ -32,13 +32,13 @@ namespace framework
 
 			public:
 				//启动
-				//ipv4 : IPv4地址
-				//@port : 监听端口
+				//@localIP : 监听IP
+				//@localPort : 监听端口
 				//@hwm : 缓存大小
 				//@Return : 错误码
 				int start(
-					const std::string ipv4,
-					const unsigned short port = 0,
+					const std::string localIP,
+					const unsigned short localPort = 0,
 					const int hwm = -1);
 
 				//停止

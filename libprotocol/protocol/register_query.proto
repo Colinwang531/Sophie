@@ -28,13 +28,15 @@ message ApplicationInfo
 		APPLICATION_TYPE_SLEEP = 20;
 		APPLICATION_TYPE_FACE = 21;
 		APPLICATION_TYPE_FIGHT = 22;
+		APPLICATION_TYPE_FIRE = 23;
 	}
 	
 	required ApplicationType type = 1;
 	required bytes name = 2;
 	required bytes ipv4 = 3;
 	optional bytes id = 4;
-	optional bytes nickname = 5;
+	optional bytes parentid = 5;
+	optional bytes nickname = 6;
 }
 
 message ApplicationMessage

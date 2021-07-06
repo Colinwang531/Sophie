@@ -1,72 +1,71 @@
 //
-//		Copyright :						@2020, ***, All Rights Reserved
+//		Copyright :						@2021, ***, All Rights Reserved
 //
-//		Author :						Õıø∆Õ˛
+//		Author :						ÁéãÁßëÂ®Å
 //		E-mail :						wangkw531@icloud.com
-//		Date :							2020-06-11
-//		Description :					ø…±‰ ˝◊Èƒ£∞Â
+//		Date :							2020-07-07
+//		Description :					ÂèØÂèòÊï∞ÁªÑ
 //
 //		History:						Author									Date										Description
-//										Õıø∆Õ˛									2020-06-11									¥¥Ω®
+//										ÁéãÁßëÂ®Å									 2020-07-07									 ÂàõÂª∫
 //
 
-#ifndef VECTOR_H
-#define VECTOR_H
+#ifndef FRAMEWORK_LIBCOMMON_MUTABLE_ARRAY_H
+#define FRAMEWORK_LIBCOMMON_MUTABLE_ARRAY_H
 
 #include <vector>
-#include "Mutex/RWLock.h"
+#include "libcommon/lock/rwlock.h"
+using WRLock = framework::libcommon::WRLock;
 
 template <class T>
-class Vector
+class MutableArray
 {
 public:
-	Vector(void) {}
-	virtual ~Vector(void) 
+	MutableArray(void) 
+	{}
+	~MutableArray(void) 
 	{
 		clear();
 	}
 
 public:
-	void pushBack(const T e)
+	void addItem(const T e)
 	{
-		WriteLock wl{ mtx };
+		wrlock.wlock();
 		queue.push_back(e);
+		wrlock.unwlock();
 	}
 
-	void removeFront(void)
+	void removeItem(const unsigned long long index = 0)
 	{
-		WriteLock wl{ mtx };
-		if (0 < queue.size())
+		int i{0};
+
+		wrlock.wlock();
+		for(typename std::vector<T>::iterator it = queue.begin(); it != queue.end();)
 		{
-			queue.erase(queue.begin());
+			if(index == i)
+			{
+				queue.erase(it);
+				break;
+			}
+
+			++i;
+			++it;
 		}
-	}
-
-	T popFront(void)
-	{
-		T t{};
-
-		WriteLock wl{ mtx };
-		if (0 < queue.size())
-		{
-			t = at(0);
-			queue.erase(queue.begin());
-		}
-
-		return t;
+		wrlock.unwlock();
 	}
 
 	void clear(void)
 	{
-		WriteLock wl{ mtx };
+		wrlock.wlock();
 		queue.clear();
+		wrlock.unwlock();
 	}
 	
-	T at(const unsigned long long index = 0)
+	T item(const unsigned long long index = 0)
 	{
 		T e{};
 
-//		ReadLock rl{ mtx };
 		if (index < queue.size())
 		{
 			e = queue[index];
@@ -75,16 +74,27 @@ public:
 		return e;
 	}
 
-	unsigned long long size(void)
+	T* itemRef(const unsigned long long index = 0)
 	{
-//		ReadLock rl{ mtx };
+		T* e{nullptr};
+
+		if (index < queue.size())
+		{
+			e = &queue[index];
+		}
+
+		return e;
+	}
+
+	const unsigned long long size(void) const
+	{
 		return queue.size();
 	}
 
 private:
 	std::vector<T> queue;
-	SharedMutex mtx;
-};//class FIFOQueue
+	WRLock wrlock;
+};//class MutableArray
 
-#endif//VECTOR_H
+#endif//FRAMEWORK_LIBCOMMON_MUTABLE_ARRAY_H
 

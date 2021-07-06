@@ -24,8 +24,8 @@ namespace framework
             REGISTER_QUERY_TYPE_NONE = 0,
             REGISTER_QUERY_TYPE_REGISTER_REQ,
             REGISTER_QUERY_TYPE_REGISTER_REP,
-            REGISTER_QUERY_QUERY_REQ,
-            REGISTER_QUERY_QUERY_REP
+            REGISTER_QUERY_TYPE_QUERY_REQ,
+            REGISTER_QUERY_TYPE_QUERY_REP
         }RegisterQueryType;
 
         class IRegisterQueryParser;
@@ -65,15 +65,6 @@ namespace framework
             //@Return ：错误码
             int setRegisterApplicationInfo(const ApplicationInfo info);
 
-            //获取查询状态码
-            //@Return ：查询状态码
-            const int getQueryStatusCode(void) const;
-
-            //设置查询状态码
-            //@status : 状态码
-            //@Return ：错误码
-            int setQueryStatusCode(const int status = -1);
-
             //获取查询应用程序信息
             //@Return ：应用程序信息
             const std::vector<ApplicationInfo> getQueryApplicationInfos(void) const;
@@ -82,6 +73,15 @@ namespace framework
             //@infos : 应用程序信息
             //@Return ：错误码
             int setQueryApplicationInfos(const std::vector<ApplicationInfo> infos);
+
+            //获取注册/查询状态码
+            //@Return ：注册/查询状态码
+            const int getStatusCode(void) const;
+
+            //设置注册/查询状态码
+            //@status : 状态码
+            //@Return ：错误码
+            int setStatusCode(const int status = -1);
 
         private:
             IRegisterQueryParser* parser;

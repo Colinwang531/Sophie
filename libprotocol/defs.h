@@ -24,6 +24,7 @@ namespace framework
         {
             APPLICATION_TYPE_NONE = 0,
             APPLICATION_TYPE_XMQ,
+            APPLICATION_TYPE_CMS,
             APPLICATION_TYPE_WEB,
             APPLICATION_TYPE_DHSLB,
             APPLICATION_TYPE_DHS,
@@ -53,7 +54,9 @@ namespace framework
             std::string name;
             std::string IPv4;
             std::string ID;
+            std::string parentID;
             std::string nickName;
+            unsigned long long timestamp;
         }ApplicationInfo;
 
         typedef enum class tagAlgorithmType_t : int
@@ -134,6 +137,144 @@ namespace framework
             std::string job;
             std::vector<std::string> pictures;
         }CrewInfo;
+
+        typedef struct tagPositionA_t
+		{
+			int repeatindicator;
+			int navigationalstatus;
+			float rot;
+			float sog;
+			int positionaccuracy;
+			float cog;
+			int trueheading;
+			int timestamp;
+			int specialindicator;
+			int spare;
+			std::string longitude;
+			std::string latitude;
+			std::string mmsi;
+		}PositionA;
+
+		typedef struct tagPositionB_t
+		{
+			int repeatindicator;
+			int spare1;
+			float sog;
+			int positionaccuracy;
+			float cog;
+			int trueheading;
+			int timestamp;
+			int spare2;
+			int bunitflag;
+			int bdisplayflag;
+			int bdscflag;
+			int bbandflag;
+			int bmessage22flag;
+			int modeflag;
+			int raimflag;
+			int commstateselectorflag;
+			int syncstate;
+			int slotincrement;
+			int numberofslots;
+			int keepflag;
+			std::string longitude;
+			std::string latitude;
+			std::string mmsi;
+		}PositionB;
+
+		typedef struct tagShipStatic_t
+		{
+			int repeatindicator;
+			int aisversion;
+			int imo;
+			int typeofshipcargo;
+			int epfd;
+			int month;
+			int day;
+			int hour;
+			int minute;
+			int dte;
+			int spare;
+			float draught;
+			std::string mmsi;
+			std::string callsign;
+			std::string name;
+			std::string dimensions;
+			std::string destination;
+		}ShipStatic;
+
+		typedef struct tagStandardSAR_t
+		{
+			int repeatindicator;
+			int altitude;
+			int positionaccuracy;
+			int timestamp;
+			int altitudesensor;
+			int spare;
+			int assignmodeflag;
+			int raimflag;
+			int commstateselectorflag;
+			int communicationstate;
+			float sog;
+			float cog;
+			std::string mmsi;
+			std::string longitude;
+			std::string latitude;
+		}StandardSAR;
+
+		typedef struct tagAidsToNavigation_t
+		{
+			int repeatindicator;
+			int navigationtype;
+			int positionaccuracy;
+			int epfd;
+			int utctimestamp;
+			int onoffpositionindicator;
+			int atonflag;
+			int raimflag;
+			int virtualflag;
+			int modeindicator;
+			int spare;
+			int stufbits;
+			std::string mmsi;
+			std::string name;
+			std::string longitude;
+			std::string latitude;
+			std::string dimensions;
+			std::string extendname;
+		}AidsToNavigation;
+
+        typedef struct tagPositionInfo_t
+        {
+            int x;
+            int y;
+            int w;
+            int h;
+        }PositionInfo;
+        
+        typedef enum tagAlarmType_t
+        {
+            ALARM_TYPE_NONE = 0,
+            ALARM_TYPE_HELMET,
+            ALARM_TYPE_PHONE,
+            ALARM_TYPE_SLEEP,
+            ALARM_TYPE_FIGHT,
+            ALARM_TYPE_FACE,
+            ALARM_TYPE_BODY,
+            ALARM_TYPE_FIRE
+        }AlarmType;
+
+        typedef struct tagAlarmInfo_t
+        {
+            AlarmType type;
+            bool checkin;
+            int personNum;
+            std::string cameraID;
+            std::string timestamp;
+            std::string picture;
+            std::vector<PositionInfo> positions;
+            std::string faceID;
+        }AlarmInfo;
     }//namespace libprotocol
 }//namespace framework
 

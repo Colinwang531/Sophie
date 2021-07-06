@@ -22,6 +22,7 @@ constexpr ApplicationInfo::ApplicationInfo(
   : name_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
   , ipv4_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
   , id_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
+  , parentid_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
   , nickname_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
   , type_(1)
 {}
@@ -64,12 +65,14 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_register_5fquery_2eproto::offs
   PROTOBUF_FIELD_OFFSET(::msg::ApplicationInfo, name_),
   PROTOBUF_FIELD_OFFSET(::msg::ApplicationInfo, ipv4_),
   PROTOBUF_FIELD_OFFSET(::msg::ApplicationInfo, id_),
+  PROTOBUF_FIELD_OFFSET(::msg::ApplicationInfo, parentid_),
   PROTOBUF_FIELD_OFFSET(::msg::ApplicationInfo, nickname_),
-  4,
+  5,
   0,
   1,
   2,
   3,
+  4,
   PROTOBUF_FIELD_OFFSET(::msg::ApplicationMessage, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::msg::ApplicationMessage, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -83,8 +86,8 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_register_5fquery_2eproto::offs
   0,
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
-  { 0, 10, sizeof(::msg::ApplicationInfo)},
-  { 15, 23, sizeof(::msg::ApplicationMessage)},
+  { 0, 11, sizeof(::msg::ApplicationInfo)},
+  { 17, 25, sizeof(::msg::ApplicationMessage)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -93,36 +96,37 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 };
 
 const char descriptor_table_protodef_register_5fquery_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\024register_query.proto\022\003msg\"\343\005\n\017Applicat"
+  "\n\024register_query.proto\022\003msg\"\220\006\n\017Applicat"
   "ionInfo\0222\n\004type\030\001 \002(\0162$.msg.ApplicationI"
   "nfo.ApplicationType\022\014\n\004name\030\002 \002(\014\022\014\n\004ipv"
-  "4\030\003 \002(\014\022\n\n\002id\030\004 \001(\014\022\020\n\010nickname\030\005 \001(\014\"\341\004"
-  "\n\017ApplicationType\022\030\n\024APPLICATION_TYPE_XM"
-  "Q\020\001\022\030\n\024APPLICATION_TYPE_CMS\020\002\022\030\n\024APPLICA"
-  "TION_TYPE_WEB\020\003\022\032\n\026APPLICATION_TYPE_DHSL"
-  "B\020\004\022\030\n\024APPLICATION_TYPE_DHS\020\005\022\032\n\026APPLICA"
-  "TION_TYPE_XMSLB\020\006\022\030\n\024APPLICATION_TYPE_XM"
-  "S\020\007\022\031\n\025APPLICATION_TYPE_RTSP\020\010\022\031\n\025APPLIC"
-  "ATION_TYPE_RTMP\020\t\022\030\n\024APPLICATION_TYPE_HL"
-  "S\020\n\022\030\n\024APPLICATION_TYPE_GBS\020\013\022\032\n\026APPLICA"
-  "TION_TYPE_GBXMS\020\014\022\030\n\024APPLICATION_TYPE_DS"
-  "S\020\r\022\030\n\024APPLICATION_TYPE_DBE\020\016\022\030\n\024APPLICA"
-  "TION_TYPE_AIS\020\017\022\030\n\024APPLICATION_TYPE_TSS\020"
-  "\020\022\032\n\026APPLICATION_TYPE_ALARM\020\021\022\033\n\027APPLICA"
-  "TION_TYPE_HELMET\020\022\022\032\n\026APPLICATION_TYPE_P"
-  "HONE\020\023\022\032\n\026APPLICATION_TYPE_SLEEP\020\024\022\031\n\025AP"
-  "PLICATION_TYPE_FACE\020\025\022\032\n\026APPLICATION_TYP"
-  "E_FIGHT\020\026\"\202\002\n\022ApplicationMessage\0221\n\004type"
-  "\030\001 \002(\0162#.msg.ApplicationMessage.CommandT"
-  "ype\022#\n\005infos\030\002 \003(\0132\024.msg.ApplicationInfo"
-  "\022\016\n\006status\030\003 \001(\005\"\203\001\n\013CommandType\022\035\n\031COMM"
-  "AND_TYPE_REGISTER_REQ\020\001\022\035\n\031COMMAND_TYPE_"
-  "REGISTER_REP\020\002\022\032\n\026COMMAND_TYPE_QUERY_REQ"
-  "\020\003\022\032\n\026COMMAND_TYPE_QUERY_REP\020\004"
+  "4\030\003 \002(\014\022\n\n\002id\030\004 \001(\014\022\020\n\010parentid\030\005 \001(\014\022\020\n"
+  "\010nickname\030\006 \001(\014\"\374\004\n\017ApplicationType\022\030\n\024A"
+  "PPLICATION_TYPE_XMQ\020\001\022\030\n\024APPLICATION_TYP"
+  "E_CMS\020\002\022\030\n\024APPLICATION_TYPE_WEB\020\003\022\032\n\026APP"
+  "LICATION_TYPE_DHSLB\020\004\022\030\n\024APPLICATION_TYP"
+  "E_DHS\020\005\022\032\n\026APPLICATION_TYPE_XMSLB\020\006\022\030\n\024A"
+  "PPLICATION_TYPE_XMS\020\007\022\031\n\025APPLICATION_TYP"
+  "E_RTSP\020\010\022\031\n\025APPLICATION_TYPE_RTMP\020\t\022\030\n\024A"
+  "PPLICATION_TYPE_HLS\020\n\022\030\n\024APPLICATION_TYP"
+  "E_GBS\020\013\022\032\n\026APPLICATION_TYPE_GBXMS\020\014\022\030\n\024A"
+  "PPLICATION_TYPE_DSS\020\r\022\030\n\024APPLICATION_TYP"
+  "E_DBE\020\016\022\030\n\024APPLICATION_TYPE_AIS\020\017\022\030\n\024APP"
+  "LICATION_TYPE_TSS\020\020\022\032\n\026APPLICATION_TYPE_"
+  "ALARM\020\021\022\033\n\027APPLICATION_TYPE_HELMET\020\022\022\032\n\026"
+  "APPLICATION_TYPE_PHONE\020\023\022\032\n\026APPLICATION_"
+  "TYPE_SLEEP\020\024\022\031\n\025APPLICATION_TYPE_FACE\020\025\022"
+  "\032\n\026APPLICATION_TYPE_FIGHT\020\026\022\031\n\025APPLICATI"
+  "ON_TYPE_FIRE\020\027\"\202\002\n\022ApplicationMessage\0221\n"
+  "\004type\030\001 \002(\0162#.msg.ApplicationMessage.Com"
+  "mandType\022#\n\005infos\030\002 \003(\0132\024.msg.Applicatio"
+  "nInfo\022\016\n\006status\030\003 \001(\005\"\203\001\n\013CommandType\022\035\n"
+  "\031COMMAND_TYPE_REGISTER_REQ\020\001\022\035\n\031COMMAND_"
+  "TYPE_REGISTER_REP\020\002\022\032\n\026COMMAND_TYPE_QUER"
+  "Y_REQ\020\003\022\032\n\026COMMAND_TYPE_QUERY_REP\020\004"
   ;
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_register_5fquery_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_register_5fquery_2eproto = {
-  false, false, 1030, descriptor_table_protodef_register_5fquery_2eproto, "register_query.proto", 
+  false, false, 1075, descriptor_table_protodef_register_5fquery_2eproto, "register_query.proto", 
   &descriptor_table_register_5fquery_2eproto_once, nullptr, 0, 2,
   schemas, file_default_instances, TableStruct_register_5fquery_2eproto::offsets,
   file_level_metadata_register_5fquery_2eproto, file_level_enum_descriptors_register_5fquery_2eproto, file_level_service_descriptors_register_5fquery_2eproto,
@@ -164,6 +168,7 @@ bool ApplicationInfo_ApplicationType_IsValid(int value) {
     case 20:
     case 21:
     case 22:
+    case 23:
       return true;
     default:
       return false;
@@ -193,6 +198,7 @@ constexpr ApplicationInfo_ApplicationType ApplicationInfo::APPLICATION_TYPE_PHON
 constexpr ApplicationInfo_ApplicationType ApplicationInfo::APPLICATION_TYPE_SLEEP;
 constexpr ApplicationInfo_ApplicationType ApplicationInfo::APPLICATION_TYPE_FACE;
 constexpr ApplicationInfo_ApplicationType ApplicationInfo::APPLICATION_TYPE_FIGHT;
+constexpr ApplicationInfo_ApplicationType ApplicationInfo::APPLICATION_TYPE_FIRE;
 constexpr ApplicationInfo_ApplicationType ApplicationInfo::ApplicationType_MIN;
 constexpr ApplicationInfo_ApplicationType ApplicationInfo::ApplicationType_MAX;
 constexpr int ApplicationInfo::ApplicationType_ARRAYSIZE;
@@ -229,7 +235,7 @@ class ApplicationInfo::_Internal {
  public:
   using HasBits = decltype(std::declval<ApplicationInfo>()._has_bits_);
   static void set_has_type(HasBits* has_bits) {
-    (*has_bits)[0] |= 16u;
+    (*has_bits)[0] |= 32u;
   }
   static void set_has_name(HasBits* has_bits) {
     (*has_bits)[0] |= 1u;
@@ -240,11 +246,14 @@ class ApplicationInfo::_Internal {
   static void set_has_id(HasBits* has_bits) {
     (*has_bits)[0] |= 4u;
   }
-  static void set_has_nickname(HasBits* has_bits) {
+  static void set_has_parentid(HasBits* has_bits) {
     (*has_bits)[0] |= 8u;
   }
+  static void set_has_nickname(HasBits* has_bits) {
+    (*has_bits)[0] |= 16u;
+  }
   static bool MissingRequiredFields(const HasBits& has_bits) {
-    return ((has_bits[0] & 0x00000013) ^ 0x00000013) != 0;
+    return ((has_bits[0] & 0x00000023) ^ 0x00000023) != 0;
   }
 };
 
@@ -273,6 +282,11 @@ ApplicationInfo::ApplicationInfo(const ApplicationInfo& from)
     id_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_id(), 
       GetArena());
   }
+  parentid_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from._internal_has_parentid()) {
+    parentid_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_parentid(), 
+      GetArena());
+  }
   nickname_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   if (from._internal_has_nickname()) {
     nickname_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_nickname(), 
@@ -286,6 +300,7 @@ void ApplicationInfo::SharedCtor() {
 name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 ipv4_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 id_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+parentid_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 nickname_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 type_ = 1;
 }
@@ -301,6 +316,7 @@ void ApplicationInfo::SharedDtor() {
   name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   ipv4_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   id_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  parentid_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   nickname_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
@@ -321,7 +337,7 @@ void ApplicationInfo::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x0000001fu) {
+  if (cached_has_bits & 0x0000003fu) {
     if (cached_has_bits & 0x00000001u) {
       name_.ClearNonDefaultToEmpty();
     }
@@ -332,6 +348,9 @@ void ApplicationInfo::Clear() {
       id_.ClearNonDefaultToEmpty();
     }
     if (cached_has_bits & 0x00000008u) {
+      parentid_.ClearNonDefaultToEmpty();
+    }
+    if (cached_has_bits & 0x00000010u) {
       nickname_.ClearNonDefaultToEmpty();
     }
     type_ = 1;
@@ -384,9 +403,17 @@ const char* ApplicationInfo::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPAC
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // optional bytes nickname = 5;
+      // optional bytes parentid = 5;
       case 5:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 42)) {
+          auto str = _internal_mutable_parentid();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // optional bytes nickname = 6;
+      case 6:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 50)) {
           auto str = _internal_mutable_nickname();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
@@ -423,7 +450,7 @@ failure:
 
   cached_has_bits = _has_bits_[0];
   // required .msg.ApplicationInfo.ApplicationType type = 1;
-  if (cached_has_bits & 0x00000010u) {
+  if (cached_has_bits & 0x00000020u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
       1, this->_internal_type(), target);
@@ -447,10 +474,16 @@ failure:
         4, this->_internal_id(), target);
   }
 
-  // optional bytes nickname = 5;
+  // optional bytes parentid = 5;
   if (cached_has_bits & 0x00000008u) {
     target = stream->WriteBytesMaybeAliased(
-        5, this->_internal_nickname(), target);
+        5, this->_internal_parentid(), target);
+  }
+
+  // optional bytes nickname = 6;
+  if (cached_has_bits & 0x00000010u) {
+    target = stream->WriteBytesMaybeAliased(
+        6, this->_internal_nickname(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -491,7 +524,7 @@ size_t ApplicationInfo::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:msg.ApplicationInfo)
   size_t total_size = 0;
 
-  if (((_has_bits_[0] & 0x00000013) ^ 0x00000013) == 0) {  // All required fields are present.
+  if (((_has_bits_[0] & 0x00000023) ^ 0x00000023) == 0) {  // All required fields are present.
     // required bytes name = 2;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
@@ -514,7 +547,7 @@ size_t ApplicationInfo::ByteSizeLong() const {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x0000000cu) {
+  if (cached_has_bits & 0x0000001cu) {
     // optional bytes id = 4;
     if (cached_has_bits & 0x00000004u) {
       total_size += 1 +
@@ -522,8 +555,15 @@ size_t ApplicationInfo::ByteSizeLong() const {
           this->_internal_id());
     }
 
-    // optional bytes nickname = 5;
+    // optional bytes parentid = 5;
     if (cached_has_bits & 0x00000008u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+          this->_internal_parentid());
+    }
+
+    // optional bytes nickname = 6;
+    if (cached_has_bits & 0x00000010u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
           this->_internal_nickname());
@@ -562,7 +602,7 @@ void ApplicationInfo::MergeFrom(const ApplicationInfo& from) {
   (void) cached_has_bits;
 
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x0000001fu) {
+  if (cached_has_bits & 0x0000003fu) {
     if (cached_has_bits & 0x00000001u) {
       _internal_set_name(from._internal_name());
     }
@@ -573,9 +613,12 @@ void ApplicationInfo::MergeFrom(const ApplicationInfo& from) {
       _internal_set_id(from._internal_id());
     }
     if (cached_has_bits & 0x00000008u) {
-      _internal_set_nickname(from._internal_nickname());
+      _internal_set_parentid(from._internal_parentid());
     }
     if (cached_has_bits & 0x00000010u) {
+      _internal_set_nickname(from._internal_nickname());
+    }
+    if (cached_has_bits & 0x00000020u) {
       type_ = from.type_;
     }
     _has_bits_[0] |= cached_has_bits;
@@ -608,6 +651,7 @@ void ApplicationInfo::InternalSwap(ApplicationInfo* other) {
   name_.Swap(&other->name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   ipv4_.Swap(&other->ipv4_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   id_.Swap(&other->id_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  parentid_.Swap(&other->parentid_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   nickname_.Swap(&other->nickname_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   swap(type_, other->type_);
 }

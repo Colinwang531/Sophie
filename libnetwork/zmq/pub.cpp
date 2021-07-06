@@ -22,8 +22,8 @@ namespace framework
 
 			public:
 				CommonError start(
-					const std::string ipv4,
-					const unsigned short port = 0,
+					const std::string localIP,
+					const unsigned short localPort = 0,
 					const int hwm = -1);
 				CommonError stop(void);
 				CommonError send(const std::string data);
@@ -41,8 +41,8 @@ namespace framework
 			}
 
 			CommonError IPub::start(
-				const std::string ipv4,
-				const unsigned short port /*= 0*/,
+				const std::string localIP,
+				const unsigned short localPort /*= 0*/,
 				const int hwm /*= -1*/)
 			{
 				CommonError e{
@@ -57,7 +57,7 @@ namespace framework
 						so = c->createNewSocket(ZMQ_PUB);
 						zmq_setsockopt(so, ZMQ_SNDHWM, &hwm, sizeof(int));
 						const std::string address{
-							(boost::format("tcp://%s:%d") % (ipv4.empty() ? "*" : ipv4) % port).str()};
+							(boost::format("tcp://%s:%d") % (localIP.empty() ? "*" : localIP) % localPort).str()};
 						zmq_bind(so, address.c_str());
 					}
 					else
@@ -105,18 +105,18 @@ namespace framework
 			}
 
 			int Pub::start(
-				const std::string ipv4,
-				const unsigned short port /* = 0 */, 
+				const std::string localIP,
+				const unsigned short localPort /* = 0 */, 
 				const int hwm /* = -1 */)
 			{
 				CommonError e{ 
-					!ipv4.empty() && gMinPortNumber <= port && gMaxPortNumber >= port ? 
+					!localIP.empty() && gMinPortNumber <= localPort && gMaxPortNumber >= localPort ? 
 					CommonError::COMMON_ERROR_SUCCESS : 
 					CommonError::COMMON_ERROR_INVALID_PARAMETER };
 
 				if (CommonError::COMMON_ERROR_SUCCESS == e)
 				{
-					e = pub ? pub->start(ipv4, port, hwm) : CommonError::COMMON_ERROR_BAD_NEW_INSTANCE;
+					e = pub ? pub->start(localIP, localPort, hwm) : CommonError::COMMON_ERROR_BAD_NEW_INSTANCE;
 				}
 
 				return static_cast<int>(e);

@@ -17,6 +17,9 @@
 using Worker = framework::libnetwork::zmq::module::Worker;
 #include "liblog/log.h"
 using Log = framework::liblog::Log;
+#include "libprotocol/defs.h"
+using ApplicationInfo = framework::libprotocol::ApplicationInfo;
+#include "libcommon/data_struct/mutable_array/mutable_array.h"
 
 class CMS final : protected Worker
 {
@@ -28,39 +31,58 @@ public:
 	~CMS(void);
 
 public:
-	//连接
+	//启动
 	//@remoteIP : 远程服务IP
 	//@remotePort : 远程服务端口
-	//@Return : 错误码
-	int connect(
-		const std::string remoteIP,
-		const unsigned short remotePort);
-
-	//建立
 	//@uploadIP : 注册服务IP
 	//@uploadPort : 注册服务端口
 	//@Return : 错误码
-	int setup(
+	int start(
+		const std::string remoteIP,
+		const unsigned short remotePort,
 		const std::string uploadIP,
 		const unsigned short uploadPort);
 
+	//停止
+	int stop(void);
+
 protected:
-	void afterWorkerPollDataProcess(
-		const std::string data) override;
+	void afterWorkerPollDataProcess(const std::string data) override;
 
 private:
-	void timerTaskHandler(void);
-	void processPairMessage(void* parser = nullptr);
-	void processRegisterMessage(void* parser = nullptr);
-	void sendPairMessage(void);
-	void sendRegisterMessage(const std::string viaID);
+	void timerTaskThreadHandler(void);
+	void sendRegisterMessage(void);
+	void sendRegisterReplyMessage(
+		const std::string receiver, 
+		const std::string via,
+		const bool isVia = false);
+	void sendQueryReplyMessage(
+		const std::string receiver, 
+		const std::string via,
+		const bool isVia = false);
+	void processRegisterQueryMessage(void* parser = nullptr);
+	void processRegisterQueryMessage(
+		const std::string sender, 
+		const std::string data,
+		const std::string target,
+		const bool isVia = false);
+	void removeExpiredApplicationInfo(void);
+	int updateRegisterApplicationInfo(
+		const std::string sender,
+		const std::string via, 
+		const bool isVia = false, 
+		void* parser = nullptr);
 
 private:
 	Log& logObj;
 	const std::string applicationID;
 	const std::string sourceID;
+	std::string viaID;
+	std::string uploadIP;
+	unsigned short uploadPort;
 	void* tid;
 	bool stopped;
+	MutableArray<ApplicationInfo> applicationInfos;
 };//class CMS
 
 #endif//CMS_H
