@@ -93,6 +93,75 @@
             ],
             "preLaunchTask": "CMS",
             "miDebuggerPath": "/usr/bin/gdb"
+        },
+        {
+            "name": "Alarm",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/x64/Debug/alarm",
+            "args": ["-remote_ip", "127.0.0.1", "-remote_port", "61001", "-publisher_ip", "127.0.0.1", "-publisher_port", "60820"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/bin/x64/Debug/",
+            "environment": [
+                {"name": "LD_LIBRARY_PATH", "value": "${workspaceFolder}/bin/x64/Debug"}
+            ],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "Alarm",
+            "miDebuggerPath": "/usr/bin/gdb"
+        },
+        {
+            "name": "Clock",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/x64/Debug/clock",
+            "args": ["-remote_ip", "127.0.0.1", "-remote_port", "61001", "-number", "0", "-baudrate", "4800"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/bin/x64/Debug/",
+            "environment": [
+                {"name": "LD_LIBRARY_PATH", "value": "${workspaceFolder}/bin/x64/Debug"}
+            ],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "Alarm",
+            "miDebuggerPath": "/usr/bin/gdb"
+        },
+        {
+            "name": "AIS",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/x64/Debug/ais",
+            "args": ["-remote_ip", "127.0.0.1", "-remote_port", "61001", "-number", "1", "-baudrate", "38400"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/bin/x64/Debug/",
+            "environment": [
+                {"name": "LD_LIBRARY_PATH", "value": "${workspaceFolder}/bin/x64/Debug"}
+            ],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "Alarm",
+            "miDebuggerPath": "/usr/bin/gdb"
         }
     ]
 }

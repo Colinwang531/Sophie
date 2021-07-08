@@ -3,7 +3,7 @@
 #include "boost/function.hpp"
 #include "boost/functional/factory.hpp"
 #include "zmq.h"
-#include "libcommon/const.h"
+#include "libcommon/defs.h"
 #include "libcommon/error.h"
 #include "libnetwork/zmq/router.h"
 using Router = framework::libnetwork::zmq::Router;

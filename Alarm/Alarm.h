@@ -20,7 +20,8 @@ using Worker = framework::libnetwork::zmq::module::Worker;
 #include "liblog/log.h"
 using Log = framework::liblog::Log;
 
-class Alarm final : protected Publisher, protected Worker
+class Alarm final 
+	: protected Publisher, protected Worker
 {
 public:
 	Alarm(

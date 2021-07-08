@@ -3,7 +3,7 @@
 #include "boost/format.hpp"
 #include "boost/functional/factory.hpp"
 #include "zmq.h"
-#include "libcommon/const.h"
+#include "libcommon/defs.h"
 #include "libcommon/error.h"
 #include "libcommon/thread/threadpool.h"
 using ThreadPool = framework::libcommon::ThreadPool;

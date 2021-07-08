@@ -13,21 +13,12 @@
 #ifndef FRAMEWORK_LIBPROTOCOL_REGISTER_QUERY_PARSER_H
 #define FRAMEWORK_LIBPROTOCOL_REGISTER_QUERY_PARSER_H
 
-#include "defs.h"
+#include "libcommon/defs.h"
 
 namespace framework
 {
     namespace libprotocol
     {
-        typedef enum class tagRegisterQueryType_t : int
-        {
-            REGISTER_QUERY_TYPE_NONE = 0,
-            REGISTER_QUERY_TYPE_REGISTER_REQ,
-            REGISTER_QUERY_TYPE_REGISTER_REP,
-            REGISTER_QUERY_TYPE_QUERY_REQ,
-            REGISTER_QUERY_TYPE_QUERY_REP
-        }RegisterQueryType;
-
         class IRegisterQueryParser;
 
         class RegisterQueryParser

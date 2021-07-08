@@ -13,7 +13,7 @@
 #ifndef FRAMEWORK_LIBPROTOCOL_ALARM_PARSER_H
 #define FRAMEWORK_LIBPROTOCOL_ALARM_PARSER_H
 
-#include "defs.h"
+#include "libcommon/defs.h"
 
 namespace framework
 {

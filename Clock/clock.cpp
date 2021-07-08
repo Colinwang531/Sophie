@@ -16,21 +16,19 @@ using Time = framework::libcommon::Time;
 using RegisterQueryParser = framework::libprotocol::RegisterQueryParser;
 #include "libprotocol/notify_parser.h"
 using NotifyParser = framework::libprotocol::NotifyParser;
-#include "libais/ais.h"
-using AISParser = framework::libais::AISParser;
-#include "ais.h"
+#include "clock.h"
 
-AIS::AIS(
+Clock::Clock(
 	Log& log, 
 	const std::string appID, 
 	void* ctx /*= nullptr*/) 
 	: Worker(ctx), logObj{log}, applicationID{appID}, 
 	sourceID{Uuid().generateRandomUuid()}, tid{nullptr}, stopped{false}
 {}
-AIS::~AIS()
+Clock::~Clock()
 {}
 
-int AIS::start(
+int Clock::start(
 	const std::string remoteIP,
 	const unsigned short remotePort,
 	const int number /*= -1*/,
@@ -50,9 +48,9 @@ int AIS::start(
 			sourceID.c_str());
 		
 		tid = ThreadPool().create(
-			boost::bind(&AIS::timerTaskThreadHandler, this));
+			boost::bind(&Clock::timerTaskThreadHandler, this));
 		e = static_cast<CommonError>(
-			com.start(number, baudrate, boost::bind(&AIS::afterComReadDataHandler, this, _1, _2)));
+			com.start(number, baudrate, boost::bind(&Clock::afterComReadDataHandler, this, _1, _2)));
 
 		if (CommonError::COMMON_ERROR_SUCCESS == e)
 		{
@@ -86,7 +84,7 @@ int AIS::start(
 	return static_cast<int>(e);
 }
 
-int AIS::stop()
+int Clock::stop()
 {
 	stopped = true;
 	com.stop();
@@ -95,7 +93,7 @@ int AIS::stop()
 	return static_cast<int>(CommonError::COMMON_ERROR_SUCCESS);
 }
 
-void AIS::afterWorkerPollDataProcess(const std::string data)
+void Clock::afterWorkerPollDataProcess(const std::string data)
 {
 	if (!data.empty())
 	{
@@ -132,49 +130,46 @@ void AIS::afterWorkerPollDataProcess(const std::string data)
 	}
 }
 
-void AIS::afterComReadDataHandler(
+void Clock::afterComReadDataHandler(
 	const char* data /* = nullptr */, 
 	const int bytes /* = 0 */)
 {
 	if (data && 0 < bytes)
 	{
-		aisData.append(data, bytes);
+		clockData.append(data, bytes);
 
 		if ('\n' == *data)
 		{
-			if (!aisData.empty())
+			if (!clockData.empty())
 			{
 				std::vector<std::string> items;
-				boost::split(items, aisData, boost::is_any_of(","));
-				const std::string flags{ items[0] };
+				boost::split(items, clockData, boost::is_any_of(","));
 
-				if ('$' == flags[0] || 'V' == flags[3] || 'D' == flags[4] || 'O' == flags[5])
+				if (!items[0].compare("$ZQZDA") || !items[0].compare("$CJZDA") || !items[0].compare("$GPZDA"))
 				{
-					const int totalNumber{ atoi(items[1].c_str()) };
-					const int currentNumber{ atoi(items[2].c_str()) };
+					char clockDesc[128]{ 0 };
+#ifdef WINDOWS
+					sprintf_s(clockDesc, 128, "%s-%s-%s,%s:%s:%s,%s",
+						items[4].c_str(), items[3].c_str(), items[2].c_str(),
+						items[1].substr(0, 2).c_str(), items[1].substr(2, 2).c_str(), items[1].substr(4, 2).c_str(),
+						items[5].c_str());
+#else
+					sprintf(clockDesc, "%s-%s-%s,%s:%s:%s,%s",
+						items[4].c_str(), items[3].c_str(), items[2].c_str(),
+						items[1].substr(0, 2).c_str(), items[1].substr(2, 2).c_str(), items[1].substr(4, 2).c_str(),
+						items[5].c_str());
+#endif//WINDOWS
 
-					if (totalNumber > currentNumber)
-					{
-						parseData.append(items[5]);
-					}
-					else if (totalNumber == currentNumber)
-					{
-						parseData.append(items[5]);
-						logObj.write(
-							framework::liblog::LogLevel::LOG_LEVEL_INFO, 
-							"Got message [ %s ] from Com.", 
-							parseData.c_str());
-						sendNotifyMessage(parseData);
-					}
+					sendClockMessage(clockDesc);
 				}
-			}
 
-			aisData.clear();
+				clockData.clear();
+			}
 		}
 	}
 }
 
-void AIS::timerTaskThreadHandler()
+void Clock::timerTaskThreadHandler()
 {
 	unsigned long long lastTick{0};
 
@@ -191,14 +186,14 @@ void AIS::timerTaskThreadHandler()
 	}
 }
 
-void AIS::sendRegisterMessage()
+void Clock::sendRegisterMessage()
 {
 	//构建注册消息
 	RegisterQueryParser registerParser;
 	registerParser.setCommandType(RegisterQueryType::REGISTER_QUERY_TYPE_REGISTER_REQ);
 	ApplicationInfo info;
-	info.type = ApplicationType::APPLICATION_TYPE_AIS;
-	info.name = "AIS";
+	info.type = ApplicationType::APPLICATION_TYPE_TSS;
+	info.name = "Clock";
 	info.ID = applicationID;
 	info.parentID = sourceID;
 	registerParser.setRegisterApplicationInfo(info);
@@ -229,7 +224,7 @@ void AIS::sendRegisterMessage()
 	}
 }
 
-void AIS::sendQueryMessage()
+void Clock::sendQueryMessage()
 {
 	//构建查询消息
 	RegisterQueryParser queryParser;
@@ -261,65 +256,22 @@ void AIS::sendQueryMessage()
 	}
 }
 
-void AIS::sendNotifyMessage(const std::string data)
+void Clock::sendClockMessage(const std::string clock)
 {
 	//构建通知消息
 	NotifyParser notifyParser;
-	AISParser aisParser;
-	CommonError e{
-		static_cast<CommonError>(aisParser.parse(parseData))};
-
-	if (CommonError::COMMON_ERROR_SUCCESS == e)
-	{
-		const AISDataType type{aisParser.getDataType()};
-		notifyParser.setNotifyType(static_cast<NotifyType>(type));
-		if(AISDataType::AIS_DATA_TYPE_POSITION_A == type)
-		{
-			notifyParser.setAISPositionAInfo(aisParser.getPositionAInfo());
-		}
-		else if(AISDataType::AIS_DATA_TYPE_POSITION_B == type)
-		{
-			notifyParser.setAISPositionBInfo(aisParser.getPositionBInfo());
-		}
-		else if(AISDataType::AIS_DATA_TYPE_SHIP_STATIC == type)
-		{
-			notifyParser.setAISShipStaticInfo(aisParser.getShipStaticInfo());
-		}
-		else if(AISDataType::AIS_DATA_TYPE_STANDARD_SAR == type)
-		{
-			notifyParser.setAISStandardSARInfo(aisParser.getStandardSARInfo());
-		}
-		else if(AISDataType::AIS_DATA_TYPE_AIDS_TO_NAVIGATION == type)
-		{
-			notifyParser.setAISAidsToNavigationInfo(aisParser.getAidsToNavigationInfo());
-		}
-		else
-		{
-			logObj.write(
-				framework::liblog::LogLevel::LOG_LEVEL_WARNING, 
-				"Not support AIS data type = [ %d ].", 
-				static_cast<int>(type));
-			return;
-		}
-	}
-	else
-	{
-		logObj.write(
-			framework::liblog::LogLevel::LOG_LEVEL_ERROR, 
-			"Parse message [ %s ] failed, result = [ %d ].", 
-			parseData.c_str(),
-			static_cast<int>(e));
-	}
-	
+	notifyParser.setNotifyType(NotifyType::NOTIFY_TYPE_CLOCK_SYC);
+	notifyParser.setClockInfo(clock);
 	const std::string notifyData{notifyParser.compose()};
-	//发送"notify://sender=sourceID & receiver=webApplicationID &data=X"
+
+	//发送"notify://sender=sourceID & receiver=alarmApplicationID &data=X"
 	UrlParser urlParser;
 	urlParser.setCommand("notify");
 	urlParser.setCommandParameter("sender", sourceID);
-	urlParser.setCommandParameter("receiver", webApplicationID);
+	urlParser.setCommandParameter("receiver", alarmApplicationID);
 	urlParser.setCommandParameter("data", notifyData);
 	const std::string urlData{urlParser.compose()};
-	int err{Worker::send(urlData)};
+	int e{Worker::send(urlData)};
 
 	if (CommonError::COMMON_ERROR_SUCCESS == static_cast<CommonError>(e))
 	{
@@ -334,11 +286,11 @@ void AIS::sendNotifyMessage(const std::string data)
 			framework::liblog::LogLevel::LOG_LEVEL_ERROR, 
 			"Send message [ %s ] failed, result = [ %d ].", 
 			urlData.c_str(),
-			err);
+			e);
 	}
 }
 
-void AIS::processRegisterMessage(void* parser /*= nullptr*/)
+void Clock::processRegisterMessage(void* parser /*= nullptr*/)
 {
 	UrlParser* urlparser{reinterpret_cast<UrlParser*>(parser)};
 	const std::vector<ParamItem> commandParamItems{urlparser->getCommandParameters()};
@@ -404,7 +356,7 @@ void AIS::processRegisterMessage(void* parser /*= nullptr*/)
 	}
 }
 
-void AIS::processQueryMessage(void* parser /*= nullptr*/)
+void Clock::processQueryMessage(void* parser /*= nullptr*/)
 {
 	UrlParser* urlParser{reinterpret_cast<UrlParser*>(parser)};
 	const std::vector<ParamItem> commandParamItems{urlParser->getCommandParameters()};
@@ -433,13 +385,13 @@ void AIS::processQueryMessage(void* parser /*= nullptr*/)
 				std::vector<ApplicationInfo> infos{queryParser.getQueryApplicationInfos()};
 				for (int i = 0; i != infos.size(); ++i)
 				{
-					if (ApplicationType::APPLICATION_TYPE_WEB == infos[i].type)
+					if (ApplicationType::APPLICATION_TYPE_ALARM == infos[i].type)
 					{
-						webApplicationID = infos[i].parentID;
+						alarmApplicationID = infos[i].parentID;
 						logObj.write(
 							framework::liblog::LogLevel::LOG_LEVEL_INFO, 
 							"Got alarm application ID = [ %s ].",
-							webApplicationID.c_str());
+							alarmApplicationID.c_str());
 						break;
 					}
 				}

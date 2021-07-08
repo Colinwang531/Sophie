@@ -13,23 +13,12 @@
 #ifndef FRAMEWORK_LIBPROTOCOL_NOTIFY_PARSER_H
 #define FRAMEWORK_LIBPROTOCOL_NOTIFY_PARSER_H
 
-#include "defs.h"
+#include "libcommon/defs.h"
 
 namespace framework
 {
     namespace libprotocol
     {
-        typedef enum class tagNotifyType_t : int
-        {
-            NOTIFY_TYPE_NONE = 0,
-            NOTIFY_TYPE_AIS_POSITION_A,
-            NOTIFY_TYPE_AIS_POSITION_B,
-            NOTIFY_TYPE_AIS_SHIP_STATIC,
-		    NOTIFY_TYPE_AIS_STANDARD_SAR,
-		    NOTIFY_TYPE_AIS_AIDS_TO_NAVIGATION,
-		    NOTIFY_TYPE_CLOCK_SYC
-        }NotifyType;
-
         class INotifyParser;
 
         class NotifyParser

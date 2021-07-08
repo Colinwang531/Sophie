@@ -3,9 +3,9 @@ using Uuid = framework::libcommon::Uuid;
 #include "liburl/url.h"
 using UrlParser = framework::liburl::UrlParser;
 using ParamItem = framework::liburl::ParamItem;
-#include "libcommon/const.h"
+#include "libcommon/defs.h"
 #include "libcommon/error.h"
-#include "XMQ.h"
+#include "xmq.h"
 
 XMQ::XMQ(
 	Log& log, 

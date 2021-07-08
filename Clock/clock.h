@@ -4,30 +4,31 @@
 //		Author :						王科威
 //		E-mail :						wangkw531@icloud.com
 //		Date :							2021-07-06
-//		Description :					AIS类
+//		Description :					母钟类
 //
 //		History:						Author									Date										Description
 //										王科威									 2021-07-06									 创建
 //
 
-#ifndef AIS_H
-#define AIS_H
+#ifndef CLOCK_H
+#define CLOCK_H
 
 #include "libnetwork/zmq/module/worker.h"
 using Worker = framework::libnetwork::zmq::module::Worker;
 #include "liblog/log.h"
 using Log = framework::liblog::Log;
+#include "libcommon/defs.h"
 #include "libcommon/hardware/com/com.h"
 using Com = framework::libcommon::hardware::Com;
 
-class AIS final : protected Worker
+class Clock final : protected Worker
 {
 public:
-	AIS(
+	Clock(
 		Log& log, 
 		const std::string appID,
 		void* ctx = nullptr);
-	~AIS(void);
+	~Clock(void);
 
 public:
 	//启动
@@ -55,7 +56,7 @@ private:
 	void timerTaskThreadHandler(void);
 	void sendRegisterMessage(void);
 	void sendQueryMessage(void);
-	void sendNotifyMessage(const std::string data);
+	void sendClockMessage(const std::string clock);
 	void processRegisterMessage(void* parser = nullptr);
 	void processQueryMessage(void* parser = nullptr);
 
@@ -64,11 +65,10 @@ private:
 	Log& logObj;
 	const std::string applicationID;
 	const std::string sourceID;
-	std::string aisData;
-	std::string parseData;
-	std::string webApplicationID;
+	std::string clockData;
+	std::string alarmApplicationID;
 	void* tid;
 	bool stopped;
-};//class AIS
+};//class Clock
 
-#endif//AIS_H
+#endif//CLOCK_H

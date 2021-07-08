@@ -9,20 +9,15 @@ using Uuid = framework::libcommon::Uuid;
 using ThreadPool = framework::libcommon::ThreadPool;
 #include "libcommon/time/time.h"
 using Time = framework::libcommon::Time;
-#include "libcommon/const.h"
+#include "libcommon/defs.h"
 #include "libcommon/error.h"
 #include "libprotocol/register_query_parser.h"
 using RegisterQueryParser = framework::libprotocol::RegisterQueryParser;
-using RegisterQueryType = framework::libprotocol::RegisterQueryType;
-using ApplicationInfo = framework::libprotocol::ApplicationInfo;
-using ApplicationType = framework::libprotocol::ApplicationType;
 #include "libprotocol/notify_parser.h"
 using NotifyParser = framework::libprotocol::NotifyParser;
-using NotifyType = framework::libprotocol::NotifyType;
 #include "libprotocol/alarm_parser.h"
 using AlarmParser = framework::libprotocol::AlarmParser;
-using AlarmInfo = framework::libprotocol::AlarmInfo;
-#include "Alarm.h"
+#include "alarm.h"
 
 Alarm::Alarm(
 	Log& log, 
@@ -103,24 +98,24 @@ void Alarm::afterWorkerPollDataProcess(const std::string data)
 {
 	if (!data.empty())
 	{
-		UrlParser parser;
-		int e{parser.parse(data)};
+		UrlParser urlParser;
+		int e{urlParser.parse(data)};
 
 		if (CommonError::COMMON_ERROR_SUCCESS == static_cast<CommonError>(e))
 		{
-			const std::string command{parser.getCommand()};
+			const std::string command{urlParser.getCommand()};
 			
 			if (0 == command.compare("register"))
 			{
-				processRegisterMessage(&parser);
+				processRegisterMessage(&urlParser);
 			}
 			else if (0 == command.compare("notify"))
 			{
-				processNotifyMessage(&parser);
+				processNotifyMessage(&urlParser);
 			}
 			else if (0 == command.compare("alarm"))
 			{
-				processAlarmMessage(&parser);
+				processAlarmMessage(&urlParser);
 			}
 			else
 			{
@@ -170,26 +165,26 @@ void Alarm::sendRegisterMessage()
 	const std::string registerData{registerParser.compose()};
 
 	//发送"register://sender=sourceID & data=X"
-	UrlParser parser;
-	parser.setCommand("register");
-	parser.setCommandParameter("sender", sourceID);
-	parser.setCommandParameter("data", registerData);
-	const std::string data{parser.compose()};
-	int e{Worker::send(data)};
+	UrlParser urlParser;
+	urlParser.setCommand("register");
+	urlParser.setCommandParameter("sender", sourceID);
+	urlParser.setCommandParameter("data", registerData);
+	const std::string urlData{urlParser.compose()};
+	int e{Worker::send(urlData)};
 
 	if (CommonError::COMMON_ERROR_SUCCESS == static_cast<CommonError>(e))
 	{
 		logObj.write(
 			framework::liblog::LogLevel::LOG_LEVEL_INFO, 
 			"Send message [ %s ] successfully.", 
-			data.c_str());
+			urlData.c_str());
 	}
 	else
 	{
 		logObj.write(
 			framework::liblog::LogLevel::LOG_LEVEL_ERROR, 
 			"Send message [ %s ] failed, result = [ %d ].", 
-			data.c_str(),
+			urlData.c_str(),
 			e);
 	}
 }
@@ -211,27 +206,27 @@ void Alarm::processRegisterMessage(void* parser /*= nullptr*/)
 	
 	if (!data.empty())
 	{
-		RegisterQueryParser parser;
+		RegisterQueryParser registerParser;
 		CommonError e{
-			static_cast<CommonError>(parser.parse(data))};
-		RegisterQueryType type{parser.getCommandType()};
+			static_cast<CommonError>(registerParser.parse(data))};
+		RegisterQueryType type{registerParser.getCommandType()};
 
 		if (CommonError::COMMON_ERROR_SUCCESS == e)
 		{
 			if (RegisterQueryType::REGISTER_QUERY_TYPE_REGISTER_REP == type)
 			{
-				const int statusCode{parser.getStatusCode()};
+				const int statusCode{registerParser.getStatusCode()};
 				if (CommonError::COMMON_ERROR_SUCCESS == static_cast<CommonError>(statusCode))
 				{
 					logObj.write(
 						framework::liblog::LogLevel::LOG_LEVEL_INFO, 
-						"Receive message of registration successfully.");
+						"Receive message of registration with status code = [ %d ].");
 				}
 				else
 				{
 					logObj.write(
 						framework::liblog::LogLevel::LOG_LEVEL_WARNING, 
-						"Receive message of registration failed, result = [ %d ].",
+						"Receive message of registration with status code = [ %d ].",
 						statusCode);
 				}
 			}
@@ -239,7 +234,7 @@ void Alarm::processRegisterMessage(void* parser /*= nullptr*/)
 			{
 				logObj.write(
 					framework::liblog::LogLevel::LOG_LEVEL_WARNING, 
-					"Add unknown registration type = [ %d ] failed.", 
+					"Got unknown command type = [ %d ] of message.", 
 					static_cast<int>(type));
 			}
 		}
@@ -247,7 +242,7 @@ void Alarm::processRegisterMessage(void* parser /*= nullptr*/)
 		{
 			logObj.write(
 				framework::liblog::LogLevel::LOG_LEVEL_ERROR, 
-				"Parse register message [ %s ] failed, result = [ %d ].", 
+				"Parse received message [ %s ] failed, result = [ %d ].", 
 				data.c_str(),
 				static_cast<int>(e));
 		}
@@ -256,14 +251,14 @@ void Alarm::processRegisterMessage(void* parser /*= nullptr*/)
 	{
 		logObj.write(
 			framework::liblog::LogLevel::LOG_LEVEL_ERROR, 
-			"Process registration message without data.");
+			"Process received message without data.");
 	}
 }
 
 void Alarm::processNotifyMessage(void* parser /*= nullptr*/)
 {
-	UrlParser* urlparser{reinterpret_cast<UrlParser*>(parser)};
-	const std::vector<ParamItem> commandParamItems{urlparser->getCommandParameters()};
+	UrlParser* urlParser{reinterpret_cast<UrlParser*>(parser)};
+	const std::vector<ParamItem> commandParamItems{urlParser->getCommandParameters()};
 	std::string data;
 
 	for (int i = 0; i != commandParamItems.size(); ++i)
@@ -277,16 +272,16 @@ void Alarm::processNotifyMessage(void* parser /*= nullptr*/)
 	
 	if (!data.empty())
 	{
-		NotifyParser parser;
+		NotifyParser notifyParser;
 		CommonError e{
-			static_cast<CommonError>(parser.parse(data))};
-		NotifyType type{parser.getNotifyType()};
+			static_cast<CommonError>(notifyParser.parse(data))};
+		NotifyType type{notifyParser.getNotifyType()};
 
 		if (CommonError::COMMON_ERROR_SUCCESS == e)
 		{
 			if (NotifyType::NOTIFY_TYPE_CLOCK_SYC == type)
 			{
-				clockInfo = parser.getClockInfo();
+				clockInfo = notifyParser.getClockInfo();
 				if (0 == (clockTimetick++ % 300))
 				{
 					logObj.write(
@@ -316,7 +311,7 @@ void Alarm::processNotifyMessage(void* parser /*= nullptr*/)
 	{
 		logObj.write(
 			framework::liblog::LogLevel::LOG_LEVEL_ERROR, 
-			"Process notification message without data.");
+			"Process received message without data.");
 	}
 }
 
@@ -337,17 +332,17 @@ void Alarm::processAlarmMessage(void* parser /*= nullptr*/)
 	
 	if (!data.empty())
 	{
-		AlarmParser parser;
+		AlarmParser alarmParser;
 		CommonError e{
-			static_cast<CommonError>(parser.parse(data))};
+			static_cast<CommonError>(alarmParser.parse(data))};
 
 		if (CommonError::COMMON_ERROR_SUCCESS == e)
 		{
-			AlarmInfo info{parser.getAlarmInfo()};
+			AlarmInfo info{alarmParser.getAlarmInfo()};
 			//用母钟时间戳更新报警数据的时间戳
 			info.timestamp = clockInfo;
-			parser.setAlarmInfo(info);
-			const std::string newData{parser.compose()};
+			alarmParser.setAlarmInfo(info);
+			const std::string newData{alarmParser.compose()};
 
 			if (!newData.empty())
 			{
@@ -388,6 +383,6 @@ void Alarm::processAlarmMessage(void* parser /*= nullptr*/)
 	{
 		logObj.write(
 			framework::liblog::LogLevel::LOG_LEVEL_ERROR, 
-			"Process alarm message without data.");
+			"Process received message without data.");
 	}
 }

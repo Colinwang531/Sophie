@@ -9,14 +9,11 @@ using Uuid = framework::libcommon::Uuid;
 using ThreadPool = framework::libcommon::ThreadPool;
 #include "libcommon/time/time.h"
 using Time = framework::libcommon::Time;
-#include "libcommon/const.h"
+#include "libcommon/defs.h"
 #include "libcommon/error.h"
 #include "libprotocol/register_query_parser.h"
 using RegisterQueryParser = framework::libprotocol::RegisterQueryParser;
-using RegisterQueryType = framework::libprotocol::RegisterQueryType;
-using ApplicationInfo = framework::libprotocol::ApplicationInfo;
-using ApplicationType = framework::libprotocol::ApplicationType;
-#include "CMS.h"
+#include "cms.h"
 
 CMS::CMS(
 	Log& log, 
@@ -175,7 +172,7 @@ void CMS::processRegisterQueryMessage(
 	{
 		if (RegisterQueryType::REGISTER_QUERY_TYPE_REGISTER_REQ == type)
 		{
-			updateRegisterApplicationInfo(target, isVia, &parser);
+			updateRegisterApplicationInfo(sender, target, isVia, &parser);
 			sendRegisterReplyMessage(sender, target, isVia);
 		}
 		else if (RegisterQueryType::REGISTER_QUERY_TYPE_REGISTER_REP == type)
@@ -261,7 +258,6 @@ void CMS::sendRegisterReplyMessage(
 	const std::string via, 
 	const bool isVia /*= false*/)
 {
-	using RegisterQueryType = framework::libprotocol::RegisterQueryType;
 	RegisterQueryParser registerParser;
 	registerParser.setCommandType(RegisterQueryType::REGISTER_QUERY_TYPE_REGISTER_REP);
 	registerParser.setStatusCode(static_cast<int>(CommonError::COMMON_ERROR_SUCCESS));
@@ -303,7 +299,6 @@ void CMS::sendQueryReplyMessage(
 	const std::string via, 
 	const bool isVia /*= false*/)
 {
-	using RegisterQueryType = framework::libprotocol::RegisterQueryType;
 	RegisterQueryParser registerParser;
 	registerParser.setCommandType(RegisterQueryType::REGISTER_QUERY_TYPE_QUERY_REP);
 	registerParser.setStatusCode(static_cast<int>(CommonError::COMMON_ERROR_SUCCESS));
@@ -366,6 +361,7 @@ void CMS::removeExpiredApplicationInfo()
 }
 
 int CMS::updateRegisterApplicationInfo(
+	const std::string sender,
 	const std::string via, 
 	const bool isVia /*= false*/,
 	void* parser /*= nullptr*/)

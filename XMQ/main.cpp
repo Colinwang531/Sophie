@@ -8,9 +8,9 @@ using XmlParser = framework::libcommon::XmlParser;
 using Uuid = framework::libcommon::Uuid;
 #include "libnetwork/zmq/ctx.h"
 using Ctx = framework::libnetwork::zmq::Ctx;
-#include "libcommon/const.h"
+#include "libcommon/defs.h"
 #include "libcommon/error.h"
-#include "XMQ.h"
+#include "xmq.h"
 
 static std::string gApplicationID;
 static std::string gLocalIP;

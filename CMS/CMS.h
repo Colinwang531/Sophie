@@ -17,8 +17,7 @@
 using Worker = framework::libnetwork::zmq::module::Worker;
 #include "liblog/log.h"
 using Log = framework::liblog::Log;
-#include "libprotocol/defs.h"
-using ApplicationInfo = framework::libprotocol::ApplicationInfo;
+#include "libcommon/defs.h"
 #include "libcommon/data_struct/mutable_array/mutable_array.h"
 
 class CMS final : protected Worker

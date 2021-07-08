@@ -7,7 +7,7 @@ using Uuid = framework::libcommon::Uuid;
 #include "libnetwork/zmq/ctx.h"
 using Ctx = framework::libnetwork::zmq::Ctx;
 #include "libcommon/error.h"
-#include "Alarm.h"
+#include "alarm.h"
 
 static std::string gApplicationID;
 static std::string gRemoteIP;
