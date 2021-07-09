@@ -12,9 +12,7 @@
             "args": ["-l", "61001"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
-            "environment": [
-                {"name": "LD_LIBRARY_PATH", "value": "${workspaceFolder}/bin/x64/Debug"}
-            ],
+            "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
             "setupCommands": [
@@ -24,7 +22,7 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "DAS",
+            //"preLaunchTask": "DAS",
             "miDebuggerPath": "/usr/bin/gdb"
         },
         {
@@ -56,9 +54,7 @@
             "args": ["--local_ip", "127.0.0.1", "--local_port", "61001"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/bin/x64/Debug/",
-            "environment": [
-                {"name": "LD_LIBRARY_PATH", "value": "${workspaceFolder}/bin/x64/Debug"}
-            ],
+            "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
             "setupCommands": [
@@ -68,7 +64,7 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "XMQ",
+            //"preLaunchTask": "XMQ",
             "miDebuggerPath": "/usr/bin/gdb"
         },
         {
@@ -79,9 +75,7 @@
             "args": ["--remote_ip", "127.0.0.1", "--remote_port", "61001", "--upload_ip", "", "--upload_port", "0"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/bin/x64/Debug/",
-            "environment": [
-                {"name": "LD_LIBRARY_PATH", "value": "${workspaceFolder}/bin/x64/Debug"}
-            ],
+            "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
             "setupCommands": [
@@ -91,7 +85,7 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "CMS",
+            //"preLaunchTask": "CMS",
             "miDebuggerPath": "/usr/bin/gdb"
         },
         {
@@ -102,9 +96,7 @@
             "args": ["--remote_ip", "127.0.0.1", "--remote_port", "61001", "--publisher_ip", "127.0.0.1", "--publisher_port", "60820"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/bin/x64/Debug/",
-            "environment": [
-                {"name": "LD_LIBRARY_PATH", "value": "${workspaceFolder}/bin/x64/Debug"}
-            ],
+            "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
             "setupCommands": [
@@ -114,7 +106,7 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "Alarm",
+            //"preLaunchTask": "Alarm",
             "miDebuggerPath": "/usr/bin/gdb"
         },
         {
@@ -125,9 +117,7 @@
             "args": ["-remote_ip", "127.0.0.1", "-remote_port", "61001", "-number", "0", "-baudrate", "4800"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/bin/x64/Debug/",
-            "environment": [
-                {"name": "LD_LIBRARY_PATH", "value": "${workspaceFolder}/bin/x64/Debug"}
-            ],
+            "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
             "setupCommands": [
@@ -137,7 +127,7 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "Alarm",
+            //"preLaunchTask": "Alarm",
             "miDebuggerPath": "/usr/bin/gdb"
         },
         {
@@ -148,9 +138,7 @@
             "args": ["-remote_ip", "127.0.0.1", "-remote_port", "61001", "-number", "1", "-baudrate", "38400"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/bin/x64/Debug/",
-            "environment": [
-                {"name": "LD_LIBRARY_PATH", "value": "${workspaceFolder}/bin/x64/Debug"}
-            ],
+            "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
             "setupCommands": [
@@ -160,7 +148,7 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "Alarm",
+            //"preLaunchTask": "Alarm",
             "miDebuggerPath": "/usr/bin/gdb"
         }
     ]
