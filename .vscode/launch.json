@@ -53,7 +53,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/bin/x64/Debug/xmq",
-            "args": ["-local_ip", "127.0.0.1", "-local_port", "61001"],
+            "args": ["--local_ip", "127.0.0.1", "--local_port", "61001"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/bin/x64/Debug/",
             "environment": [
@@ -76,7 +76,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/bin/x64/Debug/cms",
-            "args": ["-x", "127.0.0.1", "-p", "61101"],
+            "args": ["--remote_ip", "127.0.0.1", "--remote_port", "61001", "--upload_ip", "", "--upload_port", "0"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/bin/x64/Debug/",
             "environment": [
@@ -99,7 +99,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/bin/x64/Debug/alarm",
-            "args": ["-remote_ip", "127.0.0.1", "-remote_port", "61001", "-publisher_ip", "127.0.0.1", "-publisher_port", "60820"],
+            "args": ["--remote_ip", "127.0.0.1", "--remote_port", "61001", "--publisher_ip", "127.0.0.1", "--publisher_port", "60820"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/bin/x64/Debug/",
             "environment": [

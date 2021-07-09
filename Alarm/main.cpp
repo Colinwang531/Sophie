@@ -71,7 +71,7 @@ int main(int argc, char* argv[])
 	if (CommonError::COMMON_ERROR_SUCCESS == static_cast<CommonError>(ctx.init()))
 	{
 		Alarm alarm{log, gApplicationID, &ctx};
-		alarm.start(gRemoteIP, gRemotePort, gPublisherIP, gPublisherPort);
+		alarm.start(gPublisherIP, gPublisherPort, gRemoteIP, gRemotePort);
 		getchar();
 		alarm.stop();
 	}

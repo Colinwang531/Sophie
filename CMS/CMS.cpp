@@ -355,6 +355,13 @@ void CMS::removeExpiredApplicationInfo()
 		if(30000 < now - registerTimestamp)
 		{
 			applicationInfos.removeItem(i);
+			logObj.write(
+				framework::liblog::LogLevel::LOG_LEVEL_WARNING, 
+				"Remove expired application ID [ %s ], name = [ %s ], type = [ %d ].", 
+				info.ID.c_str(),
+				info.name.c_str(),
+				static_cast<int>(info.type));
+				
 			break;
 		}
 	}
@@ -382,7 +389,7 @@ int CMS::updateRegisterApplicationInfo(
 		for (int i = 0; i != applicationInfos.size(); ++i)
 		{
 			ApplicationInfo* infoRef{applicationInfos.itemRef(i)};
-			if (infoRef->ID.compare(info.ID))
+			if (0 == infoRef->ID.compare(info.ID))
 			{
 				infoRef->timestamp = Time().tickcount();
 				exist = true;

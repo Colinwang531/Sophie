@@ -46,7 +46,7 @@ namespace framework
 				const int hwm /*= -1*/)
 			{
 				CommonError e{
-					so ? CommonError::COMMON_ERROR_SUCCESS : CommonError::COMMON_ERROR_INVALID_PARAMETER };
+					ctx ? CommonError::COMMON_ERROR_SUCCESS : CommonError::COMMON_ERROR_INVALID_PARAMETER };
 
 				if (CommonError::COMMON_ERROR_SUCCESS == e)
 				{

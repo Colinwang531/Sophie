@@ -128,7 +128,49 @@ void XMQ::afterSwitcherPollDataProcess(
 void XMQ::afterWorkerPollDataProcess(
 	const std::string data)
 {
-	//参数处理流程via -> receiver -> upload
+	if (!data.empty())
+	{
+		UrlParser parser;
+		int e{parser.parse(data)};
+
+		if (CommonError::COMMON_ERROR_SUCCESS == static_cast<CommonError>(e))
+		{
+			const std::string command{parser.getCommand()};
+
+			if (0 == command.compare("register") || 
+				0 == command.compare("query") || 
+				0 == command.compare("config") || 
+				0 == command.compare("notify") || 
+				0 == command.compare("alarm"))
+			{
+				//参数处理流程via -> receiver -> upload -> friend
+				if (!forwardVia(&parser))
+				{
+					if (!forwardReceiver(&parser))
+					{
+						if (!forwardUpload(sourceID, &parser))
+						{
+							forwardFriend(data);
+						}
+					}
+				}
+			}
+			else
+			{
+				logObj.write(
+					framework::liblog::LogLevel::LOG_LEVEL_WARNING, 
+					"Not support command type [ %s ].", 
+					command.c_str());
+			}
+		}
+		else
+		{
+			logObj.write(
+				framework::liblog::LogLevel::LOG_LEVEL_ERROR, 
+				"Parse poll data failed, result = [ %d ].", 
+				e);
+		}
+	}
 }
 
 bool XMQ::forwardVia(void* parser /*= nullptr*/)
@@ -200,7 +242,6 @@ bool XMQ::forwardUpload(
 	const std::string sourceID, 
 	void* parser /*= nullptr*/)
 {
-	friendID = sourceID;
 	bool status{false};
 	UrlParser* urlparser{reinterpret_cast<UrlParser*>(parser)};
 
@@ -232,6 +273,7 @@ bool XMQ::forwardUpload(
 		if (0 == userParameters[i].key.compare("upload"))
 		{
 			status = true;
+			friendID = sourceID;
 			break;
 		}
 	}
